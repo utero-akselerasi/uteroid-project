@@ -1,3 +1,7 @@
+# Next.js
+.next/
+out/
+
 # OS
 .DS_Store
 Thumbs.db
@@ -12,6 +16,10 @@ Thumbs.db
 node_modules/
 dist/
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Python
 __pycache__/
@@ -21,3 +29,4 @@ venv/
 
 # Logs
 *.log
+npm-debug.log*
