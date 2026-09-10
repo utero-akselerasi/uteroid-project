@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
 
 interface MenuNavItem {
@@ -128,18 +129,23 @@ export default function Header() {
     };
   }, [menuOpen]);
 
-  const isDarkText = !scrolled ? navTheme === "dark" : false;
+  const pathname = usePathname();
+  const isWorksPage = pathname?.startsWith("/work");
+
+  const isDarkText = !scrolled ? (isWorksPage || navTheme === "dark") : false;
   const textColor = isDarkText ? "#0a0a0a" : "#ffffff";
   const mutedTextColor = isDarkText ? "rgba(10, 10, 10, 0.6)" : "rgba(255, 255, 255, 0.7)";
   const pillBg = scrolled
     ? "rgba(13, 13, 13, 0.85)"
+    : isWorksPage
+    ? "rgba(255, 255, 255, 0.88)"
     : isDarkText
     ? "rgba(245, 239, 230, 0.75)"
     : "rgba(201, 26, 31, 0.4)";
   const borderColor = scrolled
     ? "rgba(255, 255, 255, 0.12)"
     : isDarkText
-    ? "rgba(10, 10, 10, 0.12)"
+    ? "rgba(10, 10, 10, 0.1)"
     : "rgba(255, 255, 255, 0.2)";
 
   return (

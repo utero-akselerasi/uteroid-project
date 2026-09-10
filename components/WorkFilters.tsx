@@ -2,126 +2,265 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-import {
-  disciplineLabels,
-  industryLabels,
-  type Discipline,
-  type Industry,
-} from "@/lib/types";
+import { workFilterLabels, type WorkFilter, industryLabels, type Industry } from "@/lib/types";
+import { getFilterCounts } from "@/lib/projects";
+
+const PRIMARY_FILTERS: WorkFilter[] = [
+  "all", "brand", "product", "promotion", "space", "digital", "indoor", "outdoor",
+];
+
+const INDUSTRY_FILTERS: Array<{ key: Industry; label: string }> = [
+  { key: "corporate",  label: "Corporate" },
+  { key: "fnb",        label: "F&B" },
+  { key: "government", label: "Government" },
+  { key: "education",  label: "Education" },
+  { key: "arts",       label: "Arts & Culture" },
+  { key: "services",   label: "Services" },
+  { key: "retail",     label: "Retail" },
+  { key: "property",   label: "Property" },
+  { key: "event",      label: "Event" },
+];
 
 export default function WorkFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const activeDiscipline = searchParams.get("discipline") || "";
+  const activeFilter   = (searchParams.get("filter")   || "all") as WorkFilter;
   const activeIndustry = searchParams.get("industry") || "";
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
+  const counts = getFilterCounts();
+
+  const createQuery = useCallback(
+    (updates: Record<string, string>) => {
       const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
+      for (const [key, val] of Object.entries(updates)) {
+        if (val) {
+          params.set(key, val);
+        } else {
+          params.delete(key);
+        }
       }
       return params.toString();
     },
     [searchParams]
   );
 
-  const handleDisciplineChange = (discipline: Discipline | "") => {
-    router.push(`/work?${createQueryString("discipline", discipline)}`);
+  const setFilter = (filter: WorkFilter) => {
+    const qs = createQuery({ filter: filter === "all" ? "" : filter });
+    router.push(`/work?${qs}`);
   };
 
-  const handleIndustryChange = (industry: Industry | "") => {
-    router.push(`/work?${createQueryString("industry", industry)}`);
+  const setIndustry = (industry: Industry | "") => {
+    const qs = createQuery({ industry });
+    router.push(`/work?${qs}`);
   };
 
-  const hasFilters = activeDiscipline || activeIndustry;
+  const hasActiveFilters = activeFilter !== "all" || activeIndustry;
 
   return (
-    <div className="mb-[var(--space-2xl)] md:mb-[var(--space-3xl)]">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-xl)]">
-        {/* Discipline Filter */}
-        <div>
-          <span className="type-micro text-[var(--color-gray-400)] block mb-4">
-            Discipline
-          </span>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => handleDisciplineChange("")}
-              className={`text-[var(--text-small)] px-4 py-2 border transition-all duration-[var(--duration-fast)] ${
-                !activeDiscipline
-                  ? "border-[var(--color-black)] bg-[var(--color-black)] text-[var(--color-white)]"
-                  : "border-[var(--color-gray-300)] hover:border-[var(--color-black)]"
-              }`}
-            >
-              All
-            </button>
-            {(Object.entries(disciplineLabels) as [Discipline, string][]).map(
-              ([key, label]) => (
-                <button
-                  key={key}
-                  onClick={() => handleDisciplineChange(key)}
-                  className={`text-[var(--text-small)] px-4 py-2 border transition-all duration-[var(--duration-fast)] ${
-                    activeDiscipline === key
-                      ? "border-[var(--color-red)] bg-[var(--color-red)] text-[var(--color-white-pure)]"
-                      : "border-[var(--color-gray-300)] hover:border-[var(--color-black)]"
-                  }`}
-                >
-                  {label}
-                </button>
-              )
-            )}
-          </div>
-        </div>
-
-        {/* Industry Filter */}
-        <div>
-          <span className="type-micro text-[var(--color-gray-400)] block mb-4">
-            Industry
-          </span>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => handleIndustryChange("")}
-              className={`text-[var(--text-small)] px-4 py-2 border transition-all duration-[var(--duration-fast)] ${
-                !activeIndustry
-                  ? "border-[var(--color-black)] bg-[var(--color-black)] text-[var(--color-white)]"
-                  : "border-[var(--color-gray-300)] hover:border-[var(--color-black)]"
-              }`}
-            >
-              All
-            </button>
-            {(Object.entries(industryLabels) as [Industry, string][]).map(
-              ([key, label]) => (
-                <button
-                  key={key}
-                  onClick={() => handleIndustryChange(key)}
-                  className={`text-[var(--text-small)] px-4 py-2 border transition-all duration-[var(--duration-fast)] ${
-                    activeIndustry === key
-                      ? "border-[var(--color-red)] bg-[var(--color-red)] text-[var(--color-white-pure)]"
-                      : "border-[var(--color-gray-300)] hover:border-[var(--color-black)]"
-                  }`}
-                >
-                  {label}
-                </button>
-              )
-            )}
-          </div>
+    <div style={{ marginBottom: "clamp(3rem, 6vw, 5rem)" }}>
+      {/* ── Primary discipline filters ────────────────────────────── */}
+      <div
+        style={{
+          marginBottom: "clamp(1rem, 2vw, 1.5rem)",
+          overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: "0.5rem",
+            paddingBottom: "4px",
+            width: "max-content",
+            minWidth: "100%",
+          }}
+        >
+          {PRIMARY_FILTERS.map((filter) => {
+            const isActive = filter === activeFilter || (filter === "all" && activeFilter === "all");
+            const count = counts[filter] ?? 0;
+            return (
+              <button
+                key={filter}
+                onClick={() => setFilter(filter)}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.55rem 1.1rem",
+                  border: isActive ? "1px solid #c91a1f" : "1px solid rgba(0, 0, 0, 0.12)",
+                  backgroundColor: isActive ? "#c91a1f" : "transparent",
+                  color: isActive ? "#ffffff" : "#0a0a0a",
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontSize: "0.75rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.borderColor = "#c91a1f";
+                    e.currentTarget.style.color = "#c91a1f";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.12)";
+                    e.currentTarget.style.color = "#0a0a0a";
+                  }
+                }}
+              >
+                <span>{workFilterLabels[filter]}</span>
+                {filter !== "all" && count > 0 && (
+                  <span
+                    style={{
+                      fontSize: "0.65rem",
+                      fontWeight: 700,
+                      opacity: isActive ? 0.9 : 0.45,
+                      letterSpacing: "0",
+                    }}
+                  >
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Reset Filters */}
-      {hasFilters && (
-        <div className="mt-[var(--space-lg)]">
-          <a
-            href="/work"
-            className="text-[var(--text-small)] uppercase tracking-[var(--tracking-wide)] text-[var(--color-red)] hover:text-[var(--color-red-dark)] transition-colors duration-[var(--duration-fast)]"
+      {/* ── Industry filters ─────────────────────────────────────────── */}
+      <div
+        style={{
+          overflowX: "auto",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.35rem",
+            paddingBottom: "4px",
+            width: "max-content",
+            minWidth: "100%",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "rgba(10, 10, 10, 0.4)",
+              paddingRight: "0.5rem",
+              whiteSpace: "nowrap",
+            }}
           >
-            Clear Filters &rarr;
-          </a>
+            Industry
+          </span>
+          <button
+            onClick={() => setIndustry("")}
+            style={{
+              padding: "0.35rem 0.75rem",
+              border: !activeIndustry ? "1px solid #0a0a0a" : "1px solid rgba(0, 0, 0, 0.1)",
+              backgroundColor: !activeIndustry ? "#0a0a0a" : "transparent",
+              color: !activeIndustry ? "#ffffff" : "rgba(10, 10, 10, 0.5)",
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              fontSize: "0.68rem",
+              fontWeight: 700,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              if (activeIndustry) {
+                e.currentTarget.style.color = "#0a0a0a";
+                e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.3)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeIndustry) {
+                e.currentTarget.style.color = "rgba(10, 10, 10, 0.5)";
+                e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.1)";
+              }
+            }}
+          >
+            All
+          </button>
+          {INDUSTRY_FILTERS.map(({ key, label }) => {
+            const isActive = activeIndustry === key;
+            return (
+              <button
+                key={key}
+                onClick={() => setIndustry(isActive ? "" : key)}
+                style={{
+                  padding: "0.35rem 0.75rem",
+                  border: isActive ? "1px solid #c91a1f" : "1px solid rgba(0, 0, 0, 0.1)",
+                  backgroundColor: isActive ? "rgba(201, 26, 31, 0.08)" : "transparent",
+                  color: isActive ? "#c91a1f" : "rgba(10, 10, 10, 0.5)",
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.color = "#0a0a0a";
+                    e.currentTarget.style.borderColor = "#c91a1f";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.color = "rgba(10, 10, 10, 0.5)";
+                    e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.1)";
+                  }
+                }}
+              >
+                {label}
+              </button>
+            );
+          })}
+
+          {hasActiveFilters && (
+            <button
+              onClick={() => {
+                router.push("/work");
+              }}
+              style={{
+                marginLeft: "0.5rem",
+                fontSize: "0.68rem",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#c91a1f",
+                background: "none",
+                border: "none",
+                borderBottom: "1px solid rgba(201, 26, 31, 0.4)",
+                paddingBottom: "1px",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                transition: "opacity 0.2s ease",
+              }}
+            >
+              Clear ×
+            </button>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
