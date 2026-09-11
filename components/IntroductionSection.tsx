@@ -9,7 +9,7 @@ export default function IntroductionSection() {
       id="about"
       style={{
         padding: "clamp(5rem, 9vw, 8rem) 0",
-        backgroundColor: "#f5efe6",
+        backgroundColor: "#ffffff",
         color: "#0a0a0a",
         position: "relative",
         overflow: "hidden",

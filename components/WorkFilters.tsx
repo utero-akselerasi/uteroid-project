@@ -170,9 +170,9 @@ export default function WorkFilters() {
             onClick={() => setIndustry("")}
             style={{
               padding: "0.35rem 0.75rem",
-              border: !activeIndustry ? "1px solid #0a0a0a" : "1px solid rgba(0, 0, 0, 0.1)",
-              backgroundColor: !activeIndustry ? "#0a0a0a" : "transparent",
-              color: !activeIndustry ? "#ffffff" : "rgba(10, 10, 10, 0.5)",
+              border: !activeIndustry ? "1px solid #c91a1f" : "1px solid rgba(0, 0, 0, 0.12)",
+              backgroundColor: !activeIndustry ? "#c91a1f" : "transparent",
+              color: !activeIndustry ? "#ffffff" : "#0a0a0a",
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
               fontSize: "0.68rem",
               fontWeight: 700,
@@ -184,14 +184,14 @@ export default function WorkFilters() {
             }}
             onMouseEnter={(e) => {
               if (activeIndustry) {
-                e.currentTarget.style.color = "#0a0a0a";
-                e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.3)";
+                e.currentTarget.style.color = "#c91a1f";
+                e.currentTarget.style.borderColor = "#c91a1f";
               }
             }}
             onMouseLeave={(e) => {
               if (activeIndustry) {
-                e.currentTarget.style.color = "rgba(10, 10, 10, 0.5)";
-                e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.1)";
+                e.currentTarget.style.color = "#0a0a0a";
+                e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.12)";
               }
             }}
           >
@@ -205,9 +205,9 @@ export default function WorkFilters() {
                 onClick={() => setIndustry(isActive ? "" : key)}
                 style={{
                   padding: "0.35rem 0.75rem",
-                  border: isActive ? "1px solid #c91a1f" : "1px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: isActive ? "rgba(201, 26, 31, 0.08)" : "transparent",
-                  color: isActive ? "#c91a1f" : "rgba(10, 10, 10, 0.5)",
+                  border: isActive ? "1px solid #c91a1f" : "1px solid rgba(0, 0, 0, 0.12)",
+                  backgroundColor: isActive ? "#c91a1f" : "transparent",
+                  color: isActive ? "#ffffff" : "#0a0a0a",
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   fontSize: "0.68rem",
                   fontWeight: 700,
@@ -219,14 +219,14 @@ export default function WorkFilters() {
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive) {
-                    e.currentTarget.style.color = "#0a0a0a";
+                    e.currentTarget.style.color = "#c91a1f";
                     e.currentTarget.style.borderColor = "#c91a1f";
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (!isActive) {
-                    e.currentTarget.style.color = "rgba(10, 10, 10, 0.5)";
-                    e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.1)";
+                    e.currentTarget.style.color = "#0a0a0a";
+                    e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.12)";
                   }
                 }}
               >

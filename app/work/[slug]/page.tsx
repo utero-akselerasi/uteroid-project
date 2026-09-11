@@ -622,7 +622,7 @@ export default async function ProjectPage({
                 <span
                   style={{
                     fontSize: "0.7rem",
-                    color: "rgba(10, 10, 10, 0.4)",
+                    color: "#555555",
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
                   }}
@@ -679,7 +679,7 @@ export default async function ProjectPage({
                 <span
                   style={{
                     fontSize: "0.7rem",
-                    color: "rgba(10, 10, 10, 0.4)",
+                    color: "#555555",
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
                   }}

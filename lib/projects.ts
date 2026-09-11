@@ -18,283 +18,266 @@ import { filterToDisciplines } from "./types";
 export const projects: Project[] = [
   // ── 01 ─────────────────────────────────────────────────────────────
   {
-    slug: "amarta-wisesa",
-    title: "Amarta Wisesa",
-    client: "PT Amarta Wisesa Indonesia",
+    slug: "garageplug",
+    title: "GaragePlug Indonesia",
+    client: "PT. Era Automotive Revolution",
     year: "2024",
-    category: "Corporate Identity",
-    industry: "corporate",
-    disciplines: ["identity", "digital", "print"],
+    category: "Brand Identity & Design System",
+    industry: "services",
+    disciplines: ["identity", "digital", "print", "indoor", "outdoor"],
     shortDescription:
-      "Comprehensive brand identity redesign and corporate communication system establishing market leadership.",
+      "Platform cloud terintegrasi untuk bengkel mobil dan detailing center, dilengkapi sistem pedoman identitas brand (GSM) komprehensif dari logo hingga armada transportasi.",
     description:
-      "When launching their new visual identity, Amarta Wisesa partnered with Utero to craft a progressive design system that communicates strength, precision, and modern corporate agility. The resulting identity spans digital platforms, print collaterals, and environmental applications.",
+      "GaragePlug adalah perangkat lunak berbasis cloud easy-to-use yang menyediakan platform digital end-to-end untuk bengkel mobil dan detailing center. Sebagai platform premium cloud untuk industri pelayanan otomotif yang dipercaya lebih dari 5.000 pengguna di seluruh dunia, GaragePlug berekspansi ke Indonesia di bawah naungan PT. Era Automotive Revolution. Utero merancang sistem standarisasi identitas visual (GSM) menyeluruh mencakup logogram generator tenaga, konfigurasi logo horizontal & vertikal, sistem warna hijau tua (#003D2E) dan supergraphic, sarana korporasi, seragam teknisi, merchandise, sarana penanda (totem & neonbox), media promosi, hingga livery armada transportasi.",
     excerpt:
-      "Comprehensive brand identity redesign and corporate communication system establishing market leadership.",
-    coverImage:
-      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1600&auto=format&fit=crop",
+      "Platform cloud terintegrasi untuk bengkel mobil dan detailing center, dilengkapi sistem pedoman identitas brand (GSM) komprehensif dari logo hingga armada transportasi.",
+    coverImage: "/projects/garageplug/cover.webp",
+    heroImage: "/projects/garageplug/cover.webp",
     galleryImages: [
-      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=1600&auto=format&fit=crop",
+      "/projects/garageplug/01-page-08.webp",
+      "/projects/garageplug/02-page-10.webp",
+      "/projects/garageplug/03-page-12.webp",
+      "/projects/garageplug/04-page-15.webp",
+      "/projects/garageplug/05-page-20.webp",
+      "/projects/garageplug/06-page-22.webp",
+      "/projects/garageplug/07-page-26.webp",
+      "/projects/garageplug/08-page-27.webp",
+      "/projects/garageplug/09-page-29.webp",
+      "/projects/garageplug/10-page-30.webp",
+      "/projects/garageplug/11-page-31.webp",
+      "/projects/garageplug/12-page-32.webp",
+      "/projects/garageplug/13-page-33.webp",
+      "/projects/garageplug/14-page-41.webp",
+      "/projects/garageplug/15-page-45.webp",
+      "/projects/garageplug/16-page-52.webp",
+      "/projects/garageplug/17-page-55.webp",
+      "/projects/garageplug/18-page-58.webp",
+      "/projects/garageplug/19-page-60.webp",
+      "/projects/garageplug/20-page-64.webp",
+      "/projects/garageplug/21-page-66.webp",
+      "/projects/garageplug/22-page-70.webp",
+      "/projects/garageplug/23-page-72.webp",
+      "/projects/garageplug/24-page-74.webp",
     ],
     featured: true,
-    tags: ["corporate", "identity", "system"],
+    tags: ["cloud", "automotive", "identity", "gsm", "fleet"],
     details: {
-      scope: ["Brand Strategy", "Visual Identity", "Print Collaterals", "Digital Assets"],
+      scope: [
+        "Pedoman Identitas Brand (GSM)",
+        "Standarisasi & Grid Konstruksi Logo",
+        "Palet Warna & Supergraphic",
+        "Sarana Korporasi (Stationery)",
+        "Seragam & Workwear",
+        "Sarana Penanda (Signage)",
+        "Media Periklanan",
+        "Branding Armada Transportasi",
+      ],
       challenge:
-        "Reposition an established corporate entity under a modern, agile identity without losing institutional credibility.",
+        "Membangun sistem standarisasi identitas visual jangka panjang untuk platform teknologi otomotif global di Indonesia, menjamin konsistensi mutlak di seluruh media digital, seragam kerja, merchandise, periklanan, dan armada operasional.",
       solution:
-        "Developed a typographic-led identity system anchored in Swiss editorial precision, deploying across print, digital, and environmental touchpoints.",
-      deliverables: ["Logo System", "Brand Guidelines", "Stationery Suite", "Digital Templates"],
+        "Mengembangkan pedoman identitas visual berbasis logogram generator yang merepresentasikan pembangkit tenaga dan penggerak energi. Dipadukan palet warna hijau tua (#003D2E) lambang pertumbuhan dan go green, sistem diterapkan secara terpadu pada sarana korporasi, apparel, penanda, hingga livery kendaraan.",
+      deliverables: [
+        "Buku Pedoman Identitas Brand (GSM)",
+        "Konfigurasi Logo Horizontal & Vertical",
+        "Stationery (Kop Surat, Amplop, Map, Kartu Nama, ID Card)",
+        "Apparel (Kemeja, Polo, Wearpack, Topi)",
+        "Merchandise (Mug, Tumbler, Totebag, Jam Dinding)",
+        "Sarana Penanda (Totem, Mini Totem, Neonbox)",
+        "Media Iklan (Roll Banner, Umbul-umbul, Billboard, Social Media)",
+        "Livery Armada (Granmax, Alphard, Bus, Box Pick Up)",
+      ],
     },
   },
 
   // ── 02 ─────────────────────────────────────────────────────────────
   {
-    slug: "baiturrokhman",
-    title: "Baiturrokhman Tour Travel",
-    client: "Baiturrokhman Tour & Travel",
-    year: "2024",
-    category: "Branding & Spatial",
-    industry: "services",
-    disciplines: ["identity", "signage", "print"],
+    slug: "mcc",
+    title: "Malang Creative Center",
+    client: "Malang Creative Center (MCC)",
+    year: "2023",
+    category: "Creative Hub Identity & Ambience",
+    industry: "arts",
+    disciplines: ["identity", "signage", "exhibition", "indoor", "outdoor"],
     shortDescription:
-      "Holistic visual identity, service collaterals, and customer experience touchpoints for pilgrimage travel.",
+      "Pedoman grafis dan identitas visual pusat inovasi dan kolaborasi industri kreatif terbesar di Jawa Timur.",
     description:
-      "Developing a trustworthy and elegant brand presence that provides peace of mind, clarity, and distinguished customer touchpoints for umrah and hajj services. Every touchpoint — from signage to collateral — was crafted to reflect the dignity and gravitas of the journey.",
+      "Malang Creative Center (MCC) adalah episentrum ekosistem kreatif Kota Malang yang mengintegrasikan 17 subsektor ekonomi kreatif. Utero merancang pedoman identitas brand komprehensif, mentransformasikan filosofi kolaborasi dan pertumbuhan kultural ke dalam sistem visual dinamis, penanda ruang, dan aplikasi lingkungan fisik.",
     excerpt:
-      "Holistic visual identity, service collaterals, and customer experience touchpoints for pilgrimage travel.",
-    coverImage:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop",
+      "Pedoman grafis dan identitas visual pusat inovasi dan kolaborasi industri kreatif terbesar di Jawa Timur.",
+    coverImage: "/projects/mcc/cover.webp",
+    heroImage: "/projects/mcc/cover.webp",
     galleryImages: [
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1600&auto=format&fit=crop",
+      "/projects/mcc/01-page-02.webp",
+      "/projects/mcc/02-page-03.webp",
+      "/projects/mcc/03-page-04.webp",
+      "/projects/mcc/04-page-05.webp",
+      "/projects/mcc/05-page-06.webp",
+      "/projects/mcc/06-page-07.webp",
+      "/projects/mcc/07-page-08.webp",
+      "/projects/mcc/08-page-09.webp",
+      "/projects/mcc/09-page-10.webp",
+      "/projects/mcc/10-page-11.webp",
+      "/projects/mcc/11-page-12.webp",
+      "/projects/mcc/12-page-13.webp",
+      "/projects/mcc/13-page-14.webp",
+      "/projects/mcc/14-page-15.webp",
+      "/projects/mcc/15-page-16.webp",
+      "/projects/mcc/16-page-17.webp",
+      "/projects/mcc/17-page-18.webp",
+      "/projects/mcc/18-page-19.webp",
+      "/projects/mcc/19-page-20.webp",
+      "/projects/mcc/20-page-21.webp",
     ],
     featured: true,
-    tags: ["branding", "spatial", "travel"],
+    tags: ["creative-hub", "culture", "identity", "spatial"],
     details: {
-      scope: ["Brand Identity", "Signage System", "Print Collaterals"],
+      scope: [
+        "Pedoman Identitas Brand (GSM)",
+        "Standarisasi Logo & Konstruksi Grid",
+        "Sistem Warna & Tipografi",
+        "Environmental Signage",
+        "Aplikasi Media Komunikasi",
+        "Elemen Grafis & Supergraphic",
+      ],
       challenge:
-        "Create a brand that inspires trust and conveys the spiritual significance of the service category.",
+        "Merancang sistem identitas visual yang mampu merepresentasikan keberagaman 17 subsektor ekonomi kreatif dalam satu platform visual yang kohesif dan dinamis di Kota Malang.",
       solution:
-        "A restrained, calligraphic-influenced identity pairing refined typography with considered spatial applications.",
-      deliverables: ["Logo & Identity", "Environmental Signage", "Collateral Suite"],
+        "Mengembangkan sistem visual yang fleksibel dan modular berbasis identitas kultural Malang, diterapkan pada ruang fisik, penanda, dan media komunikasi di seluruh gedung MCC.",
+      deliverables: [
+        "Buku Pedoman Identitas Brand (GSM)",
+        "Logo & Sistem Identitas Visual",
+        "Environmental Signage & Wayfinding",
+        "Supergraphic System",
+        "Media Komunikasi Digital & Cetak",
+      ],
     },
   },
 
   // ── 03 ─────────────────────────────────────────────────────────────
   {
-    slug: "festival-mbois-8",
-    title: "Festival Mbois 8",
-    client: "Malang Creative Community",
-    year: "2023",
-    category: "Event Visual Identity",
-    industry: "arts",
-    disciplines: ["identity", "campaign", "outdoor", "digital"],
+    slug: "stamford",
+    title: "Stamford Indonesia FC",
+    client: "Stamford Indonesia FC",
+    year: "2021",
+    category: "Sports Academy Brand Identity",
+    industry: "education",
+    disciplines: ["identity", "campaign", "print"],
     shortDescription:
-      "Dynamic visual identity and city-wide campaign system celebrating regional creative economy.",
+      "Identitas visual dan pedoman brand akademi sepak bola terpadu bertaraf internasional 'Beyond Dreams'.",
     description:
-      "A bold, energetic identity combining contemporary typography with regional cultural motifs to unite artists, makers, and innovators across East Java. The campaign system extended across outdoor media, digital activations, and merchandise.",
+      "Stamford Indonesia FC (SIFC) adalah pusat pelatihan sepak bola terpadu yang memadukan pendidikan formal, kurikulum Filanesia, dan lisensi AFC. Utero menyusun pedoman identitas brand dari sketsa konsep hingga implementasi jersey, apparel, dan sarana fasilitas.",
     excerpt:
-      "Dynamic visual identity and city-wide campaign system celebrating regional creative economy.",
-    coverImage:
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1600&auto=format&fit=crop",
+      "Identitas visual dan pedoman brand akademi sepak bola terpadu bertaraf internasional 'Beyond Dreams'.",
+    coverImage: "/projects/stamford/cover.webp",
+    heroImage: "/projects/stamford/cover.webp",
     galleryImages: [
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600&auto=format&fit=crop",
+      "/projects/stamford/01-page-02.webp",
+      "/projects/stamford/02-page-03.webp",
+      "/projects/stamford/03-page-04.webp",
+      "/projects/stamford/04-page-05.webp",
+      "/projects/stamford/05-page-06.webp",
+      "/projects/stamford/06-page-07.webp",
+      "/projects/stamford/07-page-08.webp",
+      "/projects/stamford/08-page-09.webp",
+      "/projects/stamford/09-page-10.webp",
+      "/projects/stamford/10-page-11.webp",
+      "/projects/stamford/11-page-12.webp",
+      "/projects/stamford/12-page-13.webp",
+      "/projects/stamford/13-page-14.webp",
+      "/projects/stamford/14-page-15.webp",
+      "/projects/stamford/15-page-16.webp",
+      "/projects/stamford/16-page-17.webp",
+      "/projects/stamford/17-page-18.webp",
+      "/projects/stamford/18-page-19.webp",
+      "/projects/stamford/19-page-20.webp",
+      "/projects/stamford/20-page-21.webp",
     ],
     featured: true,
-    tags: ["event", "campaign", "outdoor", "culture"],
+    tags: ["sports", "academy", "football", "identity"],
     details: {
-      scope: ["Visual Identity", "Campaign System", "Outdoor Media", "Digital Activation"],
+      scope: [
+        "Konsep & Strategi Brand",
+        "Identitas Logo & Maskot",
+        "Sistem Warna & Tipografi",
+        "Jersey & Apparel Akademi",
+        "Sarana Media Promosi",
+        "Fasilitas & Signage",
+      ],
       challenge:
-        "Create a unifying identity for a diverse creative festival that energizes both participants and the public.",
+        "Membangun identitas brand akademi sepak bola profesional yang mampu mengangkat citra standar internasional sekaligus merepresentasikan semangat lokal dan aspirasi generasi muda.",
       solution:
-        "Layered typographic compositions with regional cultural references deployed across an integrated campaign system.",
-      deliverables: ["Identity System", "Outdoor Banners", "Social Media Kit", "Merchandise"],
+        "Mengembangkan identitas visual berbasis tagline 'Beyond Dreams' dengan logotype atletik, palet warna klub yang kuat, serta sistem aplikasi menyeluruh dari jersey hingga fasilitas pelatihan.",
+      deliverables: [
+        "Logo & Brand Identity System",
+        "Jersey Design (Home, Away, Goalkeeper)",
+        "Apparel (Jaket, Polo, Kaos Training)",
+        "Sarana Media & Promosi",
+        "Signage Fasilitas Akademi",
+      ],
     },
   },
 
   // ── 04 ─────────────────────────────────────────────────────────────
   {
-    slug: "bank-sidoarjo",
-    title: "Bank Sidoarjo",
-    client: "PT BPR Bank Sidoarjo",
+    slug: "chatten",
+    title: "Chatten Coffee & Floats",
+    client: "Chatten Cafe",
     year: "2023",
-    category: "Corporate & Signage",
-    industry: "corporate",
-    disciplines: ["identity", "signage", "indoor"],
+    category: "F&B Visual Identity & Packaging",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "indoor"],
     shortDescription:
-      "Modern regional banking corporate identity and branch signage environmental graphics.",
+      "Identitas visual retro pop dan pedoman packaging gerai kopi dan sajian float modern.",
     description:
-      "Transforming the visual language of a longstanding financial institution to appeal to a new generation of entrepreneurs while cementing institutional stability. The work spans corporate identity through to full environmental signage deployment.",
+      "Chatten Coffee & Floats menghadirkan nuansa klasik hangat dengan sentuhan pop kontemporer. Utero menyusun pedoman identitas merek meliputi maskot, tipografi retro, kemasan produk, dan elemen interior cafe.",
     excerpt:
-      "Modern regional banking corporate identity and branch signage environmental graphics.",
-    coverImage:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
+      "Identitas visual retro pop dan pedoman packaging gerai kopi dan sajian float modern.",
+    coverImage: "/projects/chatten/cover.webp",
+    heroImage: "/projects/chatten/cover.webp",
     galleryImages: [
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600&auto=format&fit=crop",
+      "/projects/chatten/01-page-02.webp",
+      "/projects/chatten/02-page-03.webp",
+      "/projects/chatten/03-page-04.webp",
+      "/projects/chatten/04-page-05.webp",
+      "/projects/chatten/05-page-06.webp",
+      "/projects/chatten/06-page-07.webp",
+      "/projects/chatten/07-page-08.webp",
+      "/projects/chatten/08-page-09.webp",
+      "/projects/chatten/09-page-10.webp",
+      "/projects/chatten/10-page-11.webp",
+      "/projects/chatten/11-page-12.webp",
+      "/projects/chatten/12-page-13.webp",
+      "/projects/chatten/13-page-14.webp",
+      "/projects/chatten/14-page-15.webp",
+      "/projects/chatten/15-page-16.webp",
+      "/projects/chatten/16-page-17.webp",
+      "/projects/chatten/17-page-18.webp",
+      "/projects/chatten/18-page-19.webp",
+      "/projects/chatten/19-page-20.webp",
+      "/projects/chatten/20-page-21.webp",
     ],
     featured: true,
-    tags: ["corporate", "banking", "signage", "environmental"],
+    tags: ["fnb", "coffee", "retro", "packaging"],
     details: {
-      scope: ["Brand Identity", "Environmental Signage", "Indoor Graphics"],
+      scope: [
+        "Konsep & Strategi Brand",
+        "Identitas Visual & Maskot",
+        "Sistem Tipografi Retro",
+        "Kemasan Produk (Packaging)",
+        "Elemen Interior Cafe",
+        "Media Promosi Digital",
+      ],
       challenge:
-        "Modernise a traditional financial institution identity while maintaining institutional gravitas.",
+        "Menciptakan identitas merek yang hangat dan memorable untuk cafe kopi dan float, menonjol di tengah persaingan ketat industri F&B dengan karakter visual retro pop yang autentik.",
       solution:
-        "Clean typographic identity with structured environmental graphic system for branch interiors and exteriors.",
-      deliverables: ["Identity Refresh", "Branch Signage System", "Indoor Environmental Graphics"],
-    },
-  },
-
-  // ── 05 ─────────────────────────────────────────────────────────────
-  {
-    slug: "tech-link",
-    title: "Tech Link",
-    client: "Tech Link Asia",
-    year: "2024",
-    category: "Digital Platform",
-    industry: "services",
-    disciplines: ["digital", "identity"],
-    shortDescription:
-      "Digital product system, brand identity, and design system for next-gen enterprise networking.",
-    description:
-      "Designing a sophisticated digital identity and UI/UX component library enabling seamless connection between enterprise services and developer tooling. The design system prioritises clarity, speed, and scalability.",
-    excerpt:
-      "Digital product system, brand identity, and design system for next-gen enterprise networking.",
-    coverImage:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?q=80&w=1600&auto=format&fit=crop",
-    ],
-    featured: false,
-    tags: ["digital", "platform", "identity", "tech"],
-    details: {
-      scope: ["Brand Identity", "Digital Design System", "UI/UX"],
-      challenge:
-        "Build a scalable digital identity that works across complex enterprise product surfaces.",
-      solution:
-        "Modular component library with systematic design tokens and clear hierarchy principles.",
-      deliverables: ["Brand Identity", "Design System", "UI Component Library"],
-    },
-  },
-
-  // ── 06 ─────────────────────────────────────────────────────────────
-  {
-    slug: "malang-creative-center",
-    title: "Malang Creative Center",
-    client: "Dinas Perindustrian dan Perdagangan Kota Malang",
-    year: "2023",
-    category: "Wayfinding & Environmental",
-    industry: "government",
-    disciplines: ["signage", "identity", "indoor"],
-    shortDescription:
-      "Wayfinding system and environmental graphic design for a 9-story creative powerhouse.",
-    description:
-      "A comprehensive spatial navigation system guiding thousands of daily creators, students, and visitors across multi-floor creative facilities. The work integrates identity, wayfinding, and environmental graphics into a cohesive spatial experience.",
-    excerpt:
-      "Wayfinding system and environmental graphic design for a 9-story creative powerhouse.",
-    coverImage:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1600&auto=format&fit=crop",
-    ],
-    featured: false,
-    tags: ["wayfinding", "environmental", "government", "spatial"],
-    details: {
-      scope: ["Wayfinding System", "Environmental Graphics", "Spatial Identity"],
-      challenge:
-        "Design a clear wayfinding system for a complex multi-storey creative facility serving diverse user groups.",
-      solution:
-        "Structured typographic wayfinding with colour-coded floor zoning and environmental graphic interventions.",
-      deliverables: ["Wayfinding System", "Floor Maps", "Environmental Graphics", "Signage Specs"],
-    },
-  },
-
-  // ── 07 ─────────────────────────────────────────────────────────────
-  {
-    slug: "mie-gacoan",
-    title: "Mie Gacoan",
-    client: "PT Pesta Pora Abadi",
-    year: "2023",
-    category: "Packaging & Retail",
-    industry: "fnb",
-    disciplines: ["packaging", "identity", "outdoor"],
-    shortDescription:
-      "High-volume packaging design system and environmental identity for nationwide culinary chain.",
-    description:
-      "Engineering durable, sustainable, and unmistakable visual packaging for one of Indonesia's most beloved and rapidly expanding culinary brands. The work spans product packaging through retail environmental graphics.",
-    excerpt:
-      "High-volume packaging design system and environmental identity for nationwide culinary chain.",
-    coverImage:
-      "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=1600&auto=format&fit=crop",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?q=80&w=1600&auto=format&fit=crop",
-    ],
-    featured: false,
-    tags: ["packaging", "fnb", "retail", "outdoor"],
-    details: {
-      scope: ["Packaging Design", "Retail Identity", "Outdoor Media"],
-      challenge:
-        "Design packaging that stands out at scale while remaining cost-effective for high-volume production.",
-      solution:
-        "Bold typographic packaging system with a strong visual hierarchy and consistent brand colour application.",
-      deliverables: ["Packaging System", "Retail Signage", "Outdoor Advertising"],
-    },
-  },
-
-  // ── 08 ─────────────────────────────────────────────────────────────
-  {
-    slug: "universitas-widyagama",
-    title: "Universitas Widyagama",
-    client: "Yayasan Pembina Pendidikan Indonesia Widyagama",
-    year: "2022",
-    category: "Institutional Identity",
-    industry: "education",
-    disciplines: ["identity", "print", "signage"],
-    shortDescription:
-      "Academic branding overhaul and institutional identity guidelines for higher education.",
-    description:
-      "Unifying academic faculties, publications, and campus signage under a cohesive, dignified visual banner. The identity system brought clarity and distinction to a multi-faculty institution across all communications.",
-    excerpt:
-      "Academic branding overhaul and institutional identity guidelines for higher education.",
-    coverImage:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop",
-    heroImage:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1600&auto=format&fit=crop",
-    ],
-    featured: false,
-    tags: ["education", "institutional", "identity"],
-    details: {
-      scope: ["Brand Identity", "Print System", "Campus Signage"],
-      challenge:
-        "Bring visual cohesion to a multi-faculty institution with inconsistent historical branding.",
-      solution:
-        "A restrained, authoritative identity system with flexible faculty sub-brand logic and clear publication standards.",
-      deliverables: ["Identity Guidelines", "Publication System", "Campus Signage"],
+        "Membangun ekosistem visual berbasis maskot karakter retro yang kuat, dipadu sistem tipografi vintage dan palet warna hangat, diterapkan konsisten di seluruh kemasan, interior, dan komunikasi brand.",
+      deliverables: [
+        "Logo & Brand Identity",
+        "Maskot Brand",
+        "Packaging System (Cup, Box, Bag)",
+        "Interior Graphic Elements",
+        "Social Media Kit & Template",
+      ],
     },
   },
 ];

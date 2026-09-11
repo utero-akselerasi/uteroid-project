@@ -14,31 +14,7 @@ export default function ManifestoSection() {
         overflow: "hidden",
       }}
     >
-      {/* Background geometric accents */}
-      <div
-        style={{
-          position: "absolute",
-          width: "clamp(450px, 50vw, 800px)",
-          height: "clamp(450px, 50vw, 800px)",
-          borderRadius: "50%",
-          backgroundColor: "rgba(120, 10, 15, 0.45)",
-          top: "-15%",
-          right: "-10%",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: "clamp(300px, 35vw, 600px)",
-          height: "clamp(300px, 35vw, 600px)",
-          borderRadius: "50%",
-          backgroundColor: "rgba(90, 6, 10, 0.35)",
-          bottom: "-20%",
-          left: "-5%",
-          pointerEvents: "none",
-        }}
-      />
+
 
       <div
         style={{

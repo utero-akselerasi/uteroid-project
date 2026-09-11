@@ -26,45 +26,7 @@ export default function HeroSection() {
         paddingBottom: "clamp(2rem, 4vw, 3.5rem)",
       }}
     >
-      {/* ─── GEOMETRIC BACKGROUND SHAPES (PRESERVED ART DIRECTION) ─── */}
-      <div
-        style={{
-          position: "absolute",
-          width: "clamp(500px, 60vw, 950px)",
-          height: "clamp(500px, 60vw, 950px)",
-          borderRadius: "50%",
-          backgroundColor: "rgba(120, 10, 15, 0.55)",
-          top: "-12%",
-          right: "-15%",
-          pointerEvents: "none",
-          transition: "transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)",
-          transform: mounted ? "scale(1)" : "scale(0.85)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: "clamp(400px, 45vw, 750px)",
-          height: "clamp(400px, 45vw, 750px)",
-          borderRadius: "50%",
-          backgroundColor: "rgba(100, 8, 12, 0.5)",
-          top: "18%",
-          right: "4%",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: "clamp(300px, 35vw, 550px)",
-          height: "clamp(300px, 35vw, 550px)",
-          borderRadius: "50%",
-          backgroundColor: "rgba(90, 6, 10, 0.45)",
-          bottom: "-8%",
-          right: "18%",
-          pointerEvents: "none",
-        }}
-      />
+
 
       {/* ─── MAIN HERO CONTENT ─── */}
       <div

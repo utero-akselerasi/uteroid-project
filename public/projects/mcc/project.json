@@ -1,0 +1,90 @@
+{
+  "slug": "mcc",
+  "title": "Malang Creative Center",
+  "client": "Malang Creative Center (MCC)",
+  "year": "2023",
+  "category": "Creative Hub Identity & Ambience",
+  "industry": "arts",
+  "disciplines": [
+    "identity",
+    "signage",
+    "space",
+    "indoor",
+    "outdoor"
+  ],
+  "shortDescription": "Pedoman grafis dan identitas visual pusat inovasi dan kolaborasi industri kreatif terbesar di Jawa Timur.",
+  "description": "Malang Creative Center (MCC) adalah episentrum ekosistem kreatif Kota Malang yang mengintegrasikan 17 subsektor ekonomi kreatif. Utero merancang pedoman identitas brand komprehensif, mentransformasikan filosofi kolaborasi dan pertumbuhan kultural ke dalam sistem visual dinamis, penanda ruang, dan aplikasi lingkungan fisik.",
+  "excerpt": "Pedoman grafis dan identitas visual pusat inovasi dan kolaborasi industri kreatif terbesar di Jawa Timur.",
+  "coverImage": "/projects/mcc/cover.webp",
+  "heroImage": "/projects/mcc/cover.webp",
+  "galleryImages": [
+    "/projects/mcc/01-page-02.webp",
+    "/projects/mcc/02-page-03.webp",
+    "/projects/mcc/03-page-04.webp",
+    "/projects/mcc/04-page-05.webp",
+    "/projects/mcc/05-page-06.webp",
+    "/projects/mcc/06-page-07.webp",
+    "/projects/mcc/07-page-08.webp",
+    "/projects/mcc/08-page-09.webp",
+    "/projects/mcc/09-page-10.webp",
+    "/projects/mcc/10-page-11.webp",
+    "/projects/mcc/11-page-12.webp",
+    "/projects/mcc/12-page-13.webp",
+    "/projects/mcc/13-page-14.webp",
+    "/projects/mcc/14-page-15.webp",
+    "/projects/mcc/15-page-16.webp",
+    "/projects/mcc/16-page-17.webp",
+    "/projects/mcc/17-page-18.webp",
+    "/projects/mcc/18-page-19.webp",
+    "/projects/mcc/19-page-20.webp",
+    "/projects/mcc/20-page-21.webp"
+  ],
+  "gallery": [
+    "/projects/mcc/01-page-02.webp",
+    "/projects/mcc/02-page-03.webp",
+    "/projects/mcc/03-page-04.webp",
+    "/projects/mcc/04-page-05.webp",
+    "/projects/mcc/05-page-06.webp",
+    "/projects/mcc/06-page-07.webp",
+    "/projects/mcc/07-page-08.webp",
+    "/projects/mcc/08-page-09.webp",
+    "/projects/mcc/09-page-10.webp",
+    "/projects/mcc/10-page-11.webp",
+    "/projects/mcc/11-page-12.webp",
+    "/projects/mcc/12-page-13.webp",
+    "/projects/mcc/13-page-14.webp",
+    "/projects/mcc/14-page-15.webp",
+    "/projects/mcc/15-page-16.webp",
+    "/projects/mcc/16-page-17.webp",
+    "/projects/mcc/17-page-18.webp",
+    "/projects/mcc/18-page-19.webp",
+    "/projects/mcc/19-page-20.webp",
+    "/projects/mcc/20-page-21.webp"
+  ],
+  "featured": true,
+  "tags": [
+    "creative-hub",
+    "culture",
+    "identity",
+    "spatial"
+  ],
+  "details": {
+    "scope": [
+      "Pedoman Identitas Brand (GSM)",
+      "Standarisasi Logo & Konstruksi Grid",
+      "Sistem Warna & Tipografi",
+      "Environmental Signage",
+      "Aplikasi Media Komunikasi",
+      "Elemen Grafis & Supergraphic"
+    ],
+    "challenge": "Merancang sistem identitas visual yang mampu merepresentasikan keberagaman 17 subsektor ekonomi kreatif dalam satu platform visual yang kohesif dan dinamis di Kota Malang.",
+    "solution": "Mengembangkan sistem visual yang fleksibel dan modular berbasis identitas kultural Malang, diterapkan pada ruang fisik, penanda, dan media komunikasi di seluruh gedung MCC.",
+    "deliverables": [
+      "Buku Pedoman Identitas Brand (GSM)",
+      "Logo & Sistem Identitas Visual",
+      "Environmental Signage & Wayfinding",
+      "Supergraphic System",
+      "Media Komunikasi Digital & Cetak"
+    ]
+  }
+}

@@ -15,31 +15,7 @@ export default function ProjectCTA() {
         overflow: "hidden",
       }}
     >
-      {/* ─── GEOMETRIC BACKGROUND SHAPES ─── */}
-      <div
-        style={{
-          position: "absolute",
-          width: "clamp(550px, 60vw, 900px)",
-          height: "clamp(550px, 60vw, 900px)",
-          borderRadius: "50%",
-          backgroundColor: "rgba(120, 10, 15, 0.45)",
-          top: "-25%",
-          right: "-15%",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: "clamp(350px, 40vw, 650px)",
-          height: "clamp(350px, 40vw, 650px)",
-          borderRadius: "50%",
-          backgroundColor: "rgba(90, 6, 10, 0.35)",
-          bottom: "-25%",
-          left: "5%",
-          pointerEvents: "none",
-        }}
-      />
+
 
       <div
         style={{

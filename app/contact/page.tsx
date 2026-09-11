@@ -1,65 +1,259 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import RevealOnScroll from "@/components/RevealOnScroll";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with Utero Indonesia in Malang. Start a design project or collaborate on strategic brand solutions.",
-};
+import { useState } from "react";
+import Link from "next/link";
+
+const SERVICE_OPTIONS = [
+  "Brand Identity",
+  "Product & Packaging",
+  "Promotion & Campaigns",
+  "Space & Wayfinding",
+  "Digital & Web",
+  "Indoor Commercial",
+  "Outdoor Large-Scale",
+];
 
 export default function ContactPage() {
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+
+  const toggleService = (serv: string) => {
+    setSelectedServices((prev) =>
+      prev.includes(serv) ? prev.filter((s) => s !== serv) : [...prev, serv]
+    );
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
-    <section className="pt-28 md:pt-36 pb-24 bg-[#f5efe6] min-h-screen text-[#0a0a0a]">
-      <div className="container-page">
-        <RevealOnScroll>
-          <div className="flex items-center gap-3 mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#c91a1f]" />
-            <span className="text-xs font-bold tracking-widest uppercase text-[#c91a1f]">
-              05 / START A CONVERSATION
-            </span>
+    <>
+      <style>{`
+        @keyframes pulse-red {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.5; transform: scale(0.75); }
+        }
+        .contact-channel:hover {
+          border-color: #c91a1f !important;
+          background-color: rgba(201, 26, 31, 0.02) !important;
+        }
+        .contact-channel:hover .contact-arrow {
+          color: #c91a1f !important;
+          transform: translateX(4px);
+        }
+        .contact-submit:hover {
+          background-color: #0a0a0a !important;
+        }
+      `}</style>
+
+      <section
+        style={{
+          paddingTop: "clamp(6rem, 10vw, 9rem)",
+          paddingBottom: "clamp(4rem, 8vw, 8rem)",
+          backgroundColor: "#ffffff",
+          minHeight: "100vh",
+          color: "#0a0a0a",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1400px",
+            margin: "0 auto",
+            padding: "0 clamp(1.25rem, 4vw, 3.5rem)",
+          }}
+        >
+          {/* ── Header ───────────────────────────────────────────── */}
+          <div
+            style={{
+              borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
+              paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
+              marginBottom: "clamp(3.5rem, 6vw, 6rem)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                marginBottom: "1.25rem",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "8px",
+                  height: "8px",
+                  backgroundColor: "#c91a1f",
+                  borderRadius: "50%",
+                  animation: "pulse-red 2s ease-in-out infinite",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "#c91a1f",
+                }}
+              >
+                05 / START A CONVERSATION
+              </span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                gap: "1.5rem",
+              }}
+            >
+              <div>
+                <h1
+                  style={{
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "clamp(3.5rem, 9vw, 8.5rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.04em",
+                    textTransform: "uppercase",
+                    color: "#0a0a0a",
+                    lineHeight: 0.92,
+                    margin: 0,
+                  }}
+                >
+                  Contact
+                </h1>
+                <p
+                  style={{
+                    marginTop: "1.25rem",
+                    fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
+                    color: "#555555",
+                    letterSpacing: "0.02em",
+                    lineHeight: 1.6,
+                    maxWidth: "540px",
+                  }}
+                >
+                  Have a brand, product, digital platform, or architectural space that needs purpose? We collaborate with bold leaders across Indonesia.
+                </p>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-end",
+                  gap: "0.5rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.04em",
+                    color: "rgba(0, 0, 0, 0.06)",
+                    lineHeight: 1,
+                  }}
+                >
+                  Malang
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(10, 10, 10, 0.35)",
+                  }}
+                >
+                  UTC+7 · WIB
+                </span>
+              </div>
+            </div>
           </div>
-        </RevealOnScroll>
 
-        <RevealOnScroll delay={1}>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-[#0a0a0a] mb-8">
-            CONTACT.
-          </h1>
-        </RevealOnScroll>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 border-t border-black/10 pt-12">
-          {/* Left Column: Direct Inquiries */}
-          <div className="lg:col-span-6 space-y-8">
-            <RevealOnScroll delay={2}>
-              <p className="text-xl md:text-2xl font-medium leading-relaxed text-[#0a0a0a]/90">
-                Have a brand, product, digital experience, or space that needs to be designed with purpose? Let&apos;s build the solution together.
-              </p>
-            </RevealOnScroll>
-
-            {/* Direct WhatsApp Links */}
-            <RevealOnScroll delay={3}>
-              <div className="space-y-4">
-                <span className="text-xs font-bold uppercase tracking-widest text-[#c91a1f] block">
-                  Direct WhatsApp Connect
+          {/* ── 2-Column Contact Grid ────────────────────────────── */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(12, 1fr)",
+              gap: "clamp(2rem, 5vw, 5rem)",
+            }}
+          >
+            {/* Left Column: Direct Channels & Studio Location */}
+            <div style={{ gridColumn: "span 12" }} className="lg:!col-span-5">
+              <div style={{ marginBottom: "2.5rem" }}>
+                <span
+                  style={{
+                    display: "block",
+                    fontSize: "0.68rem",
+                    fontWeight: 800,
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "#c91a1f",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Direct WhatsApp Channels
                 </span>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                   <a
                     href="https://wa.me/6281999900900"
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor="CHAT"
-                    className="flex items-center justify-between p-4 bg-white border border-black/10 hover:border-[#c91a1f] hover:bg-[#c91a1f] hover:text-white transition-all group no-underline text-[#0a0a0a]"
+                    className="contact-channel"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "1.25rem 1.5rem",
+                      border: "1px solid rgba(0, 0, 0, 0.08)",
+                      textDecoration: "none",
+                      color: "inherit",
+                      transition: "all 0.2s ease",
+                    }}
                   >
                     <div>
-                      <span className="text-xs text-black/50 group-hover:text-white/80 block mb-0.5">
+                      <span
+                        style={{
+                          display: "block",
+                          fontSize: "0.68rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.1em",
+                          textTransform: "uppercase",
+                          color: "#555555",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
                         Client Relations
                       </span>
-                      <span className="text-sm font-bold">
+                      <span
+                        style={{
+                          fontSize: "0.95rem",
+                          fontWeight: 800,
+                          color: "#0a0a0a",
+                        }}
+                      >
                         081 999 900 900 (Wahyu)
                       </span>
                     </div>
-                    <span className="text-[#25D366] group-hover:text-white font-bold">&rarr;</span>
+                    <span
+                      className="contact-arrow"
+                      style={{
+                        fontSize: "1.1rem",
+                        color: "#25D366",
+                        fontWeight: 800,
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      →
+                    </span>
                   </a>
 
                   <a
@@ -67,111 +261,488 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor="CHAT"
-                    className="flex items-center justify-between p-4 bg-white border border-black/10 hover:border-[#c91a1f] hover:bg-[#c91a1f] hover:text-white transition-all group no-underline text-[#0a0a0a]"
+                    className="contact-channel"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "1.25rem 1.5rem",
+                      border: "1px solid rgba(0, 0, 0, 0.08)",
+                      textDecoration: "none",
+                      color: "inherit",
+                      transition: "all 0.2s ease",
+                    }}
                   >
                     <div>
-                      <span className="text-xs text-black/50 group-hover:text-white/80 block mb-0.5">
+                      <span
+                        style={{
+                          display: "block",
+                          fontSize: "0.68rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.1em",
+                          textTransform: "uppercase",
+                          color: "#555555",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
                         Studio Management
                       </span>
-                      <span className="text-sm font-bold">
+                      <span
+                        style={{
+                          fontSize: "0.95rem",
+                          fontWeight: 800,
+                          color: "#0a0a0a",
+                        }}
+                      >
                         081 7388 616 (Utero)
                       </span>
                     </div>
-                    <span className="text-[#25D366] group-hover:text-white font-bold">&rarr;</span>
+                    <span
+                      className="contact-arrow"
+                      style={{
+                        fontSize: "1.1rem",
+                        color: "#25D366",
+                        fontWeight: 800,
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      →
+                    </span>
                   </a>
                 </div>
               </div>
-            </RevealOnScroll>
 
-            {/* Email & Studio Info */}
-            <RevealOnScroll delay={4}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-black/10">
+              {/* Studio Address & Email */}
+              <div
+                style={{
+                  paddingTop: "2rem",
+                  borderTop: "1px solid rgba(0, 0, 0, 0.08)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1.75rem",
+                }}
+              >
                 <div>
-                  <span className="text-xs uppercase tracking-widest text-black/50 block mb-1">
-                    Email
+                  <span
+                    style={{
+                      display: "block",
+                      fontSize: "0.68rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "rgba(10, 10, 10, 0.4)",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Email Communication
                   </span>
                   <a
                     href="mailto:marketingutero@gmail.com"
                     data-cursor="EMAIL"
-                    className="text-base font-bold text-[#0a0a0a] hover:text-[#c91a1f] transition-colors"
+                    style={{
+                      fontSize: "1.05rem",
+                      fontWeight: 800,
+                      color: "#0a0a0a",
+                      textDecoration: "none",
+                      transition: "color 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#c91a1f";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "#0a0a0a";
+                    }}
                   >
                     marketingutero@gmail.com
                   </a>
                 </div>
 
                 <div>
-                  <span className="text-xs uppercase tracking-widest text-black/50 block mb-1">
-                    Studio Base
+                  <span
+                    style={{
+                      display: "block",
+                      fontSize: "0.68rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "rgba(10, 10, 10, 0.4)",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Malang Headquarters
                   </span>
-                  <p className="text-base font-bold text-[#0a0a0a] m-0">
-                    Malang, East Java, Indonesia
+                  <p
+                    style={{
+                      fontSize: "0.95rem",
+                      lineHeight: 1.6,
+                      color: "#333333",
+                      margin: "0 0 0.5rem",
+                    }}
+                  >
+                    Jl. Bantaran 1 No. 25, Purwantoro, Blimbing, Malang, Jawa Timur 65141, Indonesia
                   </p>
+                  <a
+                    href="https://maps.google.com/?q=Utero+Indonesia+Malang"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontSize: "0.75rem",
+                      fontWeight: 800,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#c91a1f",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Open in Google Maps →
+                  </a>
                 </div>
-              </div>
-            </RevealOnScroll>
-          </div>
 
-          {/* Right Column: Social & Direct CTA Card */}
-          <div className="lg:col-span-5 lg:col-start-8">
-            <RevealOnScroll delay={3}>
-              <div className="bg-[#0a0a0a] text-white p-8 md:p-10 space-y-8">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-[#c91a1f] block mb-2">
-                    Studio Hours
+                  <span
+                    style={{
+                      display: "block",
+                      fontSize: "0.68rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "rgba(10, 10, 10, 0.4)",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Studio Operating Hours
                   </span>
-                  <p className="text-lg font-bold">
-                    Monday — Friday
-                  </p>
-                  <p className="text-sm text-white/60">
-                    09:00 — 17:00 WIB (UTC+7)
-                  </p>
-                </div>
-
-                <div className="border-t border-white/10 pt-6">
-                  <span className="text-xs font-bold uppercase tracking-widest text-[#c91a1f] block mb-4">
-                    Follow Our Channels
-                  </span>
-                  <div className="flex flex-col gap-3">
-                    <a
-                      href="https://www.instagram.com/uteroindonesia/?hl=en"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-bold uppercase tracking-wider text-white/80 hover:text-[#c91a1f] transition-colors flex justify-between items-center"
-                    >
-                      <span>Instagram</span>
-                      <span>&nearr;</span>
-                    </a>
-                    <a
-                      href="https://www.facebook.com/uteroadvertisingindonesia/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-bold uppercase tracking-wider text-white/80 hover:text-[#c91a1f] transition-colors flex justify-between items-center"
-                    >
-                      <span>Facebook</span>
-                      <span>&nearr;</span>
-                    </a>
-                    <a
-                      href="https://www.youtube.com/@uteroindonesia"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm font-bold uppercase tracking-wider text-white/80 hover:text-[#c91a1f] transition-colors flex justify-between items-center"
-                    >
-                      <span>YouTube</span>
-                      <span>&nearr;</span>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="border-t border-white/10 pt-6">
-                  <p className="text-xs uppercase tracking-widest text-white/50">
-                    Design as a Solution. Est. 1998 in Malang.
+                  <p style={{ fontSize: "0.875rem", color: "#555555", margin: 0 }}>
+                    Monday – Friday: 08:30 – 17:00 WIB<br />
+                    Saturday: 08:30 – 14:00 WIB
                   </p>
                 </div>
               </div>
-            </RevealOnScroll>
+            </div>
+
+            {/* Right Column: Interactive Editorial Inquiry Form */}
+            <div style={{ gridColumn: "span 12" }} className="lg:!col-span-7">
+              <div
+                style={{
+                  border: "1px solid rgba(0, 0, 0, 0.08)",
+                  padding: "clamp(2rem, 4vw, 3.5rem)",
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <span
+                  style={{
+                    display: "block",
+                    fontSize: "0.68rem",
+                    fontWeight: 800,
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "#c91a1f",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  Project Brief Inquiry
+                </span>
+
+                <h2
+                  style={{
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.03em",
+                    textTransform: "uppercase",
+                    color: "#0a0a0a",
+                    lineHeight: 1.1,
+                    margin: "0 0 2rem",
+                  }}
+                >
+                  Tell Us About Your Vision
+                </h2>
+
+                {submitted ? (
+                  <div
+                    style={{
+                      padding: "2.5rem",
+                      backgroundColor: "rgba(201, 26, 31, 0.04)",
+                      border: "1px solid rgba(201, 26, 31, 0.2)",
+                      textAlign: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "1.5rem",
+                        fontWeight: 900,
+                        textTransform: "uppercase",
+                        color: "#c91a1f",
+                        marginBottom: "0.75rem",
+                      }}
+                    >
+                      Inquiry Received
+                    </span>
+                    <p style={{ fontSize: "0.95rem", color: "#555555", margin: "0 0 1.5rem" }}>
+                      Thank you for contacting Utero Indonesia. Our client strategy director will review your brief and connect within 1 business day.
+                    </p>
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        borderBottom: "1px solid #c91a1f",
+                        color: "#c91a1f",
+                        fontSize: "0.75rem",
+                        fontWeight: 800,
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Submit Another Inquiry
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+                    {/* Services Multi-Select Pills */}
+                    <div>
+                      <label
+                        style={{
+                          display: "block",
+                          fontSize: "0.72rem",
+                          fontWeight: 800,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          color: "#555555",
+                          marginBottom: "0.75rem",
+                        }}
+                      >
+                        Interested Disciplines
+                      </label>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                        {SERVICE_OPTIONS.map((opt) => {
+                          const isSelected = selectedServices.includes(opt);
+                          return (
+                            <button
+                              type="button"
+                              key={opt}
+                              onClick={() => toggleService(opt)}
+                              style={{
+                                padding: "0.5rem 0.9rem",
+                                border: isSelected ? "1px solid #c91a1f" : "1px solid rgba(0, 0, 0, 0.12)",
+                                backgroundColor: isSelected ? "#c91a1f" : "transparent",
+                                color: isSelected ? "#ffffff" : "#0a0a0a",
+                                fontSize: "0.72rem",
+                                fontWeight: 700,
+                                letterSpacing: "0.08em",
+                                textTransform: "uppercase",
+                                cursor: "pointer",
+                                transition: "all 0.2s ease",
+                              }}
+                            >
+                              {opt}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Name & Brand */}
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.25rem" }}>
+                      <div>
+                        <label
+                          htmlFor="clientName"
+                          style={{
+                            display: "block",
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.12em",
+                            textTransform: "uppercase",
+                            color: "rgba(10, 10, 10, 0.5)",
+                            marginBottom: "0.5rem",
+                          }}
+                        >
+                          Your Name *
+                        </label>
+                        <input
+                          id="clientName"
+                          required
+                          type="text"
+                          placeholder="e.g. Budi Santoso"
+                          style={{
+                            width: "100%",
+                            padding: "0.85rem 1rem",
+                            border: "1px solid rgba(0, 0, 0, 0.12)",
+                            outline: "none",
+                            fontSize: "0.9rem",
+                            color: "#0a0a0a",
+                            backgroundColor: "#fafafa",
+                            fontFamily: "inherit",
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="brandName"
+                          style={{
+                            display: "block",
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.12em",
+                            textTransform: "uppercase",
+                            color: "rgba(10, 10, 10, 0.5)",
+                            marginBottom: "0.5rem",
+                          }}
+                        >
+                          Company / Brand
+                        </label>
+                        <input
+                          id="brandName"
+                          type="text"
+                          placeholder="e.g. Amarta Wisesa"
+                          style={{
+                            width: "100%",
+                            padding: "0.85rem 1rem",
+                            border: "1px solid rgba(0, 0, 0, 0.12)",
+                            outline: "none",
+                            fontSize: "0.9rem",
+                            color: "#0a0a0a",
+                            backgroundColor: "#fafafa",
+                            fontFamily: "inherit",
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Email & Phone */}
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.25rem" }}>
+                      <div>
+                        <label
+                          htmlFor="clientEmail"
+                          style={{
+                            display: "block",
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.12em",
+                            textTransform: "uppercase",
+                            color: "rgba(10, 10, 10, 0.5)",
+                            marginBottom: "0.5rem",
+                          }}
+                        >
+                          Email Address *
+                        </label>
+                        <input
+                          id="clientEmail"
+                          required
+                          type="email"
+                          placeholder="name@company.com"
+                          style={{
+                            width: "100%",
+                            padding: "0.85rem 1rem",
+                            border: "1px solid rgba(0, 0, 0, 0.12)",
+                            outline: "none",
+                            fontSize: "0.9rem",
+                            color: "#0a0a0a",
+                            backgroundColor: "#fafafa",
+                            fontFamily: "inherit",
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="clientPhone"
+                          style={{
+                            display: "block",
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.12em",
+                            textTransform: "uppercase",
+                            color: "rgba(10, 10, 10, 0.5)",
+                            marginBottom: "0.5rem",
+                          }}
+                        >
+                          WhatsApp / Phone
+                        </label>
+                        <input
+                          id="clientPhone"
+                          type="tel"
+                          placeholder="+62 81..."
+                          style={{
+                            width: "100%",
+                            padding: "0.85rem 1rem",
+                            border: "1px solid rgba(0, 0, 0, 0.12)",
+                            outline: "none",
+                            fontSize: "0.9rem",
+                            color: "#0a0a0a",
+                            backgroundColor: "#fafafa",
+                            fontFamily: "inherit",
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Message / Brief */}
+                    <div>
+                      <label
+                        htmlFor="projectBrief"
+                        style={{
+                          display: "block",
+                          fontSize: "0.7rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          color: "rgba(10, 10, 10, 0.5)",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
+                        Project Brief &amp; Scope Overview *
+                      </label>
+                      <textarea
+                        id="projectBrief"
+                        required
+                        rows={4}
+                        placeholder="Describe your current brand challenge, key timeline, and deliverables required..."
+                        style={{
+                          width: "100%",
+                          padding: "0.85rem 1rem",
+                          border: "1px solid rgba(0, 0, 0, 0.12)",
+                          outline: "none",
+                          fontSize: "0.9rem",
+                          color: "#0a0a0a",
+                          backgroundColor: "#fafafa",
+                          fontFamily: "inherit",
+                          resize: "vertical",
+                        }}
+                      />
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      className="contact-submit"
+                      data-cursor="SUBMIT"
+                      style={{
+                        padding: "1rem 2.5rem",
+                        backgroundColor: "#c91a1f",
+                        color: "#ffffff",
+                        border: "none",
+                        fontSize: "0.75rem",
+                        fontWeight: 800,
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        cursor: "pointer",
+                        alignSelf: "flex-start",
+                        transition: "background-color 0.2s ease",
+                      }}
+                    >
+                      Send Project Inquiry →
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
