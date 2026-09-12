@@ -46,9 +46,9 @@ export default function ManifestoSection() {
             />
             <span
               style={{
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                letterSpacing: "0.15em",
+                fontSize: "0.75rem",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "rgba(255, 255, 255, 0.9)",
               }}
@@ -62,13 +62,13 @@ export default function ManifestoSection() {
         <RevealOnScroll delay={1}>
           <p
             style={{
-              fontSize: "clamp(1.1rem, 1.8vw, 1.6rem)",
-              fontWeight: 600,
-              letterSpacing: "0.02em",
+              fontSize: "clamp(0.9rem, 1.3vw, 1.2rem)",
+              fontWeight: 400,
+              letterSpacing: "0.01em",
               color: "rgba(255, 255, 255, 0.85)",
               maxWidth: "850px",
-              marginBottom: "clamp(3rem, 6vw, 5rem)",
-              lineHeight: 1.4,
+              marginBottom: "clamp(2rem, 4vw, 3rem)",
+              lineHeight: 1.5,
             }}
           >
             With 25+ years of experience in the field of branding, marketing, and advertising, our core standard has remained resolute:
@@ -79,19 +79,19 @@ export default function ManifestoSection() {
         <RevealOnScroll delay={2}>
           <div
             style={{
-              borderTop: "2px solid rgba(255, 255, 255, 0.25)",
-              borderBottom: "2px solid rgba(255, 255, 255, 0.25)",
-              padding: "clamp(2.5rem, 6vw, 4.5rem) 0",
-              margin: "0 0 clamp(3rem, 5vw, 4.5rem)",
+              borderTop: "1px solid rgba(255, 255, 255, 0.2)",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+              padding: "clamp(1.5rem, 3vw, 2.5rem) 0",
+              margin: "0 0 clamp(2rem, 4vw, 3rem)",
             }}
           >
             <h2
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(2.8rem, 8.5vw, 8.5rem)",
-                fontWeight: 900,
-                lineHeight: 0.95,
-                letterSpacing: "-0.04em",
+                fontSize: "clamp(1.5rem, 4vw, 3.5rem)",
+                fontWeight: 400,
+                lineHeight: 1.2,
+                letterSpacing: "-0.02em",
                 textTransform: "uppercase",
                 color: "#ffffff",
                 margin: 0,
@@ -101,7 +101,7 @@ export default function ManifestoSection() {
               <br />
               REALISASI
               <br />
-              <span style={{ color: "#0a0a0a", WebkitTextStroke: "1px #ffffff" }}>
+              <span style={{ color: "#ffffff" }}>
                 SAMA DENGAN
               </span>
               <br />
@@ -122,8 +122,8 @@ export default function ManifestoSection() {
           <RevealOnScroll delay={3}>
             <p
               style={{
-                fontSize: "clamp(1rem, 1.25vw, 1.2rem)",
-                lineHeight: 1.7,
+                fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
+                lineHeight: 1.6,
                 color: "rgba(255, 255, 255, 0.9)",
                 margin: 0,
               }}
@@ -142,19 +142,19 @@ export default function ManifestoSection() {
             >
               <p
                 style={{
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   color: "#c91a1f",
-                  margin: "0 0 0.5rem",
+                  margin: "0 0 0.4rem",
                 }}
               >
                 UTERO STANDARD
               </p>
               <p
                 style={{
-                  fontSize: "0.95rem",
+                  fontSize: "0.85rem",
                   color: "rgba(255, 255, 255, 0.8)",
                   lineHeight: 1.5,
                   margin: 0,

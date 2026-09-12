@@ -116,9 +116,9 @@ export default function ServicesSection() {
               />
               <span
                 style={{
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   color: "#c91a1f",
                 }}
@@ -132,12 +132,12 @@ export default function ServicesSection() {
             <h2
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(2.25rem, 5vw, 4.5rem)",
-                fontWeight: 900,
-                letterSpacing: "-0.03em",
-                textTransform: "uppercase",
+                fontSize: "clamp(1.2rem, 2.2vw, 2rem)",
+                fontWeight: 400,
+                letterSpacing: "-0.01em",
+                textTransform: "none",
                 color: "#0a0a0a",
-                lineHeight: 1.05,
+                lineHeight: 1.4,
                 margin: 0,
                 maxWidth: "1100px",
               }}
@@ -150,11 +150,11 @@ export default function ServicesSection() {
           <RevealOnScroll delay={2}>
             <p
               style={{
-                fontSize: "clamp(1rem, 1.25vw, 1.2rem)",
-                lineHeight: 1.7,
+                fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
+                lineHeight: 1.6,
                 color: "rgba(10, 10, 10, 0.75)",
                 maxWidth: "850px",
-                marginTop: "1.5rem",
+                marginTop: "1rem",
               }}
             >
               Using progressive design systems and modern technologies, we ensure that every brand experience is visible, accessible, and treads lightly on the environment — driving digital arts and engaging human connections.
@@ -169,7 +169,7 @@ export default function ServicesSection() {
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "clamp(2.5rem, 5vw, 5rem)",
             alignItems: "flex-start",
-            borderTop: "2px solid #0a0a0a",
+            borderTop: "1px solid rgba(10, 10, 10, 0.15)",
             paddingTop: "clamp(2rem, 4vw, 3rem)",
           }}
         >
@@ -206,8 +206,8 @@ export default function ServicesSection() {
                     <div style={{ display: "flex", alignItems: "baseline", gap: "1.25rem" }}>
                       <span
                         style={{
-                          fontSize: "0.85rem",
-                          fontWeight: 700,
+                          fontSize: "0.75rem",
+                          fontWeight: 500,
                           color: isActive ? "#c91a1f" : "rgba(10, 10, 10, 0.4)",
                           fontFamily: "monospace",
                         }}
@@ -217,9 +217,9 @@ export default function ServicesSection() {
                       <span
                         style={{
                           fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                          fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)",
-                          fontWeight: 900,
-                          letterSpacing: "-0.02em",
+                          fontSize: "clamp(1rem, 1.5vw, 1.5rem)",
+                          fontWeight: 500,
+                          letterSpacing: "-0.01em",
                           textTransform: "uppercase",
                           color: isActive ? "#c91a1f" : "#0a0a0a",
                           transition: "color 0.2s ease",
@@ -287,10 +287,10 @@ export default function ServicesSection() {
                   left: "1rem",
                   backgroundColor: "#c91a1f",
                   color: "#ffffff",
-                  padding: "4px 8px",
-                  fontSize: "0.75rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.1em",
+                  padding: "3px 6px",
+                  fontSize: "0.7rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
                 }}
               >
                 {activeCapability.id} / {activeCapability.name}
@@ -300,19 +300,19 @@ export default function ServicesSection() {
             <div>
               <h3
                 style={{
-                  fontSize: "1.2rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.02em",
+                  fontSize: "1rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.01em",
                   color: "#ffffff",
-                  marginBottom: "0.5rem",
+                  marginBottom: "0.4rem",
                 }}
               >
                 {activeCapability.tagline}
               </h3>
               <p
                 style={{
-                  fontSize: "0.95rem",
-                  lineHeight: 1.6,
+                  fontSize: "0.85rem",
+                  lineHeight: 1.5,
                   color: "rgba(255, 255, 255, 0.75)",
                   margin: 0,
                 }}
@@ -325,26 +325,26 @@ export default function ServicesSection() {
             <div>
               <p
                 style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
+                  fontSize: "0.7rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   color: "#c91a1f",
-                  marginBottom: "0.75rem",
+                  marginBottom: "0.5rem",
                 }}
               >
                 DELIVERABLES
               </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
                 {activeCapability.deliverables.map((del) => (
                   <span
                     key={del}
                     style={{
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
+                      fontSize: "0.7rem",
+                      fontWeight: 400,
                       backgroundColor: "rgba(255, 255, 255, 0.1)",
                       color: "#ffffff",
-                      padding: "4px 10px",
+                      padding: "3px 8px",
                       borderRadius: "2px",
                     }}
                   >

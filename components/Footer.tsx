@@ -60,14 +60,14 @@ export default function Footer() {
               data-cursor="HOME"
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "1.4rem",
-                fontWeight: 900,
-                letterSpacing: "0.15em",
+                fontSize: "1.2rem",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "#ffffff",
                 textDecoration: "none",
                 display: "inline-block",
-                marginBottom: "0.5rem",
+                marginBottom: "0.4rem",
               }}
             >
               UTERO.ID
@@ -75,12 +75,12 @@ export default function Footer() {
 
             <p
               style={{
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                letterSpacing: "0.15em",
+                fontSize: "0.75rem",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "#c91a1f",
-                margin: "0 0 1.25rem",
+                margin: "0 0 1rem",
               }}
             >
               DESIGN AS A SOLUTION.
@@ -88,8 +88,8 @@ export default function Footer() {
 
             <p
               style={{
-                fontSize: "0.95rem",
-                lineHeight: 1.6,
+                fontSize: "0.85rem",
+                lineHeight: 1.5,
                 color: "rgba(255, 255, 255, 0.65)",
                 margin: 0,
               }}
@@ -102,18 +102,18 @@ export default function Footer() {
           <div>
             <span
               style={{
-                fontSize: "0.75rem",
-                fontWeight: 800,
-                letterSpacing: "0.15em",
+                fontSize: "0.7rem",
+                fontWeight: 500,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 color: "rgba(255, 255, 255, 0.4)",
                 display: "block",
-                marginBottom: "1.25rem",
+                marginBottom: "1rem",
               }}
             >
               NAVIGATION
             </span>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               {mainNavLinks.map((item) => (
                 <li key={item.label}>
                   <Link
@@ -121,9 +121,9 @@ export default function Footer() {
                     data-cursor="OPEN &rarr;"
                     style={{
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      fontSize: "1.1rem",
-                      fontWeight: 800,
-                      letterSpacing: "0.02em",
+                      fontSize: "0.9rem",
+                      fontWeight: 500,
+                      letterSpacing: "0.01em",
                       textTransform: "uppercase",
                       color: "#ffffff",
                       textDecoration: "none",
@@ -132,7 +132,7 @@ export default function Footer() {
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = "#c91a1f";
-                      e.currentTarget.style.transform = "translateX(4px)";
+                      e.currentTarget.style.transform = "translateX(2px)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.color = "#ffffff";
@@ -150,19 +150,19 @@ export default function Footer() {
           <div>
             <span
               style={{
-                fontSize: "0.75rem",
-                fontWeight: 800,
-                letterSpacing: "0.15em",
+                fontSize: "0.7rem",
+                fontWeight: 500,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 color: "rgba(255, 255, 255, 0.4)",
                 display: "block",
-                marginBottom: "1.25rem",
+                marginBottom: "1rem",
               }}
             >
               WHATSAPP INQUIRIES
             </span>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <a
                 href="https://wa.me/6281999900900"
                 target="_blank"
@@ -174,11 +174,11 @@ export default function Footer() {
                   justifyContent: "space-between",
                   backgroundColor: "rgba(255, 255, 255, 0.06)",
                   border: "1px solid rgba(255, 255, 255, 0.1)",
-                  padding: "10px 14px",
+                  padding: "8px 12px",
                   color: "#ffffff",
                   textDecoration: "none",
-                  fontSize: "0.9rem",
-                  fontWeight: 700,
+                  fontSize: "0.8rem",
+                  fontWeight: 400,
                   transition: "background-color 0.2s ease, border-color 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -205,11 +205,11 @@ export default function Footer() {
                   justifyContent: "space-between",
                   backgroundColor: "rgba(255, 255, 255, 0.06)",
                   border: "1px solid rgba(255, 255, 255, 0.1)",
-                  padding: "10px 14px",
+                  padding: "8px 12px",
                   color: "#ffffff",
                   textDecoration: "none",
-                  fontSize: "0.9rem",
-                  fontWeight: 700,
+                  fontSize: "0.8rem",
+                  fontWeight: 400,
                   transition: "background-color 0.2s ease, border-color 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
@@ -231,13 +231,13 @@ export default function Footer() {
           <div>
             <span
               style={{
-                fontSize: "0.75rem",
-                fontWeight: 800,
-                letterSpacing: "0.15em",
+                fontSize: "0.7rem",
+                fontWeight: 500,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 color: "rgba(255, 255, 255, 0.4)",
                 display: "block",
-                marginBottom: "1.25rem",
+                marginBottom: "1rem",
               }}
             >
               EMAIL &amp; SOCIAL
@@ -247,14 +247,14 @@ export default function Footer() {
               href="mailto:marketingutero@gmail.com"
               data-cursor="EMAIL"
               style={{
-                fontSize: "1rem",
-                fontWeight: 700,
+                fontSize: "0.85rem",
+                fontWeight: 400,
                 color: "#ffffff",
                 textDecoration: "none",
                 borderBottom: "1px solid rgba(255, 255, 255, 0.4)",
                 paddingBottom: "2px",
                 display: "inline-block",
-                marginBottom: "1.5rem",
+                marginBottom: "1rem",
                 transition: "border-color 0.2s ease, color 0.2s ease",
               }}
               onMouseEnter={(e) => {
@@ -269,7 +269,7 @@ export default function Footer() {
               marketingutero@gmail.com
             </a>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -278,9 +278,9 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   data-cursor="OPEN &nearr;"
                   style={{
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    letterSpacing: "0.05em",
                     textTransform: "uppercase",
                     color: "rgba(255, 255, 255, 0.75)",
                     textDecoration: "none",
@@ -297,7 +297,7 @@ export default function Footer() {
                   }}
                 >
                   <span>{social.label}</span>
-                  <span style={{ fontSize: "11px" }}>&nearr;</span>
+                  <span style={{ fontSize: "10px" }}>&nearr;</span>
                 </a>
               ))}
             </div>
@@ -316,17 +316,17 @@ export default function Footer() {
             gap: "1rem",
           }}
         >
-          <div style={{ fontSize: "0.8rem", color: "rgba(255, 255, 255, 0.5)" }}>
+          <div style={{ fontSize: "0.75rem", color: "rgba(255, 255, 255, 0.5)" }}>
             &copy; 1998 — {currentYear} UTERO.ID. All rights reserved.
           </div>
 
           <div
             style={{
-              fontSize: "0.8rem",
-              fontWeight: 700,
-              letterSpacing: "0.1em",
+              fontSize: "0.7rem",
+              fontWeight: 400,
+              letterSpacing: "0.05em",
               textTransform: "uppercase",
-              color: "rgba(255, 255, 255, 0.8)",
+              color: "rgba(255, 255, 255, 0.6)",
             }}
           >
             MALANG, INDONESIA — CREATIVE DESIGN STUDIO

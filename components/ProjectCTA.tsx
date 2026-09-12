@@ -48,9 +48,9 @@ export default function ProjectCTA() {
               />
               <span
                 style={{
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   color: "rgba(255, 255, 255, 0.9)",
                 }}
@@ -64,8 +64,8 @@ export default function ProjectCTA() {
           <RevealOnScroll delay={1}>
             <p
               style={{
-                fontSize: "clamp(1.25rem, 2.2vw, 2rem)",
-                fontWeight: 600,
+                fontSize: "clamp(1rem, 1.5vw, 1.5rem)",
+                fontWeight: 400,
                 letterSpacing: "-0.01em",
                 color: "rgba(255, 255, 255, 0.9)",
                 marginBottom: "clamp(1rem, 2vw, 1.5rem)",
@@ -80,13 +80,13 @@ export default function ProjectCTA() {
             <h2
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(3rem, 8.5vw, 8.5rem)",
-                fontWeight: 900,
-                lineHeight: 0.92,
-                letterSpacing: "-0.04em",
+                fontSize: "clamp(1.5rem, 4vw, 3.5rem)",
+                fontWeight: 400,
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
                 textTransform: "uppercase",
                 color: "#ffffff",
-                marginBottom: "clamp(2.5rem, 5vw, 4rem)",
+                marginBottom: "clamp(2rem, 4vw, 3rem)",
               }}
             >
               LET&apos;S WORK
@@ -113,17 +113,17 @@ export default function ProjectCTA() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "1rem",
+                  gap: "0.8rem",
                   backgroundColor: "#ffffff",
                   color: "#c91a1f",
-                  padding: "clamp(1.1rem, 2vw, 1.35rem) clamp(2rem, 3.5vw, 3rem)",
-                  fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
-                  fontWeight: 800,
-                  letterSpacing: "0.1em",
+                  padding: "clamp(0.9rem, 1.5vw, 1.1rem) clamp(1.5rem, 2.5vw, 2rem)",
+                  fontSize: "clamp(0.75rem, 0.9vw, 0.85rem)",
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
                   textDecoration: "none",
                   borderRadius: "2px",
-                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+                  boxShadow: "0 6px 20px rgba(0, 0, 0, 0.15)",
                   transition: "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
                 }}
                 onMouseEnter={(e) => {

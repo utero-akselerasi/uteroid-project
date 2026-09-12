@@ -49,7 +49,7 @@ export default function HeroSection() {
         >
           <span
             style={{
-              fontSize: "clamp(0.55rem, 0.85vw, 0.75rem)",
+              fontSize: "clamp(0.696rem, 1.075vw, 0.949rem)",
               fontWeight: 400,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
@@ -69,7 +69,7 @@ export default function HeroSection() {
         >
           <h1
             style={{
-              fontSize: "clamp(2.75rem, 9.4vw, 5rem)",
+              fontSize: "clamp(3.479rem, 11.89vw, 6.325rem)",
               fontWeight: 400,
               lineHeight: 0.94,
               letterSpacing: "-0.02em",
@@ -130,7 +130,7 @@ export default function HeroSection() {
         >
           <p
             style={{
-              fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+              fontSize: "clamp(1.012rem, 1.392vw, 1.265rem)",
               lineHeight: 1.6,
               color: "#F7F2EC",
               margin: 0,
@@ -155,7 +155,7 @@ export default function HeroSection() {
         >
           <p
             style={{
-              fontSize: "clamp(0.5rem, 0.75vw, 0.65rem)",
+              fontSize: "clamp(0.633rem, 0.949vw, 0.822rem)",
               fontWeight: 400,
               letterSpacing: "0.15em",
               textTransform: "uppercase",

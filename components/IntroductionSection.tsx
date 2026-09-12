@@ -43,9 +43,9 @@ export default function IntroductionSection() {
             />
             <span
               style={{
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                letterSpacing: "0.15em",
+                fontSize: "0.75rem",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "#c91a1f",
               }}
@@ -61,11 +61,11 @@ export default function IntroductionSection() {
             <h2
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(1.85rem, 3.8vw, 3.75rem)",
-                fontWeight: 900,
-                lineHeight: 1.15,
-                letterSpacing: "-0.03em",
-                textTransform: "uppercase",
+                fontSize: "clamp(1.2rem, 2.2vw, 2rem)",
+                fontWeight: 400,
+                lineHeight: 1.5,
+                letterSpacing: "-0.01em",
+                textTransform: "none",
                 color: "#0a0a0a",
                 maxWidth: "1150px",
               }}
@@ -89,20 +89,20 @@ export default function IntroductionSection() {
           <RevealOnScroll delay={2}>
             <h3
               style={{
-                fontSize: "0.85rem",
-                fontWeight: 800,
-                letterSpacing: "0.15em",
+                fontSize: "0.75rem",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "#0a0a0a",
-                marginBottom: "1.25rem",
+                marginBottom: "1rem",
               }}
             >
               BRAND CONSULTANT &amp; CREATIVE AGENCY
             </h3>
             <p
               style={{
-                fontSize: "clamp(1rem, 1.2vw, 1.15rem)",
-                lineHeight: 1.7,
+                fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
+                lineHeight: 1.6,
                 color: "rgba(10, 10, 10, 0.75)",
                 margin: 0,
               }}
@@ -115,22 +115,22 @@ export default function IntroductionSection() {
           <RevealOnScroll delay={3}>
             <h3
               style={{
-                fontSize: "0.85rem",
-                fontWeight: 800,
-                letterSpacing: "0.15em",
+                fontSize: "0.75rem",
+                fontWeight: 500,
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: "#0a0a0a",
-                marginBottom: "1.25rem",
+                marginBottom: "1rem",
               }}
             >
               PROVEN TRACK RECORD &amp; BRAND EQUITY
             </h3>
             <p
               style={{
-                fontSize: "clamp(1rem, 1.2vw, 1.15rem)",
-                lineHeight: 1.7,
+                fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
+                lineHeight: 1.6,
                 color: "rgba(10, 10, 10, 0.75)",
-                marginBottom: "2rem",
+                marginBottom: "1.5rem",
               }}
             >
               With more than 25 years of experience in the creative industry, a deep grasp of design principles, consumer psychology, and market trends, we are committed to helping organizations achieve their goals and increase brand equity.
@@ -142,15 +142,15 @@ export default function IntroductionSection() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.75rem",
-                fontSize: "0.85rem",
-                fontWeight: 800,
-                letterSpacing: "0.12em",
+                gap: "0.5rem",
+                fontSize: "0.75rem",
+                fontWeight: 500,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 color: "#0a0a0a",
                 textDecoration: "none",
-                borderBottom: "2px solid #c91a1f",
-                paddingBottom: "3px",
+                borderBottom: "1px solid #c91a1f",
+                paddingBottom: "2px",
                 transition: "color 0.2s ease, border-color 0.2s ease",
               }}
               onMouseEnter={(e) => {
@@ -180,37 +180,37 @@ export default function IntroductionSection() {
             }}
           >
             <div>
-              <div style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 900, color: "#c91a1f", lineHeight: 1 }}>
+              <div style={{ fontSize: "clamp(1.25rem, 2vw, 1.75rem)", fontWeight: 500, color: "#c91a1f", lineHeight: 1 }}>
                 25+
               </div>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.5rem" }}>
+              <div style={{ fontSize: "0.7rem", fontWeight: 400, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.4rem" }}>
                 Years Experience
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 900, color: "#0a0a0a", lineHeight: 1 }}>
+              <div style={{ fontSize: "clamp(1.25rem, 2vw, 1.75rem)", fontWeight: 500, color: "#0a0a0a", lineHeight: 1 }}>
                 500+
               </div>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.5rem" }}>
+              <div style={{ fontSize: "0.7rem", fontWeight: 400, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.4rem" }}>
                 Brand Projects
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 900, color: "#0a0a0a", lineHeight: 1 }}>
+              <div style={{ fontSize: "clamp(1.25rem, 2vw, 1.75rem)", fontWeight: 500, color: "#0a0a0a", lineHeight: 1 }}>
                 100%
               </div>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.5rem" }}>
+              <div style={{ fontSize: "0.7rem", fontWeight: 400, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.4rem" }}>
                 Execution Driven
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 900, color: "#0a0a0a", lineHeight: 1 }}>
+              <div style={{ fontSize: "clamp(1.25rem, 2vw, 1.75rem)", fontWeight: 500, color: "#0a0a0a", lineHeight: 1 }}>
                 ID
               </div>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.5rem" }}>
+              <div style={{ fontSize: "0.7rem", fontWeight: 400, letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(10, 10, 10, 0.6)", marginTop: "0.4rem" }}>
                 National Reach
               </div>
             </div>
