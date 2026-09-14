@@ -50,8 +50,8 @@ export default function ContactPage() {
 
       <section
         style={{
-          paddingTop: "clamp(6rem, 10vw, 9rem)",
-          paddingBottom: "clamp(4rem, 8vw, 8rem)",
+          paddingTop: "clamp(2rem, 4vw, 3rem)",
+          paddingBottom: "clamp(2rem, 4vw, 3rem)",
           backgroundColor: "#ffffff",
           minHeight: "100vh",
           color: "#0a0a0a",
@@ -59,32 +59,32 @@ export default function ContactPage() {
       >
         <div
           style={{
-            maxWidth: "1400px",
+            maxWidth: "1200px",
             margin: "0 auto",
-            padding: "0 clamp(1.25rem, 4vw, 3.5rem)",
+            padding: "0 clamp(1rem, 2vw, 2rem)",
           }}
         >
           {/* ── Header ───────────────────────────────────────────── */}
           <div
             style={{
               borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-              paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
-              marginBottom: "clamp(3.5rem, 6vw, 6rem)",
+              paddingBottom: "clamp(1rem, 2vw, 1.5rem)",
+              marginBottom: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.75rem",
-                marginBottom: "1.25rem",
+                gap: "0.5rem",
+                marginBottom: "0.75rem",
               }}
             >
               <span
                 style={{
                   display: "inline-block",
-                  width: "8px",
-                  height: "8px",
+                  width: "6px",
+                  height: "6px",
                   backgroundColor: "#c91a1f",
                   borderRadius: "50%",
                   animation: "pulse-red 2s ease-in-out infinite",
@@ -92,9 +92,9 @@ export default function ContactPage() {
               />
               <span
                 style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.15em",
+                  fontSize: "0.65rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   color: "#c91a1f",
                 }}
@@ -116,12 +116,12 @@ export default function ContactPage() {
                 <h1
                   style={{
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    fontSize: "clamp(3.5rem, 9vw, 8.5rem)",
-                    fontWeight: 900,
-                    letterSpacing: "-0.04em",
+                    fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
+                    fontWeight: 500,
+                    letterSpacing: "-0.02em",
                     textTransform: "uppercase",
                     color: "#0a0a0a",
-                    lineHeight: 0.92,
+                    lineHeight: 1.1,
                     margin: 0,
                   }}
                 >
@@ -129,11 +129,11 @@ export default function ContactPage() {
                 </h1>
                 <p
                   style={{
-                    marginTop: "1.25rem",
-                    fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
+                    marginTop: "0.75rem",
+                    fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
                     color: "#555555",
-                    letterSpacing: "0.02em",
-                    lineHeight: 1.6,
+                    letterSpacing: "0.01em",
+                    lineHeight: 1.5,
                     maxWidth: "540px",
                   }}
                 >
@@ -152,9 +152,9 @@ export default function ContactPage() {
                 <span
                   style={{
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                    fontWeight: 900,
-                    letterSpacing: "-0.04em",
+                    fontSize: "clamp(1rem, 2vw, 1.5rem)",
+                    fontWeight: 500,
+                    letterSpacing: "-0.02em",
                     color: "rgba(0, 0, 0, 0.06)",
                     lineHeight: 1,
                   }}
@@ -181,27 +181,27 @@ export default function ContactPage() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(12, 1fr)",
-              gap: "clamp(2rem, 5vw, 5rem)",
+              gap: "clamp(1rem, 2vw, 1.5rem)",
             }}
           >
             {/* Left Column: Direct Channels & Studio Location */}
             <div style={{ gridColumn: "span 12" }} className="lg:!col-span-5">
-              <div style={{ marginBottom: "2.5rem" }}>
+              <div style={{ marginBottom: "1.5rem" }}>
                 <span
                   style={{
                     display: "block",
-                    fontSize: "0.68rem",
-                    fontWeight: 800,
-                    letterSpacing: "0.15em",
+                    fontSize: "0.6rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.08em",
                     textTransform: "uppercase",
                     color: "#c91a1f",
-                    marginBottom: "1rem",
+                    marginBottom: "0.5rem",
                   }}
                 >
                   Direct WhatsApp Channels
                 </span>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                   <a
                     href="https://wa.me/6281999900900"
                     target="_blank"
@@ -212,7 +212,7 @@ export default function ContactPage() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "1.25rem 1.5rem",
+                      padding: "0.75rem 1rem",
                       border: "1px solid rgba(0, 0, 0, 0.08)",
                       textDecoration: "none",
                       color: "inherit",
@@ -223,20 +223,20 @@ export default function ContactPage() {
                       <span
                         style={{
                           display: "block",
-                          fontSize: "0.68rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.1em",
+                          fontSize: "0.6rem",
+                          fontWeight: 500,
+                          letterSpacing: "0.06em",
                           textTransform: "uppercase",
                           color: "#555555",
-                          marginBottom: "0.25rem",
+                          marginBottom: "0.2rem",
                         }}
                       >
                         Client Relations
                       </span>
                       <span
                         style={{
-                          fontSize: "0.95rem",
-                          fontWeight: 800,
+                          fontSize: "0.8rem",
+                          fontWeight: 500,
                           color: "#0a0a0a",
                         }}
                       >
@@ -266,7 +266,7 @@ export default function ContactPage() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "1.25rem 1.5rem",
+                      padding: "0.75rem 1rem",
                       border: "1px solid rgba(0, 0, 0, 0.08)",
                       textDecoration: "none",
                       color: "inherit",
@@ -277,20 +277,20 @@ export default function ContactPage() {
                       <span
                         style={{
                           display: "block",
-                          fontSize: "0.68rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.1em",
+                          fontSize: "0.6rem",
+                          fontWeight: 500,
+                          letterSpacing: "0.06em",
                           textTransform: "uppercase",
                           color: "#555555",
-                          marginBottom: "0.25rem",
+                          marginBottom: "0.2rem",
                         }}
                       >
                         Studio Management
                       </span>
                       <span
                         style={{
-                          fontSize: "0.95rem",
-                          fontWeight: 800,
+                          fontSize: "0.8rem",
+                          fontWeight: 500,
                           color: "#0a0a0a",
                         }}
                       >
@@ -315,11 +315,11 @@ export default function ContactPage() {
               {/* Studio Address & Email */}
               <div
                 style={{
-                  paddingTop: "2rem",
+                  paddingTop: "1rem",
                   borderTop: "1px solid rgba(0, 0, 0, 0.08)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "1.75rem",
+                  gap: "1rem",
                 }}
               >
                 <div>
@@ -425,7 +425,7 @@ export default function ContactPage() {
               <div
                 style={{
                   border: "1px solid rgba(0, 0, 0, 0.08)",
-                  padding: "clamp(2rem, 4vw, 3.5rem)",
+                  padding: "clamp(1rem, 2vw, 1.5rem)",
                   backgroundColor: "#ffffff",
                 }}
               >
@@ -446,13 +446,13 @@ export default function ContactPage() {
                 <h2
                   style={{
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)",
-                    fontWeight: 900,
-                    letterSpacing: "-0.03em",
+                    fontSize: "clamp(1rem, 1.5vw, 1.5rem)",
+                    fontWeight: 500,
+                    letterSpacing: "-0.02em",
                     textTransform: "uppercase",
                     color: "#0a0a0a",
-                    lineHeight: 1.1,
-                    margin: "0 0 2rem",
+                    lineHeight: 1.2,
+                    margin: "0 0 1rem",
                   }}
                 >
                   Tell Us About Your Vision
@@ -500,23 +500,23 @@ export default function ContactPage() {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                     {/* Services Multi-Select Pills */}
                     <div>
                       <label
                         style={{
                           display: "block",
-                          fontSize: "0.72rem",
-                          fontWeight: 800,
-                          letterSpacing: "0.12em",
+                          fontSize: "0.65rem",
+                          fontWeight: 500,
+                          letterSpacing: "0.08em",
                           textTransform: "uppercase",
                           color: "#555555",
-                          marginBottom: "0.75rem",
+                          marginBottom: "0.4rem",
                         }}
                       >
                         Interested Disciplines
                       </label>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                         {SERVICE_OPTIONS.map((opt) => {
                           const isSelected = selectedServices.includes(opt);
                           return (
@@ -525,13 +525,13 @@ export default function ContactPage() {
                               key={opt}
                               onClick={() => toggleService(opt)}
                               style={{
-                                padding: "0.5rem 0.9rem",
+                                padding: "0.35rem 0.7rem",
                                 border: isSelected ? "1px solid #c91a1f" : "1px solid rgba(0, 0, 0, 0.12)",
                                 backgroundColor: isSelected ? "#c91a1f" : "transparent",
                                 color: isSelected ? "#ffffff" : "#0a0a0a",
-                                fontSize: "0.72rem",
-                                fontWeight: 700,
-                                letterSpacing: "0.08em",
+                                fontSize: "0.65rem",
+                                fontWeight: 500,
+                                letterSpacing: "0.06em",
                                 textTransform: "uppercase",
                                 cursor: "pointer",
                                 transition: "all 0.2s ease",
@@ -545,18 +545,18 @@ export default function ContactPage() {
                     </div>
 
                     {/* Name & Brand */}
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.25rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
                       <div>
                         <label
                           htmlFor="clientName"
                           style={{
                             display: "block",
-                            fontSize: "0.7rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.12em",
+                            fontSize: "0.6rem",
+                            fontWeight: 500,
+                            letterSpacing: "0.06em",
                             textTransform: "uppercase",
                             color: "rgba(10, 10, 10, 0.5)",
-                            marginBottom: "0.5rem",
+                            marginBottom: "0.3rem",
                           }}
                         >
                           Your Name *
@@ -568,10 +568,10 @@ export default function ContactPage() {
                           placeholder="e.g. Budi Santoso"
                           style={{
                             width: "100%",
-                            padding: "0.85rem 1rem",
+                            padding: "0.5rem 0.75rem",
                             border: "1px solid rgba(0, 0, 0, 0.12)",
                             outline: "none",
-                            fontSize: "0.9rem",
+                            fontSize: "0.8rem",
                             color: "#0a0a0a",
                             backgroundColor: "#fafafa",
                             fontFamily: "inherit",
@@ -584,12 +584,12 @@ export default function ContactPage() {
                           htmlFor="brandName"
                           style={{
                             display: "block",
-                            fontSize: "0.7rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.12em",
+                            fontSize: "0.6rem",
+                            fontWeight: 500,
+                            letterSpacing: "0.06em",
                             textTransform: "uppercase",
                             color: "rgba(10, 10, 10, 0.5)",
-                            marginBottom: "0.5rem",
+                            marginBottom: "0.3rem",
                           }}
                         >
                           Company / Brand
@@ -600,10 +600,10 @@ export default function ContactPage() {
                           placeholder="e.g. Amarta Wisesa"
                           style={{
                             width: "100%",
-                            padding: "0.85rem 1rem",
+                            padding: "0.5rem 0.75rem",
                             border: "1px solid rgba(0, 0, 0, 0.12)",
                             outline: "none",
-                            fontSize: "0.9rem",
+                            fontSize: "0.8rem",
                             color: "#0a0a0a",
                             backgroundColor: "#fafafa",
                             fontFamily: "inherit",
@@ -613,18 +613,18 @@ export default function ContactPage() {
                     </div>
 
                     {/* Email & Phone */}
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.25rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
                       <div>
                         <label
                           htmlFor="clientEmail"
                           style={{
                             display: "block",
-                            fontSize: "0.7rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.12em",
+                            fontSize: "0.6rem",
+                            fontWeight: 500,
+                            letterSpacing: "0.06em",
                             textTransform: "uppercase",
                             color: "rgba(10, 10, 10, 0.5)",
-                            marginBottom: "0.5rem",
+                            marginBottom: "0.3rem",
                           }}
                         >
                           Email Address *
@@ -636,10 +636,10 @@ export default function ContactPage() {
                           placeholder="name@company.com"
                           style={{
                             width: "100%",
-                            padding: "0.85rem 1rem",
+                            padding: "0.5rem 0.75rem",
                             border: "1px solid rgba(0, 0, 0, 0.12)",
                             outline: "none",
-                            fontSize: "0.9rem",
+                            fontSize: "0.8rem",
                             color: "#0a0a0a",
                             backgroundColor: "#fafafa",
                             fontFamily: "inherit",
@@ -652,12 +652,12 @@ export default function ContactPage() {
                           htmlFor="clientPhone"
                           style={{
                             display: "block",
-                            fontSize: "0.7rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.12em",
+                            fontSize: "0.6rem",
+                            fontWeight: 500,
+                            letterSpacing: "0.06em",
                             textTransform: "uppercase",
                             color: "rgba(10, 10, 10, 0.5)",
-                            marginBottom: "0.5rem",
+                            marginBottom: "0.3rem",
                           }}
                         >
                           WhatsApp / Phone
@@ -668,10 +668,10 @@ export default function ContactPage() {
                           placeholder="+62 81..."
                           style={{
                             width: "100%",
-                            padding: "0.85rem 1rem",
+                            padding: "0.5rem 0.75rem",
                             border: "1px solid rgba(0, 0, 0, 0.12)",
                             outline: "none",
-                            fontSize: "0.9rem",
+                            fontSize: "0.8rem",
                             color: "#0a0a0a",
                             backgroundColor: "#fafafa",
                             fontFamily: "inherit",
@@ -699,14 +699,14 @@ export default function ContactPage() {
                       <textarea
                         id="projectBrief"
                         required
-                        rows={4}
+                        rows={3}
                         placeholder="Describe your current brand challenge, key timeline, and deliverables required..."
                         style={{
                           width: "100%",
-                          padding: "0.85rem 1rem",
+                          padding: "0.5rem 0.75rem",
                           border: "1px solid rgba(0, 0, 0, 0.12)",
                           outline: "none",
-                          fontSize: "0.9rem",
+                          fontSize: "0.8rem",
                           color: "#0a0a0a",
                           backgroundColor: "#fafafa",
                           fontFamily: "inherit",
@@ -721,13 +721,13 @@ export default function ContactPage() {
                       className="contact-submit"
                       data-cursor="SUBMIT"
                       style={{
-                        padding: "1rem 2.5rem",
+                        padding: "0.6rem 1.5rem",
                         backgroundColor: "#c91a1f",
                         color: "#ffffff",
                         border: "none",
-                        fontSize: "0.75rem",
-                        fontWeight: 800,
-                        letterSpacing: "0.14em",
+                        fontSize: "0.7rem",
+                        fontWeight: 500,
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         cursor: "pointer",
                         alignSelf: "flex-start",
