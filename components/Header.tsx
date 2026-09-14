@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
 
@@ -20,36 +20,58 @@ const menuNavLinks: MenuNavItem[] = [
     label: "WORK",
     subtitle: "Selected Case Studies & Archive",
     href: "/work",
-    previewImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    previewImage:
+      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "02",
     label: "STUDIO",
     subtitle: "Philosophy, 25+ Years & Culture",
     href: "/studio",
-    previewImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    previewImage:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "03",
     label: "SERVICES",
     subtitle: "Brand, Space, Digital & Capabilities",
     href: "/services",
-    previewImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    previewImage:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "04",
     label: "INSIGHTS",
     subtitle: "Publications, Media & Case Notes",
     href: "/insights",
-    previewImage: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
+    previewImage:
+      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "05",
     label: "CONTACT",
     subtitle: "Direct Channels & Studio Base",
     href: "/contact",
-    previewImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
+    previewImage:
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
   },
+];
+
+const topNavItems = [
+  { label: "WORK", href: "/work" },
+  { label: "SERVICES", href: "/services" },
+  { label: "STUDIO", href: "/studio" },
+  { label: "INSIGHTS", href: "/insights" },
+];
+
+const inquiryDisciplines = [
+  "Brand Identity",
+  "Product & Packaging",
+  "Promotions & Campaigns",
+  "Space & Wayfinding",
+  "Digital & Web",
+  "Indoor Commercial",
+  "Outdoor Large-Scale",
 ];
 
 export default function Header() {
@@ -57,10 +79,26 @@ export default function Header() {
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  const [activePreview, setActivePreview] = useState<string>(menuNavLinks[0].previewImage);
+  const [activePreview, setActivePreview] = useState<string>(
+    menuNavLinks[0].previewImage
+  );
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredTopNav, setHoveredTopNav] = useState<string | null>(null);
+  const [isContactHovered, setIsContactHovered] = useState(false);
+  const [isMenuHovered, setIsMenuHovered] = useState(false);
   const [localTime, setLocalTime] = useState<string>("");
   const [navTheme, setNavTheme] = useState<"light" | "dark">("light");
+
+  // Project Brief Inquiry Form States
+  const [selectedDisciplines, setSelectedDisciplines] = useState<string[]>([]);
+  const [formName, setFormName] = useState("");
+  const [formCompany, setFormCompany] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formBrief, setFormBrief] = useState("");
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const lastScrollY = useRef(0);
 
@@ -104,12 +142,15 @@ export default function Header() {
 
       // Detect background section color under header for adaptive text theme
       const headerCenter = 35;
-      const elementsUnder = document.elementsFromPoint(window.innerWidth / 2, headerCenter);
+      const elementsUnder = document.elementsFromPoint(
+        window.innerWidth / 2,
+        headerCenter
+      );
       const section = elementsUnder.find((el) => el.tagName === "SECTION" || el.id);
 
       if (section) {
         const id = section.id;
-        if (id === "about" || id === "capabilities") {
+        if (id === "about" || id === "capabilities" || id === "insights") {
           setNavTheme("dark");
         } else {
           setNavTheme("light");
@@ -132,26 +173,50 @@ export default function Header() {
   const pathname = usePathname();
   const isWorksPage = pathname?.startsWith("/work");
 
-  const isDarkText = !scrolled ? (isWorksPage || navTheme === "dark") : false;
+  const isDarkText = !scrolled ? isWorksPage || navTheme === "dark" : false;
   const textColor = isDarkText ? "#0a0a0a" : "#ffffff";
-  const mutedTextColor = isDarkText ? "rgba(10, 10, 10, 0.6)" : "rgba(255, 255, 255, 0.7)";
+  const mutedTextColor = isDarkText
+    ? "rgba(10, 10, 10, 0.7)"
+    : "rgba(255, 255, 255, 0.8)";
   const pillBg = scrolled
-    ? "rgba(13, 13, 13, 0.85)"
+    ? "rgba(13, 13, 13, 0.88)"
     : isWorksPage
-    ? "rgba(255, 255, 255, 0.88)"
+    ? "rgba(255, 255, 255, 0.9)"
     : isDarkText
-    ? "rgba(245, 239, 230, 0.75)"
-    : "rgba(201, 26, 31, 0.4)";
+    ? "rgba(250, 248, 245, 0.8)"
+    : "rgba(18, 14, 14, 0.55)";
   const borderColor = scrolled
-    ? "rgba(255, 255, 255, 0.12)"
+    ? "rgba(255, 255, 255, 0.14)"
     : isDarkText
-    ? "rgba(10, 10, 10, 0.1)"
+    ? "rgba(10, 10, 10, 0.12)"
     : "rgba(255, 255, 255, 0.2)";
+
+  // Toggle Discipline Selection
+  const toggleDiscipline = (disc: string) => {
+    setSelectedDisciplines((prev) =>
+      prev.includes(disc) ? prev.filter((d) => d !== disc) : [...prev, disc]
+    );
+  };
+
+  // Handle Project Inquiry Submit
+  const handleInquirySubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!formName.trim() || !formEmail.trim() || !formBrief.trim()) {
+      setFormError("Please fill in all required fields (*)");
+      return;
+    }
+    setFormError("");
+    setFormSubmitting(true);
+    setTimeout(() => {
+      setFormSubmitting(false);
+      setFormSubmitted(true);
+    }, 600);
+  };
 
   return (
     <>
       {/* ══════════════════════════════════════════════
-          SMART 2026 FLOATING / ADAPTIVE NAVIGATION
+          UNIFIED 2026 FLOATING TOP NAVIGATION
       ══════════════════════════════════════════════ */}
       <header
         style={{
@@ -160,12 +225,13 @@ export default function Header() {
           left: 0,
           right: 0,
           zIndex: 1000,
-          padding: "clamp(1rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2.5rem)",
+          padding: "clamp(0.85rem, 1.8vw, 1.4rem) clamp(1rem, 3.5vw, 3rem)",
           transform:
             scrollDirection === "down" && scrolled && !menuOpen && !contactOpen
               ? "translateY(-100%)"
               : "translateY(0)",
-          transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease",
+          transition:
+            "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease",
           pointerEvents: "none",
         }}
       >
@@ -176,11 +242,12 @@ export default function Header() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            gap: "1rem",
             pointerEvents: "auto",
           }}
         >
           {/* LEFT: Wordmark + Live Studio Status Badge */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <Link
               href="/"
               style={{
@@ -188,19 +255,22 @@ export default function Header() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                padding: "8px 16px",
+                padding: "8px 18px",
                 borderRadius: "9999px",
                 backgroundColor: pillBg,
-                backdropFilter: "blur(16px)",
+                backdropFilter: "blur(18px)",
                 border: `1px solid ${borderColor}`,
-                boxShadow: scrolled ? "0 8px 32px rgba(0, 0, 0, 0.2)" : "none",
-                transition: "background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease",
+                boxShadow: scrolled
+                  ? "0 8px 32px rgba(0, 0, 0, 0.25)"
+                  : "0 4px 16px rgba(0, 0, 0, 0.08)",
+                transition:
+                  "background-color 0.3s ease, border-color 0.3s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.02)";
+                e.currentTarget.style.transform = "translateY(-1.5px) scale(1.02)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.transform = "translateY(0) scale(1)";
               }}
             >
               <span
@@ -208,7 +278,7 @@ export default function Header() {
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   fontWeight: 900,
                   fontSize: "13px",
-                  letterSpacing: "0.15em",
+                  letterSpacing: "0.16em",
                   textTransform: "uppercase",
                   color: scrolled ? "#ffffff" : textColor,
                   transition: "color 0.3s ease",
@@ -222,21 +292,21 @@ export default function Header() {
                   width: "6px",
                   height: "6px",
                   borderRadius: "50%",
-                  backgroundColor: "#c91a1f",
+                  backgroundColor: "#e31e24",
                 }}
               />
             </Link>
 
             {/* Desktop City & Live Time Pill */}
             <div
-              className="hidden lg:flex"
+              className="hidden xl:flex"
               style={{
                 alignItems: "center",
                 gap: "0.5rem",
                 padding: "8px 14px",
                 borderRadius: "9999px",
                 backgroundColor: pillBg,
-                backdropFilter: "blur(16px)",
+                backdropFilter: "blur(18px)",
                 border: `1px solid ${borderColor}`,
                 fontSize: "11px",
                 fontWeight: 600,
@@ -246,20 +316,103 @@ export default function Header() {
                 transition: "all 0.3s ease",
               }}
             >
-              <span style={{ color: "#c91a1f" }}>●</span>
+              <span style={{ color: "#e31e24" }}>●</span>
               <span>MALANG, ID</span>
-              <span style={{ opacity: 0.4 }}>/</span>
+              <span style={{ opacity: 0.35 }}>/</span>
               <span style={{ fontFamily: "monospace", letterSpacing: "0.05em" }}>
                 {localTime || "13:00:00"} WIB
               </span>
             </div>
           </div>
 
-          {/* RIGHT: Animated Contact Launcher Trigger + Menu Trigger */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            {/* Contact Launcher Popover Button */}
+          {/* RIGHT: ALL NAVIGATION ITEMS PLACED TOGETHER (WORK, SERVICES, STUDIO, INSIGHTS, CONTACT, MENU) */}
+          <nav
+            aria-label="Top primary navigation"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "clamp(0.4rem, 1vw, 0.75rem)",
+            }}
+          >
+            {/* Desktop Links: WORK, SERVICES, STUDIO, INSIGHTS */}
+            <div
+              className="hidden md:flex"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "clamp(0.2rem, 0.6vw, 0.5rem)",
+                padding: "4px 8px",
+                borderRadius: "9999px",
+                backgroundColor: pillBg,
+                backdropFilter: "blur(18px)",
+                border: `1px solid ${borderColor}`,
+                boxShadow: scrolled
+                  ? "0 8px 32px rgba(0, 0, 0, 0.2)"
+                  : "0 4px 16px rgba(0, 0, 0, 0.05)",
+                transition: "all 0.3s ease",
+              }}
+            >
+              {topNavItems.map((item) => {
+                const isActive = pathname === item.href;
+                const isHovered = hoveredTopNav === item.label;
+
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onMouseEnter={() => setHoveredTopNav(item.label)}
+                    onMouseLeave={() => setHoveredTopNav(null)}
+                    style={{
+                      position: "relative",
+                      padding: "6px 14px",
+                      textDecoration: "none",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: isHovered
+                        ? "#e31e24"
+                        : isActive
+                        ? "#e31e24"
+                        : scrolled
+                        ? "rgba(255, 255, 255, 0.85)"
+                        : textColor,
+                      transform: isHovered ? "translateY(-1.5px)" : "translateY(0)",
+                      transition:
+                        "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <span>{item.label}</span>
+
+                    {/* Subtle Intentional Animated Underline Reveal */}
+                    <span
+                      style={{
+                        position: "absolute",
+                        bottom: "2px",
+                        left: "14px",
+                        right: "14px",
+                        height: "2px",
+                        backgroundColor: "#e31e24",
+                        borderRadius: "1px",
+                        transform: isHovered || isActive ? "scaleX(1)" : "scaleX(0)",
+                        transformOrigin: "left",
+                        transition:
+                          "transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
+                      }}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* CONTACT Button */}
             <button
               onClick={() => setContactOpen(!contactOpen)}
+              onMouseEnter={() => setIsContactHovered(true)}
+              onMouseLeave={() => setIsContactHovered(false)}
               aria-expanded={contactOpen}
               aria-label="Toggle contact channels"
               style={{
@@ -269,73 +422,97 @@ export default function Header() {
                 padding: "8px 16px",
                 borderRadius: "9999px",
                 backgroundColor: contactOpen
-                  ? "#c91a1f"
+                  ? "#e31e24"
+                  : isContactHovered
+                  ? scrolled
+                    ? "rgba(227, 30, 36, 0.2)"
+                    : isDarkText
+                    ? "rgba(10, 10, 10, 0.08)"
+                    : "rgba(255, 255, 255, 0.25)"
                   : pillBg,
-                backdropFilter: "blur(16px)",
+                backdropFilter: "blur(18px)",
                 border: contactOpen
-                  ? "1px solid #c91a1f"
+                  ? "1px solid #e31e24"
+                  : isContactHovered
+                  ? "1px solid #e31e24"
                   : `1px solid ${borderColor}`,
                 cursor: "pointer",
                 fontSize: "11px",
                 fontWeight: 800,
-                letterSpacing: "0.12em",
+                letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: contactOpen ? "#ffffff" : scrolled ? "#ffffff" : textColor,
-                boxShadow: contactOpen ? "0 8px 24px rgba(201, 26, 31, 0.35)" : "none",
-                transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
-              }}
-              onMouseEnter={(e) => {
-                if (!contactOpen) {
-                  e.currentTarget.style.backgroundColor = isDarkText ? "rgba(10, 10, 10, 0.08)" : "rgba(255, 255, 255, 0.2)";
-                  e.currentTarget.style.transform = "translateY(-1px)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!contactOpen) {
-                  e.currentTarget.style.backgroundColor = pillBg;
-                  e.currentTarget.style.transform = "translateY(0)";
-                }
+                color: contactOpen
+                  ? "#ffffff"
+                  : isContactHovered
+                  ? "#e31e24"
+                  : scrolled
+                  ? "#ffffff"
+                  : textColor,
+                boxShadow: contactOpen
+                  ? "0 8px 24px rgba(227, 30, 36, 0.35)"
+                  : isContactHovered
+                  ? "0 6px 20px rgba(0, 0, 0, 0.15)"
+                  : "none",
+                transform: isContactHovered
+                  ? "translateY(-1.5px) scale(1.02)"
+                  : "translateY(0) scale(1)",
+                transition:
+                  "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease",
               }}
             >
               <span>{contactOpen ? "CLOSE" : "CONTACT"}</span>
               <span
                 style={{
                   color: contactOpen ? "#ffffff" : "#25D366",
-                  fontSize: "10px",
+                  fontSize: "9px",
                   display: "inline-block",
                   transform: contactOpen ? "rotate(45deg)" : "none",
-                  transition: "transform 0.2s ease",
+                  transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
                 }}
               >
                 {contactOpen ? "✕" : "●"}
               </span>
             </button>
 
-            {/* Menu Trigger Button */}
+            {/* MENU Button */}
             <button
               onClick={() => {
                 setMenuOpen(true);
                 setContactOpen(false);
               }}
+              onMouseEnter={() => setIsMenuHovered(true)}
+              onMouseLeave={() => setIsMenuHovered(false)}
               aria-label="Open studio menu"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.75rem",
+                gap: "0.65rem",
                 padding: "8px 18px",
                 borderRadius: "9999px",
-                backgroundColor: scrolled ? "#c91a1f" : isDarkText ? "#0a0a0a" : "#ffffff",
-                color: scrolled ? "#ffffff" : isDarkText ? "#ffffff" : "#0a0a0a",
+                backgroundColor: isMenuHovered
+                  ? "#e31e24"
+                  : scrolled
+                  ? "#e31e24"
+                  : isDarkText
+                  ? "#0a0a0a"
+                  : "#ffffff",
+                color: isMenuHovered
+                  ? "#ffffff"
+                  : scrolled
+                  ? "#ffffff"
+                  : isDarkText
+                  ? "#ffffff"
+                  : "#0a0a0a",
                 border: "none",
                 cursor: "pointer",
-                boxShadow: "0 6px 20px rgba(0, 0, 0, 0.15)",
-                transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.04)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
+                boxShadow: isMenuHovered
+                  ? "0 8px 24px rgba(227, 30, 36, 0.4)"
+                  : "0 6px 20px rgba(0, 0, 0, 0.15)",
+                transform: isMenuHovered
+                  ? "translateY(-1.5px) scale(1.03)"
+                  : "translateY(0) scale(1)",
+                transition:
+                  "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease",
               }}
             >
               <span
@@ -350,7 +527,7 @@ export default function Header() {
                 MENU
               </span>
 
-              {/* Minimal Hamburger lines */}
+              {/* Minimal Hamburger lines that animate on hover */}
               <div
                 style={{
                   display: "flex",
@@ -362,25 +539,27 @@ export default function Header() {
                 <span
                   style={{
                     display: "block",
-                    width: "16px",
+                    width: isMenuHovered ? "16px" : "16px",
                     height: "2px",
                     backgroundColor: "currentColor",
                     borderRadius: "1px",
+                    transition: "width 0.25s ease",
                   }}
                 />
                 <span
                   style={{
                     display: "block",
-                    width: "10px",
+                    width: isMenuHovered ? "16px" : "10px",
                     height: "2px",
                     backgroundColor: "currentColor",
                     borderRadius: "1px",
                     alignSelf: "flex-end",
+                    transition: "width 0.25s ease",
                   }}
                 />
               </div>
             </button>
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -394,7 +573,7 @@ export default function Header() {
       />
 
       {/* ══════════════════════════════════════════════
-          IMMERSIVE 2026 EDITORIAL MENU OVERLAY
+          IMMERSIVE EDITORIAL MENU OVERLAY
       ══════════════════════════════════════════════ */}
       <div
         style={{
@@ -405,7 +584,8 @@ export default function Header() {
           color: "#ffffff",
           opacity: menuOpen ? 1 : 0,
           visibility: menuOpen ? "visible" : "hidden",
-          transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s",
+          transition:
+            "opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s",
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",
@@ -416,7 +596,7 @@ export default function Header() {
           style={{
             position: "absolute",
             inset: 0,
-            opacity: 0.15,
+            opacity: 0.12,
             pointerEvents: "none",
             overflow: "hidden",
             transition: "opacity 0.5s ease",
@@ -430,7 +610,7 @@ export default function Header() {
               sizes="100vw"
               style={{
                 objectFit: "cover",
-                filter: "grayscale(100%) contrast(150%)",
+                filter: "grayscale(100%) contrast(140%)",
                 transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
                 transform: hoveredIndex !== null ? "scale(1.05)" : "scale(1)",
               }}
@@ -445,7 +625,7 @@ export default function Header() {
             width: "clamp(500px, 60vw, 900px)",
             height: "clamp(500px, 60vw, 900px)",
             borderRadius: "50%",
-            backgroundColor: "rgba(120, 10, 15, 0.45)",
+            backgroundColor: "rgba(120, 10, 15, 0.4)",
             top: "-15%",
             right: "-10%",
             pointerEvents: "none",
@@ -467,7 +647,7 @@ export default function Header() {
         {/* Top Bar inside Overlay */}
         <div
           style={{
-            padding: "clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 4vw, 3.5rem)",
+            padding: "clamp(0.6rem, 1.5vw, 1rem) clamp(1.25rem, 4vw, 3.5rem)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -525,7 +705,8 @@ export default function Header() {
               padding: "8px 18px",
               color: "#ffffff",
               backdropFilter: "blur(10px)",
-              transition: "transform 0.2s ease, background-color 0.2s ease",
+              transition:
+                "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = "#ffffff";
@@ -559,8 +740,8 @@ export default function Header() {
             flex: 1,
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "clamp(2rem, 5vw, 6rem)",
-            padding: "clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3.5rem)",
+            gap: "clamp(1.2rem, 2.5vw, 3rem)",
+            padding: "clamp(0.8rem, 2vw, 1.5rem) clamp(1.25rem, 4vw, 3.5rem)",
             alignItems: "center",
             position: "relative",
             zIndex: 10,
@@ -586,7 +767,7 @@ export default function Header() {
                       display: "flex",
                       alignItems: "baseline",
                       justifyContent: "space-between",
-                      padding: "clamp(0.6rem, 1.4vw, 1rem) 0",
+                      padding: "clamp(0.35rem, 0.8vw, 0.6rem) 0",
                       borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
                       textDecoration: "none",
                       color: "#ffffff",
@@ -595,7 +776,13 @@ export default function Header() {
                       opacity: hoveredIndex !== null && !isHovered ? 0.45 : 1,
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "clamp(1rem, 2.5vw, 2rem)" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: "clamp(0.6rem, 1.5vw, 1.2rem)",
+                      }}
+                    >
                       <span
                         style={{
                           fontSize: "clamp(11px, 1.2vw, 14px)",
@@ -609,7 +796,7 @@ export default function Header() {
                       <span
                         style={{
                           fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                          fontSize: "clamp(2.2rem, 5.5vw, 4.75rem)",
+                          fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
                           fontWeight: 900,
                           textTransform: "uppercase",
                           letterSpacing: "-0.03em",
@@ -622,7 +809,7 @@ export default function Header() {
 
                     <span
                       style={{
-                        fontSize: "clamp(0.75rem, 1vw, 0.85rem)",
+                        fontSize: "clamp(0.72rem, 0.95vw, 0.82rem)",
                         fontWeight: 600,
                         letterSpacing: "0.1em",
                         textTransform: "uppercase",
@@ -639,204 +826,525 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Right Column: Studio Contact & Live Office Information */}
+          {/* Right Column: BESPOKE PROJECT BRIEF INQUIRY FORM */}
           <div
             style={{
-              backgroundColor: "rgba(0, 0, 0, 0.25)",
-              backdropFilter: "blur(20px)",
-              padding: "clamp(1.75rem, 3.5vw, 3rem)",
-              border: "1px solid rgba(255, 255, 255, 0.15)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.75rem",
+              backgroundColor: "rgba(10, 10, 10, 0.45)",
+              backdropFilter: "blur(24px)",
+              padding: "clamp(0.8rem, 1.5vw, 1.2rem)",
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+              borderRadius: "4px",
+              boxShadow: "0 16px 40px rgba(0, 0, 0, 0.3)",
+              maxHeight: "calc(100vh - 120px)",
+              overflowY: "auto",
             }}
           >
-            <div>
-              <span
+            {/* Header / Title */}
+            <div style={{ marginBottom: "1.25rem" }}>
+              <div
                 style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.15em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  marginBottom: "0.4rem",
+                }}
+              >
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "6px",
+                    height: "6px",
+                    backgroundColor: "#ffffff",
+                    borderRadius: "50%",
+                  }}
+                />
+                <span
+                  style={{
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(255, 255, 255, 0.85)",
+                  }}
+                >
+                  PROJECT BRIEF INQUIRY
+                </span>
+              </div>
+              <h3
+                style={{
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)",
+                  fontWeight: 900,
+                  letterSpacing: "-0.02em",
                   textTransform: "uppercase",
                   color: "#ffffff",
-                  display: "block",
-                  marginBottom: "0.5rem",
+                  margin: 0,
+                  lineHeight: 1.15,
                 }}
               >
-                STUDIO LOCATION
-              </span>
-              <p style={{ fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>
-                Malang, East Java, Indonesia
-              </p>
-              <p
-                style={{
-                  fontSize: "0.85rem",
-                  color: "rgba(255, 255, 255, 0.7)",
-                  margin: "0.25rem 0 0",
-                }}
-              >
-                Local Time: {localTime || "13:00:00"} WIB (UTC+7)
-              </p>
+                TELL US ABOUT YOUR VISION
+              </h3>
             </div>
 
-            {/* Direct WhatsApp Quick Chat Buttons */}
-            <div>
-              <span
+            {formSubmitted ? (
+              /* Success Confirmation State */
+              <div
                 style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  color: "#ffffff",
-                  display: "block",
-                  marginBottom: "0.75rem",
+                  padding: "2rem 1rem",
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "1rem",
                 }}
               >
-                DIRECT WHATSAPP
-              </span>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <a
-                  href="https://wa.me/6281999900900"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <div
                   style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "50%",
+                    backgroundColor: "#ffffff",
+                    color: "#c91a1f",
                     display: "flex",
-                    justifyContent: "space-between",
                     alignItems: "center",
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    padding: "10px 14px",
+                    justifyContent: "center",
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  ✓
+                </div>
+                <div>
+                  <h4
+                    style={{
+                      fontSize: "1.2rem",
+                      fontWeight: 800,
+                      margin: "0 0 0.5rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    BRIEF RECEIVED
+                  </h4>
+                  <p
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "rgba(255, 255, 255, 0.8)",
+                      lineHeight: 1.5,
+                      margin: 0,
+                      maxWidth: "380px",
+                    }}
+                  >
+                    Thank you, <strong>{formName}</strong>. Our creative team will
+                    review your project requirements and get in touch within 24
+                    hours.
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    setFormSubmitted(false);
+                    setFormName("");
+                    setFormCompany("");
+                    setFormEmail("");
+                    setFormPhone("");
+                    setFormBrief("");
+                    setSelectedDisciplines([]);
+                  }}
+                  style={{
+                    marginTop: "0.5rem",
+                    padding: "8px 18px",
+                    backgroundColor: "transparent",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
                     borderRadius: "2px",
                     color: "#ffffff",
-                    textDecoration: "none",
-                    fontSize: "0.85rem",
+                    fontSize: "0.75rem",
                     fontWeight: 700,
-                    transition: "background-color 0.2s ease",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.25)";
+                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+                    e.currentTarget.style.backgroundColor = "transparent";
                   }}
                 >
-                  <span>081 999 900 900 (Wahyu)</span>
-                  <span style={{ color: "#25D366" }}>&rarr;</span>
-                </a>
+                  SUBMIT ANOTHER BRIEF
+                </button>
+              </div>
+            ) : (
+              /* The Inquiry Form */
+              <form onSubmit={handleInquirySubmit}>
+                {/* Section: Interested Disciplines */}
+                <div style={{ marginBottom: "1.25rem" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      color: "rgba(255, 255, 255, 0.75)",
+                      marginBottom: "0.6rem",
+                    }}
+                  >
+                    INTERESTED DISCIPLINES
+                  </label>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "0.4rem",
+                    }}
+                  >
+                    {inquiryDisciplines.map((disc) => {
+                      const isSelected = selectedDisciplines.includes(disc);
+                      return (
+                        <button
+                          key={disc}
+                          type="button"
+                          onClick={() => toggleDiscipline(disc)}
+                          style={{
+                            padding: "3px 8px",
+                            borderRadius: "9999px",
+                            fontSize: "0.62rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.04em",
+                            cursor: "pointer",
+                            backgroundColor: isSelected
+                              ? "#ffffff"
+                              : "rgba(255, 255, 255, 0.08)",
+                            color: isSelected ? "#0d0d0d" : "#ffffff",
+                            border: isSelected
+                              ? "1px solid #ffffff"
+                              : "1px solid rgba(255, 255, 255, 0.18)",
+                            transition:
+                              "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
+                            transform: isSelected ? "scale(1.02)" : "scale(1)",
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!isSelected) {
+                              e.currentTarget.style.backgroundColor =
+                                "rgba(255, 255, 255, 0.18)";
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!isSelected) {
+                              e.currentTarget.style.backgroundColor =
+                                "rgba(255, 255, 255, 0.08)";
+                            }
+                          }}
+                        >
+                          {isSelected ? "✓ " : "+ "}
+                          {disc}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
-                <a
-                  href="https://wa.me/62817388616"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                {/* Grid Inputs: Name & Company */}
+                <div
                   style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                    gap: "0.75rem",
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  <div>
+                    <label
+                      htmlFor="menu-inquiry-name"
+                      style={{
+                        display: "block",
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "rgba(255, 255, 255, 0.7)",
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      YOUR NAME *
+                    </label>
+                    <input
+                      id="menu-inquiry-name"
+                      type="text"
+                      required
+                      placeholder="e.g. Alex Morgan"
+                      value={formName}
+                      onChange={(e) => setFormName(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "8px 12px",
+                        backgroundColor: "rgba(255, 255, 255, 0.07)",
+                        border: "1px solid rgba(255, 255, 255, 0.16)",
+                        borderRadius: "2px",
+                        color: "#ffffff",
+                        fontSize: "0.82rem",
+                        outline: "none",
+                        transition: "border-color 0.2s ease",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#ffffff";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255, 255, 255, 0.16)";
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="menu-inquiry-company"
+                      style={{
+                        display: "block",
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "rgba(255, 255, 255, 0.7)",
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      COMPANY / BRAND
+                    </label>
+                    <input
+                      id="menu-inquiry-company"
+                      type="text"
+                      placeholder="e.g. Studio Vertex"
+                      value={formCompany}
+                      onChange={(e) => setFormCompany(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "8px 12px",
+                        backgroundColor: "rgba(255, 255, 255, 0.07)",
+                        border: "1px solid rgba(255, 255, 255, 0.16)",
+                        borderRadius: "2px",
+                        color: "#ffffff",
+                        fontSize: "0.82rem",
+                        outline: "none",
+                        transition: "border-color 0.2s ease",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#ffffff";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255, 255, 255, 0.16)";
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Grid Inputs: Email & WhatsApp */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                    gap: "0.75rem",
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  <div>
+                    <label
+                      htmlFor="menu-inquiry-email"
+                      style={{
+                        display: "block",
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "rgba(255, 255, 255, 0.7)",
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      EMAIL ADDRESS *
+                    </label>
+                    <input
+                      id="menu-inquiry-email"
+                      type="email"
+                      required
+                      placeholder="alex@company.com"
+                      value={formEmail}
+                      onChange={(e) => setFormEmail(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "8px 12px",
+                        backgroundColor: "rgba(255, 255, 255, 0.07)",
+                        border: "1px solid rgba(255, 255, 255, 0.16)",
+                        borderRadius: "2px",
+                        color: "#ffffff",
+                        fontSize: "0.82rem",
+                        outline: "none",
+                        transition: "border-color 0.2s ease",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#ffffff";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255, 255, 255, 0.16)";
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="menu-inquiry-phone"
+                      style={{
+                        display: "block",
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "rgba(255, 255, 255, 0.7)",
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      WHATSAPP / PHONE
+                    </label>
+                    <input
+                      id="menu-inquiry-phone"
+                      type="tel"
+                      placeholder="+62 81..."
+                      value={formPhone}
+                      onChange={(e) => setFormPhone(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "8px 12px",
+                        backgroundColor: "rgba(255, 255, 255, 0.07)",
+                        border: "1px solid rgba(255, 255, 255, 0.16)",
+                        borderRadius: "2px",
+                        color: "#ffffff",
+                        fontSize: "0.82rem",
+                        outline: "none",
+                        transition: "border-color 0.2s ease",
+                      }}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = "#ffffff";
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor =
+                          "rgba(255, 255, 255, 0.16)";
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Brief & Scope Overview Textarea */}
+                <div style={{ marginBottom: "1.2rem" }}>
+                  <label
+                    htmlFor="menu-inquiry-brief"
+                    style={{
+                      display: "block",
+                      fontSize: "0.68rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "rgba(255, 255, 255, 0.7)",
+                      marginBottom: "0.3rem",
+                    }}
+                  >
+                    PROJECT BRIEF &amp; SCOPE OVERVIEW *
+                  </label>
+                  <textarea
+                    id="menu-inquiry-brief"
+                    required
+                    rows={3}
+                    placeholder="Briefly describe your objectives, target audience, timeline, or key challenges..."
+                    value={formBrief}
+                    onChange={(e) => setFormBrief(e.target.value)}
+                    style={{
+                      width: "100%",
+                        padding: "6px 10px",
+                        backgroundColor: "rgba(255, 255, 255, 0.07)",
+                        border: "1px solid rgba(255, 255, 255, 0.16)",
+                        borderRadius: "2px",
+                        color: "#ffffff",
+                        fontSize: "0.72rem",
+                      outline: "none",
+                      resize: "vertical",
+                      minHeight: "70px",
+                      transition: "border-color 0.2s ease",
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = "#ffffff";
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor =
+                        "rgba(255, 255, 255, 0.16)";
+                    }}
+                  />
+                </div>
+
+                {formError && (
+                  <p
+                    style={{
+                      color: "#ffcdd2",
+                      fontSize: "0.75rem",
+                      margin: "0 0 0.75rem",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {formError}
+                  </p>
+                )}
+
+                {/* Submit Action Button */}
+                <button
+                  type="submit"
+                  disabled={formSubmitting}
+                  style={{
+                    width: "100%",
                     display: "flex",
-                    justifyContent: "space-between",
                     alignItems: "center",
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    padding: "10px 14px",
+                    justifyContent: "center",
+                    gap: "0.5rem",
+                    padding: "8px 16px",
+                    backgroundColor: "#ffffff",
+                    color: "#c91a1f",
+                    border: "none",
                     borderRadius: "2px",
-                    color: "#ffffff",
-                    textDecoration: "none",
-                    fontSize: "0.85rem",
-                    fontWeight: 700,
-                    transition: "background-color 0.2s ease",
+                    cursor: formSubmitting ? "wait" : "pointer",
+                    fontSize: "0.78rem",
+                    fontWeight: 900,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)",
+                    transition:
+                      "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.25)";
+                    e.currentTarget.style.transform = "translateY(-1.5px)";
+                    e.currentTarget.style.backgroundColor = "#0d0d0d";
+                    e.currentTarget.style.color = "#ffffff";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.backgroundColor = "#ffffff";
+                    e.currentTarget.style.color = "#c91a1f";
                   }}
                 >
-                  <span>081 7388 616 (Utero)</span>
-                  <span style={{ color: "#25D366" }}>&rarr;</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Email & Socials */}
-            <div>
-              <span
-                style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  color: "#ffffff",
-                  display: "block",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                EMAIL &amp; SOCIAL
-              </span>
-              <a
-                href="mailto:marketingutero@gmail.com"
-                style={{
-                  fontSize: "0.95rem",
-                  fontWeight: 700,
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  display: "block",
-                  marginBottom: "1rem",
-                }}
-              >
-                marketingutero@gmail.com
-              </a>
-
-              <div style={{ display: "flex", gap: "1rem" }}>
-                <a
-                  href="https://www.instagram.com/uteroindonesia/?hl=en"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "rgba(255, 255, 255, 0.8)",
-                    textDecoration: "none",
-                  }}
-                >
-                  Instagram &nearr;
-                </a>
-                <a
-                  href="https://www.facebook.com/uteroadvertisingindonesia/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "rgba(255, 255, 255, 0.8)",
-                    textDecoration: "none",
-                  }}
-                >
-                  Facebook &nearr;
-                </a>
-                <a
-                  href="https://www.youtube.com/@uteroindonesia"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "rgba(255, 255, 255, 0.8)",
-                    textDecoration: "none",
-                  }}
-                >
-                  YouTube &nearr;
-                </a>
-              </div>
-            </div>
+                  <span>
+                    {formSubmitting
+                      ? "TRANSMITTING BRIEF..."
+                      : "SUBMIT PROJECT BRIEF"}
+                  </span>
+                  <span>&rarr;</span>
+                </button>
+              </form>
+            )}
           </div>
         </div>
 
         {/* Bottom Bar inside Overlay */}
         <div
           style={{
-            padding: "clamp(1rem, 2vw, 1.5rem) clamp(1.25rem, 4vw, 3.5rem)",
+            padding: "clamp(0.5rem, 1.2vw, 0.85rem) clamp(1.25rem, 4vw, 3.5rem)",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",

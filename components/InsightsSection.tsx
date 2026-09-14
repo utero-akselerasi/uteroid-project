@@ -13,8 +13,8 @@ export default function InsightsSection() {
       id="insights"
       style={{
         padding: "clamp(5rem, 9vw, 8.5rem) 0",
-        backgroundColor: "#0d0d0d",
-        color: "#ffffff",
+        backgroundColor: "#ffffff",
+        color: "#0a0a0a",
         position: "relative",
       }}
     >
@@ -34,7 +34,7 @@ export default function InsightsSection() {
             alignItems: "flex-end",
             gap: "1.5rem",
             marginBottom: "clamp(3rem, 6vw, 5rem)",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+            borderBottom: "1px solid rgba(10, 10, 10, 0.12)",
             paddingBottom: "1.5rem",
           }}
         >
@@ -53,17 +53,17 @@ export default function InsightsSection() {
                     display: "inline-block",
                     width: "8px",
                     height: "8px",
-                    backgroundColor: "#c91a1f",
+                    backgroundColor: "#e31e24",
                     borderRadius: "50%",
                   }}
                 />
                 <span
                   style={{
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.15em",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    color: "#c91a1f",
+                    color: "#e31e24",
                   }}
                 >
                   05 / MEDIA &amp; PUBLICATIONS
@@ -75,12 +75,12 @@ export default function InsightsSection() {
               <h2
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                  fontSize: "clamp(2.2rem, 5vw, 4rem)",
                   fontWeight: 900,
                   letterSpacing: "-0.03em",
                   textTransform: "uppercase",
-                  color: "#ffffff",
-                  lineHeight: 1,
+                  color: "#0a0a0a",
+                  lineHeight: 1.05,
                   margin: 0,
                 }}
               >
@@ -97,21 +97,21 @@ export default function InsightsSection() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                fontSize: "0.85rem",
-                fontWeight: 800,
+                fontSize: "0.8rem",
+                fontWeight: 700,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "#ffffff",
+                color: "#0a0a0a",
                 textDecoration: "none",
-                borderBottom: "2px solid #c91a1f",
-                paddingBottom: "2px",
+                borderBottom: "2px solid #e31e24",
+                paddingBottom: "4px",
                 transition: "color 0.2s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#c91a1f";
+                e.currentTarget.style.color = "#e31e24";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = "#ffffff";
+                e.currentTarget.style.color = "#0a0a0a";
               }}
             >
               <span>VIEW ALL ARTICLES</span>
@@ -145,7 +145,7 @@ export default function InsightsSection() {
                     display: "flex",
                     flexDirection: "column",
                     height: "100%",
-                    borderTop: "1px solid rgba(255, 255, 255, 0.15)",
+                    borderTop: "1px solid rgba(10, 10, 10, 0.12)",
                     paddingTop: "1.5rem",
                   }}
                 >
@@ -155,9 +155,11 @@ export default function InsightsSection() {
                       position: "relative",
                       width: "100%",
                       aspectRatio: "16/10",
-                      backgroundColor: "#161616",
+                      backgroundColor: "#f5f5f5",
                       overflow: "hidden",
-                      marginBottom: "1.5rem",
+                      marginBottom: "1.25rem",
+                      borderRadius: "2px",
+                      border: "1px solid rgba(10, 10, 10, 0.06)",
                     }}
                   >
                     {article.coverImage ? (
@@ -168,11 +170,18 @@ export default function InsightsSection() {
                         sizes="(max-width: 768px) 100vw, 33vw"
                         style={{
                           objectFit: "cover",
-                          transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease",
+                          transition:
+                            "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
                         }}
                       />
                     ) : (
-                      <div style={{ width: "100%", height: "100%", backgroundColor: "#1e1e1e" }} />
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "#f0f0f0",
+                        }}
+                      />
                     )}
                   </div>
 
@@ -187,22 +196,22 @@ export default function InsightsSection() {
                   >
                     <span
                       style={{
-                        fontSize: "0.75rem",
+                        fontSize: "0.72rem",
                         fontWeight: 700,
-                        letterSpacing: "0.1em",
+                        letterSpacing: "0.12em",
                         textTransform: "uppercase",
-                        color: "#c91a1f",
+                        color: "#e31e24",
                       }}
                     >
                       {article.category}
                     </span>
                     <span
                       style={{
-                        fontSize: "0.75rem",
-                        color: "rgba(255, 255, 255, 0.4)",
+                        fontSize: "0.72rem",
+                        color: "rgba(10, 10, 10, 0.5)",
                       }}
                     >
-                      {article.date} · {article.readTime}
+                      {article.date} &bull; {article.readTime}
                     </span>
                   </div>
 
@@ -210,11 +219,11 @@ export default function InsightsSection() {
                   <h3
                     style={{
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      fontSize: "clamp(1.25rem, 1.8vw, 1.6rem)",
-                      fontWeight: 800,
-                      lineHeight: 1.25,
+                      fontSize: "clamp(1.15rem, 1.6vw, 1.45rem)",
+                      fontWeight: 700,
+                      lineHeight: 1.3,
                       letterSpacing: "-0.02em",
-                      color: "#ffffff",
+                      color: "#0a0a0a",
                       margin: "0 0 0.75rem",
                       transition: "color 0.2s ease",
                     }}
@@ -227,7 +236,7 @@ export default function InsightsSection() {
                     style={{
                       fontSize: "0.9rem",
                       lineHeight: 1.6,
-                      color: "rgba(255, 255, 255, 0.65)",
+                      color: "rgba(10, 10, 10, 0.65)",
                       margin: "0 0 1.5rem",
                       flexGrow: 1,
                     }}
@@ -241,11 +250,11 @@ export default function InsightsSection() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: "0.5rem",
-                      fontSize: "0.8rem",
-                      fontWeight: 800,
+                      fontSize: "0.78rem",
+                      fontWeight: 700,
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
-                      color: "#c91a1f",
+                      color: "#e31e24",
                     }}
                   >
                     <span>READ ARTICLE</span>

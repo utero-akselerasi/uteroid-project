@@ -55,7 +55,7 @@ export default function ProjectCTA() {
                   color: "rgba(255, 255, 255, 0.9)",
                 }}
               >
-                06 / START A CONVERSATION
+                04 / START A CONVERSATION
               </span>
             </div>
           </RevealOnScroll>

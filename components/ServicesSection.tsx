@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import RevealOnScroll from "./RevealOnScroll";
 
 interface Capability {
@@ -11,64 +12,89 @@ interface Capability {
   description: string;
   deliverables: string[];
   image: string;
+  slug: string;
 }
 
 const capabilities: Capability[] = [
   {
     id: "01",
-    name: "BRAND",
-    tagline: "Strategic Identity & Positioning",
-    description: "Crafting comprehensive brand identities, naming, guidelines, and visual architectures that establish unforgettable market presence.",
-    deliverables: ["Visual Identity Systems", "Brand Architecture", "Brand Guidelines", "Naming & Tone of Voice"],
-    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    name: "IDENTITY",
+    tagline: "Strategic Brand Systems & Guidelines",
+    description:
+      "Crafting distinctive visual identities, logos, brand architecture, and meticulous guidelines that position organizations with authority and emotional resonance.",
+    deliverables: [
+      "Visual Identity & Logo Systems",
+      "Brand Guidelines & Manuals",
+      "Corporate Stationery & Collateral",
+      "Brand Architecture & Naming",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    slug: "brand",
   },
   {
     id: "02",
-    name: "PRODUCT",
-    tagline: "Physical & Digital Artifacts",
-    description: "Designing tactile product packaging, physical merchandise, and interactive product interfaces with supreme ergonomic craft.",
-    deliverables: ["Packaging Design", "Structural Form", "Merchandise Systems", "Label Systems"],
-    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop",
+    name: "PRINTED",
+    tagline: "Editorial, Publications & Packaging",
+    description:
+      "Engineering tactile print media, company profiles, catalogs, annual reports, and physical product packaging with world-class typographic precision and print finishing.",
+    deliverables: [
+      "Company Profiles & Annual Reports",
+      "Catalogs & Editorial Publications",
+      "Product Packaging & Label Systems",
+      "Brochures & Marketing Print",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop",
+    slug: "product",
   },
   {
     id: "03",
-    name: "PROMOTION",
-    tagline: "High-Impact Creative Campaigns",
-    description: "Conceptualizing strategic promotional campaigns, launch narratives, and print/digital assets that drive consumer action.",
-    deliverables: ["Campaign Strategy", "Key Visuals", "Marketing Collateral", "Social Assets"],
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+    name: "MISC",
+    tagline: "Merchandise, Uniforms & Collateral",
+    description:
+      "Designing branded merchandise, corporate uniforms, event collateral, calendars, and bespoke physical items that turn employees and clients into passionate brand advocates.",
+    deliverables: [
+      "Corporate Uniforms & Apparel",
+      "Bespoke Merchandise & Swag",
+      "Event Systems & Exhibition Kits",
+      "Executive Gift Sets & Souvenirs",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+    slug: "promotion",
   },
   {
     id: "04",
-    name: "SPACE",
-    tagline: "Wayfinding & Environmental Graphics",
-    description: "Translating brand DNA into three-dimensional architecture, directional wayfinding, and spatial experiences for public and private venues.",
-    deliverables: ["Wayfinding Systems", "Environmental Typography", "Exhibition Design", "Interior Branding"],
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    name: "DIGITAL",
+    tagline: "Websites, UI/UX & Digital Media",
+    description:
+      "Building high-performance websites, user interfaces, social media design frameworks, and interactive digital assets that communicate seamlessly across screens.",
+    deliverables: [
+      "Bespoke Web Design & UI/UX",
+      "Interactive Digital Experiences",
+      "Social Media Design Systems",
+      "Digital Branding & Motion Assets",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    slug: "digital",
   },
   {
     id: "05",
-    name: "DIGITAL",
-    tagline: "Connected Brand Experiences",
-    description: "Designing bespoke websites, web applications, and digital platforms that combine aesthetic power with high performance and accessibility.",
-    deliverables: ["Web Design & UI/UX", "Design Systems", "Interactive Prototypes", "Accessible Platforms"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    id: "06",
-    name: "INDOOR",
-    tagline: "Commercial & Office Visuals",
-    description: "Developing indoor signage, wall graphics, acoustic branding, and interior communication elements for institutions and businesses.",
-    deliverables: ["Office Graphics", "Indoor Signage", "Acoustic Panels", "Bespoke Installations"],
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    id: "07",
-    name: "OUTDOOR",
-    tagline: "Large-Scale Public Visibility",
-    description: "Engineering massive outdoor billboards, building wraps, pylons, and architectural banners that dominate cityscapes with dignity.",
-    deliverables: ["City Billboards", "Architectural Pylons", "Building Graphics", "Transit Media"],
-    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
+    name: "ENVIRONMENTAL",
+    tagline: "Signage, Wayfinding & Spatial Graphics",
+    description:
+      "Transforming architecture and physical environments into experiential branded spaces through large-scale directional signage, architectural graphics, and outdoor media.",
+    deliverables: [
+      "Wayfinding & Directional Signage",
+      "Indoor Office Branding & Graphics",
+      "Outdoor Billboards & Architectural Pylons",
+      "Exhibition & Event Space Design",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    slug: "space",
   },
 ];
 
@@ -82,7 +108,7 @@ export default function ServicesSection() {
       id="capabilities"
       style={{
         padding: "clamp(5rem, 9vw, 8.5rem) 0",
-        backgroundColor: "#f5efe6",
+        backgroundColor: "#ffffff",
         color: "#0a0a0a",
         position: "relative",
       }}
@@ -95,7 +121,7 @@ export default function ServicesSection() {
         }}
       >
         {/* Section Header */}
-        <div style={{ marginBottom: "clamp(3rem, 6vw, 5rem)" }}>
+        <div style={{ marginBottom: "clamp(2.5rem, 5vw, 4.5rem)" }}>
           <RevealOnScroll>
             <div
               style={{
@@ -110,54 +136,58 @@ export default function ServicesSection() {
                   display: "inline-block",
                   width: "8px",
                   height: "8px",
-                  backgroundColor: "#c91a1f",
+                  backgroundColor: "#e31e24",
                   borderRadius: "50%",
                 }}
               />
               <span
                 style={{
                   fontSize: "0.75rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.1em",
+                  fontWeight: 600,
+                  letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "#c91a1f",
+                  color: "#e31e24",
                 }}
               >
-                04 / CREATIVE APPROACH &amp; CAPABILITIES
+                04 / CREATIVE CAPABILITIES
               </span>
             </div>
           </RevealOnScroll>
 
+          {/* Heading from PDF reference */}
           <RevealOnScroll delay={1}>
             <h2
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(1.2rem, 2.2vw, 2rem)",
-                fontWeight: 400,
-                letterSpacing: "-0.01em",
-                textTransform: "none",
+                fontSize: "clamp(2rem, 5vw, 4rem)",
+                fontWeight: 900,
+                letterSpacing: "-0.03em",
+                textTransform: "uppercase",
                 color: "#0a0a0a",
-                lineHeight: 1.4,
+                lineHeight: 1.05,
                 margin: 0,
                 maxWidth: "1100px",
               }}
             >
-              Our philosophy is built on people addicted to creating, learning, and growing together — discovering what others miss.
+              WHAT CAN WE{" "}
+              <span style={{ color: "#e31e24" }}>DESIGN FOR YOU?</span>
             </h2>
           </RevealOnScroll>
 
-          {/* Supporting Philosophy statement */}
+          {/* Supporting Statement */}
           <RevealOnScroll delay={2}>
             <p
               style={{
-                fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
+                fontSize: "clamp(0.95rem, 1.15vw, 1.1rem)",
                 lineHeight: 1.6,
-                color: "rgba(10, 10, 10, 0.75)",
+                color: "rgba(10, 10, 10, 0.7)",
                 maxWidth: "850px",
-                marginTop: "1rem",
+                marginTop: "1.2rem",
               }}
             >
-              Using progressive design systems and modern technologies, we ensure that every brand experience is visible, accessible, and treads lightly on the environment — driving digital arts and engaging human connections.
+              Comprehensive design services tailored to your strategic needs &mdash; from
+              foundational brand identity to physical packaging, digital platforms, and
+              three-dimensional architectural spaces.
             </p>
           </RevealOnScroll>
         </div>
@@ -169,11 +199,11 @@ export default function ServicesSection() {
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "clamp(2.5rem, 5vw, 5rem)",
             alignItems: "flex-start",
-            borderTop: "1px solid rgba(10, 10, 10, 0.15)",
-            paddingTop: "clamp(2rem, 4vw, 3rem)",
+            borderTop: "1px solid rgba(10, 10, 10, 0.12)",
+            paddingTop: "clamp(2rem, 3.5vw, 3rem)",
           }}
         >
-          {/* Left Column: List of 7 Capabilities */}
+          {/* Left Column: 5 Capabilities matching PDF */}
           <div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               {capabilities.map((item, idx) => {
@@ -188,8 +218,8 @@ export default function ServicesSection() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "clamp(1rem, 2vw, 1.5rem) 0",
-                      borderBottom: "1px solid rgba(10, 10, 10, 0.12)",
+                      padding: "clamp(1.1rem, 2vw, 1.6rem) 0",
+                      borderBottom: "1px solid rgba(10, 10, 10, 0.1)",
                       backgroundColor: "transparent",
                       borderTop: "none",
                       borderLeft: "none",
@@ -197,18 +227,24 @@ export default function ServicesSection() {
                       textAlign: "left",
                       cursor: "pointer",
                       transition: "padding-left 0.25s ease, color 0.2s ease",
-                      paddingLeft: isActive ? "12px" : "0",
-                      borderLeftColor: isActive ? "#c91a1f" : "transparent",
+                      paddingLeft: isActive ? "14px" : "0",
+                      borderLeftColor: isActive ? "#e31e24" : "transparent",
                       borderLeftWidth: isActive ? "4px" : "0px",
                       borderLeftStyle: "solid",
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "baseline", gap: "1.25rem" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: "1.25rem",
+                      }}
+                    >
                       <span
                         style={{
-                          fontSize: "0.75rem",
-                          fontWeight: 500,
-                          color: isActive ? "#c91a1f" : "rgba(10, 10, 10, 0.4)",
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
+                          color: isActive ? "#e31e24" : "rgba(10, 10, 10, 0.4)",
                           fontFamily: "monospace",
                         }}
                       >
@@ -217,11 +253,11 @@ export default function ServicesSection() {
                       <span
                         style={{
                           fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                          fontSize: "clamp(1rem, 1.5vw, 1.5rem)",
-                          fontWeight: 500,
+                          fontSize: "clamp(1.2rem, 1.8vw, 1.75rem)",
+                          fontWeight: 700,
                           letterSpacing: "-0.01em",
                           textTransform: "uppercase",
-                          color: isActive ? "#c91a1f" : "#0a0a0a",
+                          color: isActive ? "#e31e24" : "#0a0a0a",
                           transition: "color 0.2s ease",
                         }}
                       >
@@ -232,8 +268,8 @@ export default function ServicesSection() {
                     <span
                       style={{
                         fontSize: "1.25rem",
-                        color: isActive ? "#c91a1f" : "rgba(10, 10, 10, 0.3)",
-                        transform: isActive ? "translateX(4px)" : "translateX(0)",
+                        color: isActive ? "#e31e24" : "rgba(10, 10, 10, 0.3)",
+                        transform: isActive ? "translateX(6px)" : "translateX(0)",
                         transition: "transform 0.2s ease, color 0.2s ease",
                       }}
                     >
@@ -246,111 +282,144 @@ export default function ServicesSection() {
           </div>
 
           {/* Right Column: Dynamic Preview Card for Active Capability */}
-          <div
-            style={{
-              position: "sticky",
-              top: "120px",
-              backgroundColor: "#0a0a0a",
-              color: "#ffffff",
-              padding: "clamp(2rem, 3.5vw, 3rem)",
-              border: "1px solid rgba(10, 10, 10, 0.15)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1.75rem",
-            }}
-          >
-            {/* Image Preview */}
+          <div>
             <div
               style={{
-                position: "relative",
-                width: "100%",
-                aspectRatio: "16/9",
-                backgroundColor: "#161616",
+                backgroundColor: "#f9f9f9",
+                border: "1px solid rgba(10, 10, 10, 0.08)",
                 overflow: "hidden",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.04)",
+                transition: "all 0.3s ease",
               }}
             >
-              <Image
-                key={activeCapability.id}
-                src={activeCapability.image}
-                alt={activeCapability.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 500px"
-                style={{
-                  objectFit: "cover",
-                  transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-                }}
-              />
               <div
                 style={{
-                  position: "absolute",
-                  top: "1rem",
-                  left: "1rem",
-                  backgroundColor: "#c91a1f",
-                  color: "#ffffff",
-                  padding: "3px 6px",
-                  fontSize: "0.7rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.08em",
+                  position: "relative",
+                  width: "100%",
+                  height: "260px",
+                  overflow: "hidden",
                 }}
               >
-                {activeCapability.id} / {activeCapability.name}
+                <Image
+                  src={activeCapability.image}
+                  alt={activeCapability.name}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    transition: "transform 0.6s ease",
+                  }}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "1rem",
+                    left: "1rem",
+                    backgroundColor: "#0d0d0d",
+                    color: "#ffffff",
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "0.3rem 0.6rem",
+                  }}
+                >
+                  CATEGORY {activeCapability.id}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <h3
-                style={{
-                  fontSize: "1rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.01em",
-                  color: "#ffffff",
-                  marginBottom: "0.4rem",
-                }}
-              >
-                {activeCapability.tagline}
-              </h3>
-              <p
-                style={{
-                  fontSize: "0.85rem",
-                  lineHeight: 1.5,
-                  color: "rgba(255, 255, 255, 0.75)",
-                  margin: 0,
-                }}
-              >
-                {activeCapability.description}
-              </p>
-            </div>
+              <div style={{ padding: "clamp(1.5rem, 3vw, 2.25rem)" }}>
+                <h3
+                  style={{
+                    fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)",
+                    fontWeight: 700,
+                    color: "#0a0a0a",
+                    margin: "0 0 0.5rem",
+                  }}
+                >
+                  {activeCapability.tagline}
+                </h3>
+                <p
+                  style={{
+                    fontSize: "0.95rem",
+                    lineHeight: 1.6,
+                    color: "rgba(10, 10, 10, 0.7)",
+                    margin: "0 0 1.5rem",
+                  }}
+                >
+                  {activeCapability.description}
+                </p>
 
-            {/* Deliverables tags */}
-            <div>
-              <p
-                style={{
-                  fontSize: "0.7rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "#c91a1f",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                DELIVERABLES
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                {activeCapability.deliverables.map((del) => (
-                  <span
-                    key={del}
+                <div
+                  style={{
+                    borderTop: "1px solid rgba(10, 10, 10, 0.1)",
+                    paddingTop: "1.2rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <div
                     style={{
-                      fontSize: "0.7rem",
-                      fontWeight: 400,
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                      color: "#ffffff",
-                      padding: "3px 8px",
-                      borderRadius: "2px",
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#e31e24",
+                      marginBottom: "0.8rem",
                     }}
                   >
-                    {del}
-                  </span>
-                ))}
+                    CORE DELIVERABLES:
+                  </div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                      gap: "0.6rem",
+                    }}
+                  >
+                    {activeCapability.deliverables.map((del) => (
+                      <div
+                        key={del}
+                        style={{
+                          fontSize: "0.82rem",
+                          color: "rgba(10, 10, 10, 0.8)",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                        }}
+                      >
+                        <span style={{ color: "#e31e24", fontWeight: 700 }}>&bull;</span>
+                        <span>{del}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <Link
+                  href={`/services/${activeCapability.slug}`}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "#ffffff",
+                    backgroundColor: "#0d0d0d",
+                    padding: "0.65rem 1.25rem",
+                    textDecoration: "none",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.backgroundColor = "#e31e24")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.backgroundColor = "#0d0d0d")
+                  }
+                >
+                  <span>VIEW DETAILS &amp; ARCHIVE</span>
+                  <span>&rarr;</span>
+                </Link>
               </div>
             </div>
           </div>

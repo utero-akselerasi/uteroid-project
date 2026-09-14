@@ -1,14 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect, useState, useCallback } from "react";
+
+const slides = [
+  {
+    id: 1,
+    image: "/img/background1.png",
+    alt: "Utero Design Studio Visual 1",
+  },
+  {
+    id: 2,
+    image: "/img/background2.png",
+    alt: "Utero Design Studio Visual 2",
+  },
+];
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const interval = setInterval(nextSlide, 6000);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
 
   return (
     <section
@@ -16,63 +37,126 @@ export default function HeroSection() {
       style={{
         position: "relative",
         height: "100vh",
-        backgroundColor: "#B2192B",
+        minHeight: "680px",
+        backgroundColor: "#0d0d0d",
         color: "#F7F2EC",
         overflow: "hidden",
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
       }}
     >
-      {/* MAIN CONTENT COLUMN - left 68% */}
+      {/* ─── FULL BACKGROUND IMAGE SLIDER ─── */}
       <div
         style={{
           position: "absolute",
-          top: "4vh",
-          left: 0,
-          width: "68vw",
-          maxWidth: "1000px",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          padding: "4.3vw",
-          paddingBottom: "70px",
-          zIndex: 2,
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
         }}
       >
-        {/* Top Label */}
+        {slides.map((slide, index) => {
+          const isActive = index === currentSlide;
+          return (
+            <div
+              key={slide.id}
+              style={{
+                position: "absolute",
+                inset: 0,
+                opacity: isActive ? 1 : 0,
+                transform: isActive ? "scale(1)" : "scale(1.06)",
+                transition: "opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1), transform 7s cubic-bezier(0.25, 1, 0.5, 1)",
+                zIndex: isActive ? 2 : 1,
+              }}
+            >
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
+                sizes="100vw"
+              />
+            </div>
+          );
+        })}
+
+        {/* Cinematic Multi-Layer Gradient Overlays for High Contrast & Legibility */}
         <div
           style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(180deg, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.4) 40%, rgba(10, 10, 10, 0.75) 80%, rgba(10, 10, 10, 0.95) 100%)",
+            zIndex: 3,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(ellipse at center, rgba(178, 25, 43, 0.25) 0%, rgba(0, 0, 0, 0.6) 100%)",
+            mixBlendMode: "multiply",
+            zIndex: 4,
+          }}
+        />
+      </div>
+
+      {/* ─── MAIN HERO CONTENT ─── */}
+      <div
+        style={{
+          position: "absolute",
+          top: "clamp(110px, 18vh, 160px)",
+          left: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          maxWidth: "1150px",
+          zIndex: 10,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Studio Tag */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.6rem",
+            marginBottom: "clamp(0.8rem, 1.5vw, 1.2rem)",
             opacity: mounted ? 1 : 0,
-            transform: mounted ? "translateY(0)" : "translateY(15px)",
-            transition:
-              "opacity 0.8s ease 0.1s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s",
+            transform: mounted ? "translateY(0)" : "translateY(10px)",
+            transition: "opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s",
           }}
         >
           <span
             style={{
-              fontSize: "clamp(0.696rem, 1.075vw, 0.949rem)",
-              fontWeight: 400,
+              display: "inline-block",
+              width: "6px",
+              height: "6px",
+              backgroundColor: "#e31e24",
+              borderRadius: "50%",
+            }}
+          />
+          <span
+            style={{
+              fontSize: "clamp(0.7rem, 0.9vw, 0.85rem)",
+              fontWeight: 600,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#F7F2EC",
+              color: "rgba(247, 242, 236, 0.85)",
             }}
           >
-            UTERO.ID — PROFESSIONAL DESIGN COMPANY
+            UTERO.ID &mdash; BRAND &amp; DESIGN COMPANY
           </span>
         </div>
-
-        {/* HEADLINE */}
-        <div
-          style={{
-            marginTop: "clamp(1.2rem, 3vw, 2.5rem)",
-            marginBottom: "clamp(1rem, 2vw, 1.8rem)",
-          }}
-        >
+        {/* Headline */}
+        <div style={{ marginBottom: "clamp(1rem, 2vw, 1.8rem)" }}>
           <h1
             style={{
-              fontSize: "clamp(3.479rem, 11.89vw, 6.325rem)",
-              fontWeight: 400,
-              lineHeight: 0.94,
-              letterSpacing: "-0.02em",
+              fontSize: "clamp(2.5rem, 7.5vw, 5.8rem)",
+              fontWeight: 900,
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
               textTransform: "uppercase",
               color: "#F7F2EC",
               margin: 0,
@@ -87,10 +171,19 @@ export default function HeroSection() {
                     "transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s",
                 }}
               >
-                DESIGN
+                SOLVE PROBLEM
               </span>
             </div>
-            <div style={{ overflow: "hidden" }}>
+
+            <div
+              style={{
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "baseline",
+                flexWrap: "wrap",
+                gap: "clamp(0.4rem, 1vw, 1rem)",
+              }}
+            >
               <span
                 style={{
                   display: "inline-block",
@@ -99,9 +192,27 @@ export default function HeroSection() {
                     "transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s",
                 }}
               >
-                AS A
+                THROUGH
+              </span>
+
+              {/* Bold DESIGN pill inspired by PDF reference */}
+              <span
+                style={{
+                  display: "inline-block",
+                  backgroundColor: "#0d0d0d",
+                  color: "#ffffff",
+                  padding: "0.05em 0.35em",
+                  border: "2px solid #e31e24",
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.5)",
+                  transform: mounted ? "translateY(0)" : "translateY(110%)",
+                  transition:
+                    "transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.42s",
+                }}
+              >
+                DESIGN
               </span>
             </div>
+
             <div style={{ overflow: "hidden" }}>
               <span
                 style={{
@@ -121,7 +232,7 @@ export default function HeroSection() {
         {/* Description */}
         <div
           style={{
-            maxWidth: "420px",
+            maxWidth: "520px",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(20px)",
             transition:
@@ -130,67 +241,131 @@ export default function HeroSection() {
         >
           <p
             style={{
-              fontSize: "clamp(1.012rem, 1.392vw, 1.265rem)",
-              lineHeight: 1.6,
-              color: "#F7F2EC",
+              fontSize: "clamp(0.95rem, 1.25vw, 1.15rem)",
+              lineHeight: 1.5,
+              color: "rgba(247, 242, 236, 0.9)",
               margin: 0,
             }}
           >
-            Professional design solutions for brands, products, spaces
-            <br />
-            and communication.
+            A comprehensive branding and design company helping organizations build
+            distinctive presence, market authority, and lasting cultural value since 1998.
           </p>
         </div>
 
-        {/* Service Categories */}
+        {/* Capabilities Ticker Strip from PDF */}
         <div
           style={{
-            marginTop: "clamp(1rem, 2vw, 1.8rem)",
-            maxWidth: "420px",
+            marginTop: "clamp(1.2rem, 2.5vw, 2.2rem)",
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "0.6rem 1.2rem",
             opacity: mounted ? 1 : 0,
-            transform: mounted ? "translateY(0)" : "translateY(20px)",
+            transform: mounted ? "translateY(0)" : "translateY(15px)",
             transition:
               "opacity 0.9s ease 0.7s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s",
           }}
         >
-          <p
-            style={{
-              fontSize: "clamp(0.633rem, 0.949vw, 0.822rem)",
-              fontWeight: 400,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "rgba(247, 242, 236, 0.7)",
-              lineHeight: 1.8,
-              margin: 0,
-            }}
-          >
-            LOGO / BRANDING / PACKAGING / SIGNAGE / DIGITAL / PRINT / INDOOR /
-            <br />
-            OUTDOOR
-          </p>
+          {["IDENTITY", "PRINTED", "MISC", "DIGITAL", "ENVIRONMENTAL"].map(
+            (cap, idx) => (
+              <span
+                key={cap}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  fontSize: "clamp(0.65rem, 0.8vw, 0.75rem)",
+                  fontWeight: 600,
+                  letterSpacing: "0.15em",
+                  color: "rgba(247, 242, 236, 0.75)",
+                }}
+              >
+                {cap}
+                {idx < 4 && (
+                  <span style={{ color: "#e31e24", marginLeft: "0.8rem" }}>/</span>
+                )}
+              </span>
+            )
+          )}
         </div>
       </div>
 
-      {/* BOTTOM DIVIDER LINE */}
+      {/* ─── SLIDE CONTROLLER & INDICATOR ─── */}
       <div
         style={{
           position: "absolute",
-          bottom: 65,
-          left: "4.3vw",
-          right: "4.3vw",
+          right: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          bottom: "clamp(75px, 11vh, 90px)",
+          zIndex: 10,
+          display: "flex",
+          alignItems: "center",
+          gap: "0.8rem",
+          opacity: mounted ? 1 : 0,
+          transition: "opacity 1s ease 0.8s",
+        }}
+      >
+        {slides.map((s, idx) => {
+          const isActive = idx === currentSlide;
+          return (
+            <button
+              key={s.id}
+              onClick={() => setCurrentSlide(idx)}
+              aria-label={`Slide ${idx + 1}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                padding: "0.3rem 0.5rem",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  fontFamily: "monospace",
+                  fontWeight: isActive ? 700 : 400,
+                  color: isActive ? "#ffffff" : "rgba(247, 242, 236, 0.4)",
+                  transition: "color 0.3s ease",
+                }}
+              >
+                0{idx + 1}
+              </span>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: isActive ? "32px" : "14px",
+                  height: "2px",
+                  backgroundColor: isActive ? "#e31e24" : "rgba(247, 242, 236, 0.3)",
+                  transition: "all 0.4s ease",
+                }}
+              />
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ─── BOTTOM DIVIDER & FOOTER INFO ─── */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "55px",
+          left: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          right: "clamp(1.5rem, 4.3vw, 4.5rem)",
           height: "1px",
-          backgroundColor: "rgba(247, 242, 236, 0.12)",
-          zIndex: 2,
+          backgroundColor: "rgba(247, 242, 236, 0.15)",
+          zIndex: 10,
         }}
       />
 
-      {/* BOTTOM LEFT - EXPLORE OUR WORK */}
+      {/* Bottom Left Link */}
       <div
         style={{
           position: "absolute",
-          bottom: 25,
-          left: "4.3vw",
-          zIndex: 2,
+          bottom: "20px",
+          left: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          zIndex: 10,
           opacity: mounted ? 1 : 0,
           transition: "opacity 1s ease 0.8s",
         }}
@@ -198,39 +373,46 @@ export default function HeroSection() {
         <Link
           href="#recent-works"
           style={{
-            fontSize: "clamp(0.5rem, 0.7vw, 0.6rem)",
-            fontWeight: 400,
+            fontSize: "clamp(0.65rem, 0.8vw, 0.75rem)",
+            fontWeight: 500,
             letterSpacing: "0.18em",
             textTransform: "uppercase",
             color: "#F7F2EC",
             textDecoration: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            transition: "color 0.2s ease",
           }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "#e31e24")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "#F7F2EC")}
         >
-          EXPLORE OUR WORK &#x2193;
+          <span>EXPLORE OUR WORK</span>
+          <span>&darr;</span>
         </Link>
       </div>
 
-      {/* BOTTOM RIGHT - PART OF UTERO INDONESIA */}
+      {/* Bottom Right Studio Tag */}
       <div
         style={{
           position: "absolute",
-          bottom: 25,
-          right: "4.3vw",
-          zIndex: 2,
+          bottom: "20px",
+          right: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          zIndex: 10,
           opacity: mounted ? 1 : 0,
           transition: "opacity 1s ease 0.8s",
         }}
       >
         <span
           style={{
-            fontSize: "clamp(0.5rem, 0.7vw, 0.6rem)",
+            fontSize: "clamp(0.65rem, 0.8vw, 0.75rem)",
             fontWeight: 400,
-            letterSpacing: "0.18em",
+            letterSpacing: "0.16em",
             textTransform: "uppercase",
             color: "rgba(247, 242, 236, 0.6)",
           }}
         >
-          PART OF UTERO INDONESIA
+          PART OF UTERO INDONESIA &mdash; EST. 1998
         </span>
       </div>
     </section>
