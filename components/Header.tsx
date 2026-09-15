@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef, FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
+import emailjs from "@emailjs/browser";
 
 interface MenuNavItem {
   number: string;
@@ -199,7 +200,7 @@ export default function Header() {
   };
 
   // Handle Project Inquiry Submit
-  const handleInquirySubmit = (e: FormEvent) => {
+  const handleInquirySubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formName.trim() || !formEmail.trim() || !formBrief.trim()) {
       setFormError("Please fill in all required fields (*)");
@@ -207,10 +208,27 @@ export default function Header() {
     }
     setFormError("");
     setFormSubmitting(true);
-    setTimeout(() => {
-      setFormSubmitting(false);
+    try {
+      await emailjs.send(
+        "service_2tybtxo",
+        "template_s7p9ieh",
+        {
+          name: formName,
+          email: formEmail,
+          company: formCompany,
+          phone: formPhone,
+          disciplines: selectedDisciplines.join(", ") || "Not specified",
+          brief: formBrief,
+        },
+        { publicKey: "4nKYv5KDnicRpdYv4" }
+      );
       setFormSubmitted(true);
-    }, 600);
+    } catch (err: unknown) {
+      console.error("EmailJS error:", err);
+      setFormError("Something went wrong. Please try again.");
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
   return (

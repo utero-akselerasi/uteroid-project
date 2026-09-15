@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import emailjs from "@emailjs/browser";
 
 const SERVICE_OPTIONS = [
   "Brand Identity",
@@ -16,6 +17,13 @@ const SERVICE_OPTIONS = [
 export default function ContactPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [formName, setFormName] = useState("");
+  const [formCompany, setFormCompany] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formBrief, setFormBrief] = useState("");
 
   const toggleService = (serv: string) => {
     setSelectedServices((prev) =>
@@ -23,9 +31,35 @@ export default function ContactPage() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!formName.trim() || !formEmail.trim() || !formBrief.trim()) {
+      setError("Please fill in all required fields (*)");
+      return;
+    }
+    setError("");
+    setSubmitting(true);
+    try {
+      await emailjs.send(
+        "service_2tybtxo",
+        "template_s7p9ieh",
+        {
+          name: formName,
+          email: formEmail,
+          company: formCompany,
+          phone: formPhone,
+          disciplines: selectedServices.join(", ") || "Not specified",
+          brief: formBrief,
+        },
+        { publicKey: "4nKYv5KDnicRpdYv4" }
+      );
+      setSubmitted(true);
+    } catch (err: unknown) {
+      console.error("EmailJS error:", err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -483,7 +517,15 @@ export default function ContactPage() {
                       Thank you for contacting Utero Indonesia. Our client strategy director will review your brief and connect within 1 business day.
                     </p>
                     <button
-                      onClick={() => setSubmitted(false)}
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormName("");
+                        setFormCompany("");
+                        setFormEmail("");
+                        setFormPhone("");
+                        setFormBrief("");
+                        setSelectedServices([]);
+                      }}
                       style={{
                         background: "none",
                         border: "none",
@@ -566,6 +608,8 @@ export default function ContactPage() {
                           required
                           type="text"
                           placeholder="e.g. Budi Santoso"
+                          value={formName}
+                          onChange={(e) => setFormName(e.target.value)}
                           style={{
                             width: "100%",
                             padding: "0.5rem 0.75rem",
@@ -598,6 +642,8 @@ export default function ContactPage() {
                           id="brandName"
                           type="text"
                           placeholder="e.g. Amarta Wisesa"
+                          value={formCompany}
+                          onChange={(e) => setFormCompany(e.target.value)}
                           style={{
                             width: "100%",
                             padding: "0.5rem 0.75rem",
@@ -634,6 +680,8 @@ export default function ContactPage() {
                           required
                           type="email"
                           placeholder="name@company.com"
+                          value={formEmail}
+                          onChange={(e) => setFormEmail(e.target.value)}
                           style={{
                             width: "100%",
                             padding: "0.5rem 0.75rem",
@@ -666,6 +714,8 @@ export default function ContactPage() {
                           id="clientPhone"
                           type="tel"
                           placeholder="+62 81..."
+                          value={formPhone}
+                          onChange={(e) => setFormPhone(e.target.value)}
                           style={{
                             width: "100%",
                             padding: "0.5rem 0.75rem",
@@ -696,12 +746,14 @@ export default function ContactPage() {
                       >
                         Project Brief &amp; Scope Overview *
                       </label>
-                      <textarea
-                        id="projectBrief"
-                        required
-                        rows={3}
-                        placeholder="Describe your current brand challenge, key timeline, and deliverables required..."
-                        style={{
+                        <textarea
+                          id="projectBrief"
+                          required
+                          rows={3}
+                          placeholder="Describe your current brand challenge, key timeline, and deliverables required..."
+                          value={formBrief}
+                          onChange={(e) => setFormBrief(e.target.value)}
+                          style={{
                           width: "100%",
                           padding: "0.5rem 0.75rem",
                           border: "1px solid rgba(0, 0, 0, 0.12)",
@@ -715,26 +767,34 @@ export default function ContactPage() {
                       />
                     </div>
 
+                    {/* Error Message */}
+                    {error && (
+                      <p style={{ fontSize: "0.75rem", color: "#c91a1f", margin: 0 }}>
+                        {error}
+                      </p>
+                    )}
+
                     {/* Submit Button */}
                     <button
                       type="submit"
                       className="contact-submit"
                       data-cursor="SUBMIT"
+                      disabled={submitting}
                       style={{
                         padding: "0.6rem 1.5rem",
-                        backgroundColor: "#c91a1f",
+                        backgroundColor: submitting ? "#999" : "#c91a1f",
                         color: "#ffffff",
                         border: "none",
                         fontSize: "0.7rem",
                         fontWeight: 500,
                         letterSpacing: "0.08em",
                         textTransform: "uppercase",
-                        cursor: "pointer",
+                        cursor: submitting ? "not-allowed" : "pointer",
                         alignSelf: "flex-start",
                         transition: "background-color 0.2s ease",
                       }}
                     >
-                      Send Project Inquiry →
+                      {submitting ? "Sending..." : "Send Project Inquiry →"}
                     </button>
                   </form>
                 )}
