@@ -108,8 +108,9 @@ export default function HeroSection() {
       <div
         style={{
           position: "absolute",
-          top: "clamp(110px, 18vh, 160px)",
-          left: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          top: "clamp(100px, 16vh, 160px)",
+          left: "clamp(1rem, 3vw, 4.5rem)",
+          right: "clamp(1rem, 3vw, 4.5rem)",
           maxWidth: "1150px",
           zIndex: 10,
           display: "flex",
@@ -121,8 +122,8 @@ export default function HeroSection() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.6rem",
-            marginBottom: "clamp(0.8rem, 1.5vw, 1.2rem)",
+            gap: "0.5rem",
+            marginBottom: "clamp(0.6rem, 1.2vw, 1.2rem)",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(10px)",
             transition: "opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s",
@@ -131,17 +132,17 @@ export default function HeroSection() {
           <span
             style={{
               display: "inline-block",
-              width: "6px",
-              height: "6px",
+              width: "5px",
+              height: "5px",
               backgroundColor: "#e31e24",
               borderRadius: "50%",
             }}
           />
           <span
             style={{
-              fontSize: "clamp(0.7rem, 0.9vw, 0.85rem)",
+              fontSize: "clamp(0.6rem, 0.8vw, 0.85rem)",
               fontWeight: 600,
-              letterSpacing: "0.18em",
+              letterSpacing: "0.16em",
               textTransform: "uppercase",
               color: "rgba(247, 242, 236, 0.85)",
             }}
@@ -150,10 +151,10 @@ export default function HeroSection() {
           </span>
         </div>
         {/* Headline */}
-        <div style={{ marginBottom: "clamp(1rem, 2vw, 1.8rem)" }}>
+        <div style={{ marginBottom: "clamp(0.8rem, 1.5vw, 1.8rem)" }}>
           <h1
             style={{
-              fontSize: "clamp(2.5rem, 7.5vw, 5.8rem)",
+              fontSize: "clamp(1.8rem, 6vw, 5.8rem)",
               fontWeight: 900,
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
@@ -232,7 +233,7 @@ export default function HeroSection() {
         {/* Description */}
         <div
           style={{
-            maxWidth: "520px",
+            maxWidth: "450px",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(20px)",
             transition:
@@ -241,7 +242,7 @@ export default function HeroSection() {
         >
           <p
             style={{
-              fontSize: "clamp(0.95rem, 1.25vw, 1.15rem)",
+              fontSize: "clamp(0.85rem, 1.1vw, 1.15rem)",
               lineHeight: 1.5,
               color: "rgba(247, 242, 236, 0.9)",
               margin: 0,
@@ -255,11 +256,11 @@ export default function HeroSection() {
         {/* Capabilities Ticker Strip from PDF */}
         <div
           style={{
-            marginTop: "clamp(1.2rem, 2.5vw, 2.2rem)",
+            marginTop: "clamp(1rem, 2vw, 2.2rem)",
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "0.6rem 1.2rem",
+            gap: "0.5rem 1rem",
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(15px)",
             transition:
@@ -273,16 +274,16 @@ export default function HeroSection() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "0.4rem",
-                  fontSize: "clamp(0.65rem, 0.8vw, 0.75rem)",
+                  gap: "0.3rem",
+                  fontSize: "clamp(0.55rem, 0.7vw, 0.75rem)",
                   fontWeight: 600,
-                  letterSpacing: "0.15em",
+                  letterSpacing: "0.12em",
                   color: "rgba(247, 242, 236, 0.75)",
                 }}
               >
                 {cap}
                 {idx < 4 && (
-                  <span style={{ color: "#e31e24", marginLeft: "0.8rem" }}>/</span>
+                  <span style={{ color: "#e31e24", marginLeft: "0.6rem" }}>/</span>
                 )}
               </span>
             )
@@ -294,12 +295,12 @@ export default function HeroSection() {
       <div
         style={{
           position: "absolute",
-          right: "clamp(1.5rem, 4.3vw, 4.5rem)",
-          bottom: "clamp(75px, 11vh, 90px)",
+          right: "clamp(1rem, 3vw, 4.5rem)",
+          bottom: "clamp(60px, 10vh, 90px)",
           zIndex: 10,
           display: "flex",
           alignItems: "center",
-          gap: "0.8rem",
+          gap: "0.6rem",
           opacity: mounted ? 1 : 0,
           transition: "opacity 1s ease 0.8s",
         }}
@@ -350,9 +351,9 @@ export default function HeroSection() {
       <div
         style={{
           position: "absolute",
-          bottom: "55px",
-          left: "clamp(1.5rem, 4.3vw, 4.5rem)",
-          right: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          bottom: "45px",
+          left: "clamp(1rem, 3vw, 4.5rem)",
+          right: "clamp(1rem, 3vw, 4.5rem)",
           height: "1px",
           backgroundColor: "rgba(247, 242, 236, 0.15)",
           zIndex: 10,
@@ -363,8 +364,8 @@ export default function HeroSection() {
       <div
         style={{
           position: "absolute",
-          bottom: "20px",
-          left: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          bottom: "15px",
+          left: "clamp(1rem, 3vw, 4.5rem)",
           zIndex: 10,
           opacity: mounted ? 1 : 0,
           transition: "opacity 1s ease 0.8s",
@@ -373,15 +374,15 @@ export default function HeroSection() {
         <Link
           href="#recent-works"
           style={{
-            fontSize: "clamp(0.65rem, 0.8vw, 0.75rem)",
+            fontSize: "clamp(0.55rem, 0.7vw, 0.75rem)",
             fontWeight: 500,
-            letterSpacing: "0.18em",
+            letterSpacing: "0.16em",
             textTransform: "uppercase",
             color: "#F7F2EC",
             textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
-            gap: "0.5rem",
+            gap: "0.4rem",
             transition: "color 0.2s ease",
           }}
           onMouseEnter={(e) => (e.currentTarget.style.color = "#e31e24")}
@@ -396,8 +397,8 @@ export default function HeroSection() {
       <div
         style={{
           position: "absolute",
-          bottom: "20px",
-          right: "clamp(1.5rem, 4.3vw, 4.5rem)",
+          bottom: "15px",
+          right: "clamp(1rem, 3vw, 4.5rem)",
           zIndex: 10,
           opacity: mounted ? 1 : 0,
           transition: "opacity 1s ease 0.8s",
@@ -405,9 +406,9 @@ export default function HeroSection() {
       >
         <span
           style={{
-            fontSize: "clamp(0.65rem, 0.8vw, 0.75rem)",
+            fontSize: "clamp(0.55rem, 0.7vw, 0.75rem)",
             fontWeight: 400,
-            letterSpacing: "0.16em",
+            letterSpacing: "0.14em",
             textTransform: "uppercase",
             color: "rgba(247, 242, 236, 0.6)",
           }}

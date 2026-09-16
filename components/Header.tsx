@@ -244,7 +244,7 @@ export default function Header() {
           left: 0,
           right: 0,
           zIndex: 1000,
-          padding: "clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 2vw, 1.5rem)",
+          padding: "clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.6rem, 1.5vw, 1.2rem)",
           transform:
             scrollDirection === "down" && scrolled && !menuOpen && !contactOpen
               ? "translateY(-100%)"
@@ -266,15 +266,15 @@ export default function Header() {
           }}
         >
           {/* LEFT: Wordmark + Live Studio Status Badge */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
             <Link
               href="/"
               style={{
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.4rem",
-                padding: "6px 12px",
+                gap: "0.3rem",
+                padding: "5px 10px",
                 borderRadius: "9999px",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
@@ -296,8 +296,8 @@ export default function Header() {
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   fontWeight: 900,
-                  fontSize: "11px",
-                  letterSpacing: "0.14em",
+                  fontSize: "10px",
+                  letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   color: scrolled ? "#ffffff" : textColor,
                   transition: "color 0.3s ease",
@@ -308,8 +308,8 @@ export default function Header() {
               <span
                 style={{
                   display: "inline-block",
-                  width: "5px",
-                  height: "5px",
+                  width: "4px",
+                  height: "4px",
                   borderRadius: "50%",
                   backgroundColor: "#e31e24",
                 }}
@@ -350,7 +350,7 @@ export default function Header() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "clamp(0.4rem, 1vw, 0.75rem)",
+              gap: "clamp(0.3rem, 0.8vw, 0.6rem)",
             }}
           >
             {/* Desktop Links: WORK, SERVICES, STUDIO, INSIGHTS */}
@@ -437,8 +437,8 @@ export default function Header() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.4rem",
-                padding: "6px 12px",
+                gap: "0.3rem",
+                padding: "5px 10px",
                 borderRadius: "9999px",
                 backgroundColor: contactOpen
                   ? "#e31e24"
@@ -456,9 +456,9 @@ export default function Header() {
                   ? "1px solid #e31e24"
                   : `1px solid ${borderColor}`,
                 cursor: "pointer",
-                fontSize: "10px",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
+                fontSize: "9px",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 color: contactOpen
                   ? "#ffffff"
@@ -505,8 +505,8 @@ export default function Header() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                padding: "6px 14px",
+                gap: "0.4rem",
+                padding: "5px 12px",
                 borderRadius: "9999px",
                 backgroundColor: isMenuHovered
                   ? "#e31e24"
@@ -537,9 +537,9 @@ export default function Header() {
               <span
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontWeight: 700,
-                  fontSize: "10px",
-                  letterSpacing: "0.1em",
+                  fontWeight: 600,
+                  fontSize: "9px",
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
                 }}
               >
@@ -666,7 +666,7 @@ export default function Header() {
         {/* Top Bar inside Overlay */}
         <div
           style={{
-            padding: "clamp(0.6rem, 1.5vw, 1rem) clamp(1.25rem, 4vw, 3.5rem)",
+            padding: "clamp(0.5rem, 1.2vw, 1rem) clamp(0.8rem, 2vw, 2rem)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -690,8 +690,8 @@ export default function Header() {
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 fontWeight: 900,
-                fontSize: "14px",
-                letterSpacing: "0.15em",
+                fontSize: "12px",
+                letterSpacing: "0.12em",
                 textTransform: "uppercase",
               }}
             >
@@ -699,9 +699,9 @@ export default function Header() {
             </span>
             <span
               style={{
-                fontSize: "10px",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
+                fontSize: "9px",
+                fontWeight: 500,
+                letterSpacing: "0.08em",
                 opacity: 0.6,
               }}
             >
@@ -720,8 +720,8 @@ export default function Header() {
               cursor: "pointer",
               display: "inline-flex",
               alignItems: "center",
-              gap: "8px",
-              padding: "8px 18px",
+              gap: "6px",
+              padding: "6px 12px",
               color: "#ffffff",
               backdropFilter: "blur(10px)",
               transition:
@@ -741,15 +741,15 @@ export default function Header() {
             <span
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "11px",
-                letterSpacing: "0.15em",
+                fontSize: "10px",
+                letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                fontWeight: 800,
+                fontWeight: 700,
               }}
             >
               CLOSE
             </span>
-            <span style={{ fontSize: "14px", fontWeight: "bold" }}>✕</span>
+            <span style={{ fontSize: "12px", fontWeight: "bold" }}>✕</span>
           </button>
         </div>
 
@@ -758,9 +758,9 @@ export default function Header() {
           style={{
             flex: 1,
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "clamp(1.2rem, 2.5vw, 3rem)",
-            padding: "clamp(0.8rem, 2vw, 1.5rem) clamp(1.25rem, 4vw, 3.5rem)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "clamp(1rem, 2vw, 3rem)",
+            padding: "clamp(0.6rem, 1.5vw, 1.5rem) clamp(1rem, 3vw, 3.5rem)",
             alignItems: "center",
             position: "relative",
             zIndex: 10,
@@ -799,13 +799,13 @@ export default function Header() {
                       style={{
                         display: "flex",
                         alignItems: "baseline",
-                        gap: "clamp(0.6rem, 1.5vw, 1.2rem)",
+                        gap: "clamp(0.4rem, 1vw, 1.2rem)",
                       }}
                     >
                       <span
                         style={{
-                          fontSize: "clamp(11px, 1.2vw, 14px)",
-                          fontWeight: 700,
+                          fontSize: "clamp(10px, 1vw, 14px)",
+                          fontWeight: 600,
                           opacity: 0.6,
                           fontFamily: "monospace",
                         }}
@@ -815,7 +815,7 @@ export default function Header() {
                       <span
                         style={{
                           fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                          fontSize: "clamp(1.2rem, 2.5vw, 2rem)",
+                          fontSize: "clamp(0.9rem, 2vw, 2rem)",
                           fontWeight: 900,
                           textTransform: "uppercase",
                           letterSpacing: "-0.03em",
@@ -850,38 +850,38 @@ export default function Header() {
             style={{
               backgroundColor: "rgba(10, 10, 10, 0.45)",
               backdropFilter: "blur(24px)",
-              padding: "clamp(0.8rem, 1.5vw, 1.2rem)",
+              padding: "clamp(0.6rem, 1.2vw, 1.2rem)",
               border: "1px solid rgba(255, 255, 255, 0.18)",
               borderRadius: "4px",
               boxShadow: "0 16px 40px rgba(0, 0, 0, 0.3)",
-              maxHeight: "calc(100vh - 120px)",
+              maxHeight: "calc(100vh - 100px)",
               overflowY: "auto",
             }}
           >
             {/* Header / Title */}
-            <div style={{ marginBottom: "1.25rem" }}>
+            <div style={{ marginBottom: "1rem" }}>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.5rem",
-                  marginBottom: "0.4rem",
+                  gap: "0.4rem",
+                  marginBottom: "0.3rem",
                 }}
               >
                 <span
                   style={{
                     display: "inline-block",
-                    width: "6px",
-                    height: "6px",
+                    width: "5px",
+                    height: "5px",
                     backgroundColor: "#ffffff",
                     borderRadius: "50%",
                   }}
                 />
                 <span
                   style={{
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.14em",
+                    fontSize: "0.65rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.12em",
                     textTransform: "uppercase",
                     color: "rgba(255, 255, 255, 0.85)",
                   }}
@@ -892,7 +892,7 @@ export default function Header() {
               <h3
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontSize: "clamp(0.9rem, 1.3vw, 1.1rem)",
+                  fontSize: "clamp(0.8rem, 1.1vw, 1.1rem)",
                   fontWeight: 900,
                   letterSpacing: "-0.02em",
                   textTransform: "uppercase",
@@ -997,16 +997,16 @@ export default function Header() {
               /* The Inquiry Form */
               <form onSubmit={handleInquirySubmit}>
                 {/* Section: Interested Disciplines */}
-                <div style={{ marginBottom: "1.25rem" }}>
+                <div style={{ marginBottom: "1rem" }}>
                   <label
                     style={{
                       display: "block",
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.12em",
+                      fontSize: "0.65rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       color: "rgba(255, 255, 255, 0.75)",
-                      marginBottom: "0.6rem",
+                      marginBottom: "0.5rem",
                     }}
                   >
                     INTERESTED DISCIPLINES
@@ -1015,7 +1015,7 @@ export default function Header() {
                     style={{
                       display: "flex",
                       flexWrap: "wrap",
-                      gap: "0.4rem",
+                      gap: "0.3rem",
                     }}
                   >
                     {inquiryDisciplines.map((disc) => {
@@ -1026,11 +1026,11 @@ export default function Header() {
                           type="button"
                           onClick={() => toggleDiscipline(disc)}
                           style={{
-                            padding: "3px 8px",
+                            padding: "2px 6px",
                             borderRadius: "9999px",
-                            fontSize: "0.62rem",
+                            fontSize: "0.58rem",
                             fontWeight: 600,
-                            letterSpacing: "0.04em",
+                            letterSpacing: "0.03em",
                             cursor: "pointer",
                             backgroundColor: isSelected
                               ? "#ffffff"
@@ -1068,9 +1068,9 @@ export default function Header() {
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                    gap: "0.75rem",
-                    marginBottom: "0.75rem",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                    gap: "0.6rem",
+                    marginBottom: "0.6rem",
                   }}
                 >
                   <div>
@@ -1078,12 +1078,12 @@ export default function Header() {
                       htmlFor="menu-inquiry-name"
                       style={{
                         display: "block",
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.1em",
+                        fontSize: "0.62rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         color: "rgba(255, 255, 255, 0.7)",
-                        marginBottom: "0.3rem",
+                        marginBottom: "0.25rem",
                       }}
                     >
                       YOUR NAME *
@@ -1097,12 +1097,12 @@ export default function Header() {
                       onChange={(e) => setFormName(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "8px 12px",
+                        padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "2px",
                         color: "#ffffff",
-                        fontSize: "0.82rem",
+                        fontSize: "0.75rem",
                         outline: "none",
                         transition: "border-color 0.2s ease",
                       }}
@@ -1121,12 +1121,12 @@ export default function Header() {
                       htmlFor="menu-inquiry-company"
                       style={{
                         display: "block",
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.1em",
+                        fontSize: "0.62rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         color: "rgba(255, 255, 255, 0.7)",
-                        marginBottom: "0.3rem",
+                        marginBottom: "0.25rem",
                       }}
                     >
                       COMPANY / BRAND
@@ -1139,12 +1139,12 @@ export default function Header() {
                       onChange={(e) => setFormCompany(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "8px 12px",
+                        padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "2px",
                         color: "#ffffff",
-                        fontSize: "0.82rem",
+                        fontSize: "0.75rem",
                         outline: "none",
                         transition: "border-color 0.2s ease",
                       }}
@@ -1163,9 +1163,9 @@ export default function Header() {
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                    gap: "0.75rem",
-                    marginBottom: "0.75rem",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                    gap: "0.6rem",
+                    marginBottom: "0.6rem",
                   }}
                 >
                   <div>
@@ -1173,12 +1173,12 @@ export default function Header() {
                       htmlFor="menu-inquiry-email"
                       style={{
                         display: "block",
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.1em",
+                        fontSize: "0.62rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         color: "rgba(255, 255, 255, 0.7)",
-                        marginBottom: "0.3rem",
+                        marginBottom: "0.25rem",
                       }}
                     >
                       EMAIL ADDRESS *
@@ -1192,12 +1192,12 @@ export default function Header() {
                       onChange={(e) => setFormEmail(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "8px 12px",
+                        padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "2px",
                         color: "#ffffff",
-                        fontSize: "0.82rem",
+                        fontSize: "0.75rem",
                         outline: "none",
                         transition: "border-color 0.2s ease",
                       }}
@@ -1216,12 +1216,12 @@ export default function Header() {
                       htmlFor="menu-inquiry-phone"
                       style={{
                         display: "block",
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.1em",
+                        fontSize: "0.62rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
                         textTransform: "uppercase",
                         color: "rgba(255, 255, 255, 0.7)",
-                        marginBottom: "0.3rem",
+                        marginBottom: "0.25rem",
                       }}
                     >
                       WHATSAPP / PHONE
@@ -1234,12 +1234,12 @@ export default function Header() {
                       onChange={(e) => setFormPhone(e.target.value)}
                       style={{
                         width: "100%",
-                        padding: "8px 12px",
+                        padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "2px",
                         color: "#ffffff",
-                        fontSize: "0.82rem",
+                        fontSize: "0.75rem",
                         outline: "none",
                         transition: "border-color 0.2s ease",
                       }}
@@ -1255,17 +1255,17 @@ export default function Header() {
                 </div>
 
                 {/* Brief & Scope Overview Textarea */}
-                <div style={{ marginBottom: "1.2rem" }}>
+                <div style={{ marginBottom: "1rem" }}>
                   <label
                     htmlFor="menu-inquiry-brief"
                     style={{
                       display: "block",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.1em",
+                      fontSize: "0.62rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
                       textTransform: "uppercase",
                       color: "rgba(255, 255, 255, 0.7)",
-                      marginBottom: "0.3rem",
+                      marginBottom: "0.25rem",
                     }}
                   >
                     PROJECT BRIEF &amp; SCOPE OVERVIEW *
@@ -1273,7 +1273,7 @@ export default function Header() {
                   <textarea
                     id="menu-inquiry-brief"
                     required
-                    rows={3}
+                    rows={2}
                     placeholder="Briefly describe your objectives, target audience, timeline, or key challenges..."
                     value={formBrief}
                     onChange={(e) => setFormBrief(e.target.value)}
@@ -1284,10 +1284,10 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "2px",
                         color: "#ffffff",
-                        fontSize: "0.72rem",
+                        fontSize: "0.7rem",
                       outline: "none",
                       resize: "vertical",
-                      minHeight: "70px",
+                      minHeight: "60px",
                       transition: "border-color 0.2s ease",
                     }}
                     onFocus={(e) => {
@@ -1322,16 +1322,16 @@ export default function Header() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: "0.5rem",
-                    padding: "8px 16px",
+                    gap: "0.4rem",
+                    padding: "6px 12px",
                     backgroundColor: "#ffffff",
                     color: "#c91a1f",
                     border: "none",
                     borderRadius: "2px",
                     cursor: formSubmitting ? "wait" : "pointer",
-                    fontSize: "0.78rem",
-                    fontWeight: 900,
-                    letterSpacing: "0.14em",
+                    fontSize: "0.7rem",
+                    fontWeight: 800,
+                    letterSpacing: "0.12em",
                     textTransform: "uppercase",
                     boxShadow: "0 4px 16px rgba(0, 0, 0, 0.2)",
                     transition:
