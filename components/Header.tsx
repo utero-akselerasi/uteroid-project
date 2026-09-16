@@ -357,7 +357,6 @@ export default function Header() {
             <div
               className="hidden md:flex"
               style={{
-                display: "flex",
                 alignItems: "center",
                 gap: "clamp(0.2rem, 0.6vw, 0.5rem)",
                 padding: "4px 8px",
