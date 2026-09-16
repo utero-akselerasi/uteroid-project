@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -243,7 +244,7 @@ export default function Header() {
           left: 0,
           right: 0,
           zIndex: 1000,
-          padding: "clamp(0.85rem, 1.8vw, 1.4rem) clamp(1rem, 3.5vw, 3rem)",
+          padding: "clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 2vw, 1.5rem)",
           transform:
             scrollDirection === "down" && scrolled && !menuOpen && !contactOpen
               ? "translateY(-100%)"
@@ -260,20 +261,20 @@ export default function Header() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "1rem",
+            gap: "0.5rem",
             pointerEvents: "auto",
           }}
         >
           {/* LEFT: Wordmark + Live Studio Status Badge */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Link
               href="/"
               style={{
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                padding: "8px 18px",
+                gap: "0.4rem",
+                padding: "6px 12px",
                 borderRadius: "9999px",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
@@ -295,8 +296,8 @@ export default function Header() {
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   fontWeight: 900,
-                  fontSize: "13px",
-                  letterSpacing: "0.16em",
+                  fontSize: "11px",
+                  letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   color: scrolled ? "#ffffff" : textColor,
                   transition: "color 0.3s ease",
@@ -307,8 +308,8 @@ export default function Header() {
               <span
                 style={{
                   display: "inline-block",
-                  width: "6px",
-                  height: "6px",
+                  width: "5px",
+                  height: "5px",
                   borderRadius: "50%",
                   backgroundColor: "#e31e24",
                 }}
@@ -436,8 +437,8 @@ export default function Header() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                padding: "8px 16px",
+                gap: "0.4rem",
+                padding: "6px 12px",
                 borderRadius: "9999px",
                 backgroundColor: contactOpen
                   ? "#e31e24"
@@ -455,9 +456,9 @@ export default function Header() {
                   ? "1px solid #e31e24"
                   : `1px solid ${borderColor}`,
                 cursor: "pointer",
-                fontSize: "11px",
-                fontWeight: 800,
-                letterSpacing: "0.14em",
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: contactOpen
                   ? "#ffffff"
@@ -482,7 +483,7 @@ export default function Header() {
               <span
                 style={{
                   color: contactOpen ? "#ffffff" : "#25D366",
-                  fontSize: "9px",
+                  fontSize: "8px",
                   display: "inline-block",
                   transform: contactOpen ? "rotate(45deg)" : "none",
                   transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -504,8 +505,8 @@ export default function Header() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.65rem",
-                padding: "8px 18px",
+                gap: "0.5rem",
+                padding: "6px 14px",
                 borderRadius: "9999px",
                 backgroundColor: isMenuHovered
                   ? "#e31e24"
@@ -536,9 +537,9 @@ export default function Header() {
               <span
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontWeight: 800,
-                  fontSize: "11px",
-                  letterSpacing: "0.15em",
+                  fontWeight: 700,
+                  fontSize: "10px",
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase",
                 }}
               >
