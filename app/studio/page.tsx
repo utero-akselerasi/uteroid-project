@@ -332,7 +332,7 @@ export default function StudioPage() {
                 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop"
+                  src="/img/studio.png"
                   alt="Utero Studio Workspace"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -351,8 +351,8 @@ export default function StudioPage() {
                 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=1200&auto=format&fit=crop"
-                  alt="Studio Planning & Design Review"
+                  src="/img/stodio.png"
+                  alt="Utero Studio Environment"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   style={{ objectFit: "cover" }}
