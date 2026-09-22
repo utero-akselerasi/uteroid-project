@@ -1,0 +1,50 @@
+{
+  "slug": "maitri",
+  "title": "Maitri",
+  "client": "Maitri",
+  "year": "",
+  "category": "Brand Identity & Visual Guideline",
+  "industry": "services",
+  "disciplines": [
+    "identity",
+    "print"
+  ],
+  "shortDescription": "Pedoman identitas visual brand Maitri.",
+  "description": "Pedoman identitas visual brand Maitri — standarisasi logo, sistem warna, tipografi, dan panduan aplikasi media komunikasi.",
+  "excerpt": "Pedoman identitas visual brand Maitri.",
+  "coverImage": "/projects/maitri/cover.webp",
+  "heroImage": "/projects/maitri/cover.webp",
+  "galleryImages": [
+    "/projects/maitri/01.webp",
+    "/projects/maitri/02.webp",
+    "/projects/maitri/03.webp",
+    "/projects/maitri/04.webp",
+    "/projects/maitri/05.webp",
+    "/projects/maitri/06.webp",
+    "/projects/maitri/07.webp",
+    "/projects/maitri/08.webp",
+    "/projects/maitri/09.webp",
+    "/projects/maitri/10.webp",
+    "/projects/maitri/11.webp"
+  ],
+  "gallery": [
+    "/projects/maitri/01.webp",
+    "/projects/maitri/02.webp",
+    "/projects/maitri/03.webp",
+    "/projects/maitri/04.webp",
+    "/projects/maitri/05.webp",
+    "/projects/maitri/06.webp",
+    "/projects/maitri/07.webp",
+    "/projects/maitri/08.webp",
+    "/projects/maitri/09.webp",
+    "/projects/maitri/10.webp",
+    "/projects/maitri/11.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "gsm",
+    "brand"
+  ],
+  "details": {}
+}

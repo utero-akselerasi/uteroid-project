@@ -1,0 +1,43 @@
+{
+  "slug": "dailbana",
+  "title": "Dailbana",
+  "client": "Dailbana",
+  "year": "",
+  "category": "Brand Identity & Visual Guideline",
+  "industry": "retail",
+  "disciplines": [
+    "identity",
+    "packaging",
+    "print"
+  ],
+  "shortDescription": "Pedoman identitas visual brand Dailbana.",
+  "description": "Graphic Standard Manual brand Dailbana — sistem identitas visual komprehensif mencakup standarisasi logo, warna, tipografi, kemasan, dan panduan aplikasi media.",
+  "excerpt": "Pedoman identitas visual brand Dailbana.",
+  "coverImage": "/projects/dailbana/cover.webp",
+  "heroImage": "/projects/dailbana/cover.webp",
+  "galleryImages": [
+    "/projects/dailbana/01.webp",
+    "/projects/dailbana/02.webp",
+    "/projects/dailbana/03.webp",
+    "/projects/dailbana/04.webp",
+    "/projects/dailbana/05.webp",
+    "/projects/dailbana/06.webp",
+    "/projects/dailbana/07.webp"
+  ],
+  "gallery": [
+    "/projects/dailbana/01.webp",
+    "/projects/dailbana/02.webp",
+    "/projects/dailbana/03.webp",
+    "/projects/dailbana/04.webp",
+    "/projects/dailbana/05.webp",
+    "/projects/dailbana/06.webp",
+    "/projects/dailbana/07.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "gsm",
+    "brand"
+  ],
+  "details": {}
+}

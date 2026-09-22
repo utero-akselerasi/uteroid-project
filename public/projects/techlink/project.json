@@ -1,0 +1,58 @@
+{
+  "slug": "techlink",
+  "title": "Techlink",
+  "client": "Techlink",
+  "year": "",
+  "category": "Technology Brand Identity & Visual Guideline",
+  "industry": "services",
+  "disciplines": [
+    "identity",
+    "digital",
+    "print"
+  ],
+  "shortDescription": "Pedoman identitas visual brand teknologi Techlink.",
+  "description": "Visual Guideline Techlink — standarisasi identitas visual brand teknologi mencakup logo, sistem warna, tipografi digital, dan panduan aplikasi media.",
+  "excerpt": "Pedoman identitas visual brand teknologi Techlink.",
+  "coverImage": "/projects/techlink/cover.webp",
+  "heroImage": "/projects/techlink/cover.webp",
+  "galleryImages": [
+    "/projects/techlink/01.webp",
+    "/projects/techlink/02.webp",
+    "/projects/techlink/03.webp",
+    "/projects/techlink/04.webp",
+    "/projects/techlink/05.webp",
+    "/projects/techlink/06.webp",
+    "/projects/techlink/07.webp",
+    "/projects/techlink/08.webp",
+    "/projects/techlink/09.webp",
+    "/projects/techlink/10.webp",
+    "/projects/techlink/11.webp",
+    "/projects/techlink/12.webp",
+    "/projects/techlink/13.webp",
+    "/projects/techlink/14.webp"
+  ],
+  "gallery": [
+    "/projects/techlink/01.webp",
+    "/projects/techlink/02.webp",
+    "/projects/techlink/03.webp",
+    "/projects/techlink/04.webp",
+    "/projects/techlink/05.webp",
+    "/projects/techlink/06.webp",
+    "/projects/techlink/07.webp",
+    "/projects/techlink/08.webp",
+    "/projects/techlink/09.webp",
+    "/projects/techlink/10.webp",
+    "/projects/techlink/11.webp",
+    "/projects/techlink/12.webp",
+    "/projects/techlink/13.webp",
+    "/projects/techlink/14.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "technology",
+    "identity",
+    "digital",
+    "visual-guideline"
+  ],
+  "details": {}
+}

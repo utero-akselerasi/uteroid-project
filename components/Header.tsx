@@ -22,40 +22,35 @@ const menuNavLinks: MenuNavItem[] = [
     label: "WORK",
     subtitle: "Selected Case Studies & Archive",
     href: "/work",
-    previewImage:
-      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/remote/brand.jpg",
   },
   {
     number: "02",
     label: "STUDIO",
     subtitle: "Philosophy, 25+ Years & Culture",
     href: "/studio",
-    previewImage:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/remote/space.jpg",
   },
   {
     number: "03",
     label: "SERVICES",
     subtitle: "Brand, Space, Digital & Capabilities",
     href: "/services",
-    previewImage:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/remote/digital.jpg",
   },
   {
     number: "04",
     label: "INSIGHTS",
     subtitle: "Publications, Media & Case Notes",
     href: "/insights",
-    previewImage:
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/remote/insight-identity.jpg",
   },
   {
     number: "05",
     label: "CONTACT",
     subtitle: "Direct Channels & Studio Base",
     href: "/contact",
-    previewImage:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/remote/outdoor.jpg",
   },
 ];
 

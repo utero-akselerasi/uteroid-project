@@ -1,0 +1,57 @@
+{
+  "slug": "uwg",
+  "title": "UWG",
+  "client": "UWG",
+  "year": "2021",
+  "category": "Brand Identity & Visual Guideline",
+  "industry": "education",
+  "disciplines": [
+    "identity",
+    "print",
+    "digital"
+  ],
+  "shortDescription": "Pedoman identitas visual UWG (Universitas Widyagama).",
+  "description": "Graphic Standard Manual UWG — standarisasi identitas visual institusi pendidikan mencakup logo, warna, tipografi, sarana korporasi, dan media komunikasi.",
+  "excerpt": "Pedoman identitas visual UWG (Universitas Widyagama).",
+  "coverImage": "/projects/uwg/cover.webp",
+  "heroImage": "/projects/uwg/cover.webp",
+  "galleryImages": [
+    "/projects/uwg/01.webp",
+    "/projects/uwg/02.webp",
+    "/projects/uwg/03.webp",
+    "/projects/uwg/04.webp",
+    "/projects/uwg/05.webp",
+    "/projects/uwg/06.webp",
+    "/projects/uwg/07.webp",
+    "/projects/uwg/08.webp",
+    "/projects/uwg/09.webp",
+    "/projects/uwg/10.webp",
+    "/projects/uwg/11.webp",
+    "/projects/uwg/12.webp",
+    "/projects/uwg/13.webp"
+  ],
+  "gallery": [
+    "/projects/uwg/01.webp",
+    "/projects/uwg/02.webp",
+    "/projects/uwg/03.webp",
+    "/projects/uwg/04.webp",
+    "/projects/uwg/05.webp",
+    "/projects/uwg/06.webp",
+    "/projects/uwg/07.webp",
+    "/projects/uwg/08.webp",
+    "/projects/uwg/09.webp",
+    "/projects/uwg/10.webp",
+    "/projects/uwg/11.webp",
+    "/projects/uwg/12.webp",
+    "/projects/uwg/13.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "education",
+    "identity",
+    "gsm",
+    "university",
+    "2021"
+  ],
+  "details": {}
+}

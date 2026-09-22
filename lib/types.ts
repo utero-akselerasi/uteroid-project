@@ -63,11 +63,13 @@ export interface Project {
   // ── Media ────────────────────────────────────────────────
   coverImage: string;          // Primary cover image for grid + detail hero
   heroImage?: string;          // Backwards-compat alias for coverImage
+  hoverImage?: string;         // Curated rich interior mockup image to preview on hover
   galleryImages?: string[];    // Case study gallery (1–N images)
   gallery?: string[];          // Backwards-compat alias for galleryImages
 
   // ── Flags & metadata ─────────────────────────────────────
   featured?: boolean;          // Show prominently on homepage (top ~3–4)
+  priority?: number;           // Archive sort priority (higher = shown first)
   tags?: string[];             // Optional tags for future filtering
 
   // ── Case study content (fill from PDF) ───────────────────

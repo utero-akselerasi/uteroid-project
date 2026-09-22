@@ -1,0 +1,59 @@
+{
+  "slug": "kiyona",
+  "title": "Kiyona",
+  "client": "Kiyona",
+  "year": "",
+  "category": "Brand Identity & Mini GSM",
+  "industry": "retail",
+  "disciplines": [
+    "identity",
+    "packaging",
+    "print"
+  ],
+  "shortDescription": "Mini GSM identitas visual brand Kiyona.",
+  "description": "Mini Graphic Standard Manual brand Kiyona — pedoman identitas visual ringkas mencakup logo, warna, tipografi, kemasan, dan panduan penggunaan identitas.",
+  "excerpt": "Mini GSM identitas visual brand Kiyona.",
+  "coverImage": "/projects/kiyona/cover.webp",
+  "heroImage": "/projects/kiyona/cover.webp",
+  "galleryImages": [
+    "/projects/kiyona/01.webp",
+    "/projects/kiyona/02.webp",
+    "/projects/kiyona/03.webp",
+    "/projects/kiyona/04.webp",
+    "/projects/kiyona/05.webp",
+    "/projects/kiyona/06.webp",
+    "/projects/kiyona/07.webp",
+    "/projects/kiyona/08.webp",
+    "/projects/kiyona/09.webp",
+    "/projects/kiyona/10.webp",
+    "/projects/kiyona/11.webp",
+    "/projects/kiyona/12.webp",
+    "/projects/kiyona/13.webp",
+    "/projects/kiyona/14.webp",
+    "/projects/kiyona/15.webp"
+  ],
+  "gallery": [
+    "/projects/kiyona/01.webp",
+    "/projects/kiyona/02.webp",
+    "/projects/kiyona/03.webp",
+    "/projects/kiyona/04.webp",
+    "/projects/kiyona/05.webp",
+    "/projects/kiyona/06.webp",
+    "/projects/kiyona/07.webp",
+    "/projects/kiyona/08.webp",
+    "/projects/kiyona/09.webp",
+    "/projects/kiyona/10.webp",
+    "/projects/kiyona/11.webp",
+    "/projects/kiyona/12.webp",
+    "/projects/kiyona/13.webp",
+    "/projects/kiyona/14.webp",
+    "/projects/kiyona/15.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "mini-gsm",
+    "retail"
+  ],
+  "details": {}
+}

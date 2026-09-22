@@ -1,0 +1,61 @@
+{
+  "slug": "lacamino",
+  "title": "La Camino",
+  "client": "La Camino",
+  "year": "",
+  "category": "Property & Hospitality Visual Guideline",
+  "industry": "property",
+  "disciplines": [
+    "identity",
+    "print",
+    "indoor",
+    "outdoor"
+  ],
+  "shortDescription": "Pedoman identitas visual properti dan hospitality La Camino.",
+  "description": "Visual Guideline La Camino — sistem identitas visual properti dan hospitality premium mencakup logo, warna, tipografi, signage, dan aplikasi lingkungan.",
+  "excerpt": "Pedoman identitas visual properti dan hospitality La Camino.",
+  "coverImage": "/projects/lacamino/cover.webp",
+  "heroImage": "/projects/lacamino/cover.webp",
+  "galleryImages": [
+    "/projects/lacamino/01.webp",
+    "/projects/lacamino/02.webp",
+    "/projects/lacamino/03.webp",
+    "/projects/lacamino/04.webp",
+    "/projects/lacamino/05.webp",
+    "/projects/lacamino/06.webp",
+    "/projects/lacamino/07.webp",
+    "/projects/lacamino/08.webp",
+    "/projects/lacamino/09.webp",
+    "/projects/lacamino/10.webp",
+    "/projects/lacamino/11.webp",
+    "/projects/lacamino/12.webp",
+    "/projects/lacamino/13.webp",
+    "/projects/lacamino/14.webp",
+    "/projects/lacamino/15.webp"
+  ],
+  "gallery": [
+    "/projects/lacamino/01.webp",
+    "/projects/lacamino/02.webp",
+    "/projects/lacamino/03.webp",
+    "/projects/lacamino/04.webp",
+    "/projects/lacamino/05.webp",
+    "/projects/lacamino/06.webp",
+    "/projects/lacamino/07.webp",
+    "/projects/lacamino/08.webp",
+    "/projects/lacamino/09.webp",
+    "/projects/lacamino/10.webp",
+    "/projects/lacamino/11.webp",
+    "/projects/lacamino/12.webp",
+    "/projects/lacamino/13.webp",
+    "/projects/lacamino/14.webp",
+    "/projects/lacamino/15.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "property",
+    "hospitality",
+    "identity",
+    "visual-guideline"
+  ],
+  "details": {}
+}

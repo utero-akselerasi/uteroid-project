@@ -1,0 +1,58 @@
+{
+  "slug": "sfi",
+  "title": "SFI",
+  "client": "SFI",
+  "year": "",
+  "category": "Brand Identity & Visual Guideline",
+  "industry": "corporate",
+  "disciplines": [
+    "identity",
+    "print"
+  ],
+  "shortDescription": "Pedoman identitas brand SFI — sistem visual korporasi komprehensif.",
+  "description": "Pedoman identitas brand SFI yang mencakup sistem visual korporasi komprehensif dari standarisasi logo hingga aplikasi media komunikasi.",
+  "excerpt": "Pedoman identitas brand SFI — sistem visual korporasi komprehensif.",
+  "coverImage": "/projects/sfi/cover.webp",
+  "heroImage": "/projects/sfi/cover.webp",
+  "galleryImages": [
+    "/projects/sfi/01.webp",
+    "/projects/sfi/02.webp",
+    "/projects/sfi/03.webp",
+    "/projects/sfi/04.webp",
+    "/projects/sfi/05.webp",
+    "/projects/sfi/06.webp",
+    "/projects/sfi/07.webp",
+    "/projects/sfi/08.webp",
+    "/projects/sfi/09.webp",
+    "/projects/sfi/10.webp",
+    "/projects/sfi/11.webp",
+    "/projects/sfi/12.webp",
+    "/projects/sfi/13.webp",
+    "/projects/sfi/14.webp",
+    "/projects/sfi/15.webp"
+  ],
+  "gallery": [
+    "/projects/sfi/01.webp",
+    "/projects/sfi/02.webp",
+    "/projects/sfi/03.webp",
+    "/projects/sfi/04.webp",
+    "/projects/sfi/05.webp",
+    "/projects/sfi/06.webp",
+    "/projects/sfi/07.webp",
+    "/projects/sfi/08.webp",
+    "/projects/sfi/09.webp",
+    "/projects/sfi/10.webp",
+    "/projects/sfi/11.webp",
+    "/projects/sfi/12.webp",
+    "/projects/sfi/13.webp",
+    "/projects/sfi/14.webp",
+    "/projects/sfi/15.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "corporate",
+    "gsm"
+  ],
+  "details": {}
+}

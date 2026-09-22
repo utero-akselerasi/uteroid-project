@@ -1,0 +1,59 @@
+{
+  "slug": "jmt",
+  "title": "JMT",
+  "client": "JMT",
+  "year": "",
+  "category": "Brand Identity & Visual Guideline",
+  "industry": "corporate",
+  "disciplines": [
+    "identity",
+    "print",
+    "outdoor"
+  ],
+  "shortDescription": "Pedoman identitas visual JMT — sistem brand korporasi komprehensif.",
+  "description": "Visual Guideline JMT — standarisasi identitas visual korporasi komprehensif mencakup logo, warna, tipografi, sarana komunikasi, dan aplikasi media.",
+  "excerpt": "Pedoman identitas visual JMT — sistem brand korporasi komprehensif.",
+  "coverImage": "/projects/jmt/cover.webp",
+  "heroImage": "/projects/jmt/cover.webp",
+  "galleryImages": [
+    "/projects/jmt/01.webp",
+    "/projects/jmt/02.webp",
+    "/projects/jmt/03.webp",
+    "/projects/jmt/04.webp",
+    "/projects/jmt/05.webp",
+    "/projects/jmt/06.webp",
+    "/projects/jmt/07.webp",
+    "/projects/jmt/08.webp",
+    "/projects/jmt/09.webp",
+    "/projects/jmt/10.webp",
+    "/projects/jmt/11.webp",
+    "/projects/jmt/12.webp",
+    "/projects/jmt/13.webp",
+    "/projects/jmt/14.webp",
+    "/projects/jmt/15.webp"
+  ],
+  "gallery": [
+    "/projects/jmt/01.webp",
+    "/projects/jmt/02.webp",
+    "/projects/jmt/03.webp",
+    "/projects/jmt/04.webp",
+    "/projects/jmt/05.webp",
+    "/projects/jmt/06.webp",
+    "/projects/jmt/07.webp",
+    "/projects/jmt/08.webp",
+    "/projects/jmt/09.webp",
+    "/projects/jmt/10.webp",
+    "/projects/jmt/11.webp",
+    "/projects/jmt/12.webp",
+    "/projects/jmt/13.webp",
+    "/projects/jmt/14.webp",
+    "/projects/jmt/15.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "corporate",
+    "identity",
+    "visual-guideline"
+  ],
+  "details": {}
+}

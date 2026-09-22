@@ -1,0 +1,50 @@
+{
+  "slug": "boop",
+  "title": "Boop",
+  "client": "Boop",
+  "year": "",
+  "category": "Brand Identity & Mini GSM",
+  "industry": "retail",
+  "disciplines": [
+    "identity",
+    "print"
+  ],
+  "shortDescription": "Mini GSM identitas brand Boop — panduan visual ringkas dan aplikatif.",
+  "description": "Mini Graphic Standard Manual (GSM) brand Boop — pedoman identitas visual ringkas yang mencakup standarisasi logo, warna, dan panduan penggunaan identitas.",
+  "excerpt": "Mini GSM identitas brand Boop — panduan visual ringkas dan aplikatif.",
+  "coverImage": "/projects/boop/cover.webp",
+  "heroImage": "/projects/boop/cover.webp",
+  "galleryImages": [
+    "/projects/boop/01.webp",
+    "/projects/boop/02.webp",
+    "/projects/boop/03.webp",
+    "/projects/boop/04.webp",
+    "/projects/boop/05.webp",
+    "/projects/boop/06.webp",
+    "/projects/boop/07.webp",
+    "/projects/boop/08.webp",
+    "/projects/boop/09.webp",
+    "/projects/boop/10.webp",
+    "/projects/boop/11.webp"
+  ],
+  "gallery": [
+    "/projects/boop/01.webp",
+    "/projects/boop/02.webp",
+    "/projects/boop/03.webp",
+    "/projects/boop/04.webp",
+    "/projects/boop/05.webp",
+    "/projects/boop/06.webp",
+    "/projects/boop/07.webp",
+    "/projects/boop/08.webp",
+    "/projects/boop/09.webp",
+    "/projects/boop/10.webp",
+    "/projects/boop/11.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "mini-gsm",
+    "retail"
+  ],
+  "details": {}
+}

@@ -10,8 +10,24 @@ import RevealOnScroll, { RevealImage } from "./RevealOnScroll";
 export default function SelectedWorkSection() {
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
 
-  // Take the primary 4 real showcase projects
-  const recentProjects = projects.slice(0, 4);
+  // Sort by verified year descending, then by priority
+  const recentProjects = [...projects]
+    .filter((p) => Boolean(p.year && p.year.trim()))
+    .sort((a, b) => {
+      const yearA = parseInt(a.year, 10);
+      const yearB = parseInt(b.year, 10);
+      if (yearB !== yearA) return yearB - yearA;
+      return (b.priority || 0) - (a.priority || 0);
+    })
+    .slice(0, 4);
+
+  // Dynamic year range
+  const validYears = projects
+    .map((p) => parseInt(p.year, 10))
+    .filter((y) => !isNaN(y));
+  const minYear = validYears.length > 0 ? Math.min(...validYears) : 2019;
+  const maxYear = validYears.length > 0 ? Math.max(...validYears) : 2026;
+  const yearRangeText = `/ ${minYear} — ${maxYear}`;
 
   return (
     <section
@@ -104,7 +120,7 @@ export default function SelectedWorkSection() {
                   color: "rgba(255, 255, 255, 0.5)",
                 }}
               >
-                / 2021 — 2024
+                {yearRangeText}
               </span>
 
               <Link
@@ -149,7 +165,6 @@ export default function SelectedWorkSection() {
           {recentProjects.map((project, idx) => {
             const projectNumber = `0${idx + 1}`;
             const isHovered = hoveredSlug === project.slug;
-
             return (
               <RevealOnScroll key={project.slug} delay={idx + 1}>
                 <Link
@@ -168,7 +183,7 @@ export default function SelectedWorkSection() {
                         backgroundColor: "#161616",
                         overflow: "hidden",
                         marginBottom: "0.5rem",
-                        border: "1px solid rgba(255, 255, 255, 0.08)",
+                        border: "none",
                       }}
                     >
                       {project.heroImage ? (
@@ -178,8 +193,7 @@ export default function SelectedWorkSection() {
                           fill
                           sizes="(max-width: 768px) 100vw, 50vw"
                           style={{
-                            objectFit: "cover",
-                            objectPosition: project.slug === "garageplug" ? "center 20%" : project.slug === "stamford" ? "center 15%" : "center",
+                            objectFit: "contain",
                             transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease",
                             transform: isHovered ? "scale(1.03)" : "scale(1)",
                             filter: isHovered ? "brightness(1.05)" : "brightness(0.9)",

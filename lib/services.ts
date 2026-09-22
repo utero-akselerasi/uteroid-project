@@ -47,7 +47,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Exhaustive technical documentation detailing safe zones, digital specs, and fabrication standards.",
       },
     ],
-    image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/brand.jpg",
     relatedProjectSlugs: ["garageplug", "baiturrokhman", "festival-mbois-8"],
   },
   {
@@ -83,7 +83,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Specifying sustainable paper stocks, soy inks, and recyclable finishes that fulfill environmental stewardship.",
       },
     ],
-    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/product.jpg",
     relatedProjectSlugs: ["kopilogi-packaging", "keripik-tempe-malang"],
   },
   {
@@ -119,7 +119,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Engineering physical store displays, table-talkers, and wobblers that trigger final purchasing decisions.",
       },
     ],
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/promotion.jpg",
     relatedProjectSlugs: ["festival-mbois-8", "garageplug"],
   },
   {
@@ -155,7 +155,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Implementing high-contrast typography, international pictograms, and legible scale for all visitor demographics.",
       },
     ],
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/space.jpg",
     relatedProjectSlugs: ["malang-creative-center-wayfinding", "baiturrokhman"],
   },
   {
@@ -191,7 +191,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Zero layout shift, optimized image assets, and flawless cross-device fluidity from handheld to 4K displays.",
       },
     ],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/digital.jpg",
     relatedProjectSlugs: ["utero-digital-system", "garageplug"],
   },
   {
@@ -227,7 +227,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Turning corporate values and milestones into striking typography murals across team collaborative zones.",
       },
     ],
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/indoor.jpg",
     relatedProjectSlugs: ["baiturrokhman", "malang-creative-center-wayfinding"],
   },
   {
@@ -263,7 +263,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Utilizing industrial-grade vinyls, fade-resistant UV pigmentation, and heavy-duty tensioning systems.",
       },
     ],
-    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/outdoor.jpg",
     relatedProjectSlugs: ["garageplug", "festival-mbois-8"],
   },
 ];

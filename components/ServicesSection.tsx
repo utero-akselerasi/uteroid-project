@@ -28,8 +28,7 @@ const capabilities: Capability[] = [
       "Corporate Stationery & Collateral",
       "Brand Architecture & Naming",
     ],
-    image:
-      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/brand.jpg",
     slug: "brand",
   },
   {
@@ -44,8 +43,7 @@ const capabilities: Capability[] = [
       "Product Packaging & Label Systems",
       "Brochures & Marketing Print",
     ],
-    image:
-      "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/product.jpg",
     slug: "product",
   },
   {
@@ -60,8 +58,7 @@ const capabilities: Capability[] = [
       "Event Systems & Exhibition Kits",
       "Executive Gift Sets & Souvenirs",
     ],
-    image:
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/promotion.jpg",
     slug: "promotion",
   },
   {
@@ -76,8 +73,7 @@ const capabilities: Capability[] = [
       "Social Media Design Systems",
       "Digital Branding & Motion Assets",
     ],
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/digital.jpg",
     slug: "digital",
   },
   {
@@ -92,8 +88,7 @@ const capabilities: Capability[] = [
       "Outdoor Billboards & Architectural Pylons",
       "Exhibition & Event Space Design",
     ],
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    image: "/img/remote/space.jpg",
     slug: "space",
   },
 ];

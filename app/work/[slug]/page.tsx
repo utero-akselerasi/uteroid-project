@@ -19,7 +19,7 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return { title: "Project Not Found" };
   return {
-    title: `${project.title} — Case Study`,
+    title: `${project.title} — Utero`,
     description:
       project.shortDescription ||
       project.excerpt ||
@@ -28,7 +28,8 @@ export async function generateMetadata({
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// Gallery — server-renderable, auto-layout
+// Gallery — editorial layout
+// Full-width first image, then 2-col pairs with occasional full-width
 // ─────────────────────────────────────────────────────────────────────
 function GalleryImage({
   src,
@@ -47,12 +48,17 @@ function GalleryImage({
         position: "relative",
         width: "100%",
         aspectRatio,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#f0efed",
         overflow: "hidden",
-        border: "1px solid rgba(0, 0, 0, 0.08)",
       }}
     >
-      <Image src={src} alt={alt} fill sizes={sizes} style={{ objectFit: "cover" }} />
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        style={{ objectFit: "contain" }}
+      />
     </div>
   );
 }
@@ -62,12 +68,12 @@ function ProjectGallery({ images }: { images: string[] }) {
 
   const [first, ...rest] = images;
 
-  // Lay out remaining images as 2-col pairs with occasional full-width
+  // Build rows: pairs of 2 with every 3rd (index 2, 5, 8…) as full-width
   const rows: React.ReactNode[] = [];
   let j = 0;
   while (j < rest.length) {
-    const isAlone = j + 1 >= rest.length || j % 5 === 2;
-    if (isAlone) {
+    const isFullWidth = j % 3 === 2 || j + 1 >= rest.length;
+    if (isFullWidth) {
       rows.push(
         <GalleryImage
           key={`g-${j}`}
@@ -81,7 +87,7 @@ function ProjectGallery({ images }: { images: string[] }) {
       rows.push(
         <div
           key={`g-pair-${j}`}
-          className="proj-gallery-pair"
+          className="sg-pair"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -107,16 +113,16 @@ function ProjectGallery({ images }: { images: string[] }) {
   }
 
   return (
-    <div style={{ marginBottom: "clamp(4rem, 7vw, 7rem)" }}>
-      {/* Gallery label */}
+    <div style={{ marginBottom: "clamp(5rem, 8vw, 8rem)" }}>
+      {/* Gallery section label */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "0.75rem",
-          marginBottom: "2rem",
+          gap: "0.6rem",
+          marginBottom: "1.75rem",
           paddingTop: "clamp(3rem, 5vw, 5rem)",
-          borderTop: "1px solid rgba(0, 0, 0, 0.08)",
+          borderTop: "1px solid rgba(0,0,0,0.07)",
         }}
       >
         <span
@@ -129,59 +135,28 @@ function ProjectGallery({ images }: { images: string[] }) {
         />
         <span
           style={{
-            fontSize: "0.72rem",
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            fontSize: "0.62rem",
             fontWeight: 800,
-            letterSpacing: "0.15em",
+            letterSpacing: "0.18em",
             textTransform: "uppercase",
             color: "#c91a1f",
           }}
         >
-          Project Gallery
+          Selected Work
         </span>
       </div>
 
       <div
-        style={{ display: "flex", flexDirection: "column", gap: "clamp(1rem, 2vw, 1.5rem)" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "clamp(0.75rem, 1.5vw, 1.25rem)",
+        }}
       >
-        <GalleryImage src={first} alt="Project image 1" aspectRatio="21/9" />
+        <GalleryImage src={first} alt="Project image 1" aspectRatio="16/9" />
         {rows}
       </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────
-// Section label helper
-// ─────────────────────────────────────────────────────────────────────
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "0.75rem",
-        marginBottom: "1.5rem",
-      }}
-    >
-      <span
-        style={{
-          width: "1.5rem",
-          height: "1px",
-          backgroundColor: "#c91a1f",
-          display: "inline-block",
-        }}
-      />
-      <span
-        style={{
-          fontSize: "0.72rem",
-          fontWeight: 800,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          color: "#c91a1f",
-        }}
-      >
-        {children}
-      </span>
     </div>
   );
 }
@@ -200,27 +175,35 @@ export default async function ProjectPage({
 
   const { prev, next } = getAdjacentProjects(project.slug);
   const coverSrc = project.coverImage || project.heroImage;
-  const gallery  = project.galleryImages || project.gallery || [];
+  const gallery = project.galleryImages || project.gallery || [];
+
+  // Sorted project index (same sort as archive)
+  const allSlugs = getAllSlugs();
+  const projectIndex = allSlugs.indexOf(project.slug);
+  const num = String(projectIndex + 1).padStart(2, "0");
+
+  const disciplines = project.disciplines.map((d) => disciplineLabels[d]).join(" · ");
 
   return (
     <>
       <style>{`
-        .proj-back:hover   { color: #c91a1f !important; }
-        .proj-cta:hover    { background-color: #0a0a0a !important; }
-        .proj-allwork:hover { color: #c91a1f !important; border-color: #c91a1f !important; }
-        .proj-adj:hover    { border-color: rgba(201,26,31,0.5) !important; background: rgba(201,26,31,0.03) !important; }
+        .sd-back:hover  { color: #c91a1f !important; }
+        .sd-cta:hover   { background-color: #0a0a0a !important; }
+        .sd-adj:hover   { border-color: rgba(201,26,31,0.35) !important; }
+        .sd-adj:hover .sd-adj-arrow { color: #c91a1f !important; }
         @media (max-width: 640px) {
-          .proj-meta-grid  { grid-template-columns: 1fr 1fr !important; }
-          .proj-adj-wrap   { flex-direction: column !important; }
-          .proj-adj        { max-width: 100% !important; }
-          .proj-gallery-pair { grid-template-columns: 1fr !important; }
+          .sg-pair    { grid-template-columns: 1fr !important; }
+          .sd-meta    { grid-template-columns: 1fr 1fr !important; }
+          .sd-adj-row { flex-direction: column !important; }
+          .sd-adj     { max-width: 100% !important; }
+          .sd-hero    { aspect-ratio: 4/3 !important; }
         }
       `}</style>
 
       <section
         style={{
-          paddingTop: "clamp(6rem, 10vw, 9rem)",
-          paddingBottom: "clamp(4rem, 8vw, 8rem)",
+          paddingTop: "clamp(7rem, 11vw, 10rem)",
+          paddingBottom: "clamp(5rem, 10vw, 10rem)",
           backgroundColor: "#ffffff",
           minHeight: "100vh",
           color: "#0a0a0a",
@@ -233,95 +216,118 @@ export default async function ProjectPage({
             padding: "0 clamp(1.25rem, 4vw, 3.5rem)",
           }}
         >
-          {/* ── Back link ─────────────────────────────────────── */}
-          <div style={{ marginBottom: "clamp(2.5rem, 4vw, 4rem)" }}>
+          {/* ── Back link ─────────────────────────────────────────── */}
+          <div style={{ marginBottom: "clamp(3rem, 5vw, 5rem)" }}>
             <Link
               href="/work"
-              data-cursor="BACK"
-              className="proj-back"
+              className="sd-back"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                fontSize: "0.72rem",
+                fontSize: "0.68rem",
                 fontWeight: 800,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "#555555",
+                color: "rgba(10,10,10,0.45)",
                 textDecoration: "none",
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 transition: "color 0.2s ease",
               }}
             >
               <span>←</span>
-              <span>Back to Works</span>
+              <span>All Work</span>
             </Link>
           </div>
 
-          {/* ── Project Header ─────────────────────────────────── */}
-          <div style={{ marginBottom: "clamp(2.5rem, 4vw, 4rem)" }}>
-            {/* Category + year label */}
-            <SectionLabel>
-              {project.category} · {project.year}
-            </SectionLabel>
+          {/* ── Project Header ────────────────────────────────────── */}
+          <div style={{ marginBottom: "clamp(3rem, 5vw, 5rem)" }}>
+            {/* Project number */}
+            <div
+              style={{
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: "0.65rem",
+                fontWeight: 800,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "#c91a1f",
+                marginBottom: "1.25rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.6rem",
+              }}
+            >
+              <span
+                style={{
+                  width: "1.5rem",
+                  height: "1px",
+                  backgroundColor: "#c91a1f",
+                  display: "inline-block",
+                }}
+              />
+              {num}
+            </div>
 
             {/* Title */}
             <h1
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(3rem, 7vw, 7rem)",
+                fontSize: "clamp(2.75rem, 6.5vw, 7rem)",
                 fontWeight: 900,
                 letterSpacing: "-0.04em",
                 textTransform: "uppercase",
                 color: "#0a0a0a",
                 lineHeight: 0.92,
-                margin: "0 0 clamp(2.5rem, 4vw, 4rem)",
+                margin: "0 0 clamp(2rem, 3.5vw, 3.5rem)",
               }}
             >
               {project.title}
             </h1>
 
-            {/* Metadata table */}
+            {/* Metadata row — 4-column grid */}
             <div
-              className="proj-meta-grid"
+              className="sd-meta"
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(4, 1fr)",
-                borderTop: "1px solid rgba(0, 0, 0, 0.08)",
-                borderLeft: "1px solid rgba(0, 0, 0, 0.08)",
+                borderTop: "1px solid rgba(0,0,0,0.07)",
+                borderLeft: "1px solid rgba(0,0,0,0.07)",
               }}
             >
               {(
                 [
                   { label: "Client",      value: project.client },
-                  { label: "Year",        value: project.year },
+                  { label: "Year",        value: project.year || "—" },
                   { label: "Industry",    value: industryLabels[project.industry] },
-                  { label: "Disciplines", value: project.disciplines.map((d) => disciplineLabels[d]).join(" / ") },
+                  { label: "Disciplines", value: disciplines },
                 ] as const
               ).map(({ label, value }) => (
                 <div
                   key={label}
                   style={{
-                    padding: "1.25rem 1.5rem",
-                    borderRight: "1px solid rgba(0, 0, 0, 0.08)",
-                    borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
+                    padding: "1.1rem 1.25rem",
+                    borderRight: "1px solid rgba(0,0,0,0.07)",
+                    borderBottom: "1px solid rgba(0,0,0,0.07)",
                   }}
                 >
                   <span
                     style={{
                       display: "block",
-                      fontSize: "0.65rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontSize: "0.6rem",
+                      fontWeight: 800,
+                      letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "rgba(10, 10, 10, 0.4)",
-                      marginBottom: "0.5rem",
+                      color: "rgba(10,10,10,0.35)",
+                      marginBottom: "0.4rem",
                     }}
                   >
                     {label}
                   </span>
                   <span
                     style={{
-                      fontSize: "0.875rem",
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontSize: "0.8rem",
                       fontWeight: 700,
                       color: "#0a0a0a",
                       lineHeight: 1.4,
@@ -334,16 +340,16 @@ export default async function ProjectPage({
             </div>
           </div>
 
-          {/* ── Hero Image ───────────────────────────────────────── */}
+          {/* ── Hero Image ───────────────────────────────────────────── */}
           <div
+            className="sd-hero"
             style={{
               position: "relative",
               width: "100%",
               aspectRatio: "21/9",
-              minHeight: "280px",
-              backgroundColor: "#f5f5f5",
+              minHeight: "240px",
+              backgroundColor: "#f0efed",
               overflow: "hidden",
-              border: "1px solid rgba(0, 0, 0, 0.08)",
               marginBottom: "clamp(3rem, 5vw, 5rem)",
             }}
           >
@@ -354,51 +360,73 @@ export default async function ProjectPage({
                 fill
                 priority
                 sizes="(max-width: 1400px) 100vw, 1400px"
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "contain" }}
               />
             ) : (
-              <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }} />
+              <div style={{ width: "100%", height: "100%", backgroundColor: "#e8e8e8" }} />
             )}
           </div>
 
-          {/* ── Project Overview ─────────────────────────────────── */}
-          <div style={{ maxWidth: "900px", marginBottom: "clamp(3rem, 5vw, 5rem)" }}>
-            <SectionLabel>Project Overview</SectionLabel>
+          {/* ── Project Overview ──────────────────────────────────────── */}
+          <div
+            style={{
+              maxWidth: "820px",
+              marginBottom: "clamp(3rem, 5vw, 5rem)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <span
+                style={{
+                  width: "1.5rem",
+                  height: "1px",
+                  backgroundColor: "#c91a1f",
+                  display: "inline-block",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontSize: "0.62rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "#c91a1f",
+                }}
+              >
+                Overview
+              </span>
+            </div>
             <p
               style={{
-                fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)",
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: "clamp(1.05rem, 1.6vw, 1.3rem)",
                 lineHeight: 1.65,
                 color: "#0a0a0a",
-                marginBottom: "1.5rem",
                 fontWeight: 400,
+                margin: 0,
               }}
             >
               {project.description}
             </p>
-            {project.shortDescription &&
-              project.shortDescription !== project.description && (
-                <p
-                  style={{
-                    fontSize: "0.95rem",
-                    lineHeight: 1.7,
-                    color: "#555555",
-                  }}
-                >
-                  {project.shortDescription}
-                </p>
-              )}
           </div>
 
-          {/* ── Case Study Details ──────────────────────────────── */}
+          {/* ── Case Study Details ────────────────────────────────────── */}
           {project.details && (
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
                 gap: "clamp(1.5rem, 3vw, 2.5rem)",
                 marginBottom: "clamp(3rem, 5vw, 5rem)",
-                paddingTop: "clamp(2.5rem, 4vw, 4rem)",
-                borderTop: "1px solid rgba(0, 0, 0, 0.08)",
+                paddingTop: "clamp(2rem, 4vw, 3.5rem)",
+                borderTop: "1px solid rgba(0,0,0,0.07)",
               }}
             >
               {project.details.scope && project.details.scope.length > 0 && (
@@ -406,11 +434,12 @@ export default async function ProjectPage({
                   <span
                     style={{
                       display: "block",
-                      fontSize: "0.65rem",
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontSize: "0.6rem",
                       fontWeight: 800,
-                      letterSpacing: "0.15em",
+                      letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "rgba(10, 10, 10, 0.4)",
+                      color: "rgba(10,10,10,0.35)",
                       marginBottom: "1rem",
                     }}
                   >
@@ -422,15 +451,26 @@ export default async function ProjectPage({
                         key={s}
                         style={{
                           display: "flex",
-                          alignItems: "center",
-                          gap: "0.6rem",
-                          fontSize: "0.875rem",
+                          alignItems: "flex-start",
+                          gap: "0.5rem",
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          fontSize: "0.82rem",
                           color: "#333333",
-                          padding: "0.4rem 0",
-                          borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
+                          padding: "0.35rem 0",
+                          borderBottom: "1px solid rgba(0,0,0,0.05)",
+                          lineHeight: 1.4,
                         }}
                       >
-                        <span style={{ color: "#c91a1f", fontSize: "0.45rem" }}>■</span>
+                        <span
+                          style={{
+                            color: "#c91a1f",
+                            fontSize: "0.4rem",
+                            marginTop: "0.35em",
+                            flexShrink: 0,
+                          }}
+                        >
+                          ■
+                        </span>
                         {s}
                       </li>
                     ))}
@@ -443,11 +483,12 @@ export default async function ProjectPage({
                   <span
                     style={{
                       display: "block",
-                      fontSize: "0.65rem",
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontSize: "0.6rem",
                       fontWeight: 800,
-                      letterSpacing: "0.15em",
+                      letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "rgba(10, 10, 10, 0.4)",
+                      color: "rgba(10,10,10,0.35)",
                       marginBottom: "1rem",
                     }}
                   >
@@ -455,9 +496,11 @@ export default async function ProjectPage({
                   </span>
                   <p
                     style={{
-                      fontSize: "0.875rem",
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontSize: "0.82rem",
                       lineHeight: 1.7,
                       color: "#555555",
+                      margin: 0,
                     }}
                   >
                     {project.details.challenge}
@@ -470,11 +513,12 @@ export default async function ProjectPage({
                   <span
                     style={{
                       display: "block",
-                      fontSize: "0.65rem",
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontSize: "0.6rem",
                       fontWeight: 800,
-                      letterSpacing: "0.15em",
+                      letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "rgba(10, 10, 10, 0.4)",
+                      color: "rgba(10,10,10,0.35)",
                       marginBottom: "1rem",
                     }}
                   >
@@ -482,9 +526,11 @@ export default async function ProjectPage({
                   </span>
                   <p
                     style={{
-                      fontSize: "0.875rem",
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontSize: "0.82rem",
                       lineHeight: 1.7,
                       color: "#555555",
+                      margin: 0,
                     }}
                   >
                     {project.details.solution}
@@ -498,11 +544,12 @@ export default async function ProjectPage({
                     <span
                       style={{
                         display: "block",
-                        fontSize: "0.65rem",
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                        fontSize: "0.6rem",
                         fontWeight: 800,
-                        letterSpacing: "0.15em",
+                        letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "rgba(10, 10, 10, 0.4)",
+                        color: "rgba(10,10,10,0.35)",
                         marginBottom: "1rem",
                       }}
                     >
@@ -514,15 +561,26 @@ export default async function ProjectPage({
                           key={d}
                           style={{
                             display: "flex",
-                            alignItems: "center",
-                            gap: "0.6rem",
-                            fontSize: "0.875rem",
+                            alignItems: "flex-start",
+                            gap: "0.5rem",
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                            fontSize: "0.82rem",
                             color: "#333333",
-                            padding: "0.4rem 0",
-                            borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
+                            padding: "0.35rem 0",
+                            borderBottom: "1px solid rgba(0,0,0,0.05)",
+                            lineHeight: 1.4,
                           }}
                         >
-                          <span style={{ color: "#c91a1f", fontSize: "0.45rem" }}>■</span>
+                          <span
+                            style={{
+                              color: "#c91a1f",
+                              fontSize: "0.4rem",
+                              marginTop: "0.35em",
+                              flexShrink: 0,
+                            }}
+                          >
+                            ■
+                          </span>
                           {d}
                         </li>
                       ))}
@@ -532,84 +590,56 @@ export default async function ProjectPage({
             </div>
           )}
 
-          {/* ── Gallery ─────────────────────────────────────────── */}
+          {/* ── Gallery ───────────────────────────────────────────────── */}
           <ProjectGallery images={gallery} />
 
-          {/* ── Tags ────────────────────────────────────────────── */}
-          {project.tags && project.tags.length > 0 && (
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "0.5rem",
-                marginBottom: "clamp(3rem, 5vw, 5rem)",
-                paddingTop: "2rem",
-                borderTop: "1px solid rgba(0, 0, 0, 0.08)",
-              }}
-            >
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  style={{
-                    padding: "0.3rem 0.75rem",
-                    border: "1px solid rgba(0, 0, 0, 0.12)",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    color: "#555555",
-                    backgroundColor: "rgba(0, 0, 0, 0.02)",
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* ── Prev / Next ──────────────────────────────────────── */}
+          {/* ── Prev / Next ────────────────────────────────────────────── */}
           <div
-            className="proj-adj-wrap"
+            className="sd-adj-row"
             style={{
               display: "flex",
               justifyContent: "space-between",
-              gap: "1px",
+              gap: "1rem",
               paddingTop: "clamp(2rem, 4vw, 4rem)",
-              borderTop: "1px solid rgba(0, 0, 0, 0.08)",
+              borderTop: "1px solid rgba(0,0,0,0.07)",
               marginBottom: "clamp(3rem, 5vw, 5rem)",
             }}
           >
             {prev ? (
               <Link
                 href={`/work/${prev.slug}`}
-                data-cursor="PREV"
-                className="proj-adj"
+                className="sd-adj"
                 style={{
                   flex: 1,
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.5rem",
-                  padding: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.08)",
+                  gap: "0.4rem",
+                  padding: "1.25rem 1.5rem",
+                  border: "1px solid rgba(0,0,0,0.08)",
                   textDecoration: "none",
                   color: "inherit",
                   maxWidth: "48%",
+                  transition: "border-color 0.2s ease",
                 }}
               >
                 <span
+                  className="sd-adj-arrow"
                   style={{
-                    fontSize: "0.65rem",
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "0.62rem",
                     fontWeight: 800,
                     letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    color: "rgba(10, 10, 10, 0.4)",
+                    color: "rgba(10,10,10,0.35)",
+                    transition: "color 0.2s ease",
                   }}
                 >
                   ← Previous
                 </span>
                 <span
                   style={{
-                    fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "clamp(0.9rem, 1.4vw, 1.15rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     textTransform: "uppercase",
@@ -621,13 +651,14 @@ export default async function ProjectPage({
                 </span>
                 <span
                   style={{
-                    fontSize: "0.7rem",
-                    color: "#555555",
-                    letterSpacing: "0.08em",
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "0.65rem",
+                    color: "rgba(10,10,10,0.35)",
+                    letterSpacing: "0.06em",
                     textTransform: "uppercase",
                   }}
                 >
-                  {prev.category}
+                  {prev.year}
                 </span>
               </Link>
             ) : (
@@ -637,36 +668,40 @@ export default async function ProjectPage({
             {next ? (
               <Link
                 href={`/work/${next.slug}`}
-                data-cursor="NEXT"
-                className="proj-adj"
+                className="sd-adj"
                 style={{
                   flex: 1,
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "flex-end",
-                  gap: "0.5rem",
-                  padding: "1.5rem",
-                  border: "1px solid rgba(0, 0, 0, 0.08)",
+                  gap: "0.4rem",
+                  padding: "1.25rem 1.5rem",
+                  border: "1px solid rgba(0,0,0,0.08)",
                   textDecoration: "none",
                   color: "inherit",
                   textAlign: "right",
                   maxWidth: "48%",
+                  transition: "border-color 0.2s ease",
                 }}
               >
                 <span
+                  className="sd-adj-arrow"
                   style={{
-                    fontSize: "0.65rem",
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "0.62rem",
                     fontWeight: 800,
                     letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    color: "rgba(10, 10, 10, 0.4)",
+                    color: "rgba(10,10,10,0.35)",
+                    transition: "color 0.2s ease",
                   }}
                 >
                   Next →
                 </span>
                 <span
                   style={{
-                    fontSize: "clamp(1rem, 1.5vw, 1.25rem)",
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "clamp(0.9rem, 1.4vw, 1.15rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.02em",
                     textTransform: "uppercase",
@@ -678,13 +713,14 @@ export default async function ProjectPage({
                 </span>
                 <span
                   style={{
-                    fontSize: "0.7rem",
-                    color: "#555555",
-                    letterSpacing: "0.08em",
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "0.65rem",
+                    color: "rgba(10,10,10,0.35)",
+                    letterSpacing: "0.06em",
                     textTransform: "uppercase",
                   }}
                 >
-                  {next.category}
+                  {next.year}
                 </span>
               </Link>
             ) : (
@@ -692,7 +728,7 @@ export default async function ProjectPage({
             )}
           </div>
 
-          {/* ── Bottom CTA ──────────────────────────────────────── */}
+          {/* ── Bottom CTA ─────────────────────────────────────────────── */}
           <div
             style={{
               display: "flex",
@@ -701,25 +737,26 @@ export default async function ProjectPage({
               alignItems: "center",
               gap: "1.5rem",
               paddingTop: "2rem",
-              borderTop: "1px solid rgba(0, 0, 0, 0.08)",
+              borderTop: "1px solid rgba(0,0,0,0.07)",
             }}
           >
             <Link
               href="/work"
-              data-cursor="BACK"
-              className="proj-allwork"
+              className="sd-back"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                fontSize: "0.72rem",
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: "0.68rem",
                 fontWeight: 800,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "#0a0a0a",
+                color: "rgba(10,10,10,0.55)",
                 textDecoration: "none",
-                borderBottom: "1px solid rgba(0, 0, 0, 0.25)",
+                borderBottom: "1px solid rgba(0,0,0,0.18)",
                 paddingBottom: "2px",
+                transition: "color 0.2s ease",
               }}
             >
               ← All Projects
@@ -727,8 +764,7 @@ export default async function ProjectPage({
 
             <Link
               href="/contact"
-              data-cursor="START A PROJECT"
-              className="proj-cta"
+              className="sd-cta"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -736,7 +772,8 @@ export default async function ProjectPage({
                 padding: "0.875rem 2rem",
                 backgroundColor: "#c91a1f",
                 color: "#ffffff",
-                fontSize: "0.72rem",
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: "0.68rem",
                 fontWeight: 800,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
@@ -744,7 +781,7 @@ export default async function ProjectPage({
                 transition: "background-color 0.2s ease",
               }}
             >
-              Start Similar Project →
+              Start a Project →
             </Link>
           </div>
         </div>

@@ -1,0 +1,54 @@
+{
+  "slug": "rohani",
+  "title": "Rohani",
+  "client": "Rohani",
+  "year": "",
+  "category": "Brand Identity & Visual Guideline",
+  "industry": "retail",
+  "disciplines": [
+    "identity",
+    "print"
+  ],
+  "shortDescription": "Pedoman identitas visual brand Rohani.",
+  "description": "Graphic Standard Manual brand Rohani — standarisasi identitas visual komprehensif mencakup logo, warna, tipografi, dan panduan aplikasi media.",
+  "excerpt": "Pedoman identitas visual brand Rohani.",
+  "coverImage": "/projects/rohani/cover.webp",
+  "heroImage": "/projects/rohani/cover.webp",
+  "galleryImages": [
+    "/projects/rohani/01.webp",
+    "/projects/rohani/02.webp",
+    "/projects/rohani/03.webp",
+    "/projects/rohani/04.webp",
+    "/projects/rohani/05.webp",
+    "/projects/rohani/06.webp",
+    "/projects/rohani/07.webp",
+    "/projects/rohani/08.webp",
+    "/projects/rohani/09.webp",
+    "/projects/rohani/10.webp",
+    "/projects/rohani/11.webp",
+    "/projects/rohani/12.webp",
+    "/projects/rohani/13.webp"
+  ],
+  "gallery": [
+    "/projects/rohani/01.webp",
+    "/projects/rohani/02.webp",
+    "/projects/rohani/03.webp",
+    "/projects/rohani/04.webp",
+    "/projects/rohani/05.webp",
+    "/projects/rohani/06.webp",
+    "/projects/rohani/07.webp",
+    "/projects/rohani/08.webp",
+    "/projects/rohani/09.webp",
+    "/projects/rohani/10.webp",
+    "/projects/rohani/11.webp",
+    "/projects/rohani/12.webp",
+    "/projects/rohani/13.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "gsm",
+    "brand"
+  ],
+  "details": {}
+}

@@ -1,0 +1,336 @@
+Checking each project in detail...
+
+==================== garageplug -> GARAGEPLUG GSM.pdf (pages: 76) ====================
+Metadata: creationDate=D:20210907100927+08'00', modDate=D:20210907100927+07'00', title=GARAGEPLUG GSM
+No date/year text snippets found in text stream.
+
+==================== mcc -> GSM MCC Final.pdf (pages: 89) ====================
+Metadata: creationDate=D:20220124111534+08'00', modDate=D:20220124111535+07'00', title=GSM MCC Final
+No date/year text snippets found in text stream.
+
+==================== stamford -> [SIAP PREVIEW]GSM STAMFORD INDONESIA.pdf (pages: 119) ====================
+Metadata: creationDate=D:20210730141533+08'00', modDate=D:20210730141535+07'00', title=[SIAP PREVIEW]GSM FULL
+Relevant text snippets:
+   P5: FC, anak-anak mulai usia 6 - 19 tahun dapat merasakan pelatihan sepakbola standar internasional dengan
+   P18: evolusi sejak 40 juta tahun lalu sehingga disebut sebagai
+
+==================== chatten -> gsm chatten.pdf (pages: 93) ====================
+Metadata: creationDate=D:20210807135923+07'00', modDate=D:20210807135944+07'00', title=
+No date/year text snippets found in text stream.
+
+==================== bank-sidoarjo -> Bank Sidoarjo Visual Guideline  FILE FINAL_removed.pdf (pages: 15) ====================
+Metadata: creationDate=, modDate=D:20260919090832Z, title=
+Relevant text snippets:
+   P1: JULI 2023
+
+==================== mie-gacoan -> GSM - MIE GACOAN_removed_removed.pdf (pages: 15) ====================
+Metadata: creationDate=, modDate=D:20260921075138Z, title=
+No date/year text snippets found in text stream.
+
+==================== logo-75th-indonesia -> GSM - Logo 75th Indonesia_removed.pdf (pages: 18) ====================
+Metadata: creationDate=, modDate=D:20260919082557Z, title=
+Relevant text snippets:
+   P2: 75 Tahun Indonesia Maju
+   P2: 2020
+   P3: 75 Tahun Indonesia Maju
+   P3: 2020
+   P4: 75 Tahun Indonesia Maju
+   P4: 2020
+   P5: 75 Tahun Indonesia Maju
+   P5: 2020
+   P6: 75 Tahun Indonesia Maju
+   P6: 2020
+   P7: 75 Tahun Indonesia Maju
+   P7: 2020
+   P8: 75 Tahun Indonesia Maju
+   P8: 2020
+   P9: 75 Tahun Indonesia Maju
+
+==================== ayam-goreng-nelongso -> GSM - Ayam Goreng Nelongso_removed.pdf (pages: 15) ====================
+Metadata: creationDate=, modDate=D:20260919084825Z, title=
+Relevant text snippets:
+   P15: designed by UTERO INDONESIA
+
+==================== konas-2021 -> GSM - KONAS 2021.pdf (pages: 20) ====================
+Metadata: creationDate=D:20210128120820+08'00', modDate=D:20210128120820+07'00', title=LOW RES KONAS PGHNAI 2021
+Relevant text snippets:
+   P1: 2021
+   P2: 2021
+   P3: KONAS PGHNAI 2021
+   P4: KONAS PGHNAI 2021
+   P4: disebut dengan KONAS PGHNAI adalah pertemuan nasional 3 tahunan antar anggota dan partisan
+   P5: KONAS PGHNAI 2021
+   P6: KONAS PGHNAI 2021
+   P7: KONAS PGHNAI 2021
+   P8: KONAS PGHNAI 2021
+   P9: KONAS PGHNAI 2021
+   P9: Tema kegiatan pada tahun ini adalah Improving Healthy
+   P10: KONAS PGHNAI 2021
+   P10: Logo KONAS PGHNAI 2021
+   P10: 2021
+   P11: KONAS PGHNAI 2021
+
+==================== sfi -> BRAND GUIDELINE SFI.pdf (pages: 21) ====================
+Metadata: creationDate=D:20241221174306+08'00', modDate=D:20241221174306+07'00', title=BRAND GUIDELINE SFI REV
+Relevant text snippets:
+   P2: 2024
+   P3: 2024
+   P4: 2024
+   P5: 2024
+   P6: 2024
+   P7: 2024
+   P8: 2024
+   P9: 2024
+   P10: 2024
+   P11: 2024
+   P12: 2024
+   P13: 2024
+   P14: 2024
+   P15: 2024
+   P16: 2024
+
+==================== wajan-giok -> BRAND GUIDELINES WAJAN GIOK.pdf (pages: 16) ====================
+Metadata: creationDate=D:20240404094335+08'00', modDate=D:20240404094335+07'00', title=BRAND GUIDELINES WAJAN GIOK
+Relevant text snippets:
+   P2: 2023
+   P3: 2023
+   P4: Bentuk naga dipilih karena pada tahun 2024 merupakan shio
+   P4: naga kayu sebagai pengingat wajan giok lahir di tahun 2024
+   P4: 2023
+   P5: 2023
+   P6: 2023
+   P7: 2023
+   P8: 2023
+   P9: 2023
+   P13: 2023
+   P14: 2023
+   P16: UTEROINDONESIA.COM
+
+==================== bpr-tulungagung -> BPR TULUNGAGUNG GSM_removed.pdf (pages: 14) ====================
+Metadata: creationDate=, modDate=D:20260919090531Z, title=
+Relevant text snippets:
+   P14: designed by Utero Indonesia
+   P14: uteroindonesia.com
+
+==================== bpr-artha-kanjuruhan -> GSM BPR Artha Kanjuruhan_removed.pdf (pages: 18) ====================
+Metadata: creationDate=, modDate=D:20260919065132Z, title=
+Relevant text snippets:
+   P18: designed by Utero Indonesia
+   P18: uteroindonesia.com
+
+==================== baiturrohman -> Baiturrohman Visual Guideline 09-10 .pdf (pages: 25) ====================
+Metadata: creationDate=D:20231009161458+07'00', modDate=D:20231009161458+07'00', title=Baiturrohman Visual Guideline 09-10 
+Relevant text snippets:
+   P1: OKT 2023
+
+==================== jmt -> VISUAL GUIDELINE JMT.pdf (pages: 22) ====================
+Metadata: creationDate=D:20260508173514+08'00', modDate=D:20260508173514+07'00', title=JMT present
+Relevant text snippets:
+   P6: uteroindonesia.com
+   P6: 2026
+   P7: uteroindonesia.com
+   P7: 2026
+   P8: uteroindonesia.com
+   P8: 2026
+   P9: uteroindonesia.com
+   P9: 2026
+   P10: uteroindonesia.com
+   P10: 2026
+   P11: uteroindonesia.com
+   P11: 2026
+   P12: uteroindonesia.com
+   P12: 2026
+   P13: uteroindonesia.com
+
+==================== lacamino -> VISUAL GUIDELINE LACAMINO.pdf (pages: 20) ====================
+Metadata: creationDate=D:20250304143525+08'00', modDate=D:20250304143525+07'00', title=VISUAL GUIDELINE LACAMINO
+Relevant text snippets:
+   P1: 2025
+   P2: 2025
+   P3: 2025
+   P4: 2025
+   P5: 2025
+   P6: 2025
+   P7: 2025
+   P8: 2025
+   P9: 2025
+   P10: 2025
+   P11: 2025
+   P12: 2025
+   P13: 2025
+   P14: 2025
+   P15: 2025
+
+==================== techlink -> visual guideline techlink.pdf (pages: 15) ====================
+Metadata: creationDate=D:20240521113548+08'00', modDate=D:20240521113548+07'00', title=visual guideline techlink
+Relevant text snippets:
+   P1: Summit 2024
+   P1: 2024
+   P2: 2024
+   P2: Prepared by UTERO INDONESIA
+   P3: Prepared by UTERO INDONESIA
+   P3: 2024
+   P4: Prepared by UTERO INDONESIA
+   P4: 2024
+   P5: Prepared by UTERO INDONESIA
+   P5: 2024
+   P6: Prepared by UTERO INDONESIA
+   P7: Prepared by UTERO INDONESIA
+   P8: Prepared by UTERO INDONESIA
+   P9: Prepared by UTERO INDONESIA
+   P10: Prepared by UTERO INDONESIA
+
+==================== proxon -> visual guideline proxon.pdf (pages: 15) ====================
+Metadata: creationDate=D:20240613090221+08'00', modDate=D:20240613090221+07'00', title=visual guideline proxon
+Relevant text snippets:
+   P2: 2024
+   P2: Prepared by UTERO INDONESIA
+   P3: 2024
+   P3: Prepared by UTERO INDONESIA
+   P4: 2024
+   P4: Prepared by UTERO INDONESIA
+   P5: 2024
+   P5: Prepared by UTERO INDONESIA
+   P6: 2024
+   P6: Prepared by UTERO INDONESIA
+   P7: Prepared by UTERO INDONESIA
+   P8: Prepared by UTERO INDONESIA
+   P9: Prepared by UTERO INDONESIA
+   P10: Prepared by UTERO INDONESIA
+   P11: Prepared by UTERO INDONESIA
+
+==================== kiyona -> MINI GSM KIYONA.pdf (pages: 17) ====================
+Metadata: creationDate=D:20260219100127+08'00', modDate=D:20260219100127+07'00', title=MINI GSM KIYONA
+Relevant text snippets:
+   P1: 2026
+   P2: 2026
+   P2: 2026
+   P3: 2026
+   P4: 2026
+   P5: 2026
+   P6: 2026
+   P7: 2026
+   P17: DESIGNED BY UTERO.ID
+
+==================== uwg -> GSM UWG 26042021 PREVIEW_removed.pdf (pages: 14) ====================
+Metadata: creationDate=, modDate=D:20260919043301Z, title=
+No date/year text snippets found in text stream.
+
+==================== rohani -> GSM - Rohani_removed.pdf (pages: 14) ====================
+Metadata: creationDate=, modDate=D:20260919080547Z, title=
+No date/year text snippets found in text stream.
+
+==================== gsm-1922 -> GSM 1922  New COLOR 27 mei  _removed.pdf (pages: 14) ====================
+Metadata: creationDate=, modDate=D:20260919065550Z, title=
+Relevant text snippets:
+   P1: Kopi 1922
+   P1: May  2022
+   P2: Kopi 1922
+   P3: Kopi 1922
+   P4: Kopi 1922
+   P5: Kopi 1922
+   P6: Kopi 1922
+   P7: handcrafted 1922 house blend, it
+   P7: 1922’s products, you are continuing the
+   P7: handcrafted 1922 house blend, it
+   P7: 1922’s products, you are continuing the
+   P7: handcrafted 1922 house blend, it
+   P7: 1922’s products, you are continuing the
+
+==================== momsarasa -> GSM momsarasa compres_removed.pdf (pages: 14) ====================
+Metadata: creationDate=, modDate=D:20260919043654Z, title=
+Relevant text snippets:
+   P7: 2022
+   P7: 2023
+   P7: 2024
+   P8: 2022
+   P8: 2023
+   P8: 2024
+   P8: 2000 gram
+
+==================== yin-yam -> yin yam mini graphic standart manual.pdf (pages: 14) ====================
+Metadata: creationDate=D:20240404104714+08'00', modDate=D:20240404104714+07'00', title=yin yam mini graphic standart manual
+Relevant text snippets:
+   P1: 2024
+   P2: 2024
+   P3: 2024
+   P4: 2024
+   P5: 2024
+   P6: 2024
+   P7: 2024
+   P8: 2024
+   P9: 2024
+   P10: 2023
+   P11: 2023
+   P12: 2023
+   P13: 2023
+   P14: UTEROINDONESIA.COM
+
+==================== cos-pleng -> COS PLENG Mini GSM .pdf (pages: 15) ====================
+Metadata: creationDate=D:20230516152728+08'00', modDate=D:20230516152728+07'00', title=COS PLENG Mini GSM 
+Relevant text snippets:
+   P1: May 2023
+   P14: ©2023
+
+==================== boop -> Boop Mini GSM.pdf (pages: 12) ====================
+Metadata: creationDate=D:20220823100856+07'00', modDate=D:20220823100857+07'00', title=Boop Mini GSM
+No date/year text snippets found in text stream.
+
+==================== maitri -> PREV GUIDELINE MAITRI_removed.pdf (pages: 12) ====================
+Metadata: creationDate=, modDate=D:20260919042413Z, title=
+Relevant text snippets:
+   P1: UTEROINDONESIA.COM
+   P2: uteroindonesia.com
+   P2: ©2025
+   P3: uteroindonesia.com ©2025
+   P3: 2025
+   P4: uteroindonesia.com ©2025
+   P4: 2025
+   P5: uteroindonesia.com ©2025
+   P5: 2025
+   P6: uteroindonesia.com ©2025
+   P6: 2025
+   P7: uteroindonesia.com ©2025
+   P7: 2025
+   P8: uteroindonesia.com ©2025
+   P8: 2025
+
+==================== satu-titik -> GSM MINI SATU TITIK LW.pdf (pages: 12) ====================
+Metadata: creationDate=D:20211006163100+08'00', modDate=D:20211006163101+07'00', title=GSM MINI SATU TITIK LW
+No date/year text snippets found in text stream.
+
+==================== amarta-wisesa -> GSM Amarta Wisesa_removed.pdf (pages: 11) ====================
+Metadata: creationDate=, modDate=D:20260919065307Z, title=
+Relevant text snippets:
+   P1: 2023
+   P2: 2023
+   P3: 2023
+   P4: 2023
+   P5: 2023
+   P6: 2023
+
+==================== plut-kumkm -> VISUAL GUIDELINE PLUT KUMKM_removed.pdf (pages: 11) ====================
+Metadata: creationDate=, modDate=D:20260921063038Z, title=
+Relevant text snippets:
+   P2: 2024
+   P3: 2024
+   P4: 2024
+   P5: 2024
+   P6: 2024
+   P7: 2024
+   P8: 2024
+   P9: 2024
+   P10: 2024
+   P11: 2024
+
+==================== dailbana -> GSM Dailbana_removed.pdf (pages: 8) ====================
+Metadata: creationDate=, modDate=D:20260919064835Z, title=
+Relevant text snippets:
+   P1: FEB.2023
+   P2: FEB.2023
+   P3: FEB.2023
+
+==================== wismari -> WISMARI FINAL_removed.pdf (pages: 7) ====================
+Metadata: creationDate=, modDate=D:20260919041824Z, title=
+Relevant text snippets:
+   P7: www.uterogroup.com  |  www.utero.id

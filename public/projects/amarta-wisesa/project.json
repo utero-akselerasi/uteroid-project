@@ -1,0 +1,49 @@
+{
+  "slug": "amarta-wisesa",
+  "title": "Amarta Wisesa",
+  "client": "Amarta Wisesa",
+  "year": "",
+  "category": "Property Brand Identity & Visual Guideline",
+  "industry": "property",
+  "disciplines": [
+    "identity",
+    "print",
+    "outdoor"
+  ],
+  "shortDescription": "Pedoman identitas visual properti Amarta Wisesa.",
+  "description": "Graphic Standard Manual Amarta Wisesa — sistem identitas visual properti komprehensif mencakup logo, warna, tipografi, sarana korporasi, dan aplikasi media pemasaran.",
+  "excerpt": "Pedoman identitas visual properti Amarta Wisesa.",
+  "coverImage": "/projects/amarta-wisesa/cover.webp",
+  "heroImage": "/projects/amarta-wisesa/cover.webp",
+  "galleryImages": [
+    "/projects/amarta-wisesa/01.webp",
+    "/projects/amarta-wisesa/02.webp",
+    "/projects/amarta-wisesa/03.webp",
+    "/projects/amarta-wisesa/04.webp",
+    "/projects/amarta-wisesa/05.webp",
+    "/projects/amarta-wisesa/06.webp",
+    "/projects/amarta-wisesa/07.webp",
+    "/projects/amarta-wisesa/08.webp",
+    "/projects/amarta-wisesa/09.webp",
+    "/projects/amarta-wisesa/10.webp"
+  ],
+  "gallery": [
+    "/projects/amarta-wisesa/01.webp",
+    "/projects/amarta-wisesa/02.webp",
+    "/projects/amarta-wisesa/03.webp",
+    "/projects/amarta-wisesa/04.webp",
+    "/projects/amarta-wisesa/05.webp",
+    "/projects/amarta-wisesa/06.webp",
+    "/projects/amarta-wisesa/07.webp",
+    "/projects/amarta-wisesa/08.webp",
+    "/projects/amarta-wisesa/09.webp",
+    "/projects/amarta-wisesa/10.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "property",
+    "identity",
+    "gsm"
+  ],
+  "details": {}
+}

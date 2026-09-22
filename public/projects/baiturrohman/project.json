@@ -1,0 +1,58 @@
+{
+  "slug": "baiturrohman",
+  "title": "Baiturrohman",
+  "client": "Baiturrohman",
+  "year": "",
+  "category": "Institutional Visual Guideline",
+  "industry": "government",
+  "disciplines": [
+    "identity",
+    "print"
+  ],
+  "shortDescription": "Pedoman identitas visual institusi Baiturrohman.",
+  "description": "Pedoman identitas visual institusi Baiturrohman — standarisasi logo, warna, tipografi, dan panduan penggunaan identitas resmi.",
+  "excerpt": "Pedoman identitas visual institusi Baiturrohman.",
+  "coverImage": "/projects/baiturrohman/cover.webp",
+  "heroImage": "/projects/baiturrohman/cover.webp",
+  "galleryImages": [
+    "/projects/baiturrohman/01.webp",
+    "/projects/baiturrohman/02.webp",
+    "/projects/baiturrohman/03.webp",
+    "/projects/baiturrohman/04.webp",
+    "/projects/baiturrohman/05.webp",
+    "/projects/baiturrohman/06.webp",
+    "/projects/baiturrohman/07.webp",
+    "/projects/baiturrohman/08.webp",
+    "/projects/baiturrohman/09.webp",
+    "/projects/baiturrohman/10.webp",
+    "/projects/baiturrohman/11.webp",
+    "/projects/baiturrohman/12.webp",
+    "/projects/baiturrohman/13.webp",
+    "/projects/baiturrohman/14.webp",
+    "/projects/baiturrohman/15.webp"
+  ],
+  "gallery": [
+    "/projects/baiturrohman/01.webp",
+    "/projects/baiturrohman/02.webp",
+    "/projects/baiturrohman/03.webp",
+    "/projects/baiturrohman/04.webp",
+    "/projects/baiturrohman/05.webp",
+    "/projects/baiturrohman/06.webp",
+    "/projects/baiturrohman/07.webp",
+    "/projects/baiturrohman/08.webp",
+    "/projects/baiturrohman/09.webp",
+    "/projects/baiturrohman/10.webp",
+    "/projects/baiturrohman/11.webp",
+    "/projects/baiturrohman/12.webp",
+    "/projects/baiturrohman/13.webp",
+    "/projects/baiturrohman/14.webp",
+    "/projects/baiturrohman/15.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "institutional",
+    "identity",
+    "visual-guideline"
+  ],
+  "details": {}
+}

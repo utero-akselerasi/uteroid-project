@@ -1,0 +1,57 @@
+{
+  "slug": "proxon",
+  "title": "Proxon",
+  "client": "Proxon",
+  "year": "",
+  "category": "Brand Identity & Visual Guideline",
+  "industry": "services",
+  "disciplines": [
+    "identity",
+    "digital",
+    "print"
+  ],
+  "shortDescription": "Pedoman identitas visual brand Proxon.",
+  "description": "Visual Guideline Proxon — standarisasi identitas visual brand mencakup logo, sistem warna, tipografi, dan panduan aplikasi digital dan media cetak.",
+  "excerpt": "Pedoman identitas visual brand Proxon.",
+  "coverImage": "/projects/proxon/cover.webp",
+  "heroImage": "/projects/proxon/cover.webp",
+  "galleryImages": [
+    "/projects/proxon/01.webp",
+    "/projects/proxon/02.webp",
+    "/projects/proxon/03.webp",
+    "/projects/proxon/04.webp",
+    "/projects/proxon/05.webp",
+    "/projects/proxon/06.webp",
+    "/projects/proxon/07.webp",
+    "/projects/proxon/08.webp",
+    "/projects/proxon/09.webp",
+    "/projects/proxon/10.webp",
+    "/projects/proxon/11.webp",
+    "/projects/proxon/12.webp",
+    "/projects/proxon/13.webp",
+    "/projects/proxon/14.webp"
+  ],
+  "gallery": [
+    "/projects/proxon/01.webp",
+    "/projects/proxon/02.webp",
+    "/projects/proxon/03.webp",
+    "/projects/proxon/04.webp",
+    "/projects/proxon/05.webp",
+    "/projects/proxon/06.webp",
+    "/projects/proxon/07.webp",
+    "/projects/proxon/08.webp",
+    "/projects/proxon/09.webp",
+    "/projects/proxon/10.webp",
+    "/projects/proxon/11.webp",
+    "/projects/proxon/12.webp",
+    "/projects/proxon/13.webp",
+    "/projects/proxon/14.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "digital",
+    "visual-guideline"
+  ],
+  "details": {}
+}

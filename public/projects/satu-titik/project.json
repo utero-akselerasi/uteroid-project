@@ -1,0 +1,50 @@
+{
+  "slug": "satu-titik",
+  "title": "Satu Titik",
+  "client": "Satu Titik",
+  "year": "",
+  "category": "Brand Identity & Mini GSM",
+  "industry": "services",
+  "disciplines": [
+    "identity",
+    "print"
+  ],
+  "shortDescription": "Mini GSM identitas visual brand Satu Titik.",
+  "description": "Mini Graphic Standard Manual brand Satu Titik — panduan identitas visual ringkas mencakup logo, warna, tipografi, dan panduan penggunaan identitas.",
+  "excerpt": "Mini GSM identitas visual brand Satu Titik.",
+  "coverImage": "/projects/satu-titik/cover.webp",
+  "heroImage": "/projects/satu-titik/cover.webp",
+  "galleryImages": [
+    "/projects/satu-titik/01.webp",
+    "/projects/satu-titik/02.webp",
+    "/projects/satu-titik/03.webp",
+    "/projects/satu-titik/04.webp",
+    "/projects/satu-titik/05.webp",
+    "/projects/satu-titik/06.webp",
+    "/projects/satu-titik/07.webp",
+    "/projects/satu-titik/08.webp",
+    "/projects/satu-titik/09.webp",
+    "/projects/satu-titik/10.webp",
+    "/projects/satu-titik/11.webp"
+  ],
+  "gallery": [
+    "/projects/satu-titik/01.webp",
+    "/projects/satu-titik/02.webp",
+    "/projects/satu-titik/03.webp",
+    "/projects/satu-titik/04.webp",
+    "/projects/satu-titik/05.webp",
+    "/projects/satu-titik/06.webp",
+    "/projects/satu-titik/07.webp",
+    "/projects/satu-titik/08.webp",
+    "/projects/satu-titik/09.webp",
+    "/projects/satu-titik/10.webp",
+    "/projects/satu-titik/11.webp"
+  ],
+  "featured": false,
+  "tags": [
+    "identity",
+    "mini-gsm",
+    "services"
+  ],
+  "details": {}
+}
