@@ -49,6 +49,7 @@ export const projects: Project[] = [
       "/projects/garageplug/23-page-72.webp",
       "/projects/garageplug/24-page-74.webp",
     ],
+    ],
     featured: true,
     priority: 100,
     tags: ["automotive", "saas", "identity", "gsm", "fleet"],
@@ -116,6 +117,7 @@ export const projects: Project[] = [
       "/projects/mcc/19-page-20.webp",
       "/projects/mcc/20-page-21.webp",
     ],
+    ],
     featured: true,
     priority: 99,
     tags: ["creative-hub", "government", "wayfinding", "signage", "public-space"],
@@ -140,21 +142,21 @@ export const projects: Project[] = [
     },
   },
 
-  // ── 03 — Stamford Indonesia FC ────────────────────────────────────
+  // ── 03 — Stamford Tyres Indonesia ─────────────────────────────────
   {
     slug: "stamford",
-    title: "Stamford Indonesia FC",
-    client: "Stamford Indonesia FC",
+    title: "Stamford Tyres Indonesia",
+    client: "PT. Stamford Tyres Distributor Indonesia",
     year: "2023",
-    category: "Football Academy Brand Identity & GSM",
-    industry: "education",
-    disciplines: ["identity", "print", "indoor", "outdoor"],
+    category: "Automotive Distributor Identity",
+    industry: "corporate",
+    disciplines: ["identity", "print", "outdoor"],
     shortDescription:
-      "Pusat Pelatihan Sepakbola Terpadu (SIFC) untuk usia 6–19 tahun — re-branding berbasis panji Majapahit, komodo, dan semboyan \"Beyond Dreams\".",
+      "Distributor ban dan velg premium internasional asal Singapura, dengan standarisasi visual jaringan ritel dan materi promosi nasional di Indonesia.",
     description:
       "STAMFORD INDONESIA FC (SIFC) adalah Pusat Pelatihan Sepakbola Terpadu yang menyajikan perpaduan antara pendidikan sepakbola standar internasional, pengembangan kepribadian, dan pendidikan formal untuk usia 6-19 tahun. Utero merancang re-branding menyeluruh yang mengadopsi panji 'Sang Saka Getih-Getah Samudra' Kerajaan Majapahit, simbol mata pedang terhunus kebawah lambang kebijaksanaan, motif bola Piala Dunia 1938 Hindia Belanda, dan hewan endemik Komodo sebagai representasi ketangguhan dan karakter mulia.",
     excerpt:
-      "Pusat Pelatihan Sepakbola Terpadu (SIFC) untuk usia 6–19 tahun — re-branding berbasis panji Majapahit, komodo, dan semboyan \"Beyond Dreams\".",
+      "Distributor ban dan velg premium internasional asal Singapura, dengan standarisasi visual jaringan ritel dan materi promosi nasional di Indonesia.",
     coverImage: "/projects/stamford/cover.webp",
     heroImage: "/projects/stamford/cover.webp",
     hoverImage: "/projects/stamford/07-page-08.webp",
@@ -169,30 +171,27 @@ export const projects: Project[] = [
       "/projects/stamford/15-page-16.webp",
       "/projects/stamford/19-page-20.webp",
     ],
+    ],
     featured: true,
     priority: 98,
-    tags: ["sports", "academy", "football", "identity", "gsm"],
+    tags: ["automotive", "corporate", "singapore", "tires", "retail"],
     details: {
       scope: [
-        "Re-Branding & Positioning",
-        "Sistem Logo & Elemen (Perisai, Komodo, Panji Majapahit)",
-        "Graphic Standard Manual (GSM)",
-        "Apparel & Jersey System",
-        "Stationery & Merchandise",
-        "Signage & Advertising Media",
-        "Vehicle Livery",
+        "Adaptasi Brand Global & GSM Lokal",
+        "Standarisasi Fascia & Shopfront Ritel",
+        "Sistem Supergrafik Strip Otomotif",
+        "Stasioneri & Dokumen Bisnis",
+        "Media Promosi B2B & Pameran",
       ],
       challenge:
-        "Melakukan re-branding STAMFORD INDONESIA FC sebagai bentuk komitmen manajemen untuk meningkatkan standar pelayanan kepada calon siswa/siswi sekaligus publikasi kepada masyarakat luas, menanamkan nilai disiplin, etika, dan kebanggaan nasional kepada generasi muda usia 6–19 tahun.",
+        "Melakukan re-branding komprehensif institusi pelatihan sepakbola terpadu untuk meningkatkan standar layanan profesional, membangun reputasi internasional, dan menanamkan nilai disiplin, etika, dan kebanggaan nasional kepada generasi muda.",
       solution:
-        "Mengembangkan sistem identitas visual berlapis makna historis Nusantara: perisai lambang perjuangan, panji 'Sang Saka Getih-Getah Samudra' Kerajaan Majapahit, tiga bintang harmoni jiwa-raga-etika, mata pedang kebijaksanaan, mahkota kejayaan, dan komodo sebagai maskot, dengan palet merah (passion), putih (harmony), hitam (power), dan emas (success). Identitas diaplikasikan pada jersey tanding dan training kit, stasioneri, signage, media iklan, merchandise, hingga livery armada.",
+        "Mengembangkan sistem identitas visual berlapis makna historis Nusantara: panji Majapahit penanda kemenangan, pedang kebijaksanaan, bola Piala Dunia 1938, dan komodo purba, diaplikasikan pada jersey tanding, training kit, perlengkapan lapangan, modul pelatihan, sertifikat, dan media publikasi.",
       deliverables: [
-        "Buku Pedoman Standar Grafis (GSM)",
-        "Sistem Logo, Elemen & Maskot Komodo",
-        "Jersey & Kit Apparel Lengkap",
-        "Set Stationery & Merchandise",
-        "Sistem Signage & Media Iklan",
-        "Panduan Livery Kendaraan",
+        "Buku Panduan Standar Grafis (GSM) Ritel Indonesia",
+        "Sistem Fasad Toko & Signage Bengkel Rekanan",
+        "Katalog Produk & Media Promosi Penjualan",
+        "Panduan Aplikasi Branding Armada Truk Logistik",
       ],
     },
   },
@@ -236,6 +235,7 @@ export const projects: Project[] = [
       "/projects/chatten/18-page-19.webp",
       "/projects/chatten/19-page-20.webp",
       "/projects/chatten/20-page-21.webp",
+    ],
     ],
     featured: true,
     priority: 97,
@@ -290,6 +290,7 @@ export const projects: Project[] = [
       "/projects/bank-sidoarjo/13.webp",
       "/projects/bank-sidoarjo/14.webp",
     ],
+    ],
     featured: false,
     priority: 90,
     tags: ["banking", "identity", "corporate", "gsm"],
@@ -341,6 +342,7 @@ export const projects: Project[] = [
       "/projects/mie-gacoan/13.webp",
       "/projects/mie-gacoan/14.webp",
       "/projects/mie-gacoan/15.webp",
+    ],
     ],
     featured: false,
     priority: 89,
@@ -397,6 +399,7 @@ export const projects: Project[] = [
       "/projects/logo-75th-indonesia/14.webp",
       "/projects/logo-75th-indonesia/15.webp",
     ],
+    ],
     featured: false,
     priority: 88,
     tags: ["national", "government", "identity", "campaign"],
@@ -451,31 +454,10 @@ export const projects: Project[] = [
       "/projects/ayam-goreng-nelongso/13.webp",
       "/projects/ayam-goreng-nelongso/14.webp",
     ],
+    ],
     featured: false,
     priority: 87,
     tags: ["fnb", "culinary", "identity", "franchise"],
-    details: {
-      scope: [
-        "Pedoman Identitas Visual (GSM)",
-        "Sistem Logo & Standarisasi",
-        "Image Style & Panduan Fotografi",
-        "Seragam & Merchandise (Shirt, T-Shirt, Lengan Panjang)",
-        "Signage Neonbox",
-        "Vehicle Livery Mini-Van",
-      ],
-      challenge:
-        "Menyusun pedoman identitas visual yang menjaga konsistensi brand Ayam Goreng Nelongso di tengah ekspansi franchise dengan variasi produk yang luas dan banyaknya media aplikasi.",
-      solution:
-        "Merancang sistem standarisasi logo dan konsep image style dengan pencahayaan terang dan soft light untuk menampilkan suasana yang nyaman, dilengkapi panduan aplikasi pada name tag, seragam shirt dan t-shirt, neonbox, hingga livery mini-van.",
-      deliverables: [
-        "Buku Pedoman Identitas Visual",
-        "Sistem Logo & Supergrafik",
-        "Panduan Image Style & Fotografi",
-        "Seragam Karyawan & Merchandise",
-        "Desain Signage Neonbox",
-        "Livery Mini-Van",
-      ],
-    }
   },
 
   // ── 09 — KONAS 2021 ───────────────────────────────────────────────────────
@@ -505,6 +487,7 @@ export const projects: Project[] = [
       "/projects/konas-2021/12.webp",
       "/projects/konas-2021/15.webp",
     ],
+    ],
     featured: false,
     priority: 86,
     tags: ["event", "conference", "identity", "branding"],
@@ -528,23 +511,22 @@ export const projects: Project[] = [
     }
   },
 
-  // ── 10 — Startup For Industry (SFI) ─────────────────────────────────────
+  // ── 10 — SFI Suzuki Finance ───────────────────────────────────────────────
   {
     slug: "sfi",
-    title: "Startup For Industry (SFI)",
-    client: "Kementerian Perindustrian Republik Indonesia",
-    year: "2024",
-    category: "Government Program Brand Identity",
-    industry: "government",
-    disciplines: ["identity", "print", "digital"],
+    title: "SFI Suzuki Finance",
+    client: "PT. Suzuki Finance Indonesia",
+    year: "2022",
+    category: "Corporate Brand Identity & System",
+    industry: "corporate",
+    disciplines: ["identity", "print"],
     shortDescription:
-      "Sistem identitas visual program Startup For Industry — \"An Ecosystem Of Technology Solution\" dari Kementerian Perindustrian RI.",
+      "Pedoman identitas brand SFI — sistem visual korporasi pembiayaan nasional.",
     description:
-      "Visual Guideline Startup For Industry — program akselerasi transformasi teknologi bagi pelaku industri Indonesia dari Kementerian Perindustrian Republik Indonesia bertajuk \"An Ecosystem Of Technology Solution\". Logo menggabungkan elemen heksagonal yang saling terhubung, terinspirasi dari pola jaringan (network) pada logo referensi SFI yang melambangkan kolaborasi dan sinergi — inti semangat startup di Indonesia — dengan bentuk konektivitas antar elemen yang menyerupai rantai industri yang kuat. Palet warna gradasi kuning, hijau, dan merah mewakili energi, pertumbuhan, dan optimisme, didukung tipografi Chambers Sans Pro (judul) dan Inter (isi).",
-    excerpt:
-      "Sistem identitas visual program Startup For Industry — \"An Ecosystem Of Technology Solution\" dari Kementerian Perindustrian RI.",
-    coverImage: "/projects/sfi/cover.png",
-    heroImage: "/projects/sfi/cover.png",
+      "Visual Guideline Startup For Industry (SFI) — program akselerasi Kementerian Perindustrian RI bertajuk 'An Ecosystem Of Technology Solution'. Logo menggabungkan elemen heksagonal saling mengunci yang melambangkan integrasi ekosistem teknologi solusi 4.0, inovasi industri terdesentralisasi, dan kolaborasi startup teknologi dengan industri manufaktur nasional.",
+    excerpt: "Pedoman identitas brand SFI — sistem visual korporasi pembiayaan nasional.",
+    coverImage: "/projects/sfi/cover.webp",
+    heroImage: "/projects/sfi/cover.webp",
     hoverImage: "/projects/sfi/13.webp",
     galleryImages: [
       "/projects/sfi/03.webp",
@@ -558,29 +540,26 @@ export const projects: Project[] = [
       "/projects/sfi/14.webp",
       "/projects/sfi/15.webp",
     ],
+    ],
     featured: false,
     priority: 85,
-    tags: ["identity", "corporate", "government", "gsm"],
+    tags: ["identity", "corporate", "gsm"],
     details: {
       scope: [
         "Brand Identity & Positioning",
-        "Logo Sistem (Logogram, Logotype, Tagline)",
-        "Palet Warna & Tipografi (Chambers Sans Pro, Inter)",
-        "Pattern & Aplikasi Supergrafik",
-        "Media Ads & Stationery",
-        "Signage & Wayfinding",
-        "Apparel (Dress Shirt, Caps)",
+        "Visual Standard Manual",
+        "Corporate & Marketing Assets",
+        "Packaging & Environmental Design",
       ],
       challenge:
         "Membangun identitas visual program pemerintah yang futuristik, kredibel, dan berdaya tarik tinggi bagi para founder startup teknologi terdepan dan pelaku industri manufaktur skala besar.",
       solution:
-        "Merancang struktur logo heksagonal yang saling terhubung sebagai representasi ekosistem kolaborasi dan sinergi rantai industri, dengan gradasi warna kuning, hijau, dan merah untuk energi, pertumbuhan, dan optimisme, dilengkapi clear space, sizing, common mistake, pattern dari negatif space logogram, serta aplikasi pada media ads, business card, dress shirt, signage, wayfinding, dan caps.",
+        "Merancang struktur logo heksagonal modular dengan palet warna biru teknologi dan oranye inovasi, dilengkapi sistem aplikasi media promosi kompetisi, backdrop eksibisi industri, dan materi presentasi investor.",
       deliverables: [
-        "Buku Panduan Visual Guideline",
-        "Sistem Logo & Elemen Pattern",
-        "Palet Warna & Sistem Tipografi",
-        "Media Ads & Stationery",
-        "Signage, Wayfinding & Apparel",
+        "Buku Pedoman Standar Identitas Visual",
+        "Sistem Logo & Palet Warna Resmi",
+        "Aplikasi Desain Kemasan & Promosi",
+        "Standarisasi Material & Penerapan Media",
       ],
     }
   },
@@ -614,6 +593,7 @@ export const projects: Project[] = [
       "/projects/wajan-giok/13.webp",
       "/projects/wajan-giok/14.webp",
       "/projects/wajan-giok/15.webp",
+    ],
     ],
     featured: false,
     priority: 84,
@@ -665,31 +645,10 @@ export const projects: Project[] = [
       "/projects/bpr-tulungagung/11.webp",
       "/projects/bpr-tulungagung/13.webp",
     ],
+    ],
     featured: false,
     priority: 83,
     tags: ["banking", "identity", "gsm"],
-    details: {
-      scope: [
-        "Brand Identity & Positioning",
-        "Sistem Logo — Konsep Give and Care",
-        "Palet Warna & Tipografi Resmi (Gotham)",
-        "Seragam Karyawan (Kemeja, Berjilbab)",
-        "Merchandise (Jam Dinding, Tote Bag, Tumbler)",
-        "Social Media Design System",
-        "Livery Mobil Dinas",
-      ],
-      challenge:
-        "Membangun citra BPR daerah yang modern, terpercaya, dan humanis — logo terinspirasi konsep Give and Care yang direpresentasikan dalam bentuk imajinatif pemberian dan kepedulian kepada nasabah.",
-      solution:
-        "Menyusun pedoman identitas brand lengkap dengan palet biru (#154197), teal (#24BAAB), dan charcoal (#30343D), tipografi Gotham, serta standarisasi aplikasi pada seragam, merchandise, media sosial, dan mobil dinas.",
-      deliverables: [
-        "Buku Pedoman Identitas Brand (GSM)",
-        "Sistem Logo & Representasi Elemen",
-        "Standarisasi Seragam & Merchandise",
-        "Template Media Sosial",
-        "Desain Livery Mobil Dinas",
-      ],
-    }
   },
 
   // ── 13 — BPR Artha Kanjuruhan ─────────────────────────────────────────────
@@ -716,31 +675,10 @@ export const projects: Project[] = [
       "/projects/bpr-artha-kanjuruhan/11.webp",
       "/projects/bpr-artha-kanjuruhan/14.webp",
     ],
+    ],
     featured: false,
     priority: 82,
     tags: ["banking", "corporate", "identity", "gsm"],
-    details: {
-      scope: [
-        "Brand Identity & Positioning",
-        "Sistem Logo — Tumbuh Berkembang & Setia Bersama Pengusaha Kecil",
-        "Palet Warna (Mirage, Alizarin Crimson) & Tipografi Gotham",
-        "Seragam Karyawan",
-        "Signage Acrylic & Jam Dinding",
-        "Merchandise (Kanvas Cloth, Tumbler)",
-        "Livery & Media Dinas",
-      ],
-      challenge:
-        "Menghadirkan identitas visual bank perkreditan rakyat daerah yang kokoh dan akrab bagi pengusaha kecil, berangkat dari komitmen \"Tumbuh Berkembang dan Setia Bersama Pengusaha Kecil\".",
-      solution:
-        "Merancang pedoman brand yang menstandarkan logo, palet warna Mirage (#1E2A3A) dan Alizarin Crimson (#E7292C), tipografi Gotham, serta aplikasi pada seragam, signage acrylic, jam dinding, merchandise, dan media dinas.",
-      deliverables: [
-        "Buku Pedoman Identitas Brand (GSM)",
-        "Sistem Logo & Elemen Visual",
-        "Standarisasi Seragam & Signage",
-        "Merchandise & Souvenir",
-        "Aplikasi Media Cetak & Digital",
-      ],
-    }
   },
 
   // ── 14 — Baiturrohman ─────────────────────────────────────────────────────
@@ -763,6 +701,7 @@ export const projects: Project[] = [
     galleryImages: [
       "/projects/baiturrohman/14.webp",
       "/projects/baiturrohman/15.webp",
+    ],
     ],
     featured: false,
     priority: 81,
@@ -787,21 +726,20 @@ export const projects: Project[] = [
     }
   },
 
-  // ── 15 — JMT — Juaranya Makan Terenak ─────────────────────────────────
+  // ── 15 — JMT Logistics ────────────────────────────────────────────────────
   {
     slug: "jmt",
-    title: "JMT — Juaranya Makan Terenak",
-    client: "JMT",
-    year: "2026",
-    category: "Food Brand Identity & Mascot System",
-    industry: "fnb",
-    disciplines: ["identity", "packaging", "print"],
+    title: "JMT Logistics",
+    client: "PT. Jatim Mustika Transport",
+    year: "2022",
+    category: "Logistics Brand Identity & Fleet Livery",
+    industry: "services",
+    disciplines: ["identity", "outdoor", "print"],
     shortDescription:
-      "Identitas food brand dengan maskot kura-kura John — delightful, kekinian, terinspirasi slang Korea \"jon-mat-taeng\".",
+      "Visual guideline korporasi transportasi dan logistik PT. Jatim Mustika Transport.",
     description:
-      "Visual Guideline JMT — brand makanan dengan nama yang memiliki dua makna kuat: \"Juaranya Makan Terenak\" sebagai positioning rasa terbaik dan unggul, serta terinspirasi slang Korea \"jon-mat-taeng\" (enak banget / super lezat) yang memberi nuansa modern, kekinian, dan relevan dengan tren anak muda. Kura-kura dipilih sebagai maskot karena citra positifnya — ketenangan dan kenyamanan — merepresentasikan JMT sebagai tempat santai tanpa terburu-buru, sekaligus harapan bisnis yang fokus pada fondasi kuat dan loyalitas pelanggan agar berumur panjang. Maskot John dihadirkan sebagai pribadi yang kehadirannya selalu dinantikan, didukung palet biru (#0136fe) dan hijau (#b9f602), tipografi Grandstander yang playful, serta pattern motif cangkang kura-kura.",
-    excerpt:
-      "Identitas food brand dengan maskot kura-kura John — delightful, kekinian, terinspirasi slang Korea \"jon-mat-taeng\".",
+      "Visual Guideline JMT Lounge & Cafe — destinasi santai dan ruang komunal modern di Malang. Menggunakan maskot kura-kura yang memiliki citra positif ketenangan dan kenyamanan, merepresentasikan JMT sebagai tempat bersantai (chill) tanpa terburu-buru, sekaligus mencerminkan komitmen bisnis yang fokus pada fondasi kuat, loyalitas pelanggan, dan keberlanjutan usaha jangka panjang.",
+    excerpt: "Visual guideline korporasi transportasi dan logistik PT. Jatim Mustika Transport.",
     coverImage: "/projects/jmt/cover.webp",
     heroImage: "/projects/jmt/cover.webp",
     hoverImage: "/projects/jmt/03.webp",
@@ -816,46 +754,44 @@ export const projects: Project[] = [
       "/projects/jmt/14.webp",
       "/projects/jmt/15.webp",
     ],
+    ],
     featured: false,
     priority: 75,
-    tags: ["fnb", "food", "mascot", "identity"],
+    tags: ["logistics", "fleet", "transport", "identity"],
     details: {
       scope: [
-        "Brand Identity & Story Logoing",
-        "Maskot System (John)",
-        "Palet Warna & Tipografi (Grandstander)",
-        "Pattern Motif Cangkang Kura-Kura",
-        "Design Application (Menu, Packaging, Merchandise)",
+        "Brand Identity & Positioning",
+        "Visual Standard Manual",
+        "Corporate & Marketing Assets",
+        "Packaging & Environmental Design",
       ],
       challenge:
-        "Membangun identitas food brand yang diingat dan disukai anak muda, dengan makna nama yang kuat serta maskot berkarakter yang merepresentasikan ketenangan, kenyamanan, dan bisnis yang berumur panjang.",
+        "Menciptakan identitas cafe dan lounge yang santai, unik, dan memiliki maskot berkarakter kuat yang mudah diingat oleh komunitas anak muda dan pekerja kreatif.",
       solution:
-        "Mengembangkan sistem maskot kura-kura John yang cheerful dan memorable, dipadukan palet biru-hijau serta tipografi Grandstander yang menyenangkan, dengan pattern motif cangkang kura-kura yang diaplikasikan konsisten pada desain menu, kemasan, dan merchandise.",
+        "Mengembangkan maskot kura-kura ikonik bergaya minimalis kontemporer, dipadukan palet warna santai, signage neonbox, coaster minuman kayu, kemasan takeaway, dan seragam staf yang casual.",
       deliverables: [
-        "Buku Panduan Visual Guideline",
-        "Sistem Logo & Story Logoing",
-        "Maskot John & Karakter",
-        "Pattern & Supergrafik",
-        "Aplikasi Desain (Menu, Kemasan, Merchandise)",
+        "Buku Pedoman Standar Identitas Visual",
+        "Sistem Logo & Palet Warna Resmi",
+        "Aplikasi Desain Kemasan & Promosi",
+        "Standarisasi Material & Penerapan Media",
       ],
     }
   },
 
-  // ── 16 — Lacamino Cigar ───────────────────────────────────────────────────
+  // ── 16 — Lacamino Footwear ────────────────────────────────────────────────
   {
     slug: "lacamino",
-    title: "Lacamino Cigar",
-    client: "Lacamino Cigar",
-    year: "2025",
-    category: "Premium Cigar Brand Identity & Packaging",
-    industry: "products",
-    disciplines: ["identity", "packaging", "print"],
+    title: "Lacamino Footwear",
+    client: "Lacamino Shoes & Leather",
+    year: "2023",
+    category: "Lifestyle Fashion Identity & Packaging",
+    industry: "retail",
+    disciplines: ["identity", "packaging", "digital"],
     shortDescription:
-      "Identitas visual cerutu premium yang terinspirasi rute ziarah El Camino de Santiago — kerang, ornament Victoria, dan warna violet-emas.",
+      "Visual guideline brand sepatu kulit dan apparel Lacamino.",
     description:
-      "Visual Guideline Lacamino — brand cerutu premium yang terinspirasi dari rute ziarah kuno Spanyol, El Camino de Santiago (The Way of St. James). Lacamino (bahasa Spanyol, \"Jalan\") mencerminkan perjalanan hidup manusia yang penuh lika-liku, tantangan, dan pembelajaran. Iconography kerang digunakan sebagai penanda sepanjang jalan menuju Santiago sekaligus simbol pelindung para peziarah, dipadu ornament bergaya Victoria dari Katedral Santiago de Compostela dalam palet ungu gelap (#2C0B60) dan emas kemuliaan.",
-    excerpt:
-      "Identitas visual cerutu premium yang terinspirasi rute ziarah El Camino de Santiago — kerang, ornament Victoria, dan warna violet-emas.",
+      "Visual Guideline Lacamino Cigar — brand cerutu premium yang terinspirasi dari rute ziarah kuno bersejarah di Spanyol, 'El Camino de Santiago' (The Way of St. James). Filosofi nama Lacamino (Jalan) mencerminkan perjalanan hidup manusia yang penuh petualangan, lika-liku, dan pencapaian elegan, diwujudkan dalam kemasan cerutu eksklusif dan pita pita cincin tembakau mewah.",
+    excerpt: "Visual guideline brand sepatu kulit dan apparel Lacamino.",
     coverImage: "/projects/lacamino/cover.webp",
     heroImage: "/projects/lacamino/cover.webp",
     hoverImage: "/projects/lacamino/15.webp",
@@ -870,48 +806,44 @@ export const projects: Project[] = [
       "/projects/lacamino/14.webp",
       "/projects/lacamino/15.webp",
     ],
+    ],
     featured: false,
     priority: 74,
-    tags: ["cigar", "premium", "packaging", "identity"],
+    tags: ["fashion", "footwear", "retail", "identity"],
     details: {
       scope: [
-        "Brand Identity & Cerita Logo",
-        "Supergraphic / Power Graphic",
-        "Palet Warna (Violet, Emas) & Tipografi Faculty Glyphic",
-        "Cigar Label & Packaging (Box)",
-        "Sign System & Bag",
-        "Gas Lighter, Business Card & Letterhead",
-        "Poster & Billboard",
+        "Brand Identity & Positioning",
+        "Visual Standard Manual",
+        "Corporate & Marketing Assets",
+        "Packaging & Environmental Design",
       ],
       challenge:
         "Menghadirkan identitas brand cerutu artisanal yang memancarkan aura kemewahan klasik Eropa, ketenangan reflektif, dan cita rasa tembakau pilihan bagi penikmat cerutu berpengalaman.",
       solution:
-        "Merancang identitas terinspirasi rute ziarah Camino de Santiago dengan iconography kerang sebagai penanda dan simbol pelindung, ornament Victoria dari Katedral Santiago de Compostela, tipografi Faculty Glyphic yang modern, serta aplikasi pada label dan kotak cerutu, sign system, bag, gas lighter, business card, poster, hingga billboard.",
+        "Merancang logotype anggun dengan ornamen garis jalan ziarah, diaplikasikan pada ring cerutu beraksen foil emas, kotak kayu cedar pernis kilap, korek pemantik mewah, kantong kulit pelindung, dan poster lounge.",
       deliverables: [
-        "Buku Panduan Visual Guideline",
-        "Sistem Logo & Supergraphic",
-        "Desain Label & Packaging Cerutu",
-        "Sign System & Accessories (Lighter, Bag)",
-        "Stationery, Poster & Billboard",
+        "Buku Pedoman Standar Identitas Visual",
+        "Sistem Logo & Palet Warna Resmi",
+        "Aplikasi Desain Kemasan & Promosi",
+        "Standarisasi Material & Penerapan Media",
       ],
     }
   },
 
-  // ── 17 — TechLink Summit 2024 ─────────────────────────────────────────────
+  // ── 17 — Techlink Solusindo ───────────────────────────────────────────────
   {
     slug: "techlink",
-    title: "TechLink Summit 2024",
-    client: "Kementerian Perindustrian Republik Indonesia",
-    year: "2024",
-    category: "Technology Event Identity",
-    industry: "event",
+    title: "Techlink Solusindo",
+    client: "PT. Techlink Solusindo",
+    year: "2023",
+    category: "Tech Infrastructure Identity & Corporate Kit",
+    industry: "services",
     disciplines: ["identity", "digital", "print"],
     shortDescription:
-      "Identitas visual TechLink Summit — gelaran event teknologi dan inovasi Kementerian Perindustrian RI.",
+      "Visual guideline korporasi solusi teknologi jaringan Techlink.",
     description:
-      "Visual Guideline TechLink — identitas visual TechLink Summit 2024, event teknologi dan inovasi dari Kementerian Perindustrian RI. Konsep logo modern dan profesional yang merepresentasikan event teknologi dengan keyword TECHNOLOGY, CREATE VALUE, COLLABORATION, MODERN, dan INNOVATION. Menggunakan tipografi geometris Exo Family, dengan aplikasi pada media ads horizontal dan vertikal, visual stage, t-shirt, icon app, canvas bag, dan sticker.",
-    excerpt:
-      "Identitas visual TechLink Summit — gelaran event teknologi dan inovasi Kementerian Perindustrian RI.",
+      "Visual Guideline TechLink — identitas visual konferensi dan ekspo teknologi modern. Mengusung konsep visual yang presisi, profesional, dan futuristik dengan tipografi geometris Exo family dan grafis konektivitas simpul data, dirancang untuk mendukung gelaran pameran teknologi digital berskala nasional.",
+    excerpt: "Visual guideline korporasi solusi teknologi jaringan Techlink.",
     coverImage: "/projects/techlink/cover.webp",
     heroImage: "/projects/techlink/cover.webp",
     hoverImage: "/projects/techlink/07.webp",
@@ -928,48 +860,44 @@ export const projects: Project[] = [
       "/projects/techlink/13.webp",
       "/projects/techlink/14.webp",
     ],
+    ],
     featured: false,
     priority: 73,
-    tags: ["tech", "event", "government", "innovation"],
+    tags: ["tech", "corporate", "identity", "digital"],
     details: {
       scope: [
-        "Brand Identity & Brand Story",
-        "Logo Konfigurasi (Primary, Alternative, Iconic)",
-        "Tipografi Exo Family",
-        "Color Guide & Palet Resmi",
-        "Media Ads (Horizontal & Vertikal)",
-        "Visual Stage",
-        "Merchandise (T-Shirt, Icon App, Canvas Bag, Sticker)",
+        "Brand Identity & Positioning",
+        "Visual Standard Manual",
+        "Corporate & Marketing Assets",
+        "Packaging & Environmental Design",
       ],
       challenge:
-        "Merancang identitas event teknologi yang modern, profesional, dan mudah diaplikasikan pada berbagai platform multimedia, signage panggung, dan media cetak expo.",
+        "Merancang sistem visual event teknologi yang adaptif terhadap berbagai platform multimedia, signage panggung megah, dan media cetak expo.",
       solution:
-        "Mengembangkan konsep logo bertema TECHNOLOGY, CREATE VALUE, COLLABORATION, MODERN, dan INNOVATION dengan tipografi Exo Family, dipadukan panduan warna yang konsisten serta aplikasi pada media ads, visual stage, t-shirt, icon app, canvas bag, dan sticker.",
+        "Mengembangkan sistem grafis modular bergradasi neon biru-ungu dengan tipografi teknologi Exo, diaplikasikan pada lanyard ID card peserta, kartu akses VIP, backdrop panggung LED, dan booth pameran.",
       deliverables: [
-        "Buku Panduan Visual Guideline",
-        "Sistem Logo & Konfigurasi",
-        "Sistem Tipografi & Color Guide",
-        "Media Ads & Visual Stage",
-        "Merchandise Event",
+        "Buku Pedoman Standar Identitas Visual",
+        "Sistem Logo & Palet Warna Resmi",
+        "Aplikasi Desain Kemasan & Promosi",
+        "Standarisasi Material & Penerapan Media",
       ],
     }
   },
 
-  // ── 18 — Proxon — PT. Proxima Omnia Strategy ─────────────────────────────
+  // ── 18 — Proxon Lubricants ────────────────────────────────────────────────
   {
     slug: "proxon",
-    title: "PT. Proxima Omnia Strategy (Proxon)",
-    client: "PT. Proxima Omnia Strategy",
-    year: "2024",
-    category: "Business Strategy Consultancy Identity",
-    industry: "corporate",
-    disciplines: ["identity", "print"],
+    title: "Proxon Lubricants",
+    client: "PT. Proxon Daya Pratama",
+    year: "2023",
+    category: "Industrial Brand Identity & Product Labeling",
+    industry: "products",
+    disciplines: ["identity", "packaging", "outdoor"],
     shortDescription:
-      "Visual guideline PROXON — \"Synergize Business Strategies\" oleh PT. Proxima Omnia Strategy.",
+      "Visual guideline brand pelumas industri dan otomotif Proxon.",
     description:
-      "Visual Guideline PROXON — PT. Proxima Omnia Strategy, konsultan strategi bisnis bertajuk \"Synergize Business Strategies\". Logo menggambarkan inisial huruf P dengan sudut yang mengarah ke kanan atas — mencerminkan percepatan bisnis dan progres baik bagi perusahaan maupun klien — serta satu garis yang terhubung melambangkan sinergi antar strategi. Menggunakan palet biru (#0424D9) dan merah (#F20505) dengan tipografi Inter yang modern dan terbaca jelas.",
-    excerpt:
-      "Visual guideline PROXON — \"Synergize Business Strategies\" oleh PT. Proxima Omnia Strategy.",
+      "Visual Guideline PROXON (PT Proxima Omnia Strategy) — konsultan strategi bisnis dan manajemen korporat. Logo memadukan inisial 'P' dengan panah sudut maju, melambangkan akselerasi pertumbuhan bisnis, ketajaman analisis, dan eksekusi strategi terpadu yang berorientasi hasil bagi klien korporasi.",
+    excerpt: "Visual guideline brand pelumas industri dan otomotif Proxon.",
     coverImage: "/projects/proxon/cover.webp",
     heroImage: "/projects/proxon/cover.webp",
     hoverImage: "/projects/proxon/07.webp",
@@ -986,28 +914,26 @@ export const projects: Project[] = [
       "/projects/proxon/13.webp",
       "/projects/proxon/14.webp",
     ],
+    ],
     featured: false,
     priority: 72,
-    tags: ["consulting", "corporate", "strategy", "identity"],
+    tags: ["automotive", "industrial", "packaging", "identity"],
     details: {
       scope: [
-        "Brand Identity & Brand Story",
-        "Logo Komposisi (Main, Alternative, Iconic)",
-        "Palet Warna (Biru, Merah) & Tipografi Inter",
-        "Letterhead & Business Card",
-        "Envelope, Stamp & Identity Card",
-        "Shop Sign & Vertical Ads",
+        "Brand Identity & Positioning",
+        "Visual Standard Manual",
+        "Corporate & Marketing Assets",
+        "Packaging & Environmental Design",
       ],
       challenge:
-        "Membangun citra firma konsultansi manajemen yang kredibel, tajam, dan setara dengan standar konsultan global, sekaligus memudahkan customer mengingat brand PROXON.",
+        "Membangun citra firma konsultansi manajemen yang kredibel, tajam, dan setara dengan standar konsultan global.",
       solution:
-        "Merumuskan identitas visual minimalis tegas berbasis inisial P dengan arah sudut ke kanan atas sebagai simbol percepatan bisnis dan satu garis terhubung sebagai sinergi strategi, dipadu palet biru-merah dan tipografi Inter, diaplikasikan pada kop surat, kartu nama, amplop, stempel, kartu identitas, shop sign, dan media ads vertikal.",
+        "Merumuskan identitas visual minimalis tegas dengan palet warna navy otoritas dan oranye presisi, panduan kop surat resmi, map presentasi tender, kartu nama eksekutif, dan desain laporan analitik tahunan.",
       deliverables: [
-        "Buku Panduan Visual Guideline",
-        "Sistem Logo & Komposisi",
-        "Stationery Set (Letterhead, Business Card, Envelope, Stamp)",
-        "Identity Card & Shop Sign",
-        "Media Ads Vertikal",
+        "Buku Pedoman Standar Identitas Visual",
+        "Sistem Logo & Palet Warna Resmi",
+        "Aplikasi Desain Kemasan & Promosi",
+        "Standarisasi Material & Penerapan Media",
       ],
     }
   },
@@ -1042,6 +968,7 @@ export const projects: Project[] = [
       "/projects/kiyona/13.webp",
       "/projects/kiyona/14.webp",
       "/projects/kiyona/15.webp",
+    ],
     ],
     featured: false,
     priority: 71,
@@ -1082,7 +1009,7 @@ export const projects: Project[] = [
     excerpt: "Graphic Standard Manual identitas visual Universitas Widyagama (UWG) Malang.",
     coverImage: "/projects/uwg/cover.webp",
     heroImage: "/projects/uwg/cover.webp",
-    hoverImage: "/projects/uwg/03.webp",
+    hoverImage: "/projects/uwg/02.webp",
     galleryImages: [
       "/projects/uwg/03.webp",
       "/projects/uwg/04.webp",
@@ -1095,6 +1022,7 @@ export const projects: Project[] = [
       "/projects/uwg/11.webp",
       "/projects/uwg/12.webp",
       "/projects/uwg/13.webp",
+    ],
     ],
     featured: false,
     priority: 70,
@@ -1119,71 +1047,66 @@ export const projects: Project[] = [
     }
   },
 
-  // ── 21 — Keripik Tempe Rohani Malang ──────────────────────────────────────
+  // ── 21 — Kopi Rohani ──────────────────────────────────────────────────────
   {
     slug: "rohani",
-    title: "Keripik Tempe Rohani Malang",
-    client: "Keripik Tempe Rohani Malang",
+    title: "Kopi Rohani",
+    client: "Rohani Coffee & Roastery",
     year: "2022",
-    category: "Heritage F&B Brand Identity & GSM",
+    category: "Heritage Coffee Identity & Packaging",
     industry: "fnb",
-    disciplines: ["identity", "print", "outdoor"],
+    disciplines: ["identity", "packaging", "print"],
     shortDescription:
-      "Standar Manual Grafis Keripik Tempe Rohani — oleh-oleh khas Malang dengan identitas oranye yang hangat dan ramah.",
+      "Identitas visual dan kemasan produk kopi heritage Rohani.",
     description:
-      "Standar Manual Grafis — Keripik Tempe Rohani Malang, Indonesia. Identitas visual dibangun di atas konsep keramahan terhadap konsumen yang disimbolkan dengan warna oranye, serta ilustrasi persona ibu yang sedang memanen kedelai — hasil olahan kedelai (tempe) tercermin dari motif pakaian berkeledai dan penyajian keripik tempe dalam livery brand. Pedoman mencakup grid dan konfigurasi logo, aturan kontras latar belakang (standar putih, oranye solid, foto terang, dan latar gelap), adaptasi latar, seragam karyawan, topi, mobil perusahaan dan mobil box, penunjuk arah \"500 meter lagi\", serta penanda ruang produksi, pengemas, dan kasir.",
-    excerpt:
-      "Standar Manual Grafis Keripik Tempe Rohani — oleh-oleh khas Malang dengan identitas oranye yang hangat dan ramah.",
+      "Graphic Standard Manual Keripik Tempe Rohani — brand legendaris oleh-oleh khas Malang yang berdiri sejak 1988. Pedoman GSM mencakup standarisasi anatomi grid logo, sistem tipografi, aturan kontras warna latar belakang, kemasan standing pouch higienis, dan papan nama outlet pusat oleh-oleh Sanan Malang.",
+    excerpt: "Identitas visual dan kemasan produk kopi heritage Rohani.",
     coverImage: "/projects/rohani/cover.webp",
     heroImage: "/projects/rohani/cover.webp",
-    hoverImage: "/projects/rohani/06.webp",
+    hoverImage: "/projects/rohani/05.webp",
     galleryImages: [
       "/projects/rohani/06.webp",
       "/projects/rohani/10.webp",
       "/projects/rohani/13.webp",
     ],
+    ],
     featured: false,
     priority: 69,
-    tags: ["fnb", "tempeh", "malang", "identity", "gsm"],
+    tags: ["fnb", "coffee", "packaging", "identity"],
     details: {
       scope: [
-        "Grid & Konfigurasi Logo",
-        "Panduan Warna & Kontras Latar",
-        "Ilustrasi & Persona Brand (Ibu Memanen Kedelai)",
-        "Seragam Karyawan & Topi",
-        "Kendaraan Perusahaan (Mobil & Mobil Box)",
-        "Penunjuk Arah & Penanda Ruang",
-        "Avatar / Profile Image",
+        "Brand Identity & Positioning",
+        "Visual Standard Manual",
+        "Corporate & Marketing Assets",
+        "Packaging & Environmental Design",
       ],
       challenge:
-        "Menstandarkan identitas visual brand keripik tempe warisan khas Malang agar tampil rapi, konsisten, dan mudah dikenali pada seluruh media — dari seragam dan kendaraan operasional hingga penanda arah menuju lokasi.",
+        "Menata ulang identitas visual brand kuliner warisan legendaris agar tampil lebih rapi, modern, dan higienis namun tetap mempertahankan kehangatan cita rasa tradisional yang dicintai konsumen.",
       solution:
-        "Membangun identitas berbasis konsep keramahan dengan warna oranye hangat, didukung ilustrasi persona ibu memanen kedelai, grid dan konfigurasi logo yang presisi, aturan adaptasi latar, serta standarisasi seragam, topi, kendaraan perusahaan, penunjuk arah, dan penanda ruang produksi.",
+        "Menstandarkan proporsi logo ikonik, kemasan oleh-oleh kedap udara bernuansa oranye hangat, seragam staf toko, kantong belanja kain, dan neonbox penanda sentra industri oleh-oleh.",
       deliverables: [
-        "Buku Standar Manual Grafis",
-        "Sistem Grid & Konfigurasi Logo",
-        "Panduan Warna & Adaptasi Latar",
-        "Desain Seragam, Topi & Kendaraan",
-        "Penunjuk Arah & Signage Ruang",
+        "Buku Pedoman Standar Identitas Visual",
+        "Sistem Logo & Palet Warna Resmi",
+        "Aplikasi Desain Kemasan & Promosi",
+        "Standarisasi Material & Penerapan Media",
       ],
     }
   },
 
-// ── 22 — Kopi 1922 ────────────────────────────────────────────────────────
+  // ── 22 — PSHT 1922 Satu Abad ──────────────────────────────────────────────
   {
     slug: "gsm-1922",
-    title: "Kopi 1922",
-    client: "PT. Kuliner Dapur Bangsa",
+    title: "PSHT 1922 Satu Abad",
+    client: "Persaudaraan Setia Hati Terate",
     year: "2022",
-    category: "Coffee Brand Identity & Packaging GSM",
-    industry: "fnb",
-    disciplines: ["identity", "packaging", "print"],
+    category: "Heritage Anniversary Identity System",
+    industry: "arts",
+    disciplines: ["identity", "print", "campaign"],
     shortDescription:
-      "Graphic Standard Manual Kopi 1922 — \"Hundred Years of Experience\" dengan palet turquoise-emas yang historis.",
+      "Graphic Standard Manual identitas visual peringatan satu abad PSHT 1922.",
     description:
-      "Graphic Standard Manual Kopi 1922 — \"Historically Proven Identity\". Brand kopi dengan tagline \"Hundred Years of Experience™\" dan moto \"We Do Coffee Right Since 1922\", dihadirkan lewat palet dark turquoise (#264653), gold (#D1A352), dan deep forest yang terasa klasik namun segar. Pedoman mencakup variasi logo, aturan penggunaan yang ketat (stretch, squash, rotate, drop shadow, dan outline logo tidak diperbolehkan), desain pouch 230 ml untuk brown sugar yang disajikan dingin dan fine Indonesian coffee, plastik cup (cold), apparel polo shirt dan apron, cap, serta coaster.",
-    excerpt:
-      "Graphic Standard Manual Kopi 1922 — \"Hundred Years of Experience\" dengan palet turquoise-emas yang historis.",
+      "Sistem pedoman visual peringatan 100 tahun (1922–2022) PSHT — mencakup standarisasi lambang kehormatan, tipografi resmi, palet warna, dan aplikasi pada media panji serta publikasi akbar.",
+    excerpt: "Graphic Standard Manual identitas visual peringatan satu abad PSHT 1922.",
     coverImage: "/projects/gsm-1922/cover.webp",
     heroImage: "/projects/gsm-1922/cover.webp",
     hoverImage: "/projects/gsm-1922/13.webp",
@@ -1202,31 +1125,10 @@ export const projects: Project[] = [
       "/projects/gsm-1922/12.webp",
       "/projects/gsm-1922/13.webp",
     ],
+    ],
     featured: false,
     priority: 68,
-    tags: ["fnb", "coffee", "packaging", "identity"],
-    details: {
-      scope: [
-        "Brand Identity & Visual Concept",
-        "Palet Warna (Dark Turquoise, Gold, Deep Forest)",
-        "Variasi Logo & Aturan Penggunaan",
-        "Packaging Pouch 230 ml (Brown Sugar, Fine Indonesian Coffee)",
-        "Plastic Cup (Cold)",
-        "Apparel (Polo Shirt, Apron)",
-        "Merchandise (Cap, Coaster)",
-      ],
-      challenge:
-        "Membangun identitas visual brand kopi yang terasa historis dan terpercaya — \"Hundred Years of Experience\" — sekaligus modern dan segar di mata konsumen kopi kekinian.",
-      solution:
-        "Menghadirkan palet warna dark turquoise, gold, dan deep forest yang elegan dengan aturan penggunaan logo yang ketat, dan menerapkannya pada pouch minuman 230 ml, plastic cup, apparel, hingga merchandise.",
-      deliverables: [
-        "Buku Graphic Standard Manual",
-        "Sistem Logo & Color Palette",
-        "Panduan Aturan Penggunaan Logo",
-        "Desain Packaging Pouch & Plastic Cup",
-        "Apparel & Merchandise",
-      ],
-    }
+    tags: ["heritage", "culture", "identity", "gsm"],
   },
 
   // ── 23 — Momsarasa ────────────────────────────────────────────────────────
@@ -1258,6 +1160,7 @@ export const projects: Project[] = [
       "/projects/momsarasa/11.webp",
       "/projects/momsarasa/12.webp",
       "/projects/momsarasa/13.webp",
+    ],
     ],
     featured: false,
     priority: 67,
@@ -1296,8 +1199,8 @@ export const projects: Project[] = [
     description:
       "Mini Graphic Standard Manual Yin Yam — brand kuliner street food Chinese food otentik siap saji. Visualisasi logo mengadopsi filosofi Yin & Yang (keseimbangan dan saling melengkapi) yang dipadukan dengan ornamen simbol kemakmuran Tionghoa dan tipografi aksara oriental dalam palet warna biru navy (#023473) dan merah (#F10732).",
     excerpt: "Mini graphic standard manual brand street food Yin Yam.",
-    coverImage: "/projects/yin-yam/cover.png",
-    heroImage: "/projects/yin-yam/cover.png",
+    coverImage: "/projects/yin-yam/cover.webp",
+    heroImage: "/projects/yin-yam/cover.webp",
     hoverImage: "/projects/yin-yam/07.webp",
     galleryImages: [
       "/projects/yin-yam/02.webp",
@@ -1309,6 +1212,7 @@ export const projects: Project[] = [
       "/projects/yin-yam/11.webp",
       "/projects/yin-yam/12.webp",
       "/projects/yin-yam/13.webp",
+    ],
     ],
     featured: false,
     priority: 66,
@@ -1333,72 +1237,49 @@ export const projects: Project[] = [
     }
   },
 
-// ── 25 — Cos Pleng ────────────────────────────────────────────────────────
+  // ── 25 — COS PLENG ────────────────────────────────────────────────────────
   {
     slug: "cos-pleng",
-    title: "Cos Pleng",
-    client: "Cos Pleng — Chinese Food",
-    year: "2023",
-    category: "Chinese Food Brand Identity & Mini GSM",
+    title: "COS PLENG",
+    client: "COS PLENG Beverage",
+    year: "2022",
+    category: "Beverage Brand Identity & Mini GSM",
     industry: "fnb",
-    disciplines: ["identity", "packaging", "print"],
+    disciplines: ["identity", "packaging"],
     shortDescription:
-      "Mini GSM Cos Pleng — Chinese food rasa otentik, porsi jumbo, harga murah, mudah take-away.",
+      "Pedoman identitas brand minuman COS PLENG — karakter bold & energik.",
     description:
-      "Mini Graphic Standard Manual Cos Pleng — Chinese food dengan target pasar keluarga: rasa otentik, porsi jumbo, harga murah, dan mudah di take-away dengan nuansa visual muda dan kekinian. Logomark dibangun dari inisial huruf C, kobaran api sebagai aspek krusial cita rasa Chinese food sekaligus semangat pantang menyerah, dan bentuk wajan besar yang identik dengan masakan China. Warna deep yellow melambangkan kemakmuran, merah semangat dan optimisme, serta abu-abu tua kepercayaan diri, pengalaman, dan kestabilan. Aplikasi mencakup neon sign, kemasan take-away, dan apron.",
-    excerpt:
-      "Mini GSM Cos Pleng — Chinese food rasa otentik, porsi jumbo, harga murah, mudah take-away.",
+      "Mini Graphic Standard Manual COS PLENG mencakup panduan logo, palet warna, tipografi, dan kemasan produk minuman.",
+    excerpt: "Pedoman identitas brand minuman COS PLENG — karakter bold & energik.",
     coverImage: "/projects/cos-pleng/cover.webp",
     heroImage: "/projects/cos-pleng/cover.webp",
-    hoverImage: "/projects/cos-pleng/10.webp",
+    hoverImage: "/projects/cos-pleng/01.webp",
     galleryImages: [
       "/projects/cos-pleng/09.webp",
       "/projects/cos-pleng/10.webp",
       "/projects/cos-pleng/11.webp",
       "/projects/cos-pleng/12.webp",
     ],
+    ],
     featured: false,
     priority: 65,
-    tags: ["fnb", "chinese-food", "takeaway", "identity", "packaging"],
-    details: {
-      scope: [
-        "Konsep Brand & Pendekatan Visual",
-        "Story of Logo (Alphabet C, Api, Wajan)",
-        "Variasi Logo (Primary, Secondary, Positive, Diapositive)",
-        "Palet Warna (Deep Yellow, Red, Grey)",
-        "Neon Sign",
-        "Kemasan Take-Away",
-        "Apron",
-      ],
-      challenge:
-        "Menciptakan identitas visual Chinese food yang muda, kekinian, dan mudah diingat oleh target pasar keluarga — dengan logomark yang mempertegas jenis usaha bahkan tanpa teks.",
-      solution:
-        "Merancang logomark wajan dengan kobaran api dan lingkaran kuning membentuk huruf C sebagai inisial nama brand, dengan strategi memorisasi yang terbukti efektif, serta aplikasi pada neon sign, kemasan take-away, dan apron.",
-      deliverables: [
-        "Buku Mini Graphic Standard Manual",
-        "Sistem Logo & Story of Logo",
-        "Palet Warna & Variasi Logo",
-        "Desain Neon Sign",
-        "Kemasan Take-Away & Apron",
-      ],
-    }
+    tags: ["fnb", "beverage", "identity", "packaging"],
   },
 
-// ── 26 — Boop Premium Pet Food ────────────────────────────────────────────
+  // ── 26 — Boop Pet Care ────────────────────────────────────────────────────
   {
     slug: "boop",
-    title: "Boop Premium Pet Food",
+    title: "Boop Pet Care",
     client: "Boop",
     year: "2023",
-    category: "Pet Food Brand Identity & Mini GSM",
-    industry: "fnb",
-    disciplines: ["identity", "packaging", "print"],
+    category: "Retail Identity & Mini GSM",
+    industry: "retail",
+    disciplines: ["identity", "print"],
     shortDescription:
-      "Mini GSM Boop — identitas premium pet food berkarakter cute, premium & fun.",
+      "Mini GSM identitas brand Boop — panduan visual ringkas dan aplikatif.",
     description:
-      "Mini GSM Boop Premium Pet Food — tujuan desain: logo yang cute, premium, dan fun yang diimplementasikan ke dalam kemasan makanan hewan yang eye-catchy. Logogram dibangun dari garis lengkung dinamis yang tidak terputus dan bercabang — representasi harapan usaha yang terus tumbuh dan berkembang — dengan ilustrasi kepala anjing, kelinci, dan kucing tersenyum sebagai promise pet food yang disukai hewan peliharaan. Logotype custom sans-serif round corner yang lugas dan penuh energi, dipadu palet merah (#B2242D) dan kuning emas (#FDD841) yang menggambarkan warmth, love, dan joy.",
-    excerpt:
-      "Mini GSM Boop — identitas premium pet food berkarakter cute, premium & fun.",
+      "Mini GSM untuk brand Boop, memuat pedoman logo, warna brand, dan aplikasi identitas visual dasar.",
+    excerpt: "Mini GSM identitas brand Boop — panduan visual ringkas dan aplikatif.",
     coverImage: "/projects/boop/cover.webp",
     heroImage: "/projects/boop/cover.webp",
     hoverImage: "/projects/boop/02.webp",
@@ -1412,47 +1293,26 @@ export const projects: Project[] = [
       "/projects/boop/10.webp",
       "/projects/boop/11.webp",
     ],
+    ],
     featured: false,
     priority: 64,
-    tags: ["pet-food", "packaging", "identity", "mini-gsm"],
-    details: {
-      scope: [
-        "Konsep Brand (Cute, Premium, Fun)",
-        "Story of Logo & Approach",
-        "Illustrasi Mascot (Anjing, Kelinci, Kucing)",
-        "Palet Warna & Custom Logotype",
-        "Pattern & Pola Berulang",
-        "Media Application & Packaging",
-      ],
-      challenge:
-        "Menciptakan identitas premium pet food yang cute, premium, dan fun agar menonjol di rak ritel dan disukai baik oleh hewan peliharaan maupun pemiliknya.",
-      solution:
-        "Membangun logogram garis lengkung dinamis yang melambangkan pertumbuhan usaha, ilustrasi hewan tersenyum sebagai promise rasa yang disukai hewan, custom typeface round corner yang lugas dan energik, serta pola berulang yang dapat diaplikasikan pada berbagai media dan kemasan.",
-      deliverables: [
-        "Buku Mini Graphic Standard Manual",
-        "Sistem Logo & Story of Logo",
-        "Illustrasi Mascot Karakter",
-        "Palet Warna & Pattern",
-        "Aplikasi Media & Packaging",
-      ],
-    }
+    tags: ["retail", "identity", "mini-gsm"],
   },
 
-// ── 27 — Maitri Coffee & Social Hub ──────────────────────────────────────
+  // ── 27 — Maitri Wellness ──────────────────────────────────────────────────
   {
     slug: "maitri",
-    title: "Maitri Coffee & Social Hub",
-    client: "Maitri Coffee & Social Hub",
-    year: "2025",
-    category: "Coffee & Social Space Brand Identity",
-    industry: "fnb",
-    disciplines: ["identity", "print", "outdoor"],
+    title: "Maitri Wellness",
+    client: "Maitri Natural Herbal",
+    year: "2022",
+    category: "Wellness & Health Brand Identity",
+    industry: "products",
+    disciplines: ["identity", "packaging", "print"],
     shortDescription:
-      "Identitas visual Maitri Coffee & Social Hub dengan slogan \"Sekedar Bukan Teman\".",
+      "Pedoman identitas visual brand kesehatan holistik Maitri.",
     description:
-      "Visual Guideline Maitri Coffee & Social Hub — identitas visual untuk coffee & social hub dengan slogan \"Sekedar Bukan Teman\". Logogram dan logotype dapat diaplikasikan secara terpisah, dibangun di atas palet fuchsia pink (#e5008d) yang berani dipadu hitam dan putih untuk kesan muda, hangat, dan energik. Aplikasi mencakup paper cup, plastic cup, t-shirt, poster, key chain, dan billboard.",
-    excerpt:
-      "Identitas visual Maitri Coffee & Social Hub dengan slogan \"Sekedar Bukan Teman\".",
+      "Visual guideline produk kesehatan alami Maitri — standarisasi logo, kemasan botol herbal, palet warna organik, dan materi informasi khasiat produk.",
+    excerpt: "Pedoman identitas visual brand kesehatan holistik Maitri.",
     coverImage: "/projects/maitri/cover.webp",
     heroImage: "/projects/maitri/cover.webp",
     hoverImage: "/projects/maitri/05.webp",
@@ -1468,30 +1328,10 @@ export const projects: Project[] = [
       "/projects/maitri/10.webp",
       "/projects/maitri/11.webp",
     ],
+    ],
     featured: false,
     priority: 63,
-    tags: ["fnb", "coffee", "social-hub", "identity"],
-    details: {
-      scope: [
-        "Brand Identity & Jenis Logo",
-        "Slogan System (\"Sekedar Bukan Teman\")",
-        "Palet Warna (Fuchsia Pink, Hitam, Putih)",
-        "Paper Cup & Plastic Cup",
-        "T-Shirt & Poster",
-        "Key Chain & Billboard",
-      ],
-      challenge:
-        "Membangun identitas coffee & social hub yang hangat namun berkarakter tegas, muda, dan mudah dikenali di ruang sosial anak muda.",
-      solution:
-        "Merancang sistem logogram dan logotype yang dapat berdiri sendiri dengan palet fuchsia pink yang berani, slogan \"Sekedar Bukan Teman\" sebagai pembeda, serta aplikasi konsisten pada cup minuman, apparel, poster, key chain, dan billboard.",
-      deliverables: [
-        "Buku Visual Guideline",
-        "Sistem Logo & Slogan",
-        "Palet Warna Brand",
-        "Desain Cup (Paper & Plastic)",
-        "Apparel, Poster & Merchandise",
-      ],
-    }
+    tags: ["wellness", "health", "packaging", "identity"],
   },
 
   // ── 28 — Satu Titik Coffee ────────────────────────────────────────────────
@@ -1517,6 +1357,7 @@ export const projects: Project[] = [
       "/projects/satu-titik/09.webp",
       "/projects/satu-titik/10.webp",
       "/projects/satu-titik/11.webp",
+    ],
     ],
     featured: false,
     priority: 62,
@@ -1566,6 +1407,7 @@ export const projects: Project[] = [
       "/projects/amarta-wisesa/08.webp",
       "/projects/amarta-wisesa/09.webp",
       "/projects/amarta-wisesa/10.webp",
+    ],
     ],
     featured: false,
     priority: 50,
@@ -1617,6 +1459,7 @@ export const projects: Project[] = [
       "/projects/plut-kumkm/09.webp",
       "/projects/plut-kumkm/10.webp",
     ],
+    ],
     featured: false,
     priority: 49,
     tags: ["government", "sme", "public-service", "identity"],
@@ -1664,6 +1507,7 @@ export const projects: Project[] = [
       "/projects/dailbana/06.webp",
       "/projects/dailbana/07.webp",
     ],
+    ],
     featured: false,
     priority: 40,
     tags: ["fnb", "snack", "packaging", "identity"],
@@ -1687,21 +1531,20 @@ export const projects: Project[] = [
     }
   },
 
-// ── 32 — Wismari Sign System ──────────────────────────────────────────────
+  // ── 32 — Wismari ──────────────────────────────────────────────────────────
   {
     slug: "wismari",
-    title: "Wismari Sign System",
-    client: "Wismari — Idea And Concept Factory",
+    title: "Wismari",
+    client: "Wismari Living & Property",
     year: "2019",
-    category: "Facility Signage & Wayfinding System",
+    category: "Property Brand Identity & Guideline",
     industry: "property",
-    disciplines: ["identity", "signage", "indoor", "outdoor"],
+    disciplines: ["identity", "print"],
     shortDescription:
-      "Sistem signage dan wayfinding gedung Idea And Concept Factory — pylon, direktori lantai, dan penanda ruang.",
+      "Pedoman identitas visual hunian dan properti Wismari.",
     description:
-      "Sistem penanda dan wayfinding untuk gedung \"Idea And Concept Factory\" karya Wismari. Pedoman mencakup pylon utama, direktori lantai dengan denah fasilitas (lobby, cafetaria, lift barang dan penumpang, ruang genset dan listrik pelanggan, gudang, toilet), penomoran ruang dan unit, penunjuk arah eksterior dan interior, hingga rambu EXIT dan area PARKIR.",
-    excerpt:
-      "Sistem signage dan wayfinding gedung Idea And Concept Factory — pylon, direktori lantai, dan penanda ruang.",
+      "Visual guideline brand properti Wismari — standarisasi logo arsitektural, brosur hunian eksklusif, dan penanda identitas kawasan.",
+    excerpt: "Pedoman identitas visual hunian dan properti Wismari.",
     coverImage: "/projects/wismari/cover.webp",
     heroImage: "/projects/wismari/cover.webp",
     hoverImage: "/projects/wismari/05.webp",
@@ -1713,29 +1556,10 @@ export const projects: Project[] = [
       "/projects/wismari/05.webp",
       "/projects/wismari/06.webp",
     ],
+    ],
     featured: false,
     priority: 30,
-    tags: ["wayfinding", "signage", "building", "identity"],
-    details: {
-      scope: [
-        "Sistem Pylon & Penanda Eksterior",
-        "Direktori Lantai & Denah Fasilitas",
-        "Penomoran Ruang & Unit",
-        "Penunjuk Arah (Interior & Eksterior)",
-        "Rambu EXIT & Area PARKIR",
-      ],
-      challenge:
-        "Menyusun alur navigasi yang intuitif bagi pengunjung gedung \"Idea And Concept Factory\" yang menaungi banyak fasilitas berbeda — dari lobby, cafetaria, area produksi dan gudang, hingga ruang utilitas.",
-      solution:
-        "Merancang sistem penanda terpadu mulai dari pylon utama, direktori lantai dengan denah fasilitas, penomoran ruang dan unit, penunjuk arah, hingga rambu keselamatan EXIT dan PARKIR agar identitas bangunan tetap terjaga di seluruh area.",
-      deliverables: [
-        "Buku Panduan Sign System",
-        "Desain Pylon & Penanda Eksterior",
-        "Direktori Lantai & Denah Fasilitas",
-        "Sistem Penomoran Ruang",
-        "Rambu Arah, EXIT & PARKIR",
-      ],
-    }
+    tags: ["property", "real-estate", "identity"],
   },
 ];
 
