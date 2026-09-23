@@ -21,11 +21,9 @@ export const metadata: Metadata = {
 function ProjectEntry({
   project,
   index,
-  isFullWidth,
 }: {
   project: Project;
   index: number;
-  isFullWidth: boolean;
 }) {
   const coverSrc = project.coverImage || project.heroImage || "";
   const num = String(index + 1).padStart(2, "0");
@@ -60,13 +58,9 @@ function ProjectEntry({
               fill
               priority={index < 4}
               loading={index < 4 ? "eager" : "lazy"}
-              sizes={
-                isFullWidth
-                  ? "(max-width: 1400px) 100vw, 1400px"
-                  : "(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 700px"
-              }
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               style={{
-                objectFit: "contain",
+                objectFit: "cover",
               }}
               className="pe-image"
             />
@@ -123,6 +117,8 @@ function ProjectEntry({
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                minWidth: 0,
+                flexShrink: 1,
               }}
             >
               {disciplines}
@@ -134,9 +130,7 @@ function ProjectEntry({
             className="pe-title"
             style={{
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              fontSize: isFullWidth
-                ? "clamp(1.25rem, 2.5vw, 2rem)"
-                : "clamp(1rem, 1.4vw, 1.3rem)",
+              fontSize: "clamp(1rem, 1.4vw, 1.3rem)",
               fontWeight: 900,
               letterSpacing: "-0.025em",
               textTransform: "uppercase",
@@ -167,6 +161,7 @@ function ProjectEntry({
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                minWidth: 0,
               }}
             >
               {project.client}
@@ -249,11 +244,7 @@ function ProjectGrid({ projects }: { projects: Project[] }) {
     <div className="pe-grid-root">
       {projects.map((project, index) => (
         <div key={project.slug} className="pe-col-item">
-          <ProjectEntry
-            project={project}
-            index={index}
-            isFullWidth={false}
-          />
+          <ProjectEntry project={project} index={index} />
         </div>
       ))}
     </div>
@@ -294,33 +285,31 @@ export default async function WorkPage({
         .pe-link:hover .pe-title { color: #c91a1f !important; }
         .pe-title { transition: color 0.2s ease; }
 
-        /* Grid: 3-4 columns on desktop, 2 on tablet, 1 on mobile */
+        /* Grid: strict 3 desktop / 2 tablet / 1 mobile */
         .pe-grid-root {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: clamp(1.25rem, 2vw, 2.25rem) clamp(1rem, 1.6vw, 1.75rem);
-          align-items: start;
-        }
-        @media (min-width: 1360px) {
-          .pe-grid-root {
-            grid-template-columns: repeat(4, 1fr);
-          }
+          gap: clamp(1.5rem, 2.5vw, 2.5rem);
         }
         @media (max-width: 1024px) {
           .pe-grid-root {
             grid-template-columns: repeat(2, 1fr);
-            gap: clamp(1.25rem, 2.5vw, 2rem) clamp(1rem, 2vw, 1.5rem);
           }
         }
         @media (max-width: 640px) {
           .pe-grid-root {
             grid-template-columns: 1fr;
-            gap: 2rem 0;
           }
+        }
+
+        /* Never hide the top row behind the fixed header when anchored */
+        .wk-grid-wrap {
+          scroll-margin-top: clamp(4rem, 6vw, 5rem);
         }
 
         .pe-col-item {
           grid-column: auto;
+          min-width: 0;
         }
 
         /* Page intro text animation */
