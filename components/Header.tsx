@@ -1,6 +1,4 @@
-
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef, FormEvent } from "react";
@@ -22,35 +20,40 @@ const menuNavLinks: MenuNavItem[] = [
     label: "WORK",
     subtitle: "Selected Case Studies & Archive",
     href: "/work",
-    previewImage: "/img/remote/brand.jpg",
+    previewImage:
+      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "02",
     label: "STUDIO",
     subtitle: "Philosophy, 25+ Years & Culture",
     href: "/studio",
-    previewImage: "/img/remote/space.jpg",
+    previewImage:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "03",
     label: "SERVICES",
     subtitle: "Brand, Space, Digital & Capabilities",
     href: "/services",
-    previewImage: "/img/remote/digital.jpg",
+    previewImage:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "04",
     label: "INSIGHTS",
     subtitle: "Publications, Media & Case Notes",
     href: "/insights",
-    previewImage: "/img/remote/insight-identity.jpg",
+    previewImage:
+      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "05",
     label: "CONTACT",
     subtitle: "Direct Channels & Studio Base",
     href: "/contact",
-    previewImage: "/img/remote/outdoor.jpg",
+    previewImage:
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
   },
 ];
 
@@ -588,6 +591,42 @@ export default function Header() {
       {/* ══════════════════════════════════════════════
           IMMERSIVE EDITORIAL MENU OVERLAY
       ══════════════════════════════════════════════ */}
+      <style>{`
+        .menu-form-input::placeholder {
+          color: rgba(255, 255, 255, 0.5);
+        }
+        .menu-form-input:focus::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+        }
+        @keyframes menuNavItemIn {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes menuFormIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .menu-nav-item {
+          opacity: 0;
+          animation: menuNavItemIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .menu-form-panel {
+          opacity: 0;
+          animation: menuFormIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
       <div
         style={{
           position: "fixed",
@@ -776,6 +815,7 @@ export default function Header() {
                       setActivePreview(link.previewImage);
                     }}
                     onMouseLeave={() => setHoveredIndex(null)}
+                    className="menu-nav-item"
                     style={{
                       display: "flex",
                       alignItems: "baseline",
@@ -787,6 +827,8 @@ export default function Header() {
                       transition: "transform 0.25s ease, opacity 0.2s ease",
                       transform: isHovered ? "translateX(12px)" : "translateX(0)",
                       opacity: hoveredIndex !== null && !isHovered ? 0.45 : 1,
+                      animationDelay: menuOpen ? `${i * 0.06}s` : "0s",
+                      position: "relative",
                     }}
                   >
                     <div
@@ -794,6 +836,7 @@ export default function Header() {
                         display: "flex",
                         alignItems: "baseline",
                         gap: "clamp(0.4rem, 1vw, 1.2rem)",
+                        position: "relative",
                       }}
                     >
                       <span
@@ -814,9 +857,24 @@ export default function Header() {
                           textTransform: "uppercase",
                           letterSpacing: "-0.03em",
                           lineHeight: 1,
+                          position: "relative",
                         }}
                       >
                         {link.label}
+                        <span
+                          style={{
+                            position: "absolute",
+                            bottom: "-2px",
+                            left: 0,
+                            width: "100%",
+                            height: "2px",
+                            backgroundColor: "#ffffff",
+                            borderRadius: "1px",
+                            transform: isHovered ? "scaleX(1)" : "scaleX(0)",
+                            transformOrigin: "left",
+                            transition: "transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
+                          }}
+                        />
                       </span>
                     </div>
 
@@ -841,15 +899,17 @@ export default function Header() {
 
           {/* Right Column: BESPOKE PROJECT BRIEF INQUIRY FORM */}
           <div
+            className="menu-form-panel"
             style={{
               backgroundColor: "rgba(10, 10, 10, 0.45)",
               backdropFilter: "blur(24px)",
               padding: "clamp(0.6rem, 1.2vw, 1.2rem)",
               border: "1px solid rgba(255, 255, 255, 0.18)",
-              borderRadius: "4px",
+              borderRadius: "8px",
               boxShadow: "0 16px 40px rgba(0, 0, 0, 0.3)",
               maxHeight: "calc(100vh - 100px)",
               overflowY: "auto",
+              animationDelay: menuOpen ? "0.25s" : "0s",
             }}
           >
             {/* Header / Title */}
@@ -968,7 +1028,7 @@ export default function Header() {
                     padding: "8px 18px",
                     backgroundColor: "transparent",
                     border: "1px solid rgba(255, 255, 255, 0.3)",
-                    borderRadius: "2px",
+                    borderRadius: "6px",
                     color: "#ffffff",
                     fontSize: "0.75rem",
                     fontWeight: 700,
@@ -1021,7 +1081,7 @@ export default function Header() {
                           onClick={() => toggleDiscipline(disc)}
                           style={{
                             padding: "2px 6px",
-                            borderRadius: "9999px",
+                            borderRadius: "6px",
                             fontSize: "0.58rem",
                             fontWeight: 600,
                             letterSpacing: "0.03em",
@@ -1089,23 +1149,26 @@ export default function Header() {
                       placeholder="e.g. Alex Morgan"
                       value={formName}
                       onChange={(e) => setFormName(e.target.value)}
+                      className="menu-form-input"
                       style={{
                         width: "100%",
                         padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
-                        borderRadius: "2px",
+                        borderRadius: "6px",
                         color: "#ffffff",
                         fontSize: "0.75rem",
                         outline: "none",
-                        transition: "border-color 0.2s ease",
+                        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = "#ffffff";
+                        e.currentTarget.style.boxShadow = "0 0 0 2px rgba(255, 255, 255, 0.1)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
                           "rgba(255, 255, 255, 0.16)";
+                        e.currentTarget.style.boxShadow = "none";
                       }}
                     />
                   </div>
@@ -1131,23 +1194,26 @@ export default function Header() {
                       placeholder="e.g. Studio Vertex"
                       value={formCompany}
                       onChange={(e) => setFormCompany(e.target.value)}
+                      className="menu-form-input"
                       style={{
                         width: "100%",
                         padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
-                        borderRadius: "2px",
+                        borderRadius: "6px",
                         color: "#ffffff",
                         fontSize: "0.75rem",
                         outline: "none",
-                        transition: "border-color 0.2s ease",
+                        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = "#ffffff";
+                        e.currentTarget.style.boxShadow = "0 0 0 2px rgba(255, 255, 255, 0.1)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
                           "rgba(255, 255, 255, 0.16)";
+                        e.currentTarget.style.boxShadow = "none";
                       }}
                     />
                   </div>
@@ -1184,23 +1250,26 @@ export default function Header() {
                       placeholder="alex@company.com"
                       value={formEmail}
                       onChange={(e) => setFormEmail(e.target.value)}
+                      className="menu-form-input"
                       style={{
                         width: "100%",
                         padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
-                        borderRadius: "2px",
+                        borderRadius: "6px",
                         color: "#ffffff",
                         fontSize: "0.75rem",
                         outline: "none",
-                        transition: "border-color 0.2s ease",
+                        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = "#ffffff";
+                        e.currentTarget.style.boxShadow = "0 0 0 2px rgba(255, 255, 255, 0.1)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
                           "rgba(255, 255, 255, 0.16)";
+                        e.currentTarget.style.boxShadow = "none";
                       }}
                     />
                   </div>
@@ -1226,23 +1295,26 @@ export default function Header() {
                       placeholder="+62 81..."
                       value={formPhone}
                       onChange={(e) => setFormPhone(e.target.value)}
+                      className="menu-form-input"
                       style={{
                         width: "100%",
                         padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
-                        borderRadius: "2px",
+                        borderRadius: "6px",
                         color: "#ffffff",
                         fontSize: "0.75rem",
                         outline: "none",
-                        transition: "border-color 0.2s ease",
+                        transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = "#ffffff";
+                        e.currentTarget.style.boxShadow = "0 0 0 2px rgba(255, 255, 255, 0.1)";
                       }}
                       onBlur={(e) => {
                         e.currentTarget.style.borderColor =
                           "rgba(255, 255, 255, 0.16)";
+                        e.currentTarget.style.boxShadow = "none";
                       }}
                     />
                   </div>
@@ -1271,25 +1343,28 @@ export default function Header() {
                     placeholder="Briefly describe your objectives, target audience, timeline, or key challenges..."
                     value={formBrief}
                     onChange={(e) => setFormBrief(e.target.value)}
+                    className="menu-form-input"
                     style={{
                       width: "100%",
                         padding: "6px 10px",
                         backgroundColor: "rgba(255, 255, 255, 0.07)",
                         border: "1px solid rgba(255, 255, 255, 0.16)",
-                        borderRadius: "2px",
+                        borderRadius: "6px",
                         color: "#ffffff",
                         fontSize: "0.7rem",
                       outline: "none",
                       resize: "vertical",
                       minHeight: "60px",
-                      transition: "border-color 0.2s ease",
+                      transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                     }}
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = "#ffffff";
+                      e.currentTarget.style.boxShadow = "0 0 0 2px rgba(255, 255, 255, 0.1)";
                     }}
                     onBlur={(e) => {
                       e.currentTarget.style.borderColor =
                         "rgba(255, 255, 255, 0.16)";
+                      e.currentTarget.style.boxShadow = "none";
                     }}
                   />
                 </div>
@@ -1321,7 +1396,7 @@ export default function Header() {
                     backgroundColor: "#ffffff",
                     color: "#c91a1f",
                     border: "none",
-                    borderRadius: "2px",
+                    borderRadius: "6px",
                     cursor: formSubmitting ? "wait" : "pointer",
                     fontSize: "0.7rem",
                     fontWeight: 800,

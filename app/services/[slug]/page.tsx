@@ -120,7 +120,7 @@ export default async function ServiceDetailPage({
           </div>
 
           {/* ── Header ───────────────────────────────────────────── */}
-          <div style={{ marginBottom: "clamp(3rem, 5vw, 5rem)" }}>
+          <div style={{ marginBottom: "clamp(2rem, 3vw, 3rem)" }}>
             <SectionLabel>
               Discipline {service.number} · {service.name}
             </SectionLabel>
@@ -128,13 +128,13 @@ export default async function ServiceDetailPage({
             <h1
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(3rem, 7vw, 6.5rem)",
+                fontSize: "clamp(2rem, 4vw, 3.5rem)",
                 fontWeight: 900,
-                letterSpacing: "-0.04em",
+                letterSpacing: "-0.03em",
                 textTransform: "uppercase",
                 color: "#0a0a0a",
-                lineHeight: 0.94,
-                margin: "0 0 1.5rem",
+                lineHeight: 1.1,
+                margin: "0 0 1rem",
               }}
             >
               {service.tagline}
@@ -142,10 +142,10 @@ export default async function ServiceDetailPage({
 
             <p
               style={{
-                fontSize: "clamp(1.15rem, 1.8vw, 1.5rem)",
+                fontSize: "clamp(1rem, 1.4vw, 1.25rem)",
                 lineHeight: 1.5,
                 color: "#555555",
-                maxWidth: "920px",
+                maxWidth: "800px",
                 margin: 0,
                 fontWeight: 400,
               }}
@@ -159,12 +159,13 @@ export default async function ServiceDetailPage({
             style={{
               position: "relative",
               width: "100%",
-              aspectRatio: "21/9",
-              minHeight: "300px",
+              aspectRatio: "16/9",
+              minHeight: "280px",
+              maxHeight: "500px",
               backgroundColor: "#f5f5f5",
               overflow: "hidden",
               border: "1px solid rgba(0, 0, 0, 0.08)",
-              marginBottom: "clamp(3.5rem, 6vw, 6rem)",
+              marginBottom: "clamp(2rem, 3vw, 3rem)",
             }}
           >
             <Image
@@ -182,10 +183,10 @@ export default async function ServiceDetailPage({
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-              gap: "clamp(2rem, 5vw, 5rem)",
-              paddingBottom: "clamp(3.5rem, 6vw, 6rem)",
+              gap: "clamp(1.5rem, 3vw, 3rem)",
+              paddingBottom: "clamp(2rem, 3vw, 3rem)",
               borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-              marginBottom: "clamp(3.5rem, 6vw, 6rem)",
+              marginBottom: "clamp(2rem, 3vw, 3rem)",
             }}
           >
             <div>
@@ -218,14 +219,14 @@ export default async function ServiceDetailPage({
           </div>
 
           {/* ── Capabilities Breakdown Cards ────────────────────── */}
-          <div style={{ marginBottom: "clamp(3.5rem, 6vw, 6rem)" }}>
+          <div style={{ marginBottom: "clamp(2rem, 3vw, 3rem)" }}>
             <SectionLabel>Core Capabilities</SectionLabel>
 
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                gap: "clamp(1.25rem, 2vw, 2rem)",
+                gap: "clamp(1rem, 1.5vw, 1.5rem)",
               }}
             >
               {service.capabilities.map((cap, i) => (
@@ -284,9 +285,9 @@ export default async function ServiceDetailPage({
           {/* ── Scope of Deliverables ────────────────────────────── */}
           <div
             style={{
-              paddingBottom: "clamp(3.5rem, 6vw, 6rem)",
+              paddingBottom: "clamp(2rem, 3vw, 3rem)",
               borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-              marginBottom: "clamp(3.5rem, 6vw, 6rem)",
+              marginBottom: "clamp(2rem, 3vw, 3rem)",
             }}
           >
             <SectionLabel>Scope of Deliverables</SectionLabel>
@@ -321,14 +322,14 @@ export default async function ServiceDetailPage({
 
           {/* ── Related Selected Projects ────────────────────────── */}
           {relatedProjects.length > 0 && (
-            <div style={{ marginBottom: "clamp(4rem, 7vw, 7rem)" }}>
+            <div style={{ marginBottom: "clamp(2.5rem, 4vw, 4rem)" }}>
               <SectionLabel>Selected Work in this Discipline</SectionLabel>
 
               <div
                 style={{
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-                  gap: "clamp(1.5rem, 3vw, 2.5rem)",
+                  gap: "clamp(1rem, 2vw, 2rem)",
                 }}
               >
                 {relatedProjects.map((proj) => {

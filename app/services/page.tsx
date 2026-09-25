@@ -37,8 +37,8 @@ export default function ServicesPage() {
           <div
             style={{
               borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-              paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
-              marginBottom: "clamp(3rem, 5vw, 5rem)",
+              paddingBottom: "clamp(2rem, 3vw, 3rem)",
+              marginBottom: "clamp(2rem, 3vw, 3rem)",
             }}
           >
             <div
@@ -85,12 +85,12 @@ export default function ServicesPage() {
                 <h1
                   style={{
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    fontSize: "clamp(3.5rem, 9vw, 8.5rem)",
+                    fontSize: "clamp(2.5rem, 6vw, 5rem)",
                     fontWeight: 900,
-                    letterSpacing: "-0.04em",
+                    letterSpacing: "-0.03em",
                     textTransform: "uppercase",
                     color: "#0a0a0a",
-                    lineHeight: 0.92,
+                    lineHeight: 0.95,
                     margin: 0,
                   }}
                 >
@@ -98,7 +98,7 @@ export default function ServicesPage() {
                 </h1>
                 <p
                   style={{
-                    marginTop: "1.25rem",
+                    marginTop: "1rem",
                     fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
                     color: "#555555",
                     letterSpacing: "0.02em",
@@ -121,9 +121,9 @@ export default function ServicesPage() {
                 <span
                   style={{
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                    fontSize: "clamp(2rem, 4vw, 3.5rem)",
                     fontWeight: 900,
-                    letterSpacing: "-0.04em",
+                    letterSpacing: "-0.03em",
                     color: "rgba(0, 0, 0, 0.06)",
                     lineHeight: 1,
                   }}
@@ -149,7 +149,7 @@ export default function ServicesPage() {
           <div
             style={{
               borderTop: "1px solid rgba(0, 0, 0, 0.08)",
-              marginBottom: "clamp(4rem, 7vw, 7rem)",
+              marginBottom: "clamp(3rem, 5vw, 5rem)",
             }}
           >
             {servicesData.map((service) => {
@@ -165,7 +165,7 @@ export default function ServicesPage() {
                     textDecoration: "none",
                     color: "inherit",
                     borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-                    padding: "clamp(2rem, 3.5vw, 3rem) 0",
+                    padding: "clamp(1.5rem, 2.5vw, 2.5rem) 0",
                     transition: "background-color 0.25s ease, padding 0.25s ease",
                   }}
                   onMouseEnter={() => setHoveredSlug(service.slug)}
