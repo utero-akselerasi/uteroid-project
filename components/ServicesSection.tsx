@@ -3,100 +3,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import RevealOnScroll from "./RevealOnScroll";
-
-interface Capability {
-  id: string;
-  name: string;
-  tagline: string;
-  description: string;
-  deliverables: string[];
-  image: string;
-  slug: string;
-}
-
-const capabilities: Capability[] = [
-  {
-    id: "01",
-    name: "IDENTITY",
-    tagline: "Strategic Brand Systems & Guidelines",
-    description:
-      "Crafting distinctive visual identities, logos, brand architecture, and meticulous guidelines that position organizations with authority and emotional resonance.",
-    deliverables: [
-      "Visual Identity & Logo Systems",
-      "Brand Guidelines & Manuals",
-      "Corporate Stationery & Collateral",
-      "Brand Architecture & Naming",
-    ],
-    image: "/img/remote/brand.jpg",
-    slug: "brand",
-  },
-  {
-    id: "02",
-    name: "PRINTED",
-    tagline: "Editorial, Publications & Packaging",
-    description:
-      "Engineering tactile print media, company profiles, catalogs, annual reports, and physical product packaging with world-class typographic precision and print finishing.",
-    deliverables: [
-      "Company Profiles & Annual Reports",
-      "Catalogs & Editorial Publications",
-      "Product Packaging & Label Systems",
-      "Brochures & Marketing Print",
-    ],
-    image: "/img/remote/product.jpg",
-    slug: "product",
-  },
-  {
-    id: "03",
-    name: "MISC",
-    tagline: "Merchandise, Uniforms & Collateral",
-    description:
-      "Designing branded merchandise, corporate uniforms, event collateral, calendars, and bespoke physical items that turn employees and clients into passionate brand advocates.",
-    deliverables: [
-      "Corporate Uniforms & Apparel",
-      "Bespoke Merchandise & Swag",
-      "Event Systems & Exhibition Kits",
-      "Executive Gift Sets & Souvenirs",
-    ],
-    image: "/img/remote/promotion.jpg",
-    slug: "promotion",
-  },
-  {
-    id: "04",
-    name: "DIGITAL",
-    tagline: "Websites, UI/UX & Digital Media",
-    description:
-      "Building high-performance websites, user interfaces, social media design frameworks, and interactive digital assets that communicate seamlessly across screens.",
-    deliverables: [
-      "Bespoke Web Design & UI/UX",
-      "Interactive Digital Experiences",
-      "Social Media Design Systems",
-      "Digital Branding & Motion Assets",
-    ],
-    image: "/img/remote/digital.jpg",
-    slug: "digital",
-  },
-  {
-    id: "05",
-    name: "ENVIRONMENTAL",
-    tagline: "Signage, Wayfinding & Spatial Graphics",
-    description:
-      "Transforming architecture and physical environments into experiential branded spaces through large-scale directional signage, architectural graphics, and outdoor media.",
-    deliverables: [
-      "Wayfinding & Directional Signage",
-      "Indoor Office Branding & Graphics",
-      "Outdoor Billboards & Architectural Pylons",
-      "Exhibition & Event Space Design",
-    ],
-    image: "/img/remote/space.jpg",
-    slug: "space",
-  },
-];
+import { disciplinesData } from "@/lib/disciplines";
 
 export default function ServicesSection() {
   const [activeIdx, setActiveIdx] = useState(0);
+  const router = useRouter();
 
-  const activeCapability = capabilities[activeIdx] || capabilities[0];
+  const activeCapability = disciplinesData[activeIdx] || disciplinesData[0];
 
   return (
     <section
@@ -180,9 +95,9 @@ export default function ServicesSection() {
                 marginTop: "1.2rem",
               }}
             >
-              Comprehensive design services tailored to your strategic needs &mdash; from
+              Six integrated design disciplines tailored to your strategic needs &mdash; from
               foundational brand identity to physical packaging, digital platforms, and
-              three-dimensional architectural spaces.
+              environmental spatial experiences.
             </p>
           </RevealOnScroll>
         </div>
@@ -198,17 +113,19 @@ export default function ServicesSection() {
             paddingTop: "clamp(2rem, 3.5vw, 3rem)",
           }}
         >
-          {/* Left Column: 5 Capabilities matching PDF */}
+          {/* Left Column: 6 Capabilities */}
           <div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              {capabilities.map((item, idx) => {
+              {disciplinesData.map((item, idx) => {
                 const isActive = activeIdx === idx;
                 return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveIdx(idx)}
-                    onMouseEnter={() => setActiveIdx(idx)}
-                    data-cursor="EXPLORE"
+                    <button
+                      key={item.id}
+                      onClick={() => router.push(`/services/${item.slug}`)}
+                      onMouseEnter={() => setActiveIdx(idx)}
+                      onFocus={() => setActiveIdx(idx)}
+                      aria-label={`View ${item.name} services`}
+                      data-cursor="EXPLORE"
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -293,18 +210,24 @@ export default function ServicesSection() {
                   width: "100%",
                   height: "260px",
                   overflow: "hidden",
+                  backgroundColor: "#0a0a0a",
                 }}
               >
-                <Image
-                  src={activeCapability.image}
-                  alt={activeCapability.name}
-                  fill
-                  style={{
-                    objectFit: "cover",
-                    transition: "transform 0.6s ease",
-                  }}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
+                {activeCapability.image && (
+                  <Image
+                    key={activeCapability.slug}
+                    src={activeCapability.image}
+                    alt={activeCapability.imageAlt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1400px) 50vw, 620px"
+                    placeholder="blur"
+                    blurDataURL={activeCapability.imageBlur}
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: activeCapability.imagePosition,
+                    }}
+                  />
+                )}
                 <div
                   style={{
                     position: "absolute",

@@ -192,7 +192,7 @@ export default function StudioPage() {
           >
             {[
               { num: "25+", label: "Years of Practice", sub: "Continuous operation since 1998" },
-              { num: "07", label: "Integrated Disciplines", sub: "Brand, Product, Space & Digital" },
+              { num: "06", label: "Integrated Disciplines", sub: "Brand, Product, Promotion, Digital, Environmental & Outdoor" },
               { num: "500+", label: "Completed Projects", sub: "Corporate, Public & Commercial" },
               { num: "Malang", label: "Studio Headquarters", sub: "East Java, Indonesia" },
             ].map((stat) => (

@@ -10,6 +10,13 @@ export interface ServiceItem {
   deliverables: string[];
   capabilities: { title: string; desc: string }[];
   image: string;
+  imageAlt: string;
+  /** Tiny inline WebP used as the blur placeholder while the image loads. */
+  imageBlur: string;
+  /** Vertical object-position for the 16:9 / wide slots (horizontal stays centred). */
+  imagePosition: string;
+  /** Label used by the inquiry-form discipline pickers. */
+  inquiryLabel: string;
   relatedProjectSlugs: string[];
 }
 
@@ -47,8 +54,14 @@ export const servicesData: ServiceItem[] = [
         desc: "Exhaustive technical documentation detailing safe zones, digital specs, and fabrication standards.",
       },
     ],
-    image: "/img/remote/brand.jpg",
-    relatedProjectSlugs: ["garageplug", "baiturrokhman", "festival-mbois-8"],
+    image: "/img/Services/brand.webp",
+    imageAlt:
+      "Brand identity design and visual system work by Utero Studio",
+    imagePosition: "center 30%",
+    imageBlur:
+      "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoIAAYABABoJZQCdAEegoMWkroAAP6XEG+iakgeaIoNGSFVNMUbX1LlyF5MqoAA",
+    inquiryLabel: "Brand Identity",
+    relatedProjectSlugs: ["stamford", "amarta-wisesa", "baiturrohman"],
   },
   {
     slug: "product",
@@ -83,8 +96,14 @@ export const servicesData: ServiceItem[] = [
         desc: "Specifying sustainable paper stocks, soy inks, and recyclable finishes that fulfill environmental stewardship.",
       },
     ],
-    image: "/img/remote/product.jpg",
-    relatedProjectSlugs: ["kopilogi-packaging", "keripik-tempe-malang"],
+    image: "/img/Services/product.webp",
+    imageAlt:
+      "Product packaging and structural container design by Utero Studio",
+    imagePosition: "center 75%",
+    imageBlur:
+      "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoIAAYABABoJYwCdADzevxgAPsbaHfNHZ3CPh7NkOgMSVrt41dK+k7roum7PD9ldaY+oa+yAAA=",
+    inquiryLabel: "Product & Packaging",
+    relatedProjectSlugs: ["lacamino", "gsm-1922", "dailbana"],
   },
   {
     slug: "promotion",
@@ -119,48 +138,18 @@ export const servicesData: ServiceItem[] = [
         desc: "Engineering physical store displays, table-talkers, and wobblers that trigger final purchasing decisions.",
       },
     ],
-    image: "/img/remote/promotion.jpg",
-    relatedProjectSlugs: ["festival-mbois-8", "garageplug"],
-  },
-  {
-    slug: "space",
-    number: "04",
-    name: "SPACE",
-    tagline: "Wayfinding & Environmental Design",
-    heroHeadline: "Transforming inert architecture into intuitive, human-centered spatial experiences.",
-    description: "Architectural wayfinding, public creative hub signage, directional systems, and spatial branding.",
-    overview:
-      "Physical environments should intuitively welcome, guide, and inspire. From landmark public creative centers like Malang Creative Center (MCC) to modern corporate headquarters, our environmental graphics give buildings an intuitive visual pulse.",
-    approach:
-      "We survey architectural floorplans, sightlines, pedestrian traffic flows, and illumination conditions. Wayfinding must function effortlessly at a glance while reinforcing the architectural character and institutional pride of the premises.",
-    deliverables: [
-      "Master Wayfinding Strategy",
-      "Architectural Signage Specifications",
-      "Directional Totems & Pylons",
-      "Environmental Graphic Murals",
-      "Floor Directory & Room Identifiers",
-      "Material, Illumination & Mount Specs",
-    ],
-    capabilities: [
-      {
-        title: "Spatial Circulation Studies",
-        desc: "Mapping decision points and line-of-sight analysis to eliminate navigation confusion across complex multi-floor facilities.",
-      },
-      {
-        title: "Architectural Integration",
-        desc: "Designing signage mounts and hardware that harmonize with concrete, steel, glass, and timber structures.",
-      },
-      {
-        title: "Universal Accessibility",
-        desc: "Implementing high-contrast typography, international pictograms, and legible scale for all visitor demographics.",
-      },
-    ],
-    image: "/img/remote/space.jpg",
-    relatedProjectSlugs: ["malang-creative-center-wayfinding", "baiturrokhman"],
+    image: "/img/Services/promotion.webp",
+    imageAlt:
+      "Promotional campaign key visual and print collateral by Utero Studio",
+    imagePosition: "center 30%",
+    imageBlur:
+      "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACQAQCdASoIAAYABABoJZQAAppaGEAA/DYleOoszi10NNIwGl340JgyHegvI0ZSSXFOSXgAAAA=",
+    inquiryLabel: "Promotion & Campaigns",
+    relatedProjectSlugs: ["logo-75th-indonesia", "techlink", "proxon"],
   },
   {
     slug: "digital",
-    number: "05",
+    number: "04",
     name: "DIGITAL",
     tagline: "Web Design & Interactive Systems",
     heroHeadline: "Building fast, high-contrast digital experiences that captivate on every screen.",
@@ -191,21 +180,33 @@ export const servicesData: ServiceItem[] = [
         desc: "Zero layout shift, optimized image assets, and flawless cross-device fluidity from handheld to 4K displays.",
       },
     ],
-    image: "/img/remote/digital.jpg",
-    relatedProjectSlugs: ["utero-digital-system", "garageplug"],
+    image: "/img/Services/digital.webp",
+    imageAlt:
+      "Digital web platform and user interface design by Utero Studio",
+    imagePosition: "center 25%",
+    imageBlur:
+      "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoIAAYABABoJZQC7AEPCMjnHcAA/oQX+8UNPPgiOPZNmPqwIB/1YI1dOWw0e5Z4QUEFzEEwAAA=",
+    inquiryLabel: "Digital & Web",
+    relatedProjectSlugs: ["uwg", "sfi", "maitri"],
   },
   {
-    slug: "indoor",
-    number: "06",
-    name: "INDOOR",
-    tagline: "Commercial Signs & Environmental Graphics",
-    heroHeadline: "Curating commercial interiors that communicate prestige and workplace culture.",
-    description: "Indoor signage, corporate office wall graphics, environmental typography, and interior visual identity.",
+    slug: "environmental",
+    number: "05",
+    name: "ENVIRONMENTAL",
+    tagline: "Wayfinding & Environmental Design",
+    heroHeadline: "Transforming inert architecture into intuitive, human-centered spatial experiences.",
+    description: "Architectural wayfinding, public creative hub signage, directional systems, spatial branding, indoor signage, corporate office wall graphics, environmental typography, and interior visual identity.",
     overview:
-      "An interior space is a daily canvas for team culture and client impressions. We develop indoor signage systems, reception feature walls, meeting room narratives, and commercial retail graphics that bring corporate DNA into physical space.",
+      "Physical environments should intuitively welcome, guide, and inspire. From landmark public creative centers like Malang Creative Center (MCC) to modern corporate headquarters, our environmental graphics give buildings an intuitive visual pulse. Interior spaces serve as daily canvases for team culture and client impressions. We develop indoor signage systems, reception feature walls, meeting room narratives, and commercial retail graphics that bring corporate DNA into physical space.",
     approach:
-      "We collaborate closely with interior designers and architects to select tactile materials—brushed brass, matte acrylic, powder-coated steel, and back-lit lettering—that match interior finish schedules flawlessly.",
+      "We survey architectural floorplans, sightlines, pedestrian traffic flows, and illumination conditions. Wayfinding must function effortlessly at a glance while reinforcing the architectural character and institutional pride of the premises. We collaborate closely with interior designers and architects to select tactile materials—brushed brass, matte acrylic, powder-coated steel, and back-lit lettering—that match interior finish schedules flawlessly.",
     deliverables: [
+      "Master Wayfinding Strategy",
+      "Architectural Signage Specifications",
+      "Directional Totems & Pylons",
+      "Environmental Graphic Murals",
+      "Floor Directory & Room Identifiers",
+      "Material, Illumination & Mount Specs",
       "Corporate Reception Identity Walls",
       "Meeting Room Thematic Graphics",
       "Architectural Lettering & Neon Accents",
@@ -214,6 +215,18 @@ export const servicesData: ServiceItem[] = [
       "Acoustic Wall Art & Environmental Prints",
     ],
     capabilities: [
+      {
+        title: "Spatial Circulation Studies",
+        desc: "Mapping decision points and line-of-sight analysis to eliminate navigation confusion across complex multi-floor facilities.",
+      },
+      {
+        title: "Architectural Integration",
+        desc: "Designing signage mounts and hardware that harmonize with concrete, steel, glass, and timber structures.",
+      },
+      {
+        title: "Universal Accessibility",
+        desc: "Implementing high-contrast typography, international pictograms, and legible scale for all visitor demographics.",
+      },
       {
         title: "Material Craft & Lighting",
         desc: "Combining halo-lit LEDs, laser-cut acrylic, and brushed aluminum for premium tactile contrast.",
@@ -227,12 +240,18 @@ export const servicesData: ServiceItem[] = [
         desc: "Turning corporate values and milestones into striking typography murals across team collaborative zones.",
       },
     ],
-    image: "/img/remote/indoor.jpg",
-    relatedProjectSlugs: ["baiturrokhman", "malang-creative-center-wayfinding"],
+    image: "/img/Services/environment.webp",
+    imageAlt:
+      "Environmental wayfinding and architectural signage by Utero Studio",
+    imagePosition: "center 25%",
+    imageBlur:
+      "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoIAAYABABoJYwCdAC2rDp0AP1SlPlqiXLFbt2nv2lB3nh+ZG7PrWvuqAA=",
+    inquiryLabel: "Environmental & Wayfinding",
+    relatedProjectSlugs: ["mcc", "wismari", "bank-sidoarjo"],
   },
   {
     slug: "outdoor",
-    number: "07",
+    number: "06",
     name: "OUTDOOR",
     tagline: "Large-Scale Public Communication",
     heroHeadline: "Dominating urban cityscapes with structural dignity and maximum readability.",
@@ -263,8 +282,14 @@ export const servicesData: ServiceItem[] = [
         desc: "Utilizing industrial-grade vinyls, fade-resistant UV pigmentation, and heavy-duty tensioning systems.",
       },
     ],
-    image: "/img/remote/outdoor.jpg",
-    relatedProjectSlugs: ["garageplug", "festival-mbois-8"],
+    image: "/img/Services/outdoor.webp",
+    imageAlt:
+      "Large-scale outdoor billboard and architectural pylon advertising by Utero Studio",
+    imagePosition: "center 75%",
+    imageBlur:
+      "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAACwAQCdASoIAAQABABoJZwCdAD0gbJgAPY5U65Aawr/ggwUiAvDosjEAAA=",
+    inquiryLabel: "Outdoor Large-Scale",
+    relatedProjectSlugs: ["plut-kumkm", "mie-gacoan", "ayam-goreng-nelongso"],
   },
 ];
 
@@ -274,4 +299,9 @@ export function getServiceBySlug(slug: string): ServiceItem | undefined {
 
 export function getAllServiceSlugs(): string[] {
   return servicesData.map((s) => s.slug);
+}
+
+/** Labels for the inquiry-form discipline pickers, in discipline order. */
+export function getInquiryLabels(): string[] {
+  return servicesData.map((s) => s.inquiryLabel);
 }

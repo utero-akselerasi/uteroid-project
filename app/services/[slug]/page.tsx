@@ -162,20 +162,28 @@ export default async function ServiceDetailPage({
               aspectRatio: "16/9",
               minHeight: "280px",
               maxHeight: "500px",
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "#0a0a0a",
               overflow: "hidden",
               border: "1px solid rgba(0, 0, 0, 0.08)",
               marginBottom: "clamp(2rem, 3vw, 3rem)",
             }}
           >
-            <Image
-              src={service.image}
-              alt={service.name}
-              fill
-              priority
-              sizes="(max-width: 1400px) 100vw, 1400px"
-              style={{ objectFit: "cover" }}
-            />
+            {service.image && (
+              <Image
+                src={service.image}
+                alt={service.imageAlt}
+                fill
+                loading="eager"
+                fetchPriority="high"
+                sizes="(max-width: 1400px) 100vw, 1400px"
+                placeholder="blur"
+                blurDataURL={service.imageBlur}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: service.imagePosition,
+                }}
+              />
+            )}
           </div>
 
           {/* ── Overview & Approach (2 Columns) ─────────────────── */}

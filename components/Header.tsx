@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
 import emailjs from "@emailjs/browser";
+import { getInquiryLabels } from "@/lib/services";
 
 interface MenuNavItem {
   number: string;
@@ -64,15 +65,7 @@ const topNavItems = [
   { label: "INSIGHTS", href: "/insights" },
 ];
 
-const inquiryDisciplines = [
-  "Brand Identity",
-  "Product & Packaging",
-  "Promotions & Campaigns",
-  "Space & Wayfinding",
-  "Digital & Web",
-  "Indoor Commercial",
-  "Outdoor Large-Scale",
-];
+const inquiryDisciplines = getInquiryLabels();
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);

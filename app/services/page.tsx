@@ -3,10 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { servicesData } from "@/lib/services";
+import { useRouter } from "next/navigation";
+import { disciplinesData } from "@/lib/disciplines";
 
 export default function ServicesPage() {
-  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const router = useRouter();
+
+  const activeDiscipline = disciplinesData[activeIdx] || disciplinesData[0];
 
   return (
     <>
@@ -46,7 +50,7 @@ export default function ServicesPage() {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.75rem",
-                marginBottom: "1.25rem",
+                marginBottom: "1rem",
               }}
             >
               <span
@@ -106,7 +110,7 @@ export default function ServicesPage() {
                     maxWidth: "540px",
                   }}
                 >
-                  Seven integrated creative disciplines engineered to resolve complex strategic challenges and command enduring enterprise equity.
+                  Six integrated design disciplines engineered to resolve complex strategic challenges and command enduring enterprise equity.
                 </p>
               </div>
 
@@ -128,7 +132,7 @@ export default function ServicesPage() {
                     lineHeight: 1,
                   }}
                 >
-                  07
+                  06
                 </span>
                 <span
                   style={{
@@ -145,141 +149,246 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          {/* ── Services List ────────────────────────────────────────── */}
+          {/* ── Services List (Homepage-style layout) ────────────── */}
           <div
             style={{
-              borderTop: "1px solid rgba(0, 0, 0, 0.08)",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: "clamp(2.5rem, 5vw, 5rem)",
+              alignItems: "flex-start",
+              borderTop: "1px solid rgba(10, 10, 10, 0.12)",
+              paddingTop: "clamp(2rem, 3.5vw, 3rem)",
               marginBottom: "clamp(3rem, 5vw, 5rem)",
             }}
           >
-            {servicesData.map((service) => {
-              const isHovered = hoveredSlug === service.slug;
-
-              return (
-                <Link
-                  key={service.slug}
-                  href={`/services/${service.slug}`}
-                  data-cursor="VIEW DISCIPLINE →"
-                  style={{
-                    display: "block",
-                    textDecoration: "none",
-                    color: "inherit",
-                    borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-                    padding: "clamp(1.5rem, 2.5vw, 2.5rem) 0",
-                    transition: "background-color 0.25s ease, padding 0.25s ease",
-                  }}
-                  onMouseEnter={() => setHoveredSlug(service.slug)}
-                  onMouseLeave={() => setHoveredSlug(null)}
-                >
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(12, 1fr)",
-                      gap: "clamp(1rem, 2.5vw, 2.5rem)",
-                      alignItems: "center",
-                    }}
-                  >
-                    {/* Col 1: Number + Title */}
-                    <div
+            {/* Left Column: 6 Disciplines */}
+            <div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {disciplinesData.map((item, idx) => {
+                  const isActive = activeIdx === idx;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => router.push(`/services/${item.slug}`)}
+                      onMouseEnter={() => setActiveIdx(idx)}
+                      onFocus={() => setActiveIdx(idx)}
+                      aria-label={`View ${item.name} services`}
+                      data-cursor="EXPLORE"
                       style={{
-                        gridColumn: "span 12",
                         display: "flex",
-                        alignItems: "baseline",
-                        gap: "1.25rem",
-                      }}
-                      className="md:!col-span-5"
-                    >
-                      <span
-                        style={{
-                          fontSize: "0.85rem",
-                          fontWeight: 800,
-                          color: "#c91a1f",
-                          fontFamily: "monospace",
-                          letterSpacing: "0.08em",
-                        }}
-                      >
-                        {service.number}
-                      </span>
-                      <h2
-                        style={{
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                          fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
-                          fontWeight: 900,
-                          letterSpacing: "-0.03em",
-                          textTransform: "uppercase",
-                          color: isHovered ? "#c91a1f" : "#0a0a0a",
-                          margin: 0,
-                          lineHeight: 1,
-                          transform: isHovered ? "translateX(6px)" : "translateX(0)",
-                          transition: "color 0.25s ease, transform 0.25s ease",
-                        }}
-                      >
-                        {service.name}
-                      </h2>
-                    </div>
-
-                    {/* Col 2: Tagline & Description */}
-                    <div
-                      style={{ gridColumn: "span 12" }}
-                      className="md:!col-span-5"
-                    >
-                      <span
-                        style={{
-                          display: "block",
-                          fontSize: "0.78rem",
-                          fontWeight: 800,
-                          letterSpacing: "0.12em",
-                          textTransform: "uppercase",
-                          color: "#0a0a0a",
-                          marginBottom: "0.4rem",
-                        }}
-                      >
-                        {service.tagline}
-                      </span>
-                      <p
-                        style={{
-                          fontSize: "0.875rem",
-                          lineHeight: 1.6,
-                          color: "#555555",
-                          margin: 0,
-                        }}
-                      >
-                        {service.description}
-                      </p>
-                    </div>
-
-                    {/* Col 3: Arrow Indicator */}
-                    <div
-                      style={{
-                        gridColumn: "span 12",
-                        display: "flex",
-                        justifyContent: "flex-end",
                         alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "clamp(1.1rem, 2vw, 1.6rem) 0",
+                        borderBottom: "1px solid rgba(10, 10, 10, 0.1)",
+                        backgroundColor: "transparent",
+                        borderTop: "none",
+                        borderLeft: "none",
+                        borderRight: "none",
+                        textAlign: "left",
+                        cursor: "pointer",
+                        transition: "padding-left 0.25s ease, color 0.2s ease",
+                        paddingLeft: isActive ? "14px" : "0",
+                        borderLeftColor: isActive ? "#e31e24" : "transparent",
+                        borderLeftWidth: isActive ? "4px" : "0px",
+                        borderLeftStyle: "solid",
                       }}
-                      className="md:!col-span-2"
                     >
                       <div
                         style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "0.5rem",
-                          fontSize: "0.72rem",
-                          fontWeight: 800,
-                          letterSpacing: "0.14em",
-                          textTransform: "uppercase",
-                          color: isHovered ? "#c91a1f" : "rgba(10, 10, 10, 0.4)",
-                          transition: "color 0.2s ease, transform 0.2s ease",
-                          transform: isHovered ? "translateX(4px)" : "translateX(0)",
+                          display: "flex",
+                          alignItems: "baseline",
+                          gap: "1.25rem",
                         }}
                       >
-                        <span>Explore</span>
-                        <span>→</span>
+                        <span
+                          style={{
+                            fontSize: "0.8rem",
+                            fontWeight: 600,
+                            color: isActive ? "#e31e24" : "rgba(10, 10, 10, 0.4)",
+                            fontFamily: "monospace",
+                          }}
+                        >
+                          {item.id}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                            fontSize: "clamp(1.2rem, 1.8vw, 1.75rem)",
+                            fontWeight: 700,
+                            letterSpacing: "-0.01em",
+                            textTransform: "uppercase",
+                            color: isActive ? "#e31e24" : "#0a0a0a",
+                            transition: "color 0.2s ease",
+                          }}
+                        >
+                          {item.name}
+                        </span>
                       </div>
+
+                      <span
+                        style={{
+                          fontSize: "1.25rem",
+                          color: isActive ? "#e31e24" : "rgba(10, 10, 10, 0.3)",
+                          transform: isActive ? "translateX(6px)" : "translateX(0)",
+                          transition: "transform 0.2s ease, color 0.2s ease",
+                        }}
+                      >
+                        &rarr;
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right Column: Dynamic Preview Card for Active Discipline */}
+            <div>
+              <div
+                style={{
+                  backgroundColor: "#f9f9f9",
+                  border: "1px solid rgba(10, 10, 10, 0.08)",
+                  overflow: "hidden",
+                  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.04)",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "260px",
+                    overflow: "hidden",
+                    backgroundColor: "#0a0a0a",
+                  }}
+                >
+                  {activeDiscipline.image && (
+                    <Image
+                      key={activeDiscipline.slug}
+                      src={activeDiscipline.image}
+                      alt={activeDiscipline.imageAlt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1400px) 50vw, 620px"
+                      placeholder="blur"
+                      blurDataURL={activeDiscipline.imageBlur}
+                      style={{
+                        objectFit: "cover",
+                        objectPosition: activeDiscipline.imagePosition,
+                      }}
+                    />
+                  )}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "1rem",
+                      left: "1rem",
+                      backgroundColor: "#0d0d0d",
+                      color: "#ffffff",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      padding: "0.3rem 0.6rem",
+                    }}
+                  >
+                    CATEGORY {activeDiscipline.id}
+                  </div>
+                </div>
+
+                <div style={{ padding: "clamp(1.5rem, 3vw, 2.25rem)" }}>
+                  <h3
+                    style={{
+                      fontSize: "clamp(1.1rem, 1.4vw, 1.35rem)",
+                      fontWeight: 700,
+                      color: "#0a0a0a",
+                      margin: "0 0 0.5rem",
+                    }}
+                  >
+                    {activeDiscipline.tagline}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.95rem",
+                      lineHeight: 1.6,
+                      color: "rgba(10, 10, 10, 0.7)",
+                      margin: "0 0 1.5rem",
+                    }}
+                  >
+                    {activeDiscipline.description}
+                  </p>
+
+                  <div
+                    style={{
+                      borderTop: "1px solid rgba(10, 10, 10, 0.1)",
+                      paddingTop: "1.2rem",
+                      marginBottom: "1.5rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "0.72rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "#e31e24",
+                        marginBottom: "0.8rem",
+                      }}
+                    >
+                      CORE DELIVERABLES:
+                    </div>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                        gap: "0.6rem",
+                      }}
+                    >
+                      {activeDiscipline.deliverables.map((del) => (
+                        <div
+                          key={del}
+                          style={{
+                            fontSize: "0.82rem",
+                            color: "rgba(10, 10, 10, 0.8)",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                          }}
+                        >
+                          <span style={{ color: "#e31e24", fontWeight: 700 }}>&bull;</span>
+                          <span>{del}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </Link>
-              );
-            })}
+
+                  <Link
+                    href={`/services/${activeDiscipline.slug}`}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      fontSize: "0.8rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#ffffff",
+                      backgroundColor: "#0d0d0d",
+                      padding: "0.65rem 1.25rem",
+                      textDecoration: "none",
+                      transition: "background-color 0.2s ease",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.backgroundColor = "#e31e24")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.backgroundColor = "#0d0d0d")
+                    }
+                  >
+                    <span>VIEW DETAILS &amp; ARCHIVE</span>
+                    <span>&rarr;</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* ── Bottom Section: Inquiries & Works Link ───────────────── */}

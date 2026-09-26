@@ -3,16 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import emailjs from "@emailjs/browser";
+import { getInquiryLabels } from "@/lib/services";
 
-const SERVICE_OPTIONS = [
-  "Brand Identity",
-  "Product & Packaging",
-  "Promotion & Campaigns",
-  "Space & Wayfinding",
-  "Digital & Web",
-  "Indoor Commercial",
-  "Outdoor Large-Scale",
-];
+const SERVICE_OPTIONS = getInquiryLabels();
 
 export default function ContactPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
