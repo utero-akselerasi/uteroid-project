@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 
 interface DeckManifest {
@@ -22,6 +23,8 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false);
   const [loadedPages, setLoadedPages] = useState<Set<number>>(new Set([0, 1]));
+  const [mounted, setMounted] = useState(false);
+  const [placeholderHeight, setPlaceholderHeight] = useState<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -83,6 +86,21 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
         document.body.style.overflow = originalOverflow;
       };
     }
+  }, [isFullscreen]);
+
+  // Portals need document, which does not exist during SSR.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Measure while the slider is still inline, before the portal removes it.
+  // Kept out of the setState updater: updaters must stay pure, and React
+  // may invoke them twice in StrictMode.
+  const toggleFullscreen = useCallback(() => {
+    if (!isFullscreen && containerRef.current) {
+      setPlaceholderHeight(containerRef.current.offsetHeight);
+    }
+    setIsFullscreen((prev) => !prev);
   }, [isFullscreen]);
 
   // Scroll to page
@@ -160,14 +178,14 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
         setIsFullscreen(false);
       } else if (e.key === "f" || e.key === "F") {
         if (!e.metaKey && !e.ctrlKey) {
-          setIsFullscreen((prev) => !prev);
+          toggleFullscreen();
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [manifest, currentPage, isFullscreen, goToPage]);
+  }, [manifest, currentPage, isFullscreen, goToPage, toggleFullscreen]);
 
   if (loading) {
     return (
@@ -186,7 +204,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
     return null;
   }
 
-  return (
+  const slider = (
     <div
       ref={containerRef}
       className={`pd-deck-slider pd-section ${isFullscreen ? "pd-deck-slider--fullscreen" : ""}`}
@@ -241,7 +259,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
 
           <button
             className="pd-deck-slider__control-btn pd-deck-slider__control-btn--secondary"
-            onClick={() => setIsFullscreen((prev) => !prev)}
+            onClick={toggleFullscreen}
             aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
           >
@@ -318,4 +336,25 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
       )}
     </div>
   );
+
+  // In fullscreen the slider is position:fixed with inset:0, which resolves
+  // against the nearest transformed ancestor rather than the viewport. The
+  // parent <RevealOnScroll> sets transform: translateY(...), which collapsed
+  // the overlay to header height. Portalling to body escapes any such
+  // ancestor, so this stays correct wherever the component is placed.
+  if (isFullscreen && mounted) {
+    return (
+      <>
+        {/* Holds the slider's place in the flow so the page behind the
+            overlay does not jump when the portal removes it. */}
+        <div
+          aria-hidden
+          style={{ height: placeholderHeight ?? undefined }}
+        />
+        {createPortal(slider, document.body)}
+      </>
+    );
+  }
+
+  return slider;
 }
