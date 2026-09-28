@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Emits .next/standalone with a minimal server.js + only the traced
+  // node_modules, so the Docker runtime stage needs no npm install.
+  output: "standalone",
   images: {
     remotePatterns: [
       {

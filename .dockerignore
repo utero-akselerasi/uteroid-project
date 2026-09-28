@@ -1,0 +1,47 @@
+# Dependencies & build output — rebuilt inside the image
+node_modules
+.next
+out
+dist
+
+# Version control & tooling
+.git
+.gitignore
+.codegraph
+.vscode
+.idea
+
+# Docs & agent files
+*.md
+AGENTS.md
+README.md
+
+# Source PDFs (~large) — only the rendered webp/json under public/ ship
+content
+
+# Python tooling used to render the decks; not needed at runtime
+scripts
+render_pdf.py
+__pycache__
+*.pyc
+venv
+.venv
+
+# Local env — injected at runtime instead
+.env
+.env.local
+.env.*.local
+
+# Incremental TS build cache
+tsconfig.tsbuildinfo
+
+# OS cruft
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# Docker's own files
+Dockerfile
+.dockerignore
+docker-compose.yml

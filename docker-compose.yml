@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: uteroid-web:latest
+    container_name: uteroid-web
+    ports:
+      # host:container — open http://localhost:3000
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
