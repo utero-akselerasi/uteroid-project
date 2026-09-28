@@ -1,0 +1,31 @@
+{
+  "slug": "wismari",
+  "total_pages": 7,
+  "deck_images": [
+    "/projects/wismari/deck/001.webp",
+    "/projects/wismari/deck/002.webp",
+    "/projects/wismari/deck/003.webp",
+    "/projects/wismari/deck/004.webp",
+    "/projects/wismari/deck/005.webp",
+    "/projects/wismari/deck/006.webp",
+    "/projects/wismari/deck/007.webp"
+  ],
+  "aspect_ratios": [
+    1.4189188029583752,
+    1.4189188029583752,
+    1.4189188029583752,
+    1.4189188029583752,
+    1.4189188029583752,
+    1.4189188029583752,
+    1.4189188029583752
+  ],
+  "thumbnails": [
+    "/projects/wismari/deck/thumbs/001.webp",
+    "/projects/wismari/deck/thumbs/002.webp",
+    "/projects/wismari/deck/thumbs/003.webp",
+    "/projects/wismari/deck/thumbs/004.webp",
+    "/projects/wismari/deck/thumbs/005.webp",
+    "/projects/wismari/deck/thumbs/006.webp",
+    "/projects/wismari/deck/thumbs/007.webp"
+  ]
+}

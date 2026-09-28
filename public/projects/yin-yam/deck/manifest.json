@@ -1,0 +1,52 @@
+{
+  "slug": "yin-yam",
+  "total_pages": 14,
+  "deck_images": [
+    "/projects/yin-yam/deck/001.webp",
+    "/projects/yin-yam/deck/002.webp",
+    "/projects/yin-yam/deck/003.webp",
+    "/projects/yin-yam/deck/004.webp",
+    "/projects/yin-yam/deck/005.webp",
+    "/projects/yin-yam/deck/006.webp",
+    "/projects/yin-yam/deck/007.webp",
+    "/projects/yin-yam/deck/008.webp",
+    "/projects/yin-yam/deck/009.webp",
+    "/projects/yin-yam/deck/010.webp",
+    "/projects/yin-yam/deck/011.webp",
+    "/projects/yin-yam/deck/012.webp",
+    "/projects/yin-yam/deck/013.webp",
+    "/projects/yin-yam/deck/014.webp"
+  ],
+  "aspect_ratios": [
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777
+  ],
+  "thumbnails": [
+    "/projects/yin-yam/deck/thumbs/001.webp",
+    "/projects/yin-yam/deck/thumbs/002.webp",
+    "/projects/yin-yam/deck/thumbs/003.webp",
+    "/projects/yin-yam/deck/thumbs/004.webp",
+    "/projects/yin-yam/deck/thumbs/005.webp",
+    "/projects/yin-yam/deck/thumbs/006.webp",
+    "/projects/yin-yam/deck/thumbs/007.webp",
+    "/projects/yin-yam/deck/thumbs/008.webp",
+    "/projects/yin-yam/deck/thumbs/009.webp",
+    "/projects/yin-yam/deck/thumbs/010.webp",
+    "/projects/yin-yam/deck/thumbs/011.webp",
+    "/projects/yin-yam/deck/thumbs/012.webp",
+    "/projects/yin-yam/deck/thumbs/013.webp",
+    "/projects/yin-yam/deck/thumbs/014.webp"
+  ]
+}

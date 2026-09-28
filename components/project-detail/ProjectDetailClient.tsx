@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/types";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import ProjectGallery from "./ProjectGallery";
 import ProjectNavigation from "./ProjectNavigation";
+import VideoPlayer from "./VideoPlayer";
+import PDFDeckSlider from "./PDFDeckSlider";
 
 interface ProjectDetailClientProps {
   project: Project;
@@ -27,6 +29,10 @@ export default function ProjectDetailClient({
 }: ProjectDetailClientProps) {
   const coverSrc = project.coverImage || project.heroImage;
   const gallery = project.galleryImages || project.gallery || [];
+  const [showVideo, setShowVideo] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const playButtonRef = useRef<HTMLButtonElement>(null);
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reliable scroll to top on mount and route/slug change
   useEffect(() => {
@@ -34,6 +40,16 @@ export default function ProjectDetailClient({
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
   }, [project.slug]);
+
+  const handlePlayClick = () => {
+    if (project.video && project.video.src) {
+      setShowVideo(true);
+    } else {
+      setShowToast(true);
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+      toastTimeoutRef.current = setTimeout(() => setShowToast(false), 2400);
+    }
+  };
 
   // Determine which detail fields exist
   const hasScope = project.details?.scope && project.details.scope.length > 0;
@@ -69,10 +85,32 @@ export default function ProjectDetailClient({
               }}
             />
           )}
+
+          {/* Play button overlay */}
+          <button
+            ref={playButtonRef}
+            className="pd-hero__play-button"
+            onClick={handlePlayClick}
+            aria-label={project.video?.src ? `Play video for ${project.title}` : `Video coming soon for ${project.title}`}
+            aria-haspopup={project.video?.src ? "dialog" : undefined}
+          >
+            <div className="pd-hero__play-button__icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </button>
         </div>
 
         {/* Filmic subtle gradient vignette — clean, no heavy black bar */}
         <div className="pd-hero__overlay" />
+
+        {/* Toast message for empty video */}
+        {showToast && (
+          <div className="pd-hero__toast" role="status" aria-live="polite">
+            Video coming soon
+          </div>
+        )}
 
         {/* Content: number, calm editorial title, metadata */}
         <div className="pd-hero__content">
@@ -195,6 +233,11 @@ export default function ProjectDetailClient({
           {/* ── Gallery ──────────────────────────────────── */}
           <ProjectGallery images={gallery} />
 
+          {/* ── Full Presentation Deck ──────────────────────── */}
+          <RevealOnScroll>
+            <PDFDeckSlider slug={project.slug} />
+          </RevealOnScroll>
+
           {/* ── Prev / Next Navigation ────────────────────── */}
           <RevealOnScroll type="fade">
             <ProjectNavigation prev={prev} next={next} />
@@ -211,6 +254,18 @@ export default function ProjectDetailClient({
           </div>
         </div>
       </section>
+
+      {/* Video Player Modal */}
+      {showVideo && project.video && (
+        <VideoPlayer
+          video={project.video}
+          poster={coverSrc}
+          onClose={() => {
+            setShowVideo(false);
+            playButtonRef.current?.focus();
+          }}
+        />
+      )}
     </>
   );
 }

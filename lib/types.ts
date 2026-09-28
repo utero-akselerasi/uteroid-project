@@ -45,6 +45,12 @@ export interface ProjectDetails {
   deliverables?: string[];
 }
 
+export interface ProjectVideo {
+  type: "youtube" | "vimeo" | "file";
+  src: string;
+  poster?: string;
+}
+
 export interface Project {
   // ── Core identity (required) ──────────────────────────────
   slug: string;
@@ -66,6 +72,11 @@ export interface Project {
   hoverImage?: string;         // Curated rich interior mockup image to preview on hover
   galleryImages?: string[];    // Case study gallery (1–N images)
   gallery?: string[];          // Backwards-compat alias for galleryImages
+  video?: ProjectVideo;        // Optional video: { type: "youtube" | "vimeo" | "file", src: string, poster?: string }
+                              // Examples:
+                              //   youtube: { type: "youtube", src: "https://www.youtube-nocookie.com/embed/VIDEO_ID" }
+                              //   vimeo: { type: "vimeo", src: "https://player.vimeo.com/video/VIDEO_ID" }
+                              //   file: { type: "file", src: "/projects/[slug]/video.mp4" }
 
   // ── Flags & metadata ─────────────────────────────────────
   featured?: boolean;          // Show prominently on homepage (top ~3–4)

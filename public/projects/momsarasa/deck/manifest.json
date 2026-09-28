@@ -1,0 +1,52 @@
+{
+  "slug": "momsarasa",
+  "total_pages": 14,
+  "deck_images": [
+    "/projects/momsarasa/deck/001.webp",
+    "/projects/momsarasa/deck/002.webp",
+    "/projects/momsarasa/deck/003.webp",
+    "/projects/momsarasa/deck/004.webp",
+    "/projects/momsarasa/deck/005.webp",
+    "/projects/momsarasa/deck/006.webp",
+    "/projects/momsarasa/deck/007.webp",
+    "/projects/momsarasa/deck/008.webp",
+    "/projects/momsarasa/deck/009.webp",
+    "/projects/momsarasa/deck/010.webp",
+    "/projects/momsarasa/deck/011.webp",
+    "/projects/momsarasa/deck/012.webp",
+    "/projects/momsarasa/deck/013.webp",
+    "/projects/momsarasa/deck/014.webp"
+  ],
+  "aspect_ratios": [
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153
+  ],
+  "thumbnails": [
+    "/projects/momsarasa/deck/thumbs/001.webp",
+    "/projects/momsarasa/deck/thumbs/002.webp",
+    "/projects/momsarasa/deck/thumbs/003.webp",
+    "/projects/momsarasa/deck/thumbs/004.webp",
+    "/projects/momsarasa/deck/thumbs/005.webp",
+    "/projects/momsarasa/deck/thumbs/006.webp",
+    "/projects/momsarasa/deck/thumbs/007.webp",
+    "/projects/momsarasa/deck/thumbs/008.webp",
+    "/projects/momsarasa/deck/thumbs/009.webp",
+    "/projects/momsarasa/deck/thumbs/010.webp",
+    "/projects/momsarasa/deck/thumbs/011.webp",
+    "/projects/momsarasa/deck/thumbs/012.webp",
+    "/projects/momsarasa/deck/thumbs/013.webp",
+    "/projects/momsarasa/deck/thumbs/014.webp"
+  ]
+}

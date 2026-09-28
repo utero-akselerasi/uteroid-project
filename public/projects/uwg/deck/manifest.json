@@ -1,0 +1,52 @@
+{
+  "slug": "uwg",
+  "total_pages": 14,
+  "deck_images": [
+    "/projects/uwg/deck/001.webp",
+    "/projects/uwg/deck/002.webp",
+    "/projects/uwg/deck/003.webp",
+    "/projects/uwg/deck/004.webp",
+    "/projects/uwg/deck/005.webp",
+    "/projects/uwg/deck/006.webp",
+    "/projects/uwg/deck/007.webp",
+    "/projects/uwg/deck/008.webp",
+    "/projects/uwg/deck/009.webp",
+    "/projects/uwg/deck/010.webp",
+    "/projects/uwg/deck/011.webp",
+    "/projects/uwg/deck/012.webp",
+    "/projects/uwg/deck/013.webp",
+    "/projects/uwg/deck/014.webp"
+  ],
+  "aspect_ratios": [
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153,
+    1.4189184035392153
+  ],
+  "thumbnails": [
+    "/projects/uwg/deck/thumbs/001.webp",
+    "/projects/uwg/deck/thumbs/002.webp",
+    "/projects/uwg/deck/thumbs/003.webp",
+    "/projects/uwg/deck/thumbs/004.webp",
+    "/projects/uwg/deck/thumbs/005.webp",
+    "/projects/uwg/deck/thumbs/006.webp",
+    "/projects/uwg/deck/thumbs/007.webp",
+    "/projects/uwg/deck/thumbs/008.webp",
+    "/projects/uwg/deck/thumbs/009.webp",
+    "/projects/uwg/deck/thumbs/010.webp",
+    "/projects/uwg/deck/thumbs/011.webp",
+    "/projects/uwg/deck/thumbs/012.webp",
+    "/projects/uwg/deck/thumbs/013.webp",
+    "/projects/uwg/deck/thumbs/014.webp"
+  ]
+}

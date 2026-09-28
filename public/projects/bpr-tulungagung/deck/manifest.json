@@ -1,0 +1,52 @@
+{
+  "slug": "bpr-tulungagung",
+  "total_pages": 14,
+  "deck_images": [
+    "/projects/bpr-tulungagung/deck/001.webp",
+    "/projects/bpr-tulungagung/deck/002.webp",
+    "/projects/bpr-tulungagung/deck/003.webp",
+    "/projects/bpr-tulungagung/deck/004.webp",
+    "/projects/bpr-tulungagung/deck/005.webp",
+    "/projects/bpr-tulungagung/deck/006.webp",
+    "/projects/bpr-tulungagung/deck/007.webp",
+    "/projects/bpr-tulungagung/deck/008.webp",
+    "/projects/bpr-tulungagung/deck/009.webp",
+    "/projects/bpr-tulungagung/deck/010.webp",
+    "/projects/bpr-tulungagung/deck/011.webp",
+    "/projects/bpr-tulungagung/deck/012.webp",
+    "/projects/bpr-tulungagung/deck/013.webp",
+    "/projects/bpr-tulungagung/deck/014.webp"
+  ],
+  "aspect_ratios": [
+    1.4141514924752638,
+    1.4141514924752638,
+    1.4141514924752638,
+    1.4141548519518035,
+    1.4141582114443048,
+    1.4141582114443048,
+    1.4141605870628564,
+    1.4141605870628564,
+    1.4141605870628564,
+    1.4141605870628564,
+    1.4141605870628564,
+    1.4141514924752638,
+    1.4141514924752638,
+    1.4141491168679994
+  ],
+  "thumbnails": [
+    "/projects/bpr-tulungagung/deck/thumbs/001.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/002.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/003.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/004.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/005.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/006.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/007.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/008.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/009.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/010.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/011.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/012.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/013.webp",
+    "/projects/bpr-tulungagung/deck/thumbs/014.webp"
+  ]
+}

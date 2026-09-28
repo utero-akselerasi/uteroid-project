@@ -1,0 +1,52 @@
+{
+  "slug": "rohani",
+  "total_pages": 14,
+  "deck_images": [
+    "/projects/rohani/deck/001.webp",
+    "/projects/rohani/deck/002.webp",
+    "/projects/rohani/deck/003.webp",
+    "/projects/rohani/deck/004.webp",
+    "/projects/rohani/deck/005.webp",
+    "/projects/rohani/deck/006.webp",
+    "/projects/rohani/deck/007.webp",
+    "/projects/rohani/deck/008.webp",
+    "/projects/rohani/deck/009.webp",
+    "/projects/rohani/deck/010.webp",
+    "/projects/rohani/deck/011.webp",
+    "/projects/rohani/deck/012.webp",
+    "/projects/rohani/deck/013.webp",
+    "/projects/rohani/deck/014.webp"
+  ],
+  "aspect_ratios": [
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963,
+    1.4142756349952963
+  ],
+  "thumbnails": [
+    "/projects/rohani/deck/thumbs/001.webp",
+    "/projects/rohani/deck/thumbs/002.webp",
+    "/projects/rohani/deck/thumbs/003.webp",
+    "/projects/rohani/deck/thumbs/004.webp",
+    "/projects/rohani/deck/thumbs/005.webp",
+    "/projects/rohani/deck/thumbs/006.webp",
+    "/projects/rohani/deck/thumbs/007.webp",
+    "/projects/rohani/deck/thumbs/008.webp",
+    "/projects/rohani/deck/thumbs/009.webp",
+    "/projects/rohani/deck/thumbs/010.webp",
+    "/projects/rohani/deck/thumbs/011.webp",
+    "/projects/rohani/deck/thumbs/012.webp",
+    "/projects/rohani/deck/thumbs/013.webp",
+    "/projects/rohani/deck/thumbs/014.webp"
+  ]
+}

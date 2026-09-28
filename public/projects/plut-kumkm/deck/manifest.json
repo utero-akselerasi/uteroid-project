@@ -1,0 +1,43 @@
+{
+  "slug": "plut-kumkm",
+  "total_pages": 11,
+  "deck_images": [
+    "/projects/plut-kumkm/deck/001.webp",
+    "/projects/plut-kumkm/deck/002.webp",
+    "/projects/plut-kumkm/deck/003.webp",
+    "/projects/plut-kumkm/deck/004.webp",
+    "/projects/plut-kumkm/deck/005.webp",
+    "/projects/plut-kumkm/deck/006.webp",
+    "/projects/plut-kumkm/deck/007.webp",
+    "/projects/plut-kumkm/deck/008.webp",
+    "/projects/plut-kumkm/deck/009.webp",
+    "/projects/plut-kumkm/deck/010.webp",
+    "/projects/plut-kumkm/deck/011.webp"
+  ],
+  "aspect_ratios": [
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777
+  ],
+  "thumbnails": [
+    "/projects/plut-kumkm/deck/thumbs/001.webp",
+    "/projects/plut-kumkm/deck/thumbs/002.webp",
+    "/projects/plut-kumkm/deck/thumbs/003.webp",
+    "/projects/plut-kumkm/deck/thumbs/004.webp",
+    "/projects/plut-kumkm/deck/thumbs/005.webp",
+    "/projects/plut-kumkm/deck/thumbs/006.webp",
+    "/projects/plut-kumkm/deck/thumbs/007.webp",
+    "/projects/plut-kumkm/deck/thumbs/008.webp",
+    "/projects/plut-kumkm/deck/thumbs/009.webp",
+    "/projects/plut-kumkm/deck/thumbs/010.webp",
+    "/projects/plut-kumkm/deck/thumbs/011.webp"
+  ]
+}

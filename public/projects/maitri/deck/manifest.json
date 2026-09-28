@@ -1,0 +1,46 @@
+{
+  "slug": "maitri",
+  "total_pages": 12,
+  "deck_images": [
+    "/projects/maitri/deck/001.webp",
+    "/projects/maitri/deck/002.webp",
+    "/projects/maitri/deck/003.webp",
+    "/projects/maitri/deck/004.webp",
+    "/projects/maitri/deck/005.webp",
+    "/projects/maitri/deck/006.webp",
+    "/projects/maitri/deck/007.webp",
+    "/projects/maitri/deck/008.webp",
+    "/projects/maitri/deck/009.webp",
+    "/projects/maitri/deck/010.webp",
+    "/projects/maitri/deck/011.webp",
+    "/projects/maitri/deck/012.webp"
+  ],
+  "aspect_ratios": [
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777,
+    1.7777777777777777
+  ],
+  "thumbnails": [
+    "/projects/maitri/deck/thumbs/001.webp",
+    "/projects/maitri/deck/thumbs/002.webp",
+    "/projects/maitri/deck/thumbs/003.webp",
+    "/projects/maitri/deck/thumbs/004.webp",
+    "/projects/maitri/deck/thumbs/005.webp",
+    "/projects/maitri/deck/thumbs/006.webp",
+    "/projects/maitri/deck/thumbs/007.webp",
+    "/projects/maitri/deck/thumbs/008.webp",
+    "/projects/maitri/deck/thumbs/009.webp",
+    "/projects/maitri/deck/thumbs/010.webp",
+    "/projects/maitri/deck/thumbs/011.webp",
+    "/projects/maitri/deck/thumbs/012.webp"
+  ]
+}

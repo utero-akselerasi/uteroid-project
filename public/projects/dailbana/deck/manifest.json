@@ -1,0 +1,34 @@
+{
+  "slug": "dailbana",
+  "total_pages": 8,
+  "deck_images": [
+    "/projects/dailbana/deck/001.webp",
+    "/projects/dailbana/deck/002.webp",
+    "/projects/dailbana/deck/003.webp",
+    "/projects/dailbana/deck/004.webp",
+    "/projects/dailbana/deck/005.webp",
+    "/projects/dailbana/deck/006.webp",
+    "/projects/dailbana/deck/007.webp",
+    "/projects/dailbana/deck/008.webp"
+  ],
+  "aspect_ratios": [
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117
+  ],
+  "thumbnails": [
+    "/projects/dailbana/deck/thumbs/001.webp",
+    "/projects/dailbana/deck/thumbs/002.webp",
+    "/projects/dailbana/deck/thumbs/003.webp",
+    "/projects/dailbana/deck/thumbs/004.webp",
+    "/projects/dailbana/deck/thumbs/005.webp",
+    "/projects/dailbana/deck/thumbs/006.webp",
+    "/projects/dailbana/deck/thumbs/007.webp",
+    "/projects/dailbana/deck/thumbs/008.webp"
+  ]
+}

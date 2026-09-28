@@ -1,0 +1,43 @@
+{
+  "slug": "amarta-wisesa",
+  "total_pages": 11,
+  "deck_images": [
+    "/projects/amarta-wisesa/deck/001.webp",
+    "/projects/amarta-wisesa/deck/002.webp",
+    "/projects/amarta-wisesa/deck/003.webp",
+    "/projects/amarta-wisesa/deck/004.webp",
+    "/projects/amarta-wisesa/deck/005.webp",
+    "/projects/amarta-wisesa/deck/006.webp",
+    "/projects/amarta-wisesa/deck/007.webp",
+    "/projects/amarta-wisesa/deck/008.webp",
+    "/projects/amarta-wisesa/deck/009.webp",
+    "/projects/amarta-wisesa/deck/010.webp",
+    "/projects/amarta-wisesa/deck/011.webp"
+  ],
+  "aspect_ratios": [
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117,
+    1.6470588235294117
+  ],
+  "thumbnails": [
+    "/projects/amarta-wisesa/deck/thumbs/001.webp",
+    "/projects/amarta-wisesa/deck/thumbs/002.webp",
+    "/projects/amarta-wisesa/deck/thumbs/003.webp",
+    "/projects/amarta-wisesa/deck/thumbs/004.webp",
+    "/projects/amarta-wisesa/deck/thumbs/005.webp",
+    "/projects/amarta-wisesa/deck/thumbs/006.webp",
+    "/projects/amarta-wisesa/deck/thumbs/007.webp",
+    "/projects/amarta-wisesa/deck/thumbs/008.webp",
+    "/projects/amarta-wisesa/deck/thumbs/009.webp",
+    "/projects/amarta-wisesa/deck/thumbs/010.webp",
+    "/projects/amarta-wisesa/deck/thumbs/011.webp"
+  ]
+}
