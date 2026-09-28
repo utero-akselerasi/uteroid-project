@@ -1197,7 +1197,16 @@ html {
    ───────────────────────────────────────────── */
 
 .pd-gallery {
-  margin-bottom: clamp(5rem, 8vw, 8rem);
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.pd-gallery__note {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #6b6b6b;
+  margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
 }
 
 .pd-gallery__grid {

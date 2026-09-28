@@ -212,13 +212,17 @@ export default function ProjectGallery({ images }: { images: string[] }) {
         {/* Section label */}
         <div className="pd-section__label">
           <span className="pd-section__label-line" />
-          <span className="pd-section__label-text">Selected Work</span>
+          <span className="pd-section__label-text">Highlights</span>
         </div>
 
         {/* Gallery grid */}
         <div className="pd-gallery__grid">
           {layout.map((slot, i) => renderSlot(slot, i))}
         </div>
+
+        <p className="pd-gallery__note">
+          A few highlights from the full presentation below.
+        </p>
       </div>
 
       {/* Lightbox */}
