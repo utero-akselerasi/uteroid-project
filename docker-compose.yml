@@ -12,3 +12,12 @@ services:
     environment:
       NODE_ENV: production
     restart: unless-stopped
+    networks:
+      - carubra-network
+
+networks:
+  carubra-network:
+    # Pre-existing shared bridge (nginx_proxy_caubra, cloudflared-tunnel
+    # and ~29 other containers live here). external keeps Compose from
+    # creating a separate uteroid-project_carubra-network instead.
+    external: true
