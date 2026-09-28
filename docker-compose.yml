@@ -6,8 +6,9 @@ services:
     image: uteroid-web:latest
     container_name: uteroid-web
     ports:
-      # host:container — open http://localhost:3000
-      - "3000:3000"
+      # host:container — open http://localhost:3020
+      # 3020 because 3000-3011, 3100, 3180, 3200 are taken on this machine.
+      - "3020:3000"
     environment:
       NODE_ENV: production
     restart: unless-stopped
