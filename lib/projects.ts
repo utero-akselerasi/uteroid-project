@@ -36,6 +36,7 @@ export const projects: Project[] = [
       "Platform cloud terintegrasi untuk bengkel mobil dan detailing center, dilengkapi sistem pedoman identitas brand (GSM) komprehensif dari logo hingga armada transportasi.",
     coverImage: "/projects/garageplug/cover.webp",
     heroImage: "/projects/garageplug/cover.webp",
+    homepageCoverImage: "/projects/dashboard-covers/garageplus.webp",
     hoverImage: "/projects/garageplug/deck/074.webp",
     galleryImages: [
       "/projects/garageplug/deck/033.webp",
@@ -729,6 +730,7 @@ export const projects: Project[] = [
       "Identitas food brand dengan maskot kura-kura John — delightful, kekinian, terinspirasi slang Korea \"jon-mat-taeng\".",
     coverImage: "/projects/jmt/cover.webp",
     heroImage: "/projects/jmt/cover.webp",
+    homepageCoverImage: "/projects/dashboard-covers/JMT.webp",
     hoverImage: "/projects/jmt/deck/016.webp",
     galleryImages: [
       "/projects/jmt/deck/011.webp",
@@ -779,6 +781,7 @@ export const projects: Project[] = [
       "Identitas visual cerutu premium yang terinspirasi rute ziarah El Camino de Santiago — kerang, ornament Victoria, dan warna violet-emas.",
     coverImage: "/projects/lacamino/cover.webp",
     heroImage: "/projects/lacamino/cover.webp",
+    homepageCoverImage: "/projects/dashboard-covers/lacamino.webp",
     hoverImage: "/projects/lacamino/deck/016.webp",
     galleryImages: [
       "/projects/lacamino/deck/010.webp",
@@ -1325,6 +1328,7 @@ export const projects: Project[] = [
       "Identitas visual Maitri Coffee & Social Hub dengan slogan \"Sekedar Bukan Teman\".",
     coverImage: "/projects/maitri/cover.webp",
     heroImage: "/projects/maitri/cover.webp",
+    homepageCoverImage: "/projects/dashboard-covers/maitri.webp",
     hoverImage: "/projects/maitri/deck/006.webp",
     galleryImages: [
       "/projects/maitri/deck/006.webp",

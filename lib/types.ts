@@ -69,6 +69,7 @@ export interface Project {
   // ── Media ────────────────────────────────────────────────
   coverImage: string;          // Primary cover image for grid + detail hero
   heroImage?: string;          // Backwards-compat alias for coverImage
+  homepageCoverImage?: string; // Optional cover image for homepage Selected Work section only
   hoverImage?: string;         // Curated rich interior mockup image to preview on hover
   galleryImages?: string[];    // Case study gallery (1–N images)
   gallery?: string[];          // Backwards-compat alias for galleryImages

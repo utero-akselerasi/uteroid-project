@@ -186,14 +186,15 @@ export default function SelectedWorkSection() {
                         border: "none",
                       }}
                     >
-                      {project.heroImage ? (
+                      {(project.homepageCoverImage || project.heroImage) ? (
                         <Image
-                          src={project.heroImage}
+                          src={project.homepageCoverImage || project.heroImage || ""}
                           alt={project.title}
                           fill
                           sizes="(max-width: 768px) 100vw, 50vw"
                           style={{
-                            objectFit: "contain",
+                            objectFit: "cover",
+                            objectPosition: "center",
                             transition: "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease",
                             transform: isHovered ? "scale(1.03)" : "scale(1)",
                             filter: isHovered ? "brightness(1.05)" : "brightness(0.9)",
