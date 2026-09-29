@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [trailingPos, setTrailingPos] = useState({ x: -100, y: -100 });
+  const trailingPosRef = useRef({ x: -100, y: -100 });
+  const cursorRingRef = useRef<HTMLDivElement>(null);
+  const isClickingRef = useRef(false);
   const [cursorText, setCursorText] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
@@ -46,8 +48,14 @@ export default function CustomCursor() {
       }
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
+    const handleMouseDown = () => {
+      setIsClicking(true);
+      isClickingRef.current = true;
+    };
+    const handleMouseUp = () => {
+      setIsClicking(false);
+      isClickingRef.current = false;
+    };
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
 
@@ -66,20 +74,26 @@ export default function CustomCursor() {
     };
   }, [isVisible]);
 
-  // Smooth lerp for trailing cursor ring
+  // Smooth lerp for trailing cursor ring using direct DOM manipulation
   useEffect(() => {
-    if (isTouch) return;
+    if (isTouch || !cursorRingRef.current) return;
     let animationFrameId: number;
 
     const animate = () => {
-      setTrailingPos((prev) => {
-        const dx = position.x - prev.x;
-        const dy = position.y - prev.y;
-        return {
-          x: prev.x + dx * 0.2,
-          y: prev.y + dy * 0.2,
-        };
-      });
+      // Update ref directly to avoid re-renders
+      const dx = position.x - trailingPosRef.current.x;
+      const dy = position.y - trailingPosRef.current.y;
+      trailingPosRef.current = {
+        x: trailingPosRef.current.x + dx * 0.2,
+        y: trailingPosRef.current.y + dy * 0.2,
+      };
+      
+      // Update DOM directly to avoid React re-renders
+      if (cursorRingRef.current) {
+        const scale = isClickingRef.current ? 0.9 : 1;
+        cursorRingRef.current.style.transform = `translate3d(${trailingPosRef.current.x}px, ${trailingPosRef.current.y}px, 0) translate(-50%, -50%) scale(${scale})`;
+      }
+      
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -107,13 +121,11 @@ export default function CustomCursor() {
     >
       {/* Outer Follower Ring / Badge */}
       <div
+        ref={cursorRingRef}
         style={{
           position: "fixed",
           top: 0,
           left: 0,
-          transform: `translate3d(${trailingPos.x}px, ${trailingPos.y}px, 0) translate(-50%, -50%) scale(${
-            isClicking ? 0.9 : 1
-          })`,
           width: hasCustomText ? "auto" : isHovered ? "48px" : "32px",
           height: hasCustomText ? "auto" : isHovered ? "48px" : "32px",
           padding: hasCustomText ? "8px 16px" : 0,

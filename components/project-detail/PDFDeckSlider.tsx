@@ -74,9 +74,71 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
     });
   }, [currentPage, manifest]);
 
-  // Lock body scroll when in fullscreen
+  // Toggle fullscreen using native Fullscreen API
+  const toggleFullscreen = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    if (!document.fullscreenElement) {
+      // Enter fullscreen
+      const requestFullscreen = 
+        container.requestFullscreen ||
+        (container as any).webkitRequestFullscreen ||
+        (container as any).mozRequestFullScreen ||
+        (container as any).msRequestFullscreen;
+
+      if (requestFullscreen) {
+        requestFullscreen.call(container).catch((err: Error) => {
+          console.error('Fullscreen request failed:', err);
+          // Fallback to CSS-only fullscreen if native fullscreen fails
+          setIsFullscreen(true);
+        });
+      } else {
+        // Browser doesn't support fullscreen API, use CSS fallback
+        setIsFullscreen(true);
+      }
+    } else {
+      // Exit fullscreen
+      const exitFullscreen = 
+        document.exitFullscreen ||
+        (document as any).webkitExitFullscreen ||
+        (document as any).mozCancelFullScreen ||
+        (document as any).msExitFullscreen;
+
+      if (exitFullscreen) {
+        exitFullscreen.call(document).catch((err: Error) => {
+          console.error('Fullscreen exit failed:', err);
+          setIsFullscreen(false);
+        });
+      } else {
+        setIsFullscreen(false);
+      }
+    }
+  }, []);
+
+  // Sync fullscreen state with browser's fullscreen state
   useEffect(() => {
-    if (isFullscreen) {
+    const handleFullscreenChange = () => {
+      const isCurrentlyFullscreen = !!document.fullscreenElement;
+      setIsFullscreen(isCurrentlyFullscreen);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
+
+  // Lock body scroll when in fullscreen (CSS fallback mode only)
+  useEffect(() => {
+    if (isFullscreen && !document.fullscreenElement) {
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       return () => {
@@ -157,17 +219,17 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
       } else if (e.key === "ArrowLeft") {
         goToPage(currentPage - 1);
       } else if (e.key === "Escape" && isFullscreen) {
-        setIsFullscreen(false);
+        toggleFullscreen();
       } else if (e.key === "f" || e.key === "F") {
         if (!e.metaKey && !e.ctrlKey) {
-          setIsFullscreen((prev) => !prev);
+          toggleFullscreen();
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [manifest, currentPage, isFullscreen, goToPage]);
+  }, [manifest, currentPage, isFullscreen, goToPage, toggleFullscreen]);
 
   if (loading) {
     return (
@@ -241,7 +303,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
 
           <button
             className="pd-deck-slider__control-btn pd-deck-slider__control-btn--secondary"
-            onClick={() => setIsFullscreen((prev) => !prev)}
+            onClick={toggleFullscreen}
             aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
           >
