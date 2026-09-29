@@ -30,3 +30,6 @@ venv/
 # Logs
 *.log
 npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo

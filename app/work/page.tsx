@@ -14,9 +14,25 @@ export const metadata: Metadata = {
 };
 
 // ─────────────────────────────────────────────────────────────────────
-// ProjectEntry — editorial card
-// Hover: CSS class only (scale 1 → 1.025), no JS state, no image swap.
-// Metadata below image: project number · disciplines / title / client · year
+// ProjectEntry — editorial card with hover crossfade + info reveal
+//
+// Implementation: pure CSS, server component safe (no client JS).
+//
+// Image layers:
+//   – .pe-image--cover: z-index 1, opacity 1 → 0 on hover (if hoverImage)
+//   – .pe-image--cover.pe-image--only: z-index 1, opacity stays 1 (no hoverImage)
+//   – .pe-image--hover: z-index 2, opacity 0 → 1 on hover
+// Both scale 1 → 1.04 simultaneously.
+//
+// Overlay (.pe-overlay): z-index 3, gradient scrim + scope + CTA.
+// Fades in + slides up from bottom on :hover.
+//
+// Grid dimming: .pe-grid-root:hover dims siblings to 0.72.
+//
+// Border radius: 8px — matches menu-form-panel in Header.tsx L901.
+//
+// Mobile (≤768px): overlay hidden; .pe-scope-mobile always shown
+// at the bottom of the image with reduced opacity.
 // ─────────────────────────────────────────────────────────────────────
 function ProjectEntry({
   project,
@@ -26,10 +42,17 @@ function ProjectEntry({
   index: number;
 }) {
   const coverSrc = project.coverImage || project.heroImage || "";
+  const hoverSrc = project.hoverImage ?? null;
   const num = String(index + 1).padStart(2, "0");
   const disciplines = project.disciplines
     .map((d) => disciplineLabels[d])
     .join(" · ");
+
+  // Scope summary: first 2 scope items joined, fallback to category
+  const scopeSummary =
+    project.details?.scope && project.details.scope.length > 0
+      ? project.details.scope.slice(0, 2).join(" · ")
+      : project.category;
 
   return (
     <Link
@@ -39,19 +62,21 @@ function ProjectEntry({
       style={{ display: "block", textDecoration: "none", color: "inherit" }}
     >
       <article>
-        {/* ── Image ── */}
+        {/* ── Image container ── */}
         <div
           className="pe-image-wrap"
           style={{
             position: "relative",
             width: "100%",
             aspectRatio: "4/3",
-            backgroundColor: "#f0efed",
             overflow: "hidden",
             marginBottom: "1rem",
+            borderRadius: "8px",
+            backgroundColor: "#f0efed",
           }}
         >
-          {coverSrc ? (
+          {/* Layer 1: Cover image */}
+          {coverSrc && (
             <Image
               src={coverSrc}
               alt={project.title}
@@ -59,17 +84,46 @@ function ProjectEntry({
               priority={index < 4}
               loading={index < 4 ? "eager" : "lazy"}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              style={{
-                objectFit: "cover",
-              }}
-              className="pe-image"
+              style={{ objectFit: "cover" }}
+              className={
+                hoverSrc
+                  ? "pe-image pe-image--cover"
+                  : "pe-image pe-image--cover pe-image--only"
+              }
             />
-          ) : (
-            <div style={{ width: "100%", height: "100%", backgroundColor: "#e8e8e8" }} />
           )}
+
+          {/* Layer 2: Hover image (crossfades in on hover) */}
+          {hoverSrc && (
+            <Image
+              src={hoverSrc}
+              alt={`${project.title} — gallery detail`}
+              fill
+              loading="lazy"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              style={{ objectFit: "cover" }}
+              className="pe-image pe-image--hover"
+              aria-hidden="true"
+            />
+          )}
+
+          {/* ── Overlay: scope summary + View Project CTA ── */}
+          {/* Fades + slides up from bottom on card hover (desktop) */}
+          <div className="pe-overlay" aria-hidden="true">
+            <div className="pe-overlay__inner">
+              <span className="pe-overlay__scope">{scopeSummary}</span>
+              <span className="pe-overlay__cta">View Project →</span>
+            </div>
+          </div>
+
+          {/* ── Mobile fallback: scope line always visible ── */}
+          {/* On touch devices hover never fires; show info statically */}
+          <div className="pe-scope-mobile" aria-hidden="true">
+            <span>{scopeSummary}</span>
+          </div>
         </div>
 
-        {/* ── Metadata ── */}
+        {/* ── Metadata below image ── */}
         <div
           style={{
             display: "flex",
@@ -234,8 +288,8 @@ function EmptyState() {
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// Editorial Grid
-// 2-column primary. Every 5th project (index 4, 9, 14, …) spans full width.
+// Project Grid — strict 3/2/1 column layout, uniform aspect ratio
+// Grid structure intentionally unchanged.
 // ─────────────────────────────────────────────────────────────────────
 function ProjectGrid({ projects }: { projects: Project[] }) {
   if (projects.length === 0) return <EmptyState />;
@@ -269,23 +323,175 @@ export default async function WorkPage({
   return (
     <>
       <style>{`
-        /* ── Work archive styles ─────────────────────────────────── */
+        /* ═══════════════════════════════════════════════════════════
+           WORK ARCHIVE — Hover-reveal motion system
+           ───────────────────────────────────────────────────────────
+           Timing tokens mirror the project detail gallery hover-zoom:
+             scale    : 0.7s cubic-bezier(0.16, 1, 0.3, 1)  (ease-out-expo)
+             crossfade: 0.35s ease
+             overlay  : 0.3s ease
+           Border radius: 8px — same as menu-form-panel (Header.tsx L901)
+        ═══════════════════════════════════════════════════════════ */
 
-        /* Hover: image scale only, no JS */
+        /* ── Base link ───────────────────────────────────────────── */
         .pe-link { cursor: pointer; }
         .pe-link:active { opacity: 0.9; }
-        .pe-image-wrap { will-change: transform; }
-        .pe-link:hover .pe-image {
-          transform: scale(1.025) !important;
-          transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        }
-        .pe-image {
-          transition: transform 0.5s ease !important;
-        }
-        .pe-link:hover .pe-title { color: #c91a1f !important; }
-        .pe-title { transition: color 0.2s ease; }
 
-        /* Grid: strict 3 desktop / 2 tablet / 1 mobile */
+        /* ── Shared image transition ─────────────────────────────── */
+        .pe-image {
+          transition:
+            opacity 0.35s ease,
+            transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Cover: fully visible, scale starts at 1 */
+        .pe-image--cover {
+          opacity: 1;
+          transform: scale(1);
+          z-index: 1;
+        }
+
+        /* Hover state for cover when a hoverImage is present:
+           fade out while scaling up together */
+        .pe-link:hover .pe-image--cover {
+          opacity: 0;
+          transform: scale(1.04);
+        }
+
+        /* Cover-only card (no hoverImage set): stays visible, just scales */
+        .pe-link:hover .pe-image--cover.pe-image--only {
+          opacity: 1;
+          transform: scale(1.04);
+        }
+
+        /* Hover image: invisible by default, crossfades in */
+        .pe-image--hover {
+          opacity: 0;
+          transform: scale(1);
+          z-index: 2;
+        }
+        .pe-link:hover .pe-image--hover {
+          opacity: 1;
+          transform: scale(1.04);
+        }
+
+        /* ── Grid-level dimming ─────────────────────────────────── */
+        /* Non-hovered siblings dim to 72% — draws focus without
+           making the page feel dark or unreadable */
+        .pe-col-item {
+          transition: opacity 0.3s ease;
+        }
+        .pe-grid-root:hover .pe-col-item {
+          opacity: 0.72;
+        }
+        .pe-grid-root:hover .pe-col-item:hover {
+          opacity: 1;
+          transition: opacity 0.15s ease;
+        }
+
+        /* ── Title color transition ───────────────────────────────── */
+        .pe-title { transition: color 0.2s ease; }
+        .pe-link:hover .pe-title { color: #c91a1f !important; }
+
+        /* ── Overlay: scope summary + CTA ───────────────────────── */
+        /* Layered above both image layers (z-index 3).
+           Gradient scrim ensures legibility over any image colour.
+           Fades in + inner content slides 6px upward. */
+        .pe-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          display: flex;
+          align-items: flex-end;
+          pointer-events: none;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.62) 0%,
+            rgba(0, 0, 0, 0.18) 45%,
+            transparent 75%
+          );
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        .pe-link:hover .pe-overlay {
+          opacity: 1;
+        }
+
+        .pe-overlay__inner {
+          width: 100%;
+          padding: 1rem 1rem 0.85rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+          transform: translateY(6px);
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .pe-link:hover .pe-overlay__inner {
+          transform: translateY(0);
+        }
+
+        .pe-overlay__scope {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.75);
+          line-height: 1.3;
+        }
+
+        .pe-overlay__cta {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.7rem;
+          font-weight: 900;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: #ffffff;
+          line-height: 1;
+        }
+
+        /* ── Mobile fallback ─────────────────────────────────────── */
+        /* Touch devices have no :hover equivalent for the crossfade.
+           .pe-scope-mobile is always shown at the bottom of the image
+           at reduced opacity, giving access to the extra info without
+           needing hover. */
+        .pe-scope-mobile {
+          display: none;
+        }
+
+        @media (max-width: 768px) {
+          /* Disable desktop overlay on touch breakpoints */
+          .pe-overlay { display: none; }
+
+          /* Show static scope pill at image bottom */
+          .pe-scope-mobile {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.55rem 0.75rem;
+            background: linear-gradient(
+              to top,
+              rgba(0, 0, 0, 0.48) 0%,
+              transparent 100%
+            );
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.57rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.68);
+            pointer-events: none;
+          }
+
+          /* No dimming on mobile — each card is full opacity */
+          .pe-grid-root:hover .pe-col-item {
+            opacity: 1;
+          }
+        }
+
+        /* ── Grid layout (unchanged) ─────────────────────────────── */
         .pe-grid-root {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -302,7 +508,6 @@ export default async function WorkPage({
           }
         }
 
-        /* Never hide the top row behind the fixed header when anchored */
         .wk-grid-wrap {
           scroll-margin-top: clamp(4rem, 6vw, 5rem);
         }
@@ -312,7 +517,7 @@ export default async function WorkPage({
           min-width: 0;
         }
 
-        /* Page intro text animation */
+        /* ── Page intro animation ────────────────────────────────── */
         @keyframes wk-fadein {
           from { opacity: 0; transform: translateY(12px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -330,7 +535,7 @@ export default async function WorkPage({
           animation: wk-fadein 0.5s 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        /* Divider line */
+        /* ── Divider ─────────────────────────────────────────────── */
         .wk-rule {
           width: 100%;
           height: 1px;
