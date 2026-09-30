@@ -33,3 +33,7 @@ npm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# Watermark pipeline (pristine deck originals + re-run state)
+public/.deck-pristine/
+scripts/.watermark-state.json
