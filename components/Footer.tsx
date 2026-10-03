@@ -276,7 +276,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  data-cursor="OPEN &nearr;"
+                  data-cursor="OPEN ↗"
                   style={{
                     fontSize: "0.75rem",
                     fontWeight: 400,
@@ -297,7 +297,7 @@ export default function Footer() {
                   }}
                 >
                   <span>{social.label}</span>
-                  <span style={{ fontSize: "10px" }}>&nearr;</span>
+                  <span style={{ fontSize: "10px" }}>↗</span>
                 </a>
               ))}
             </div>

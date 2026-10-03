@@ -9,11 +9,23 @@ const WATERMARK_SRC = path.join(ROOT, 'public', 'img', 'watermark.png');
 const PRISTINE_DIR = path.join(ROOT, 'public', '.deck-pristine');
 const STATE_FILE = path.join(__dirname, '.watermark-state.json');
 
-const OPACITY = 0.08;
+const OPACITY = 0.30;              // alpha of the mark pixels (on their colour layer)
 const WATERMARK_WIDTH_RATIO = 0.32;
 const WEBP_QUALITY = 78;
 const WEBP_EFFORT = 5;
-const TOOL_VERSION = 1;
+const TOOL_VERSION = 4; // v4 = adaptive light/dark mark colour based on slide brightness
+
+// Halo: a neutral (mid-grey) ring dilated around the mark, at fixed visual
+// width regardless of page resolution. Gives the mark a luminance edge so it
+// reads on any background — white pages and saturated-red pages alike.
+const HALO_ENABLED = true;
+const HALO_RADIUS_RATIO = 0.008; // of mark width
+const HALO_OPACITY = 0.60;
+const HALO_NEUTRAL = 128;
+// Adaptive thresholds: slide avg luma >= BRIGHT_THRESHOLD -> dark mark; else light mark
+const BRIGHT_THRESHOLD = 128;   // 0-255 luma
+const DARK_MARK_L   = 30;       // near-black mark on bright slides (R=G=B=30)
+const LIGHT_MARK_L  = 240;      // near-white mark on dark slides   (R=G=B=240)
 
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
@@ -61,43 +73,155 @@ function buildPlan() {
   return plan;
 }
 
+// Separable max-filter dilation on a single-channel mask, in FINAL pixel space,
+// so the halo keeps a constant visual width regardless of page resolution or
+// how far the source mark was scaled up/down.
+function dilate(mask, w, h, r) {
+  if (r < 1) return mask;
+  const tmp = new Uint8Array(w * h);
+  for (let y = 0; y < h; y++) {
+    const row = y * w;
+    for (let x = 0; x < w; x++) {
+      let m = 0;
+      const lo = Math.max(0, x - r);
+      const hi = Math.min(w - 1, x + r);
+      for (let k = lo; k <= hi; k++) {
+        const v = mask[row + k];
+        if (v > m) m = v;
+      }
+      tmp[row + x] = m;
+    }
+  }
+  const out = new Uint8Array(w * h);
+  for (let x = 0; x < w; x++) {
+    for (let y = 0; y < h; y++) {
+      let m = 0;
+      const lo = Math.max(0, y - r);
+      const hi = Math.min(h - 1, y + r);
+      for (let k = lo; k <= hi; k++) {
+        const v = tmp[k * w + x];
+        if (v > m) m = v;
+      }
+      out[y * w + x] = m;
+    }
+  }
+  return out;
+}
+
 async function buildWatermark() {
   const { data, info } = await sharp(WATERMARK_SRC)
     .raw()
     .toBuffer({ resolveWithObject: true });
   const { width, height, channels } = info;
   if (channels < 3) throw new Error('watermark must have >=3 channels, got ' + channels);
-  const rgba = Buffer.alloc(width * height * 4);
-  let maxAlpha = 0;
+  // Build a coverage mask: dark logo pixels -> high mask value, white bg -> 0.
+  const mask = new Uint8Array(width * height);
+  let maxMask = 0;
   for (let i = 0, p = 0; i < width * height; i++, p += channels) {
     const r = data[p];
     const g = data[p + 1];
     const b = data[p + 2];
-    const alpha = Math.round((255 - Math.min(r, g, b)) * OPACITY);
-    const o = i * 4;
-    rgba[o] = r;
-    rgba[o + 1] = g;
-    rgba[o + 2] = b;
-    rgba[o + 3] = alpha;
-    if (alpha > maxAlpha) maxAlpha = alpha;
+    const m = 255 - Math.min(r, g, b); // 0 on white, 255 on black
+    mask[i] = m;
+    if (m > maxMask) maxMask = m;
   }
-  return { buf: rgba, width, height, maxAlpha };
+  return { mask, width, height, maxMask };
+}
+
+// Sample the average luma of the slide's center region to decide mark colour.
+async function slideLuma(srcPath, w, h) {
+  // Sample a centred 40% crop to avoid edge chrome / white borders.
+  const cx = Math.round(w * 0.30);
+  const cy = Math.round(h * 0.30);
+  const cw = Math.round(w * 0.40);
+  const ch = Math.round(h * 0.40);
+  const { data, info } = await sharp(srcPath)
+    .extract({ left: cx, top: cy, width: cw, height: ch })
+    .resize(64, 36, { fit: 'fill' }) // tiny sample
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  let sum = 0;
+  const px = info.width * info.height;
+  const ch2 = info.channels;
+  for (let i = 0; i < px; i++) {
+    const p = i * ch2;
+    // ITU-R BT.601 luma
+    sum += 0.299 * data[p] + 0.587 * data[p + 1] + 0.114 * data[p + 2];
+  }
+  return sum / px; // 0-255
 }
 
 async function render(wm, srcPath) {
   const meta = await sharp(srcPath).metadata();
-  const w = Math.max(1, Math.round(meta.width * WATERMARK_WIDTH_RATIO));
+  const pageW = meta.width;
+  const pageH = meta.height;
+  const w = Math.max(1, Math.round(pageW * WATERMARK_WIDTH_RATIO));
   const h = Math.max(1, Math.round(w * (wm.height / wm.width)));
-  const mark = await sharp(wm.buf, { raw: { width: wm.width, height: wm.height, channels: 4 } })
-    .resize({ width: w, kernel: 'lanczos3' })
+
+  // Determine mark colour based on slide brightness.
+  const luma = await slideLuma(srcPath, pageW, pageH);
+  const isBright = luma >= BRIGHT_THRESHOLD;
+  const markL = isBright ? DARK_MARK_L : LIGHT_MARK_L;
+
+  // Resize coverage mask into final pixel space.
+  const maskSmall = await sharp(Buffer.from(wm.mask), { raw: { width: wm.width, height: wm.height, channels: 1 } })
+    .resize({ width: w, height: h, kernel: 'lanczos3' })
+    .raw()
+    .toBuffer();
+
+  // Mark layer — uniform colour, opacity driven by mask.
+  const mark = Buffer.alloc(w * h * 4);
+  for (let i = 0; i < w * h; i++) {
+    const o = i * 4;
+    mark[o]     = markL;
+    mark[o + 1] = markL;
+    mark[o + 2] = markL;
+    mark[o + 3] = Math.round(maskSmall[i] * OPACITY);
+  }
+
+  const layers = [];
+  let haloMax = 0;
+
+  if (HALO_ENABLED && HALO_RADIUS_RATIO > 0) {
+    const r = Math.max(1, Math.round(w * HALO_RADIUS_RATIO));
+    const grown = dilate(maskSmall, w, h, r);
+    // Ring only — exclude the mark interior.
+    const haloL = isBright ? DARK_MARK_L : LIGHT_MARK_L;
+    const halo = Buffer.alloc(w * h * 4);
+    for (let i = 0; i < w * h; i++) {
+      const ring = grown[i] > maskSmall[i] ? grown[i] : 0;
+      const a = Math.round(ring * HALO_OPACITY);
+      const o = i * 4;
+      halo[o]     = haloL;
+      halo[o + 1] = haloL;
+      halo[o + 2] = haloL;
+      halo[o + 3] = a;
+      if (a > haloMax) haloMax = a;
+    }
+    const haloPng = await sharp(halo, { raw: { width: w, height: h, channels: 4 } })
+      .png({ compressionLevel: 9 })
+      .toBuffer();
+    layers.push({ input: haloPng, blend: 'over' });
+  }
+
+  const markPng = await sharp(mark, { raw: { width: w, height: h, channels: 4 } })
     .png({ compressionLevel: 9 })
     .toBuffer();
-  const left = Math.round((meta.width - w) / 2);
-  const top = Math.round((meta.height - h) / 2);
-  return sharp(srcPath)
-    .composite([{ input: mark, left, top, blend: 'over' }])
+  layers.push({ input: markPng, blend: 'over' });
+
+  const left = Math.round((pageW - w) / 2);
+  const top  = Math.round((pageH - h) / 2);
+  for (const l of layers) {
+    l.left = left;
+    l.top  = top;
+  }
+
+  const out = await sharp(srcPath)
+    .composite(layers)
     .webp({ quality: WEBP_QUALITY, effort: WEBP_EFFORT, smartSubsample: true })
     .toBuffer();
+  out.haloMax = haloMax;
+  return out;
 }
 
 async function pool(items, worker, n) {
@@ -133,7 +257,9 @@ async function main() {
   console.log('deck pages        :', plan.length);
   console.log('covers (skipped)  :', covers.length);
   console.log('to watermark      :', limited.length);
-  console.log('watermark         :', wm.width + 'x' + wm.height, '| max alpha', wm.maxAlpha + '/255 (' + ((wm.maxAlpha / 255) * 100).toFixed(1) + '%)');
+  const markMaxAlpha = Math.round(wm.maxMask * OPACITY);
+  console.log('watermark         :', wm.width + 'x' + wm.height, '| max mark alpha', markMaxAlpha + '/255 (' + ((markMaxAlpha / 255) * 100).toFixed(1) + '%)');
+  console.log('halo              :', HALO_ENABLED ? 'neutral ' + HALO_NEUTRAL + ', radius ' + (HALO_RADIUS_RATIO * 100).toFixed(2) + '% of mark width, max alpha ' + Math.round(255 * HALO_OPACITY) + '/255' : 'disabled');
   console.log('placement         : centered, width ' + WATERMARK_WIDTH_RATIO * 100 + '% of page');
   console.log('webp              : quality ' + WEBP_QUALITY + ', effort ' + WEBP_EFFORT);
   console.log('');
@@ -183,6 +309,10 @@ async function main() {
           watermarkSha: wmSha,
           opacity: OPACITY,
           ratio: WATERMARK_WIDTH_RATIO,
+          halo: HALO_ENABLED,
+          haloRadiusRatio: HALO_RADIUS_RATIO,
+          haloOpacity: HALO_OPACITY,
+          haloNeutral: HALO_NEUTRAL,
           quality: WEBP_QUALITY,
           version: TOOL_VERSION,
         };
@@ -246,7 +376,7 @@ async function main() {
     console.log('watermarked pages after  :', mib(wmAfter), 'MB');
     console.log('delta                    :', signed(wmAfter, wmBefore), '(' + pct(wmAfter, wmBefore) + ')');
     console.log('');
-    console.log('deck pages now (945 wm + 32 covers):', mib(deckTotal), 'MB');
+    console.log('deck pages now (' + (results.filter((r) => r && r.bytes).length) + ' wm this run + ' + covers.length + ' covers):', mib(deckTotal), 'MB');
     console.log('thumbs (untouched)                :', mib(thumbTotal), 'MB');
     console.log('deck asset folder total           :', mib(deckTotal + thumbTotal), 'MB');
   }

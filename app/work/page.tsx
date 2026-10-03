@@ -41,7 +41,12 @@ function ProjectEntry({
   project: Project;
   index: number;
 }) {
-  const coverSrc = project.coverImage || project.heroImage || "";
+  // Grid base image: prefer the curated AI cover when one exists, else the
+  // project's own cover. Scoped to the grid only — the detail hero
+  // (ProjectDetailClient) still uses coverImage, and hoverSrc below is
+  // independent so the crossfade is unaffected.
+  const coverSrc =
+    project.homepageCoverImage || project.coverImage || project.heroImage || "";
   const hoverSrc = project.hoverImage ?? null;
   const num = String(index + 1).padStart(2, "0");
   const disciplines = project.disciplines
@@ -84,7 +89,10 @@ function ProjectEntry({
               priority={index < 4}
               loading={index < 4 ? "eager" : "lazy"}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              style={{ objectFit: "cover" }}
+              style={{
+                objectFit: "cover",
+                objectPosition: project.gridCoverPosition || "center",
+              }}
               className={
                 hoverSrc
                   ? "pe-image pe-image--cover"

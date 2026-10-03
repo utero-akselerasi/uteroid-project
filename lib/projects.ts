@@ -31,12 +31,13 @@ export const projects: Project[] = [
     shortDescription:
       "Platform cloud terintegrasi untuk bengkel mobil dan detailing center, dilengkapi sistem pedoman identitas brand (GSM) komprehensif dari logo hingga armada transportasi.",
     description:
-      "GaragePlug adalah platform cloud terintegrasi untuk manajemen bengkel mobil dan detailing center modern yang dipercaya lebih dari 5.000 pengguna global. Di Indonesia, Utero merancang sistem standarisasi identitas visual (GSM) komprehensif 76 halaman mencakup logogram generator daya, supergrafik turunan geometris, palet warna hijau tua (#003D2E) melambangkan pertumbuhan bisnis, panduan fotografi monokrom terfokus, sarana korporasi, seragam teknisi, signage totem pylon, hingga livery armada operasional.",
+      "GaragePlug adalah platform cloud terintegrasi untuk manajemen bengkel mobil dan detailing center modern yang dipercaya lebih dari 5.000 pengguna global. Di Indonesia, Utero merancang sistem standarisasi identitas visual (GSM) komprehensif mencakup logogram generator daya, supergrafik turunan geometris, palet warna hijau tua (#003D2E) melambangkan pertumbuhan bisnis, panduan fotografi monokrom terfokus, sarana korporasi, seragam teknisi, signage totem pylon, hingga livery armada operasional.",
     excerpt:
       "Platform cloud terintegrasi untuk bengkel mobil dan detailing center, dilengkapi sistem pedoman identitas brand (GSM) komprehensif dari logo hingga armada transportasi.",
     coverImage: "/projects/garageplug/cover.webp",
     heroImage: "/projects/garageplug/cover.webp",
     homepageCoverImage: "/projects/dashboard-covers/garageplus.webp",
+    gridCoverPosition: "center 50%",
     hoverImage: "/projects/garageplug/gallery/074.webp",
     galleryImages: [
       "/projects/garageplug/gallery/033.webp",
@@ -66,7 +67,7 @@ export const projects: Project[] = [
       solution:
         "Merancang sistem identitas visual berbasis simbol generator daya bertenaga dengan palet warna hijau tua (#003D2E) yang mencerminkan pertumbuhan bisnis dan presisi teknologi. Pedoman GSM mencakup aturan variasi logo vertikal/horizontal, supergrafik dinamis, panduan fotografi monokrom fokus obyek, seragam teknisi, dan standarisasi livery armada bergerak.",
       deliverables: [
-        "Buku Pedoman Standar Grafis (GSM) 76 Halaman",
+        "Buku Pedoman Standar Grafis (GSM)",
         "Sistem Logo & Supergrafik",
         "Desain Signage Eksterior & Interior Bengkel",
         "Desain Livery Armada Mobil Operasional",
@@ -731,6 +732,7 @@ export const projects: Project[] = [
     coverImage: "/projects/jmt/cover.webp",
     heroImage: "/projects/jmt/cover.webp",
     homepageCoverImage: "/projects/dashboard-covers/JMT.webp",
+    gridCoverPosition: "center 60%",
     hoverImage: "/projects/jmt/gallery/016.webp",
     galleryImages: [
       "/projects/jmt/gallery/011.webp",
@@ -782,6 +784,7 @@ export const projects: Project[] = [
     coverImage: "/projects/lacamino/cover.webp",
     heroImage: "/projects/lacamino/cover.webp",
     homepageCoverImage: "/projects/dashboard-covers/lacamino.webp",
+    gridCoverPosition: "45% 45%",
     hoverImage: "/projects/lacamino/gallery/016.webp",
     galleryImages: [
       "/projects/lacamino/gallery/010.webp",
@@ -1329,6 +1332,7 @@ export const projects: Project[] = [
     coverImage: "/projects/maitri/cover.webp",
     heroImage: "/projects/maitri/cover.webp",
     homepageCoverImage: "/projects/dashboard-covers/maitri.webp",
+    gridCoverPosition: "center 32%",
     hoverImage: "/projects/maitri/gallery/006.webp",
     galleryImages: [
       "/projects/maitri/gallery/006.webp",

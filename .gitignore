@@ -37,3 +37,6 @@ npm-debug.log*
 # Watermark pipeline (pristine deck originals + re-run state)
 public/.deck-pristine/
 scripts/.watermark-state.json
+
+# Scratch directory (temporary files)
+scratch/

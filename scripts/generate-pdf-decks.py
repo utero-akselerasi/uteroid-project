@@ -214,6 +214,7 @@ def process_pdf_deck(browser, slug: str, pdf_filename: str, scale: float = 2.0):
 def main():
     parser = argparse.ArgumentParser(description="Generate PDF deck images for all projects")
     parser.add_argument("--slug", help="Process specific project slug only")
+    parser.add_argument("--pdf", help="Override the PDF filename (content/Works) for --slug")
     parser.add_argument("--scale", type=float, default=2.0, help="Render scale (default: 2.0)")
     args = parser.parse_args()
     
@@ -223,8 +224,15 @@ def main():
             print(f"❌ ERROR: Unknown slug: {args.slug}")
             print(f"Available slugs: {list(PROJECT_PDF_MAP.keys())}")
             sys.exit(1)
-        projects_to_process = {args.slug: PROJECT_PDF_MAP[args.slug]}
+        pdf_filename = args.pdf or PROJECT_PDF_MAP[args.slug]
+        if args.pdf and not (WORKS_DIR / args.pdf).exists():
+            print(f"❌ ERROR: PDF not found in content/Works: {WORKS_DIR / args.pdf}")
+            sys.exit(1)
+        projects_to_process = {args.slug: pdf_filename}
     else:
+        if args.pdf:
+            print("❌ ERROR: --pdf requires --slug")
+            sys.exit(1)
         projects_to_process = PROJECT_PDF_MAP
     
     results = []
