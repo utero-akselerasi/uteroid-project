@@ -34,7 +34,6 @@ PROJECT_PDF_MAP = {
     "chatten": "gsm chatten.pdf",
     "bank-sidoarjo": "Bank Sidoarjo Visual Guideline  FILE FINAL_removed.pdf",
     "mie-gacoan": "GSM - MIE GACOAN_removed_removed.pdf",
-    "logo-75th-indonesia": "GSM - Logo 75th Indonesia_removed.pdf",
     "ayam-goreng-nelongso": "GSM - Ayam Goreng Nelongso_removed.pdf",
     "konas-2021": "GSM - KONAS 2021.pdf",
     "sfi": "BRAND GUIDELINE SFI.pdf",

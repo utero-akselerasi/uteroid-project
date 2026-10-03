@@ -288,6 +288,55 @@ async function run() {
     await sleep(800);
     await captureScreenshot(client, path.join(SCREENSHOTS_DIR, '10-work-grid-mobile-jmt-lacamino.png'));
 
+    // ─────────────────────────────────────────────────────────────
+    // 6. New project: logo-73-indonesia detail (desktop)
+    // ─────────────────────────────────────────────────────────────
+    console.log('6. Capturing logo-73-indonesia detail hero (desktop)...');
+    await setViewport(client, 1440, 900);
+    await client.send('Page.navigate', { url: 'http://localhost:3000/work/logo-73-indonesia' });
+    await sleep(2500);
+    await waitForImages(client);
+    await captureScreenshot(client, path.join(SCREENSHOTS_DIR, '11-logo73-detail-hero-desktop.png'));
+
+    console.log('6b. Capturing logo-73-indonesia deck slide 2 (stamp proof)...');
+    await client.send('Runtime.evaluate', {
+      expression: `const s = document.querySelector('.pd-deck-slider'); if (s) s.scrollIntoView({ block: 'center' });`,
+    });
+    await sleep(1000);
+    await client.send('Runtime.evaluate', {
+      expression: `const b = Array.from(document.querySelectorAll('.pd-deck-slider__control-btn')); const n = b.find(x => x.getAttribute('aria-label') === 'Next slide'); if (n) n.click();`,
+    });
+    await sleep(1500);
+    await waitForImages(client);
+    await sleep(800);
+    await captureScreenshot(client, path.join(SCREENSHOTS_DIR, '12-logo73-deck-slide2-stamp.png'));
+
+    // ─────────────────────────────────────────────────────────────
+    // 7. New projects position in /work grid (desktop)
+    // ─────────────────────────────────────────────────────────────
+    console.log('7. Capturing /work grid at new projects...');
+    await client.send('Page.navigate', { url: 'http://localhost:3000/work' });
+    await sleep(2500);
+    await waitForImages(client);
+    await client.send('Runtime.evaluate', {
+      expression: `const el = document.querySelector('a[href="/work/logo-73-indonesia"]'); if (el) el.scrollIntoView({ block: 'center' });`,
+    });
+    await sleep(1200);
+    await waitForImages(client);
+    await sleep(600);
+    await captureScreenshot(client, path.join(SCREENSHOTS_DIR, '13-work-grid-new-projects.png'));
+
+    // ─────────────────────────────────────────────────────────────
+    // 8. New project detail (mobile 390x844)
+    // ─────────────────────────────────────────────────────────────
+    console.log('8. Capturing logo-73-indonesia detail (mobile 390)...');
+    await setViewport(client, 390, 844, true);
+    await client.send('Page.navigate', { url: 'http://localhost:3000/work/logo-73-indonesia' });
+    await sleep(2500);
+    await waitForImages(client);
+    await sleep(800);
+    await captureScreenshot(client, path.join(SCREENSHOTS_DIR, '14-logo73-detail-mobile.png'));
+
     client.close();
     console.log('All screenshots captured successfully!');
   } finally {

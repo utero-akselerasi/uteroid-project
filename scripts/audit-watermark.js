@@ -9,7 +9,28 @@ const PUBLIC_PROJECTS = path.join(ROOT, 'public', 'projects');
 const PRISTINE_DIR = path.join(ROOT, 'public', '.deck-pristine');
 const STATE_FILE = path.join(__dirname, '.watermark-state.json');
 
-const state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+// Decks that arrive already watermarked in the source PDF (or were stamped to
+// match the delivered decks) and are rendered directly into the deck format.
+// They intentionally have no pristine backup and no watermark-state entry, so
+// they are exempt from the pristine/SHA checks below.
+const MANUALLY_WATERMARKED = new Set([
+  // 31 replaced decks rendered from pre-watermarked PDFs in "public/pdf slides"
+  'amarta-wisesa', 'ayam-goreng-nelongso', 'baiturrohman', 'bank-sidoarjo', 'boop',
+  'bpr-artha-kanjuruhan', 'bpr-tulungagung', 'chatten', 'cos-pleng', 'dailbana',
+  'garageplug', 'gsm-1922', 'jmt', 'kiyona', 'konas-2021', 'lacamino', 'maitri',
+  'mcc', 'mie-gacoan', 'momsarasa', 'plut-kumkm', 'proxon', 'rohani', 'satu-titik',
+  'sfi', 'stamford', 'techlink', 'uwg', 'wajan-giok', 'wismari', 'yin-yam',
+  // new decks: logo-73 stamped to match; latobas & dhika watermarked at source
+  'logo-73-indonesia', 'latobas-cigar', 'dhika-universe',
+]);
+
+let state = { version: 1, files: {} };
+try {
+  state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+} catch {
+  // state file is optional once all decks are manually watermarked
+}
+state.files = state.files || {};
 
 const slugs = fs.readdirSync(PUBLIC_PROJECTS, { withFileTypes: true })
   .filter(d => d.isDirectory())
@@ -19,23 +40,36 @@ const slugs = fs.readdirSync(PUBLIC_PROJECTS, { withFileTypes: true })
 
 console.log('Total project slugs with deck manifests:', slugs.length);
 
-let totalTargets = 0;
-let totalWatermarked = 0;
-let totalCovers = 0;
+let totalPages = 0;
+let manuallyWatermarked = 0;
+let verified = 0;
+let exemptSlugs = 0;
 let anomalies = [];
 
 for (const slug of slugs) {
   const deckDir = path.join(PUBLIC_PROJECTS, slug, 'deck');
   const manifest = JSON.parse(fs.readFileSync(path.join(deckDir, 'manifest.json'), 'utf8'));
   const pages = manifest.deck_images.map(p => path.basename(p));
+  totalPages += pages.length;
+
+  // Every page referenced by the manifest must exist on disk.
+  for (const page of pages) {
+    if (!fs.existsSync(path.join(deckDir, page))) {
+      anomalies.push({ slug, page, issue: 'Deck page missing on disk' });
+    }
+  }
+
+  if (MANUALLY_WATERMARKED.has(slug)) {
+    // Watermarked at the source: no pristine backup / state entry expected.
+    exemptSlugs++;
+    manuallyWatermarked += pages.length;
+    continue;
+  }
+
+  // Legacy automated-watermark checks: cover is untouched, every other page
+  // must have a pristine backup and a matching state entry.
   const cover = pages[0];
   const targets = pages.slice(1);
-  totalCovers += 1;
-  totalTargets += targets.length;
-
-  let slugWatermarked = 0;
-  let slugPristine = 0;
-  let slugStateMatches = 0;
 
   for (const page of targets) {
     const src = path.join(deckDir, page);
@@ -50,40 +84,30 @@ for (const slug of slugs) {
     }
     if (!fs.existsSync(pristine)) {
       anomalies.push({ slug, page, issue: 'Pristine backup missing' });
-    } else {
-      slugPristine++;
     }
-
     if (!rec) {
       anomalies.push({ slug, page, issue: 'Missing from watermark-state.json' });
+    } else if (sha(fs.readFileSync(src)) === rec.outputSha) {
+      verified++;
     } else {
-      const curSha = sha(fs.readFileSync(src));
-      if (curSha === rec.outputSha) {
-        slugStateMatches++;
-        slugWatermarked++;
-      } else {
-        anomalies.push({ slug, page, issue: 'Disk SHA does not match state outputSha' });
-      }
+      anomalies.push({ slug, page, issue: 'Disk SHA does not match state outputSha' });
     }
   }
 
-  // Check cover is NOT watermarked
-  const coverPath = path.join(deckDir, cover);
   const coverPristine = path.join(PRISTINE_DIR, slug, cover);
   if (fs.existsSync(coverPristine)) {
-    anomalies.push({ slug, cover, issue: 'Cover has pristine backup (should NOT be watermarked)' });
+    anomalies.push({ slug, page: cover, issue: 'Cover has pristine backup (should NOT be watermarked)' });
   }
-
-  totalWatermarked += slugWatermarked;
 }
 
-console.log('Total slugs audited        :', slugs.length);
-console.log('Total covers untouched     :', totalCovers);
-console.log('Total target pages         :', totalTargets);
-console.log('Total verified watermarked :', totalWatermarked);
-console.log('Anomalies found            :', anomalies.length);
+console.log('Total slugs audited             :', slugs.length);
+console.log('  manually watermarked (exempt) :', exemptSlugs);
+console.log('Total deck pages                :', totalPages);
+console.log('  covered by manual watermark   :', manuallyWatermarked);
+console.log('  verified via pristine/state   :', verified);
+console.log('Anomalies found                 :', anomalies.length);
 if (anomalies.length > 0) {
   console.log('Sample anomalies:', anomalies.slice(0, 10));
 } else {
-  console.log('AUDIT PASSED: All 32 projects have 100% verified watermarks on all deck slides, and covers are untouched!');
+  console.log('AUDIT PASSED: every deck page exists and all watermarked decks are accounted for.');
 }

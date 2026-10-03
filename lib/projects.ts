@@ -323,53 +323,6 @@ export const projects: Project[] = [
     }
   },
 
-  // ── 07 — 75 Tahun Republik Indonesia ──────────────────────────────────────
-  {
-    slug: "logo-75th-indonesia",
-    title: "75 Tahun Republik Indonesia",
-    client: "Pemerintah RI / Panitia Nasional",
-    year: "2020",
-    category: "National Anniversary Identity & Campaign",
-    industry: "government",
-    disciplines: ["identity", "campaign", "outdoor"],
-    shortDescription:
-      "Sistem identitas visual dan pedoman aplikasi logo peringatan 75 Tahun Kemerdekaan RI.",
-    description:
-      "Pedoman Identitas Visual Resmi Peringatan 75 Tahun Kemerdekaan Republik Indonesia (Indonesia Maju) — karya kolaborasi Satu Collective bersama Utero. Menghadirkan konfigurasi angka 75 yang dinamis dan progresif sebagai simbol pemerataan ekonomi, pembangunan maritim, dan akselerasi SDM unggul di seluruh penjuru tanah air.",
-    excerpt: "Sistem identitas visual dan pedoman aplikasi logo peringatan 75 Tahun Kemerdekaan RI.",
-    coverImage: "/projects/logo-75th-indonesia/cover.webp",
-    heroImage: "/projects/logo-75th-indonesia/cover.webp",
-    hoverImage: "/projects/logo-75th-indonesia/gallery/009.webp",
-    galleryImages: [
-      "/projects/logo-75th-indonesia/gallery/009.webp",
-      "/projects/logo-75th-indonesia/gallery/015.webp",
-      "/projects/logo-75th-indonesia/gallery/016.webp",
-      "/projects/logo-75th-indonesia/gallery/017.webp",
-    ],
-    video: undefined,
-    featured: false,
-    priority: 88,
-    tags: ["national", "government", "identity", "campaign"],
-    details: {
-      scope: [
-        "Brand Identity & Positioning",
-        "Visual Standard Manual",
-        "Corporate & Marketing Assets",
-        "Packaging & Environmental Design",
-      ],
-      challenge:
-        "Merancang identitas perayaan kemerdekaan nasional yang inklusif, membangkitkan optimisme kebangsaan di tengah tantangan global, dan mudah diaplikasikan secara serentak oleh seluruh kementerian, BUMN, pemda, dan masyarakat luas.",
-      solution:
-        "Menciptakan sistem supergrafik fleksibel yang terinspirasi dari gugusan pulau dan gelombang maritim Indonesia, dilengkapi pedoman aplikasi warna monokrom dan full-color pada baliho, media digital, busana kenegaraan, dan umbul-umbul ruang publik.",
-      deliverables: [
-        "Buku Pedoman Standar Identitas Visual",
-        "Sistem Logo & Palet Warna Resmi",
-        "Aplikasi Desain Kemasan & Promosi",
-        "Standarisasi Material & Penerapan Media",
-      ],
-    }
-  },
-
   // ── 08 — Ayam Goreng Nelongso ─────────────────────────────────────────────
   {
     slug: "ayam-goreng-nelongso",
@@ -1599,6 +1552,135 @@ export const projects: Project[] = [
         "Direktori Lantai & Denah Fasilitas",
         "Sistem Penomoran Ruang",
         "Rambu Arah, EXIT & PARKIR",
+      ],
+    }
+  },
+
+  // ── 33 — 73 Tahun Indonesia Merdeka ──────────────────────────────────────
+  {
+    slug: "logo-73-indonesia",
+    title: "73 Tahun Indonesia Merdeka",
+    client: "Pemerintah RI / Panitia Nasional",
+    year: "2018",
+    category: "National Anniversary Identity & Campaign",
+    industry: "government",
+    disciplines: ["identity", "campaign", "outdoor"],
+    shortDescription:
+      "Pedoman identitas visual peringatan 73 Tahun Kemerdekaan RI — logogram 73TH dan logotype \"Indonesia Maju Berkarya\".",
+    description:
+      "Pedoman Identitas Visual peringatan 73 Tahun Kemerdekaan Republik Indonesia. Logogram 73TH dan logotype \"INDONESIA MAJU BERKARYA\" dibentuk dari sudut 45 derajat yang melambangkan Semangat 1945, dengan konsep negative space angka 73 yang membentuk huruf I dan B — Indonesia Bekerja, Indonesia Bersama, Indonesia Berkarya. Pedoman mencakup struktur dan zona pengecualian logo, variasi logo, palet warna monokrom, serta tipografi Montserrat dan Myriad Pro.",
+    excerpt:
+      "Pedoman identitas visual peringatan 73 Tahun Kemerdekaan RI — logogram 73TH dan logotype \"Indonesia Maju Berkarya\".",
+    coverImage: "/projects/logo-73-indonesia/deck/001.webp",
+    heroImage: "/projects/logo-73-indonesia/deck/001.webp",
+    video: undefined,
+    featured: false,
+    priority: 86,
+    tags: ["national", "government", "identity", "campaign"],
+    details: {
+      scope: [
+        "Struktur & Konfigurasi Logo",
+        "Zona Pengecualian & Skala Minimal",
+        "Variasi & Warna Logo",
+        "Tipografi (Montserrat & Myriad Pro)",
+        "Aturan Penggunaan Logo",
+      ],
+      challenge:
+        "Merancang identitas peringatan kemerdekaan yang lugas, bermakna, dan mudah diterapkan pada berbagai media, dengan tetap menonjolkan semangat 1945 serta nilai kebangsaan yang inklusif.",
+      solution:
+        "Mengonstruksi logogram 73TH dari sudut 45 derajat dan memanfaatkan negative space angka 73 untuk membentuk huruf I dan B, dilengkapi sistem varian logo, aturan pengecualian, serta tipografi yang konsisten.",
+      deliverables: [
+        "Buku Pedoman Identitas Visual",
+        "Sistem Logo Vertikal & Horizontal",
+        "Variasi & Palet Warna Logo",
+        "Aturan Tipografi",
+        "Ketentuan Penggunaan Logo",
+      ],
+    }
+  },
+
+  // ── 34 — La Tobas Cigar ──────────────────────────────────────────────────
+  {
+    slug: "latobas-cigar",
+    title: "La Tobas Cigar",
+    client: "La Tobas Cigar",
+    year: "2023",
+    category: "Brand Identity, Packaging & Visual Guideline",
+    industry: "products",
+    disciplines: ["identity", "packaging", "print"],
+    shortDescription:
+      "Graphic Standard Manual La Tobas Cigar Premium — identitas cerutu premium Indonesia dengan filosofi Sword, Guard, Pray, dan Bintang.",
+    description:
+      "Graphic Standard Manual untuk La Tobas Cigar Premium, merek cerutu premium Indonesia. Logo dibangun dari filosofi Sword (kebenaran/trust), Guard (kegigihan dan ketahanan), Pray (kebaikan Tuhan), serta Bintang yang merujuk pada nama Tobias — terlahir dengan bintang. Pedoman mencakup standardisasi logo, komponen dan filosofi, sistem warna, tipografi, serta aplikasi pada kemasan dan materi komunikasi.",
+    excerpt:
+      "Graphic Standard Manual La Tobas Cigar Premium — identitas cerutu premium Indonesia dengan filosofi Sword, Guard, Pray, dan Bintang.",
+    coverImage: "/projects/latobas-cigar/deck/001.webp",
+    heroImage: "/projects/latobas-cigar/deck/001.webp",
+    video: undefined,
+    featured: false,
+    priority: 85,
+    tags: ["cigar", "identity", "packaging", "gsm"],
+    details: {
+      scope: [
+        "Standardisasi & Konfigurasi Logo",
+        "Filosofi Logo",
+        "Sistem Warna & Tipografi",
+        "Aplikasi Kemasan (Packaging)",
+        "Materi Komunikasi & Promosi",
+      ],
+      challenge:
+        "Membangun identitas cerutu premium yang menonjolkan nilai kebenaran, ketahanan, dan spiritualitas, sekaligus tampil elegan di pasar cerutu.",
+      solution:
+        "Merancang logogram dengan elemen Sword, Guard, Pray, dan Bintang yang masing-masing membawa makna, dipadukan sistem warna dan tipografi yang berkelas serta aplikasi kemasan premium.",
+      deliverables: [
+        "Buku Graphic Standard Manual",
+        "Sistem & Konfigurasi Logo",
+        "Filosofi Logo",
+        "Sistem Warna & Tipografi",
+        "Aplikasi Kemasan & Media",
+      ],
+    }
+  },
+
+  // ── 35 — Dhika Universe ──────────────────────────────────────────────────
+  {
+    slug: "dhika-universe",
+    title: "Dhika Universe",
+    client: "Dhika Universe",
+    year: "",
+    category: "Property Brand Identity & Visual Guideline",
+    industry: "property",
+    disciplines: ["identity", "print", "indoor", "outdoor"],
+    shortDescription:
+      "Graphic Standard Manual brand identity Apartemen Dhika Universe dengan konsep \"The Future Sight\" — muda, energik, dan visioner.",
+    description:
+      "Graphic Standard Manual brand identity Apartemen Dhika Universe dengan konsep \"The Future Sight\" — pandangan masa depan. Brand personality-nya berjiwa muda dan energik: workholic, up to date, risk taker, dan ekspresif. Pedoman memuat proses perancangan (brainstorming, thumbnails, sketsa, digitalisasi, review logogram), komponen logo, versi primer & sekunder, co-branded logo, konfigurasi dan skala minimal, clear space, grid lines, konsep warna (solid, gradient, colour tone), image & layout style, hingga target penempatan logo.",
+    excerpt:
+      "Graphic Standard Manual brand identity Apartemen Dhika Universe dengan konsep \"The Future Sight\" — muda, energik, dan visioner.",
+    coverImage: "/projects/dhika-universe/deck/001.webp",
+    heroImage: "/projects/dhika-universe/deck/001.webp",
+    video: undefined,
+    featured: false,
+    priority: 84,
+    tags: ["property", "apartment", "identity", "gsm"],
+    details: {
+      scope: [
+        "Proses Perancangan & Review Logogram",
+        "Komponen & Versi Logo",
+        "Co-branded Logo & Penempatan",
+        "Skala Minimal, Clear Space & Grid Lines",
+        "Konsep Warna, Image & Layout Style",
+      ],
+      challenge:
+        "Menciptakan identitas apartemen yang mencerminkan pribadi muda, energik, dan visioner, sekaligus fleksibel untuk komunikasi di pasar properti Malang.",
+      solution:
+        "Mengembangkan brand identity Dhika Universe lewat logogram yang tegas namun fleksibel, didukung konsep warna, image style, dan layout style yang konsisten serta pedoman penempatan logo yang jelas.",
+      deliverables: [
+        "Buku Graphic Standard Manual",
+        "Sistem & Versi Logo",
+        "Co-branded Logo & Penempatan",
+        "Panduan Warna, Image & Layout",
+        "Grid, Clear Space & Skala Minimal",
       ],
     }
   },
