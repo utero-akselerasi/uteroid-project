@@ -145,7 +145,7 @@ export const servicesData: ServiceItem[] = [
     imageBlur:
       "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACQAQCdASoIAAYABABoJZQAAppaGEAA/DYleOoszi10NNIwGl340JgyHegvI0ZSSXFOSXgAAAA=",
     inquiryLabel: "Promotion & Campaigns",
-    relatedProjectSlugs: ["logo-75th-indonesia", "techlink", "proxon"],
+    relatedProjectSlugs: ["logo-73-indonesia", "techlink", "proxon"],
   },
   {
     slug: "digital",

@@ -131,6 +131,7 @@ export default function ServicesSection() {
                       alignItems: "center",
                       justifyContent: "space-between",
                       padding: "clamp(1.1rem, 2vw, 1.6rem) 0",
+                      minHeight: "clamp(3.5rem, 5vw, 4.5rem)",
                       borderBottom: "1px solid rgba(10, 10, 10, 0.1)",
                       backgroundColor: "transparent",
                       borderTop: "none",
