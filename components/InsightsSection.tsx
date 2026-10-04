@@ -2,10 +2,22 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { insights } from "@/lib/insights";
+import { insights as localInsights } from "@/lib/insights";
+import type { Insight } from "@/lib/types";
 import RevealOnScroll from "./RevealOnScroll";
 
-export default function InsightsSection() {
+// This is a Client Component, so it cannot read the CMS itself — the API key
+// must stay server-side. A Server Component parent passes `insights` in:
+//
+//   const { insights } = await getInsights();
+//   <InsightsSection insights={insights} />
+//
+// Omitting the prop falls back to the local entries.
+export default function InsightsSection({
+  insights = localInsights,
+}: {
+  insights?: Insight[];
+}) {
   const displayInsights = insights.slice(0, 3);
 
   return (
@@ -211,7 +223,9 @@ export default function InsightsSection() {
                         color: "rgba(10, 10, 10, 0.5)",
                       }}
                     >
-                      {article.date} &bull; {article.readTime}
+                      {[article.date, article.readTime]
+                        .filter(Boolean)
+                        .join(" • ")}
                     </span>
                   </div>
 

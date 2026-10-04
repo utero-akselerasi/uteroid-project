@@ -3,6 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_GTM_ID: ${NEXT_PUBLIC_GTM_ID:-}
+        NEXT_PUBLIC_GA4_MEASUREMENT_ID: ${NEXT_PUBLIC_GA4_MEASUREMENT_ID:-}
+        NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION:-}
     image: uteroid-web:latest
     container_name: uteroid-web
     ports:
@@ -11,13 +15,21 @@ services:
       - "3020:3000"
     environment:
       NODE_ENV: production
+      # CMS Artikel Public Read API. Server-side only — never NEXT_PUBLIC_*,
+      # or the key would be inlined into the browser bundle.
+      # Set ARTIKEL_API_KEY in an uncommitted .env next to this file.
+      ARTIKEL_API_URL: ${ARTIKEL_API_URL:-https://cms.carubra.com/api/v1}
+      ARTIKEL_API_KEY: ${ARTIKEL_API_KEY:-}
     restart: unless-stopped
     networks:
       - carubra-network
+      - utero-id-network
 
 networks:
   carubra-network:
     # Pre-existing shared bridge (nginx_proxy_caubra, cloudflared-tunnel
     # and ~29 other containers live here). external keeps Compose from
     # creating a separate uteroid-project_carubra-network instead.
+    external: true
+  utero-id-network:
     external: true
