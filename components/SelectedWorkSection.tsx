@@ -164,14 +164,14 @@ export default function SelectedWorkSection() {
         >
           {recentProjects.map((project, idx) => {
             const projectNumber = `0${idx + 1}`;
-            const isHovered = hoveredSlug === project.slug;
+            const isHovered = hoveredSlug === project.routeSlug;
             return (
-              <RevealOnScroll key={project.slug} delay={idx + 1}>
+              <RevealOnScroll key={project.routeSlug} delay={idx + 1}>
                 <Link
-                  href={`/work/${project.slug}`}
+                  href={`/work/${project.routeSlug}`}
                   data-cursor="VIEW PROJECT &rarr;"
                   style={{ textDecoration: "none", color: "inherit", display: "block" }}
-                  onMouseEnter={() => setHoveredSlug(project.slug)}
+                  onMouseEnter={() => setHoveredSlug(project.routeSlug)}
                   onMouseLeave={() => setHoveredSlug(null)}
                 >
                   <article>

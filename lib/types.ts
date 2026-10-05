@@ -53,7 +53,8 @@ export interface ProjectVideo {
 
 export interface Project {
   // ── Core identity (required) ──────────────────────────────
-  slug: string;
+  slug: string;                // Internal identifier for asset paths (e.g., "maitri")
+  routeSlug: string;           // Public URL slug derived from title (e.g., "maitri-coffee-and-social-hub")
   title: string;
   client: string;
   year: string;

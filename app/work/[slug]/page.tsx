@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProjectBySlug, getAllSlugs, getAdjacentProjects } from "@/lib/projects";
+import { getProjectByRouteSlug, getAllRouteSlugs, getAdjacentProjects } from "@/lib/projects";
 import { disciplineLabels, industryLabels } from "@/lib/types";
 import ProjectDetailClient from "@/components/project-detail/ProjectDetailClient";
 
 export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+  return getAllRouteSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = getProjectByRouteSlug(slug);
   if (!project) return { title: "Project Not Found" };
   return {
     title: `${project.title} — Utero`,
@@ -34,14 +34,14 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = getProjectByRouteSlug(slug);
   if (!project) notFound();
 
-  const { prev, next } = getAdjacentProjects(project.slug);
+  const { prev, next } = getAdjacentProjects(project.routeSlug);
 
   // Project index for display number
-  const allSlugs = getAllSlugs();
-  const projectIndex = allSlugs.indexOf(project.slug);
+  const allRouteSlugs = getAllRouteSlugs();
+  const projectIndex = allRouteSlugs.indexOf(project.routeSlug);
   const num = String(projectIndex + 1).padStart(2, "0");
 
   // Formatted discipline labels
@@ -55,8 +55,8 @@ export default async function ProjectPage({
   return (
     <ProjectDetailClient
       project={project}
-      prev={prev ? { slug: prev.slug, title: prev.title, year: prev.year, coverImage: prev.coverImage } : null}
-      next={next ? { slug: next.slug, title: next.title, year: next.year, coverImage: next.coverImage } : null}
+      prev={prev ? { slug: prev.routeSlug, title: prev.title, year: prev.year, coverImage: prev.coverImage } : null}
+      next={next ? { slug: next.routeSlug, title: next.title, year: next.year, coverImage: next.coverImage } : null}
       projectNum={num}
       disciplines={disciplines}
       industryLabel={industryLabel}

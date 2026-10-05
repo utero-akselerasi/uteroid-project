@@ -9,6 +9,7 @@ import ProjectGallery from "./ProjectGallery";
 import ProjectNavigation from "./ProjectNavigation";
 import VideoPlayer from "./VideoPlayer";
 import PDFDeckSlider from "./PDFDeckSlider";
+import { useTranslations } from "@/lib/useTranslations";
 
 interface ProjectDetailClientProps {
   project: Project;
@@ -27,6 +28,7 @@ export default function ProjectDetailClient({
   disciplines,
   industryLabel,
 }: ProjectDetailClientProps) {
+  const t = useTranslations();
   const coverSrc = project.coverImage || project.heroImage;
   const gallery = project.galleryImages || project.gallery || [];
   const [showVideo, setShowVideo] = useState(false);
@@ -108,7 +110,7 @@ export default function ProjectDetailClient({
         {/* Toast message for empty video */}
         {showToast && (
           <div className="pd-hero__toast" role="status" aria-live="polite">
-            Video coming soon
+            {t.projectDetail.videoComingSoon}
           </div>
         )}
 
@@ -153,7 +155,7 @@ export default function ProjectDetailClient({
           {/* Back link */}
           <Link href="/work" className="pd-back" style={{ display: "block" }}>
             <span>←</span>
-            <span>All Work</span>
+            <span>{t.projectDetail.allWork}</span>
           </Link>
 
           {/* ── Overview ────────────────────────────────── */}
@@ -161,7 +163,7 @@ export default function ProjectDetailClient({
             <div className="pd-section">
               <div className="pd-section__label">
                 <span className="pd-section__label-line" />
-                <span className="pd-section__label-text">Overview</span>
+                <span className="pd-section__label-text">{t.projectDetail.overview}</span>
               </div>
               <p className="pd-section__text">{project.description}</p>
             </div>
@@ -177,7 +179,7 @@ export default function ProjectDetailClient({
                     {hasChallenge && (
                       <div>
                         <span className="pd-detail-block__label">
-                          Challenge
+                          {t.projectDetail.challenge}
                         </span>
                         <p className="pd-detail-block__text">
                           {project.details!.challenge}
@@ -186,7 +188,7 @@ export default function ProjectDetailClient({
                     )}
                     {hasSolution && (
                       <div>
-                        <span className="pd-detail-block__label">Approach</span>
+                        <span className="pd-detail-block__label">{t.projectDetail.approach}</span>
                         <p className="pd-detail-block__text">
                           {project.details!.solution}
                         </p>
@@ -198,7 +200,7 @@ export default function ProjectDetailClient({
                   <div className="pd-details-grid__col">
                     {hasScope && (
                       <div>
-                        <span className="pd-detail-block__label">Scope</span>
+                        <span className="pd-detail-block__label">{t.projectDetail.scope}</span>
                         <ul className="pd-detail-block__list">
                           {project.details!.scope!.map((s) => (
                             <li key={s}>
@@ -212,7 +214,7 @@ export default function ProjectDetailClient({
                     {hasDeliverables && (
                       <div>
                         <span className="pd-detail-block__label">
-                          Deliverables
+                          {t.projectDetail.deliverables}
                         </span>
                         <ul className="pd-detail-block__list">
                           {project.details!.deliverables!.map((d) => (

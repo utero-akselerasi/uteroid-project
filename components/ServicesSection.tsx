@@ -6,10 +6,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import RevealOnScroll from "./RevealOnScroll";
 import { disciplinesData } from "@/lib/disciplines";
+import { useTranslations } from "@/lib/useTranslations";
 
 export default function ServicesSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   const router = useRouter();
+  const t = useTranslations();
 
   const activeCapability = disciplinesData[activeIdx] || disciplinesData[0];
 
@@ -59,7 +61,7 @@ export default function ServicesSection() {
                   color: "#e31e24",
                 }}
               >
-                04 / CREATIVE CAPABILITIES
+                {t.services.sectionLabel}
               </span>
             </div>
           </RevealOnScroll>
@@ -79,8 +81,7 @@ export default function ServicesSection() {
                 maxWidth: "1100px",
               }}
             >
-              WHAT CAN WE{" "}
-              <span style={{ color: "#e31e24" }}>DESIGN FOR YOU?</span>
+              {t.services.heading}
             </h2>
           </RevealOnScroll>
 
@@ -95,9 +96,7 @@ export default function ServicesSection() {
                 marginTop: "1.2rem",
               }}
             >
-              Six integrated design disciplines tailored to your strategic needs &mdash; from
-              foundational brand identity to physical packaging, digital platforms, and
-              environmental spatial experiences.
+              {t.services.description}
             </p>
           </RevealOnScroll>
         </div>
@@ -243,7 +242,7 @@ export default function ServicesSection() {
                     padding: "0.3rem 0.6rem",
                   }}
                 >
-                  CATEGORY {activeCapability.id}
+                  {t.services.categoryLabel} {activeCapability.id}
                 </div>
               </div>
 
@@ -286,7 +285,7 @@ export default function ServicesSection() {
                       marginBottom: "0.8rem",
                     }}
                   >
-                    CORE DELIVERABLES:
+                    {t.services.coreDeliverables}
                   </div>
                   <div
                     style={{
@@ -336,7 +335,7 @@ export default function ServicesSection() {
                     (e.currentTarget.style.backgroundColor = "#0d0d0d")
                   }
                 >
-                  <span>VIEW DETAILS &amp; ARCHIVE</span>
+                  <span>{t.services.viewDetails}</span>
                   <span>&rarr;</span>
                 </Link>
               </div>

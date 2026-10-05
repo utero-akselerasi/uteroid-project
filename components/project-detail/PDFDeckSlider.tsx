@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import { useTranslations } from "@/lib/useTranslations";
 
 interface DeckManifest {
   slug: string;
@@ -16,6 +17,7 @@ interface PDFDeckSliderProps {
 }
 
 export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
+  const t = useTranslations();
   const [manifest, setManifest] = useState<DeckManifest | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -236,7 +238,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
       <div className="pd-deck-slider pd-section">
         <div className="pd-section__label">
           <span className="pd-section__label-line" />
-          <span className="pd-section__label-text">Full Presentation</span>
+          <span className="pd-section__label-text">{t.projectDetail.fullPresentation}</span>
         </div>
         <div className="pd-deck-slider__loading">Loading presentation deck...</div>
       </div>
@@ -253,12 +255,12 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
       ref={containerRef}
       className={`pd-deck-slider pd-section ${isFullscreen ? "pd-deck-slider--fullscreen" : ""}`}
       data-lenis-prevent
-      aria-label="Full Presentation Deck"
+      aria-label={`${t.projectDetail.fullPresentation} Deck`}
     >
       <div className="pd-deck-slider__header">
         <div className="pd-section__label">
           <span className="pd-section__label-line" />
-          <span className="pd-section__label-text">Full Presentation</span>
+          <span className="pd-section__label-text">{t.projectDetail.fullPresentation}</span>
         </div>
 
         <div className="pd-deck-slider__controls">

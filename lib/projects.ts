@@ -22,6 +22,7 @@ export const projects: Project[] = [
   // ── 01 — GaragePlug Indonesia ─────────────────────────────────────
   {
     slug: "garageplug",
+    routeSlug: "garageplug-indonesia",
     title: "GaragePlug Indonesia",
     client: "PT. Era Automotive Revolution",
     year: "2024",
@@ -79,6 +80,7 @@ export const projects: Project[] = [
   // ── 02 — Malang Creative Center (MCC) ─────────────────────────────
   {
     slug: "mcc",
+    routeSlug: "malang-creative-center",
     title: "Malang Creative Center",
     client: "Pemerintah Kota Malang / Diskopindag",
     year: "2023",
@@ -128,6 +130,7 @@ export const projects: Project[] = [
   // ── 03 — Stamford Indonesia FC ────────────────────────────────────
   {
     slug: "stamford",
+    routeSlug: "stamford-indonesia-fc",
     title: "Stamford Indonesia FC",
     client: "Stamford Indonesia FC",
     year: "2023",
@@ -181,6 +184,7 @@ export const projects: Project[] = [
   // ── 04 — Chatten Cafe ─────────────────────────────────────────────
   {
     slug: "chatten",
+    routeSlug: "chatten-cafe",
     title: "Chatten Cafe",
     client: "Chatten Coffee & Eatery",
     year: "2023",
@@ -202,7 +206,7 @@ export const projects: Project[] = [
       "/projects/chatten/gallery/086.webp",
       "/projects/chatten/gallery/092.webp",
     ],
-    video: undefined,
+    video: { type: "youtube", src: "JLcelJezdKs" },
     featured: true,
     priority: 97,
     tags: ["fnb", "coffee", "retro", "packaging"],
@@ -232,6 +236,7 @@ export const projects: Project[] = [
   // ── 05 — Bank Sidoarjo ────────────────────────────────────────────────────
   {
     slug: "bank-sidoarjo",
+    routeSlug: "bank-sidoarjo",
     title: "Bank Sidoarjo",
     client: "BPR Delta Artha (Bank Sidoarjo)",
     year: "2022",
@@ -279,6 +284,7 @@ export const projects: Project[] = [
   // ── 06 — Mie Gacoan ───────────────────────────────────────────────────────
   {
     slug: "mie-gacoan",
+    routeSlug: "mie-gacoan",
     title: "Mie Gacoan",
     client: "PT. Pesta Pora Abadi",
     year: "2021",
@@ -326,6 +332,7 @@ export const projects: Project[] = [
   // ── 08 — Ayam Goreng Nelongso ─────────────────────────────────────────────
   {
     slug: "ayam-goreng-nelongso",
+    routeSlug: "ayam-goreng-nelongso",
     title: "Ayam Goreng Nelongso",
     client: "PT. Nelongso Sukses Mandiri",
     year: "2021",
@@ -377,6 +384,7 @@ export const projects: Project[] = [
   // ── 09 — KONAS 2021 ───────────────────────────────────────────────────────
   {
     slug: "konas-2021",
+    routeSlug: "konas-2021",
     title: "KONAS 2021",
     client: "Panitia KONAS 2021",
     year: "2021",
@@ -422,6 +430,7 @@ export const projects: Project[] = [
   // ── 10 — Startup For Industry (SFI) ─────────────────────────────────────
   {
     slug: "sfi",
+    routeSlug: "startup-for-industry-sfi",
     title: "Startup For Industry (SFI)",
     client: "Kementerian Perindustrian Republik Indonesia",
     year: "2024",
@@ -474,6 +483,7 @@ export const projects: Project[] = [
   // ── 11 — Wajan Giok ───────────────────────────────────────────────────────
   {
     slug: "wajan-giok",
+    routeSlug: "wajan-giok",
     title: "Wajan Giok",
     client: "Wajan Giok",
     year: "2023",
@@ -521,6 +531,7 @@ export const projects: Project[] = [
   // ── 12 — BPR Tulungagung ──────────────────────────────────────────────────
   {
     slug: "bpr-tulungagung",
+    routeSlug: "bpr-tulungagung",
     title: "BPR Tulungagung",
     client: "BPR Tulungagung",
     year: "2021",
@@ -572,6 +583,7 @@ export const projects: Project[] = [
   // ── 13 — BPR Artha Kanjuruhan ─────────────────────────────────────────────
   {
     slug: "bpr-artha-kanjuruhan",
+    routeSlug: "bpr-artha-kanjuruhan",
     title: "BPR Artha Kanjuruhan",
     client: "BPR Artha Kanjuruhan Pemkab Malang",
     year: "2022",
@@ -623,6 +635,7 @@ export const projects: Project[] = [
   // ── 14 — Baiturrohman ─────────────────────────────────────────────────────
   {
     slug: "baiturrohman",
+    routeSlug: "baiturrohman",
     title: "Baiturrohman",
     client: "Yayasan Baiturrohman",
     year: "2021",
@@ -670,6 +683,7 @@ export const projects: Project[] = [
   // ── 15 — JMT — Juaranya Makan Terenak ─────────────────────────────────
   {
     slug: "jmt",
+    routeSlug: "jmt-juaranya-makan-terenak",
     title: "JMT — Juaranya Makan Terenak",
     client: "JMT",
     year: "2026",
@@ -722,6 +736,7 @@ export const projects: Project[] = [
   // ── 16 — Lacamino Cigar ───────────────────────────────────────────────────
   {
     slug: "lacamino",
+    routeSlug: "lacamino-cigar",
     title: "Lacamino Cigar",
     client: "Lacamino Cigar",
     year: "2025",
@@ -776,6 +791,7 @@ export const projects: Project[] = [
   // ── 17 — TechLink Summit 2024 ─────────────────────────────────────────────
   {
     slug: "techlink",
+    routeSlug: "techlink-summit-2024",
     title: "TechLink Summit 2024",
     client: "Kementerian Perindustrian Republik Indonesia",
     year: "2024",
@@ -828,6 +844,7 @@ export const projects: Project[] = [
   // ── 18 — Proxon — PT. Proxima Omnia Strategy ─────────────────────────────
   {
     slug: "proxon",
+    routeSlug: "pt-proxima-omnia-strategy-proxon",
     title: "PT. Proxima Omnia Strategy (Proxon)",
     client: "PT. Proxima Omnia Strategy",
     year: "2024",
@@ -879,6 +896,7 @@ export const projects: Project[] = [
   // ── 19 — Kiyona Beauty ────────────────────────────────────────────────────
   {
     slug: "kiyona",
+    routeSlug: "kiyona-beauty",
     title: "Kiyona Beauty",
     client: "Kiyona Skincare Indonesia",
     year: "2023",
@@ -926,6 +944,7 @@ export const projects: Project[] = [
   // ── 20 — Universitas Widyagama ────────────────────────────────────────────
   {
     slug: "uwg",
+    routeSlug: "universitas-widyagama",
     title: "Universitas Widyagama",
     client: "Universitas Widyagama Malang",
     year: "2021",
@@ -973,6 +992,7 @@ export const projects: Project[] = [
   // ── 21 — Keripik Tempe Rohani Malang ──────────────────────────────────────
   {
     slug: "rohani",
+    routeSlug: "keripik-tempe-rohani-malang",
     title: "Keripik Tempe Rohani Malang",
     client: "Keripik Tempe Rohani Malang",
     year: "2022",
@@ -1023,6 +1043,7 @@ export const projects: Project[] = [
 // ── 22 — Kopi 1922 ────────────────────────────────────────────────────────
   {
     slug: "gsm-1922",
+    routeSlug: "kopi-1922",
     title: "Kopi 1922",
     client: "PT. Kuliner Dapur Bangsa",
     year: "2022",
@@ -1075,6 +1096,7 @@ export const projects: Project[] = [
   // ── 23 — Momsarasa ────────────────────────────────────────────────────────
   {
     slug: "momsarasa",
+    routeSlug: "momsarasa",
     title: "Momsarasa",
     client: "Momsarasa Culinary Seasoning",
     year: "2022",
@@ -1122,6 +1144,7 @@ export const projects: Project[] = [
   // ── 24 — Yin Yam ──────────────────────────────────────────────────────────
   {
     slug: "yin-yam",
+    routeSlug: "yin-yam",
     title: "Yin Yam",
     client: "Yin Yam Street Bites",
     year: "2022",
@@ -1169,6 +1192,7 @@ export const projects: Project[] = [
 // ── 25 — Cos Pleng ────────────────────────────────────────────────────────
   {
     slug: "cos-pleng",
+    routeSlug: "cos-pleng",
     title: "Cos Pleng",
     client: "Cos Pleng — Chinese Food",
     year: "2023",
@@ -1221,6 +1245,7 @@ export const projects: Project[] = [
 // ── 26 — Boop Premium Pet Food ────────────────────────────────────────────
   {
     slug: "boop",
+    routeSlug: "boop-premium-pet-food",
     title: "Boop Premium Pet Food",
     client: "Boop",
     year: "2023",
@@ -1270,6 +1295,7 @@ export const projects: Project[] = [
 // ── 27 — Maitri Coffee & Social Hub ──────────────────────────────────────
   {
     slug: "maitri",
+    routeSlug: "maitri-coffee-and-social-hub",
     title: "Maitri Coffee & Social Hub",
     client: "Maitri Coffee & Social Hub",
     year: "2025",
@@ -1323,6 +1349,7 @@ export const projects: Project[] = [
   // ── 28 — Satu Titik Coffee ────────────────────────────────────────────────
   {
     slug: "satu-titik",
+    routeSlug: "satu-titik-coffee",
     title: "Satu Titik Coffee",
     client: "Satu Titik Coffee & Eatery",
     year: "2022",
@@ -1368,6 +1395,7 @@ export const projects: Project[] = [
   // ── 29 — Amarta Wisesa ────────────────────────────────────────────────────
   {
     slug: "amarta-wisesa",
+    routeSlug: "amarta-wisesa",
     title: "Amarta Wisesa",
     client: "PT. Amarta Wisesa",
     year: "2021",
@@ -1415,6 +1443,7 @@ export const projects: Project[] = [
   // ── 30 — PLUT KUMKM ───────────────────────────────────────────────────────
   {
     slug: "plut-kumkm",
+    routeSlug: "plut-kumkm",
     title: "PLUT KUMKM",
     client: "Kementerian Koperasi & UKM / PLUT Jatim",
     year: "2021",
@@ -1462,6 +1491,7 @@ export const projects: Project[] = [
   // ── 31 — Dailbana ─────────────────────────────────────────────────────────
   {
     slug: "dailbana",
+    routeSlug: "dailbana",
     title: "Dailbana",
     client: "Dailbana Snack",
     year: "2022",
@@ -1509,6 +1539,7 @@ export const projects: Project[] = [
 // ── 32 — Wismari Sign System ──────────────────────────────────────────────
   {
     slug: "wismari",
+    routeSlug: "wismari-sign-system",
     title: "Wismari Sign System",
     client: "Wismari — Idea And Concept Factory",
     year: "2019",
@@ -1559,6 +1590,7 @@ export const projects: Project[] = [
   // ── 33 — 73 Tahun Indonesia Merdeka ──────────────────────────────────────
   {
     slug: "logo-73-indonesia",
+    routeSlug: "73-tahun-indonesia-merdeka",
     title: "73 Tahun Indonesia Merdeka",
     client: "Pemerintah RI / Panitia Nasional",
     year: "2018",
@@ -1602,6 +1634,7 @@ export const projects: Project[] = [
   // ── 34 — La Tobas Cigar ──────────────────────────────────────────────────
   {
     slug: "latobas-cigar",
+    routeSlug: "la-tobas-cigar",
     title: "La Tobas Cigar",
     client: "La Tobas Cigar",
     year: "2023",
@@ -1645,6 +1678,7 @@ export const projects: Project[] = [
   // ── 35 — Dhika Universe ──────────────────────────────────────────────────
   {
     slug: "dhika-universe",
+    routeSlug: "dhika-universe",
     title: "Dhika Universe",
     client: "Dhika Universe",
     year: "",
@@ -1695,6 +1729,10 @@ export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
+export function getProjectByRouteSlug(routeSlug: string): Project | undefined {
+  return projects.find((p) => p.routeSlug === routeSlug);
+}
+
 export function getFeaturedProjects(count = 4): Project[] {
   const featured = projects.filter((p) => p.featured);
   return featured.slice(0, count);
@@ -1736,11 +1774,11 @@ export function getProjectsByFilters(params: {
   return filtered;
 }
 
-export function getAdjacentProjects(slug: string): {
+export function getAdjacentProjects(routeSlug: string): {
   prev: Project | null;
   next: Project | null;
 } {
-  const index = projects.findIndex((p) => p.slug === slug);
+  const index = projects.findIndex((p) => p.routeSlug === routeSlug);
   return {
     prev: index > 0 ? projects[index - 1] : null,
     next: index < projects.length - 1 ? projects[index + 1] : null,
@@ -1749,6 +1787,10 @@ export function getAdjacentProjects(slug: string): {
 
 export function getAllSlugs(): string[] {
   return projects.map((p) => p.slug);
+}
+
+export function getAllRouteSlugs(): string[] {
+  return projects.map((p) => p.routeSlug);
 }
 
 /** Returns a count of projects for each WorkFilter */

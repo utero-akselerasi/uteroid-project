@@ -4,10 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import emailjs from "@emailjs/browser";
 import { getInquiryLabels } from "@/lib/services";
+import { useTranslations } from "@/lib/useTranslations";
 
 const SERVICE_OPTIONS = getInquiryLabels();
 
 export default function ContactPage() {
+  const t = useTranslations();
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -27,7 +29,7 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName.trim() || !formEmail.trim() || !formBrief.trim()) {
-      setError("Please fill in all required fields (*)");
+      setError(t.contact.errorRequired);
       return;
     }
     setError("");
@@ -49,7 +51,7 @@ export default function ContactPage() {
       setSubmitted(true);
     } catch (err: unknown) {
       console.error("EmailJS error:", err);
-      setError("Something went wrong. Please try again.");
+      setError(t.contact.errorTryAgain);
     } finally {
       setSubmitting(false);
     }
@@ -126,7 +128,7 @@ export default function ContactPage() {
                   color: "#c91a1f",
                 }}
               >
-                05 / START A CONVERSATION
+                {t.contact.sectionLabel}
               </span>
             </div>
 
@@ -152,7 +154,7 @@ export default function ContactPage() {
                     margin: 0,
                   }}
                 >
-                  Contact
+                  {t.contact.heading}
                 </h1>
                 <p
                   style={{
@@ -164,7 +166,7 @@ export default function ContactPage() {
                     maxWidth: "540px",
                   }}
                 >
-                  Have a brand, product, digital platform, or architectural space that needs purpose? We collaborate with bold leaders across Indonesia.
+                  {t.contact.description}
                 </p>
               </div>
 
@@ -186,7 +188,7 @@ export default function ContactPage() {
                     lineHeight: 1,
                   }}
                 >
-                  Malang
+                  {t.contact.malang}
                 </span>
                 <span
                   style={{
@@ -197,7 +199,7 @@ export default function ContactPage() {
                     color: "rgba(10, 10, 10, 0.35)",
                   }}
                 >
-                  UTC+7 · WIB
+                  {t.contact.timezone}
                 </span>
               </div>
             </div>
@@ -225,7 +227,7 @@ export default function ContactPage() {
                     marginBottom: "0.5rem",
                   }}
                 >
-                  Direct WhatsApp Channels
+                  {t.contact.directWhatsApp}
                 </span>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -258,7 +260,7 @@ export default function ContactPage() {
                           marginBottom: "0.2rem",
                         }}
                       >
-                        Client Relations
+                        {t.contact.clientRelations}
                       </span>
                       <span
                         style={{
@@ -312,7 +314,7 @@ export default function ContactPage() {
                           marginBottom: "0.2rem",
                         }}
                       >
-                        Studio Management
+                        {t.contact.studioManagement}
                       </span>
                       <span
                         style={{
@@ -361,7 +363,7 @@ export default function ContactPage() {
                       marginBottom: "0.4rem",
                     }}
                   >
-                    Email Communication
+                    {t.contact.emailCommunication}
                   </span>
                   <a
                     href="mailto:marketingutero@gmail.com"
@@ -396,7 +398,7 @@ export default function ContactPage() {
                       marginBottom: "0.4rem",
                     }}
                   >
-                    Malang Headquarters
+                    {t.contact.malangHQ}
                   </span>
                   <p
                     style={{
@@ -421,7 +423,7 @@ export default function ContactPage() {
                       textDecoration: "none",
                     }}
                   >
-                    Open in Google Maps →
+                    {t.contact.openMaps}
                   </a>
                 </div>
 
@@ -437,7 +439,7 @@ export default function ContactPage() {
                       marginBottom: "0.4rem",
                     }}
                   >
-                    Studio Operating Hours
+                    {t.contact.operatingHours}
                   </span>
                   <p style={{ fontSize: "0.875rem", color: "#555555", margin: 0 }}>
                     Monday – Friday: 08:30 – 17:00 WIB<br />
@@ -467,7 +469,7 @@ export default function ContactPage() {
                     marginBottom: "0.5rem",
                   }}
                 >
-                  Project Brief Inquiry
+                  {t.contact.projectBrief}
                 </span>
 
                 <h2
@@ -482,7 +484,7 @@ export default function ContactPage() {
                     margin: "0 0 1rem",
                   }}
                 >
-                  Tell Us About Your Vision
+                  {t.contact.tellUsVision}
                 </h2>
 
                 {submitted ? (
@@ -504,10 +506,10 @@ export default function ContactPage() {
                         marginBottom: "0.75rem",
                       }}
                     >
-                      Inquiry Received
+                      {t.contact.inquiryReceived}
                     </span>
                     <p style={{ fontSize: "0.95rem", color: "#555555", margin: "0 0 1.5rem" }}>
-                      Thank you for contacting Utero Indonesia. Our client strategy director will review your brief and connect within 1 business day.
+                      {t.contact.thankYou}
                     </p>
                     <button
                       onClick={() => {
@@ -531,7 +533,7 @@ export default function ContactPage() {
                         cursor: "pointer",
                       }}
                     >
-                      Submit Another Inquiry
+                      {t.contact.submitAnother}
                     </button>
                   </div>
                 ) : (
@@ -549,7 +551,7 @@ export default function ContactPage() {
                           marginBottom: "0.4rem",
                         }}
                       >
-                        Interested Disciplines
+                        {t.contact.interestedDisciplines}
                       </label>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                         {SERVICE_OPTIONS.map((opt) => {
@@ -594,7 +596,7 @@ export default function ContactPage() {
                             marginBottom: "0.3rem",
                           }}
                         >
-                          Your Name *
+                          {t.contact.name}
                         </label>
                         <input
                           id="clientName"
@@ -629,7 +631,7 @@ export default function ContactPage() {
                             marginBottom: "0.3rem",
                           }}
                         >
-                          Company / Brand
+                          {t.contact.company}
                         </label>
                         <input
                           id="brandName"
@@ -666,7 +668,7 @@ export default function ContactPage() {
                             marginBottom: "0.3rem",
                           }}
                         >
-                          Email Address *
+                          {t.contact.email}
                         </label>
                         <input
                           id="clientEmail"
@@ -701,7 +703,7 @@ export default function ContactPage() {
                             marginBottom: "0.3rem",
                           }}
                         >
-                          WhatsApp / Phone
+                          {t.contact.phone}
                         </label>
                         <input
                           id="clientPhone"
@@ -737,7 +739,7 @@ export default function ContactPage() {
                           marginBottom: "0.5rem",
                         }}
                       >
-                        Project Brief &amp; Scope Overview *
+                        {t.contact.brief}
                       </label>
                         <textarea
                           id="projectBrief"
@@ -787,7 +789,7 @@ export default function ContactPage() {
                         transition: "background-color 0.2s ease",
                       }}
                     >
-                      {submitting ? "Sending..." : "Send Project Inquiry →"}
+                      {submitting ? "Sending..." : t.contact.submit}
                     </button>
                   </form>
                 )}

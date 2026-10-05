@@ -6,74 +6,75 @@ import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
 import emailjs from "@emailjs/browser";
 import { getInquiryLabels } from "@/lib/services";
+import { useLanguage } from "@/lib/LanguageContext";
+import { useTranslations, type Translations } from "@/lib/useTranslations";
+
+type NavKey = keyof Translations["nav"];
+type NavSubtitleKey = keyof Translations["navSubtitles"];
 
 interface MenuNavItem {
   number: string;
-  label: string;
-  subtitle: string;
+  labelKey: NavKey;
   href: string;
   previewImage: string;
 }
 
-const menuNavLinks: MenuNavItem[] = [
+const menuNavLinksStatic: MenuNavItem[] = [
   {
     number: "01",
-    label: "WORK",
-    subtitle: "Selected Case Studies & Archive",
+    labelKey: "work",
     href: "/work",
     previewImage:
       "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "02",
-    label: "STUDIO",
-    subtitle: "Philosophy, 25+ Years & Culture",
+    labelKey: "studio",
     href: "/studio",
     previewImage:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "03",
-    label: "SERVICES",
-    subtitle: "Brand, Space, Digital & Capabilities",
+    labelKey: "services",
     href: "/services",
     previewImage:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "04",
-    label: "INSIGHTS",
-    subtitle: "Publications, Media & Case Notes",
+    labelKey: "insights",
     href: "/insights",
     previewImage:
       "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "05",
-    label: "CONTACT",
-    subtitle: "Direct Channels & Studio Base",
+    labelKey: "contact",
     href: "/contact",
     previewImage:
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
   },
 ];
 
-const topNavItems = [
-  { label: "WORK", href: "/work" },
-  { label: "SERVICES", href: "/services" },
-  { label: "STUDIO", href: "/studio" },
-  { label: "INSIGHTS", href: "/insights" },
+const topNavItemsStatic: { labelKey: NavKey; href: string }[] = [
+  { labelKey: "work", href: "/work" },
+  { labelKey: "services", href: "/services" },
+  { labelKey: "studio", href: "/studio" },
+  { labelKey: "insights", href: "/insights" },
 ];
 
 const inquiryDisciplines = getInquiryLabels();
 
 export default function Header() {
+  const { language, toggleLanguage } = useLanguage();
+  const t = useTranslations();
   const [scrolled, setScrolled] = useState(false);
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [activePreview, setActivePreview] = useState<string>(
-    menuNavLinks[0].previewImage
+    menuNavLinksStatic[0].previewImage
   );
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredTopNav, setHoveredTopNav] = useState<string | null>(null);
@@ -81,6 +82,22 @@ export default function Header() {
   const [isMenuHovered, setIsMenuHovered] = useState(false);
   const [localTime, setLocalTime] = useState<string>("");
   const [navTheme, setNavTheme] = useState<"light" | "dark">("light");
+
+  // Resolve nav labels and subtitles from the active language dictionary.
+  const menuNavLinks: { number: string; label: string; subtitle: string; href: string; previewImage: string }[] =
+    menuNavLinksStatic.map((item) => ({
+      number: item.number,
+      label: t.nav[item.labelKey],
+      subtitle: t.navSubtitles[item.labelKey as NavSubtitleKey],
+      href: item.href,
+      previewImage: item.previewImage,
+    }));
+
+  const topNavItems = topNavItemsStatic.map((item) => ({
+    labelKey: item.labelKey,
+    label: t.nav[item.labelKey],
+    href: item.href,
+  }));
 
   // Project Brief Inquiry Form States
   const [selectedDisciplines, setSelectedDisciplines] = useState<string[]>([]);
@@ -333,6 +350,45 @@ export default function Header() {
                 {localTime || "13:00:00"} WIB
               </span>
             </div>
+
+            {/* Language Toggle Button */}
+            <button
+              onClick={toggleLanguage}
+              aria-label="Toggle language"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "6px 12px",
+                borderRadius: "9999px",
+                backgroundColor: pillBg,
+                backdropFilter: "blur(18px)",
+                border: `1px solid ${borderColor}`,
+                cursor: "pointer",
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: scrolled ? "rgba(255, 255, 255, 0.85)" : textColor,
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = scrolled
+                  ? "rgba(227, 30, 36, 0.2)"
+                  : isDarkText
+                  ? "rgba(10, 10, 10, 0.08)"
+                  : "rgba(255, 255, 255, 0.25)";
+                e.currentTarget.style.borderColor = "#e31e24";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = pillBg;
+                e.currentTarget.style.borderColor = borderColor;
+              }}
+            >
+              <span style={{ color: "#e31e24" }}>{language === "en" ? "EN" : "ID"}</span>
+              <span style={{ opacity: 0.3 }}>/</span>
+              <span>{language === "en" ? "ID" : "EN"}</span>
+            </button>
           </div>
 
           {/* RIGHT: ALL NAVIGATION ITEMS PLACED TOGETHER (WORK, SERVICES, STUDIO, INSIGHTS, CONTACT, MENU) */}
@@ -469,7 +525,7 @@ export default function Header() {
                   "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease",
               }}
             >
-              <span>{contactOpen ? "CLOSE" : "CONTACT"}</span>
+              <span>{contactOpen ? t.nav.close : t.nav.contact}</span>
               <span
                 style={{
                   color: contactOpen ? "#ffffff" : "#25D366",
@@ -533,7 +589,7 @@ export default function Header() {
                   textTransform: "uppercase",
                 }}
               >
-                MENU
+                {t.nav.menu}
               </span>
 
               {/* Minimal Hamburger lines that animate on hover */}
