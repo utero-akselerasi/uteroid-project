@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getServiceBySlug, getAllServiceSlugs } from "@/lib/services";
 import { getProjectBySlug } from "@/lib/projects";
+import { getProjectCover } from "@/lib/projectMedia";
 
 export async function generateStaticParams() {
   return getAllServiceSlugs().map((slug) => ({ slug }));
@@ -342,7 +343,7 @@ export default async function ServiceDetailPage({
               >
                 {relatedProjects.map((proj) => {
                   if (!proj) return null;
-                  const cover = proj.coverImage || proj.heroImage;
+                  const cover = getProjectCover(proj);
 
                   return (
                     <Link

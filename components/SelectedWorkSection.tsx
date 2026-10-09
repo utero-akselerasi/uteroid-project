@@ -25,6 +25,7 @@ import {
   useMemo,
 }                  from "react";
 import { projects } from "@/lib/projects";
+import { getProjectCover } from "@/lib/projectMedia";
 import { disciplineLabels } from "@/lib/types";
 import RevealOnScroll from "./RevealOnScroll";
 import { useTranslations } from "@/lib/useTranslations";
@@ -80,7 +81,7 @@ function preloadImage(src: string) {
 }
 
 function coverSrc(p: PoolProject): string {
-  return p.homepageCoverImage || p.coverImage || p.heroImage || "";
+  return getProjectCover(p);
 }
 
 // ── Card sub-components ───────────────────────────────────────────────────────

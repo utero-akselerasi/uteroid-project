@@ -8,6 +8,7 @@ import PageTransition from "@/components/PageTransition";
 import { LanguageProvider } from "@/lib/LanguageContext";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://utero.id"),
   title: {
     default: "UTERO.ID — Design as a Solution",
     template: "%s | UTERO.ID",

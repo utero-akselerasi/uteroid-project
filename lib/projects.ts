@@ -35,9 +35,8 @@ export const projects: Project[] = [
       "GaragePlug adalah platform cloud terintegrasi untuk manajemen bengkel mobil dan detailing center modern yang dipercaya lebih dari 5.000 pengguna global. Di Indonesia, Utero merancang sistem standarisasi identitas visual (GSM) komprehensif mencakup logogram generator daya, supergrafik turunan geometris, palet warna hijau tua (#003D2E) melambangkan pertumbuhan bisnis, panduan fotografi monokrom terfokus, sarana korporasi, seragam teknisi, signage totem pylon, hingga livery armada operasional.",
     excerpt:
       "Platform cloud terintegrasi untuk bengkel mobil dan detailing center, dilengkapi sistem pedoman identitas brand (GSM) komprehensif dari logo hingga armada transportasi.",
-    coverImage: "/projects/garageplug/cover.webp",
-    heroImage: "/projects/garageplug/cover.webp",
-    homepageCoverImage: "/projects/dashboard-covers/garageplus.webp",
+    coverImage: "/projects/garageplug/cover-bbd0a0d8.webp",
+    heroImage: "/projects/garageplug/cover-bbd0a0d8.webp",
     gridCoverPosition: "center 50%",
     hoverImage: "/projects/garageplug/gallery/074.webp",
     galleryImages: [
@@ -93,8 +92,8 @@ export const projects: Project[] = [
       "Malang Creative Center (MCC) adalah gedung representasi 17 subsektor ekonomi kreatif terbesar di Jawa Timur, diinisiasi oleh Pemerintah Kota Malang. Gedung 8 lantai ini menjadi wadah kolaborasi, inkubasi, dan pameran karya insan kreatif lokal. Utero menyusun pedoman visual menyeluruh yang menerjemahkan semangat integrasi dan inovasi Malang ke dalam sistem grafis arsitektural: dari signatur tipografi fasad, sistem wayfinding direktori tiap lantai, penanda zona kreatif (broadcast room, auditorium, co-working, culinary lab), piktogram kustom, hingga materi promosi peresmian.",
     excerpt:
       "Pusat inkubasi dan kolaborasi 17 subsektor ekonomi kreatif di Malang Raya, dilengkapi standarisasi identitas visual ruang dan wayfinding multi-lantai.",
-    coverImage: "/projects/mcc/cover.webp",
-    heroImage: "/projects/mcc/cover.webp",
+    coverImage: "/projects/mcc/cover-c2016ab7.webp",
+    heroImage: "/projects/mcc/cover-c2016ab7.webp",
     hoverImage: "/projects/mcc/gallery/010.webp",
     galleryImages: [
       "/projects/mcc/gallery/010.webp",
@@ -143,8 +142,8 @@ export const projects: Project[] = [
       "STAMFORD INDONESIA FC (SIFC) adalah Pusat Pelatihan Sepakbola Terpadu yang menyajikan perpaduan antara pendidikan sepakbola standar internasional, pengembangan kepribadian, dan pendidikan formal untuk usia 6-19 tahun. Utero merancang re-branding menyeluruh yang mengadopsi panji 'Sang Saka Getih-Getah Samudra' Kerajaan Majapahit, simbol mata pedang terhunus kebawah lambang kebijaksanaan, motif bola Piala Dunia 1938 Hindia Belanda, dan hewan endemik Komodo sebagai representasi ketangguhan dan karakter mulia.",
     excerpt:
       "Pusat Pelatihan Sepakbola Terpadu (SIFC) untuk usia 6–19 tahun — re-branding berbasis panji Majapahit, komodo, dan semboyan \"Beyond Dreams\".",
-    coverImage: "/projects/stamford/cover.webp",
-    heroImage: "/projects/stamford/cover.webp",
+    coverImage: "/projects/stamford/cover-8ce35e0e.webp",
+    heroImage: "/projects/stamford/cover-8ce35e0e.webp",
     hoverImage: "/projects/stamford/gallery/065.webp",
     galleryImages: [
       "/projects/stamford/gallery/065.webp",
@@ -197,8 +196,8 @@ export const projects: Project[] = [
       "Chatten Cafe adalah destinasi kuliner kopi dan float di Malang yang menggabungkan estetika retro pop 80-an dengan kenyamanan nongkrong kontemporer. Utero membangun identitas brand menyeluruh: dari maskot beruang retro yang ikonik, logotype kustom bergaya bubble script, palet warna pastel hangat (kuning mustard, toffee brown, cream), desain kemasan take-away cup dan pastry box, signage neon interior, hingga seragam barista dan konten media sosial.",
     excerpt:
       "Identitas visual retro pop dan pedoman packaging gerai kopi dan sajian float modern.",
-    coverImage: "/projects/chatten/cover.webp",
-    heroImage: "/projects/chatten/cover.webp",
+    coverImage: "/projects/chatten/cover-72739a10.webp",
+    heroImage: "/projects/chatten/cover-72739a10.webp",
     hoverImage: "/projects/chatten/gallery/022.webp",
     galleryImages: [
       "/projects/chatten/gallery/022.webp",
@@ -248,8 +247,8 @@ export const projects: Project[] = [
     description:
       "Visual Identity Guideline Bank Sidoarjo (BPR Delta Artha Perseroda) — sistem standarisasi identitas visual perbankan daerah yang modern, terpercaya, dan inklusif. Logo berbentuk lingkaran dinamis dengan perpaduan warna biru korporat dan kuning keemasan kemakmuran, dirancang untuk memperkuat ekuitas brand dan memastikan konsistensi komunikasi di seluruh kantor cabang, sarana ATM, dan media layanan nasabah.",
     excerpt: "Pedoman identitas visual Bank Sidoarjo — standarisasi brand perbankan daerah komprehensif.",
-    coverImage: "/projects/bank-sidoarjo/cover.webp",
-    heroImage: "/projects/bank-sidoarjo/cover.webp",
+    coverImage: "/projects/bank-sidoarjo/cover-8d6a3566.webp",
+    heroImage: "/projects/bank-sidoarjo/cover-8d6a3566.webp",
     hoverImage: "/projects/bank-sidoarjo/gallery/013.webp",
     galleryImages: [
       "/projects/bank-sidoarjo/gallery/009.webp",
@@ -296,8 +295,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual Mie Gacoan — pedoman identitas visual jaringan restoran mie pedas nomor satu di Indonesia. Bentuk dasar lingkaran melambangkan filosofi kemajuan berkesinambungan yang dipadukan karakter logogram mie dinamis dan logotype tegas. Menggunakan kombinasi warna cyan ceria (#00B2D8) dan magenta berani (#EC008C) untuk menghadirkan atmosfer kuliner yang energetik, menyenangkan, dan relevan dengan generasi muda.",
     excerpt: "Graphic Standard Manual jaringan kuliner nomor 1 di Indonesia Mie Gacoan.",
-    coverImage: "/projects/mie-gacoan/cover.webp",
-    heroImage: "/projects/mie-gacoan/cover.webp",
+    coverImage: "/projects/mie-gacoan/cover-a01cef9c.webp",
+    heroImage: "/projects/mie-gacoan/cover-a01cef9c.webp",
     hoverImage: "/projects/mie-gacoan/gallery/015.webp",
     galleryImages: [
       "/projects/mie-gacoan/gallery/010.webp",
@@ -344,8 +343,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual Ayam Goreng Nelongso — merancang sistem standarisasi logo, maskot, signage outlet, packaging, dan materi promosi untuk ekspansi franchise nasional.",
     excerpt: "Sistem identitas visual komprehensif waralaba kuliner nasional Ayam Goreng Nelongso.",
-    coverImage: "/projects/ayam-goreng-nelongso/cover.webp",
-    heroImage: "/projects/ayam-goreng-nelongso/cover.webp",
+    coverImage: "/projects/ayam-goreng-nelongso/cover-cb856c38.webp",
+    heroImage: "/projects/ayam-goreng-nelongso/cover-cb856c38.webp",
     hoverImage: "/projects/ayam-goreng-nelongso/gallery/014.webp",
     galleryImages: [
       "/projects/ayam-goreng-nelongso/gallery/009.webp",
@@ -396,8 +395,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual KONAS PGHNAI 2021 — Kongres Nasional Perhimpunan Gastroenterologi, Hepatologi dan Nutrisi Anak Indonesia. Logo menggabungkan simbol organ pencernaan anak, stilasi bunga mekar sebagai lambang tumbuh kembang sehat, dan gelombang digital medis yang mencerminkan pertukaran riset ilmiah dokter spesialis anak di era modern.",
     excerpt: "Identitas visual Konferensi Nasional (KONAS) 2021 — sistem grafis komprehensif perhelatan akbar.",
-    coverImage: "/projects/konas-2021/cover.webp",
-    heroImage: "/projects/konas-2021/cover.webp",
+    coverImage: "/projects/konas-2021/cover-d83aa705.webp",
+    heroImage: "/projects/konas-2021/cover-d83aa705.webp",
     hoverImage: "/projects/konas-2021/gallery/018.webp",
     galleryImages: [
       "/projects/konas-2021/gallery/018.webp",
@@ -443,8 +442,8 @@ export const projects: Project[] = [
       "Visual Guideline Startup For Industry — program akselerasi transformasi teknologi bagi pelaku industri Indonesia dari Kementerian Perindustrian Republik Indonesia bertajuk \"An Ecosystem Of Technology Solution\". Logo menggabungkan elemen heksagonal yang saling terhubung, terinspirasi dari pola jaringan (network) pada logo referensi SFI yang melambangkan kolaborasi dan sinergi — inti semangat startup di Indonesia — dengan bentuk konektivitas antar elemen yang menyerupai rantai industri yang kuat. Palet warna gradasi kuning, hijau, dan merah mewakili energi, pertumbuhan, dan optimisme, didukung tipografi Chambers Sans Pro (judul) dan Inter (isi).",
     excerpt:
       "Sistem identitas visual program Startup For Industry — \"An Ecosystem Of Technology Solution\" dari Kementerian Perindustrian RI.",
-    coverImage: "/projects/sfi/cover.webp",
-    heroImage: "/projects/sfi/cover.webp",
+    coverImage: "/projects/sfi/cover-694ccaf4.webp",
+    heroImage: "/projects/sfi/cover-694ccaf4.webp",
     hoverImage: "/projects/sfi/gallery/014.webp",
     galleryImages: [
       "/projects/sfi/gallery/014.webp",
@@ -495,8 +494,8 @@ export const projects: Project[] = [
     description:
       "Brand Guideline Wajan Giok — identitas visual restoran Chinese food halal bernuansa modern otentik. Visualisasi logotype mengadopsi gaya kaligrafi aksara Tionghoa (Han) yang dipadukan dengan simbol naga kayu pembawa kemakmuran, menghadirkan kehangatan sajian oriental sehari-hari yang berkelas dan ramah keluarga.",
     excerpt: "Pedoman identitas brand kuliner Wajan Giok — sistem visual F&B yang kuat.",
-    coverImage: "/projects/wajan-giok/cover.webp",
-    heroImage: "/projects/wajan-giok/cover.webp",
+    coverImage: "/projects/wajan-giok/cover-2b23cd55.webp",
+    heroImage: "/projects/wajan-giok/cover-2b23cd55.webp",
     hoverImage: "/projects/wajan-giok/gallery/015.webp",
     galleryImages: [
       "/projects/wajan-giok/gallery/010.webp",
@@ -543,8 +542,8 @@ export const projects: Project[] = [
     description:
       "Pedoman identitas visual Bank Perkreditan Rakyat (BPR) Tulungagung — mencakup standarisasi logo, warna, tipografi, dan aplikasi media komunikasi resmi.",
     excerpt: "Pedoman identitas visual Bank Perkreditan Rakyat Tulungagung.",
-    coverImage: "/projects/bpr-tulungagung/cover.webp",
-    heroImage: "/projects/bpr-tulungagung/cover.webp",
+    coverImage: "/projects/bpr-tulungagung/cover-ebb87ab2.webp",
+    heroImage: "/projects/bpr-tulungagung/cover-ebb87ab2.webp",
     hoverImage: "/projects/bpr-tulungagung/gallery/013.webp",
     galleryImages: [
       "/projects/bpr-tulungagung/gallery/007.webp",
@@ -595,8 +594,8 @@ export const projects: Project[] = [
     description:
       "Standarisasi identitas visual perbankan daerah BPR Artha Kanjuruhan mencakup logo, pedoman warna korporasi, aplikasi stasioneri perbankan, dan signage kantor cabang.",
     excerpt: "Pedoman identitas visual Bank Perkreditan Rakyat Artha Kanjuruhan.",
-    coverImage: "/projects/bpr-artha-kanjuruhan/cover.webp",
-    heroImage: "/projects/bpr-artha-kanjuruhan/cover.webp",
+    coverImage: "/projects/bpr-artha-kanjuruhan/cover-cb7b93c7.webp",
+    heroImage: "/projects/bpr-artha-kanjuruhan/cover-cb7b93c7.webp",
     hoverImage: "/projects/bpr-artha-kanjuruhan/gallery/007.webp",
     galleryImages: [
       "/projects/bpr-artha-kanjuruhan/gallery/007.webp",
@@ -647,8 +646,8 @@ export const projects: Project[] = [
     description:
       "Pedoman Identitas Visual Baiturrokhman Tour & Travel — biro perjalanan ibadah Umroh dan Haji Khusus. Logo dirancang dengan penuh kehati-hatian untuk mencerminkan esensi ibadah: mengintegrasikan siluet kubah masjid suci, garis lengkung orbit thawaf Ka'bah, dan sayap kemudahan pelayanan dalam palet warna hijau zamrud dan emas kemuliaan.",
     excerpt: "Pedoman identitas visual institusi Baiturrohman.",
-    coverImage: "/projects/baiturrohman/cover.webp",
-    heroImage: "/projects/baiturrohman/cover.webp",
+    coverImage: "/projects/baiturrohman/cover-36d766e5.webp",
+    heroImage: "/projects/baiturrohman/cover-36d766e5.webp",
     hoverImage: "/projects/baiturrohman/gallery/019.webp",
     galleryImages: [
       "/projects/baiturrohman/gallery/019.webp",
@@ -696,9 +695,8 @@ export const projects: Project[] = [
       "Visual Guideline JMT — brand makanan dengan nama yang memiliki dua makna kuat: \"Juaranya Makan Terenak\" sebagai positioning rasa terbaik dan unggul, serta terinspirasi slang Korea \"jon-mat-taeng\" (enak banget / super lezat) yang memberi nuansa modern, kekinian, dan relevan dengan tren anak muda. Kura-kura dipilih sebagai maskot karena citra positifnya — ketenangan dan kenyamanan — merepresentasikan JMT sebagai tempat santai tanpa terburu-buru, sekaligus harapan bisnis yang fokus pada fondasi kuat dan loyalitas pelanggan agar berumur panjang. Maskot John dihadirkan sebagai pribadi yang kehadirannya selalu dinantikan, didukung palet biru (#0136fe) dan hijau (#b9f602), tipografi Grandstander yang playful, serta pattern motif cangkang kura-kura.",
     excerpt:
       "Identitas food brand dengan maskot kura-kura John — delightful, kekinian, terinspirasi slang Korea \"jon-mat-taeng\".",
-    coverImage: "/projects/jmt/cover.webp",
-    heroImage: "/projects/jmt/cover.webp",
-    homepageCoverImage: "/projects/dashboard-covers/JMT.webp",
+    coverImage: "/projects/jmt/cover-f5383c62.webp",
+    heroImage: "/projects/jmt/cover-f5383c62.webp",
     gridCoverPosition: "center 60%",
     hoverImage: "/projects/jmt/gallery/016.webp",
     galleryImages: [
@@ -749,9 +747,8 @@ export const projects: Project[] = [
       "Visual Guideline Lacamino — brand cerutu premium yang terinspirasi dari rute ziarah kuno Spanyol, El Camino de Santiago (The Way of St. James). Lacamino (bahasa Spanyol, \"Jalan\") mencerminkan perjalanan hidup manusia yang penuh lika-liku, tantangan, dan pembelajaran. Iconography kerang digunakan sebagai penanda sepanjang jalan menuju Santiago sekaligus simbol pelindung para peziarah, dipadu ornament bergaya Victoria dari Katedral Santiago de Compostela dalam palet ungu gelap (#2C0B60) dan emas kemuliaan.",
     excerpt:
       "Identitas visual cerutu premium yang terinspirasi rute ziarah El Camino de Santiago — kerang, ornament Victoria, dan warna violet-emas.",
-    coverImage: "/projects/lacamino/cover.webp",
-    heroImage: "/projects/lacamino/cover.webp",
-    homepageCoverImage: "/projects/dashboard-covers/lacamino.webp",
+    coverImage: "/projects/lacamino/cover-656b19b3.webp",
+    heroImage: "/projects/lacamino/cover-656b19b3.webp",
     gridCoverPosition: "45% 45%",
     hoverImage: "/projects/lacamino/gallery/016.webp",
     galleryImages: [
@@ -804,8 +801,8 @@ export const projects: Project[] = [
       "Visual Guideline TechLink — identitas visual TechLink Summit 2024, event teknologi dan inovasi dari Kementerian Perindustrian RI. Konsep logo modern dan profesional yang merepresentasikan event teknologi dengan keyword TECHNOLOGY, CREATE VALUE, COLLABORATION, MODERN, dan INNOVATION. Menggunakan tipografi geometris Exo Family, dengan aplikasi pada media ads horizontal dan vertikal, visual stage, t-shirt, icon app, canvas bag, dan sticker.",
     excerpt:
       "Identitas visual TechLink Summit — gelaran event teknologi dan inovasi Kementerian Perindustrian RI.",
-    coverImage: "/projects/techlink/cover.webp",
-    heroImage: "/projects/techlink/cover.webp",
+    coverImage: "/projects/techlink/cover-e233abf9.webp",
+    heroImage: "/projects/techlink/cover-e233abf9.webp",
     hoverImage: "/projects/techlink/gallery/008.webp",
     galleryImages: [
       "/projects/techlink/gallery/006.webp",
@@ -857,8 +854,8 @@ export const projects: Project[] = [
       "Visual Guideline PROXON — PT. Proxima Omnia Strategy, konsultan strategi bisnis bertajuk \"Synergize Business Strategies\". Logo menggambarkan inisial huruf P dengan sudut yang mengarah ke kanan atas — mencerminkan percepatan bisnis dan progres baik bagi perusahaan maupun klien — serta satu garis yang terhubung melambangkan sinergi antar strategi. Menggunakan palet biru (#0424D9) dan merah (#F20505) dengan tipografi Inter yang modern dan terbaca jelas.",
     excerpt:
       "Visual guideline PROXON — \"Synergize Business Strategies\" oleh PT. Proxima Omnia Strategy.",
-    coverImage: "/projects/proxon/cover.webp",
-    heroImage: "/projects/proxon/cover.webp",
+    coverImage: "/projects/proxon/cover-5b09d9f9.webp",
+    heroImage: "/projects/proxon/cover-5b09d9f9.webp",
     hoverImage: "/projects/proxon/gallery/012.webp",
     galleryImages: [
       "/projects/proxon/gallery/007.webp",
@@ -908,8 +905,8 @@ export const projects: Project[] = [
     description:
       "Mini GSM Kiyona — brand produk perawatan kulit dan kecantikan holistik. Nama KIYONA lahir dari gabungan kata 'Kiyo' (Murni) dan 'Na' (Indah/Lembut), berpijak pada keyakinan bahwa kecantikan sejati lahir dari pemurnian diri yang otentik. Mengadaptasi bentuk Bunga Lily lambang kemurnian dan kelahiran kembali, dengan tagline 'So light, It Becomes Your Skin' serta simpul ikatan komitmen brand bersama penggunanya.",
     excerpt: "Mini GSM identitas visual brand kecantikan dan skincare Kiyona.",
-    coverImage: "/projects/kiyona/cover.webp",
-    heroImage: "/projects/kiyona/cover.webp",
+    coverImage: "/projects/kiyona/cover-10a4908a.webp",
+    heroImage: "/projects/kiyona/cover-10a4908a.webp",
     hoverImage: "/projects/kiyona/gallery/011.webp",
     galleryImages: [
       "/projects/kiyona/gallery/009.webp",
@@ -956,8 +953,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual Universitas Widyagama Malang (UWG) — standarisasi logo akronim perguruan tinggi swasta terkemuka di Malang. Mengusung simbol akronim geometris kubus pengetahuan yang mencerminkan kampus yang inovatif, berdaya saing global, dan berakar kuat pada nilai nasionalisme dan kewirausahaan.",
     excerpt: "Graphic Standard Manual identitas visual Universitas Widyagama (UWG) Malang.",
-    coverImage: "/projects/uwg/cover.webp",
-    heroImage: "/projects/uwg/cover.webp",
+    coverImage: "/projects/uwg/cover-5cb477f4.webp",
+    heroImage: "/projects/uwg/cover-5cb477f4.webp",
     hoverImage: "/projects/uwg/gallery/012.webp",
     galleryImages: [
       "/projects/uwg/gallery/005.webp",
@@ -1005,8 +1002,8 @@ export const projects: Project[] = [
       "Standar Manual Grafis — Keripik Tempe Rohani Malang, Indonesia. Identitas visual dibangun di atas konsep keramahan terhadap konsumen yang disimbolkan dengan warna oranye, serta ilustrasi persona ibu yang sedang memanen kedelai — hasil olahan kedelai (tempe) tercermin dari motif pakaian berkeledai dan penyajian keripik tempe dalam livery brand. Pedoman mencakup grid dan konfigurasi logo, aturan kontras latar belakang (standar putih, oranye solid, foto terang, dan latar gelap), adaptasi latar, seragam karyawan, topi, mobil perusahaan dan mobil box, penunjuk arah \"500 meter lagi\", serta penanda ruang produksi, pengemas, dan kasir.",
     excerpt:
       "Standar Manual Grafis Keripik Tempe Rohani — oleh-oleh khas Malang dengan identitas oranye yang hangat dan ramah.",
-    coverImage: "/projects/rohani/cover.webp",
-    heroImage: "/projects/rohani/cover.webp",
+    coverImage: "/projects/rohani/cover-556175bf.webp",
+    heroImage: "/projects/rohani/cover-556175bf.webp",
     hoverImage: "/projects/rohani/gallery/007.webp",
     galleryImages: [
       "/projects/rohani/gallery/007.webp",
@@ -1056,8 +1053,8 @@ export const projects: Project[] = [
       "Graphic Standard Manual Kopi 1922 — \"Historically Proven Identity\". Brand kopi dengan tagline \"Hundred Years of Experience™\" dan moto \"We Do Coffee Right Since 1922\", dihadirkan lewat palet dark turquoise (#264653), gold (#D1A352), dan deep forest yang terasa klasik namun segar. Pedoman mencakup variasi logo, aturan penggunaan yang ketat (stretch, squash, rotate, drop shadow, dan outline logo tidak diperbolehkan), desain pouch 230 ml untuk brown sugar yang disajikan dingin dan fine Indonesian coffee, plastik cup (cold), apparel polo shirt dan apron, cap, serta coaster.",
     excerpt:
       "Graphic Standard Manual Kopi 1922 — \"Hundred Years of Experience\" dengan palet turquoise-emas yang historis.",
-    coverImage: "/projects/gsm-1922/cover.webp",
-    heroImage: "/projects/gsm-1922/cover.webp",
+    coverImage: "/projects/gsm-1922/cover-912aa7d8.webp",
+    heroImage: "/projects/gsm-1922/cover-912aa7d8.webp",
     hoverImage: "/projects/gsm-1922/gallery/007.webp",
     galleryImages: [
       "/projects/gsm-1922/gallery/007.webp",
@@ -1108,8 +1105,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual Momsarasa — produsen camilan olahan kentang premium khas dataran tinggi. Rebranding Momsarasa menghadirkan karakter visual yang ramah dan hangat dengan tipografi bernuansa nostalgia pedesaan, mencerminkan keaslian bahan baku kentang pilihan yang diolah renyah dengan bumbu rempah alami warisan keluarga.",
     excerpt: "Graphic Standard Manual kemasan dan identitas produk bumbu dapur Momsarasa.",
-    coverImage: "/projects/momsarasa/cover.webp",
-    heroImage: "/projects/momsarasa/cover.webp",
+    coverImage: "/projects/momsarasa/cover-30d10875.webp",
+    heroImage: "/projects/momsarasa/cover-30d10875.webp",
     hoverImage: "/projects/momsarasa/gallery/013.webp",
     galleryImages: [
       "/projects/momsarasa/gallery/004.webp",
@@ -1156,8 +1153,8 @@ export const projects: Project[] = [
     description:
       "Mini Graphic Standard Manual Yin Yam — brand kuliner street food Chinese food otentik siap saji. Visualisasi logo mengadopsi filosofi Yin & Yang (keseimbangan dan saling melengkapi) yang dipadukan dengan ornamen simbol kemakmuran Tionghoa dan tipografi aksara oriental dalam palet warna biru navy (#023473) dan merah (#F10732).",
     excerpt: "Mini graphic standard manual brand street food Yin Yam.",
-    coverImage: "/projects/yin-yam/cover.webp",
-    heroImage: "/projects/yin-yam/cover.webp",
+    coverImage: "/projects/yin-yam/cover-b3456f39.webp",
+    heroImage: "/projects/yin-yam/cover-b3456f39.webp",
     hoverImage: "/projects/yin-yam/gallery/008.webp",
     galleryImages: [
       "/projects/yin-yam/gallery/008.webp",
@@ -1205,8 +1202,8 @@ export const projects: Project[] = [
       "Mini Graphic Standard Manual Cos Pleng — Chinese food dengan target pasar keluarga: rasa otentik, porsi jumbo, harga murah, dan mudah di take-away dengan nuansa visual muda dan kekinian. Logomark dibangun dari inisial huruf C, kobaran api sebagai aspek krusial cita rasa Chinese food sekaligus semangat pantang menyerah, dan bentuk wajan besar yang identik dengan masakan China. Warna deep yellow melambangkan kemakmuran, merah semangat dan optimisme, serta abu-abu tua kepercayaan diri, pengalaman, dan kestabilan. Aplikasi mencakup neon sign, kemasan take-away, dan apron.",
     excerpt:
       "Mini GSM Cos Pleng — Chinese food rasa otentik, porsi jumbo, harga murah, mudah take-away.",
-    coverImage: "/projects/cos-pleng/cover.webp",
-    heroImage: "/projects/cos-pleng/cover.webp",
+    coverImage: "/projects/cos-pleng/cover-02f495f6.webp",
+    heroImage: "/projects/cos-pleng/cover-02f495f6.webp",
     hoverImage: "/projects/cos-pleng/gallery/011.webp",
     galleryImages: [
       "/projects/cos-pleng/gallery/010.webp",
@@ -1258,8 +1255,8 @@ export const projects: Project[] = [
       "Mini GSM Boop Premium Pet Food — tujuan desain: logo yang cute, premium, dan fun yang diimplementasikan ke dalam kemasan makanan hewan yang eye-catchy. Logogram dibangun dari garis lengkung dinamis yang tidak terputus dan bercabang — representasi harapan usaha yang terus tumbuh dan berkembang — dengan ilustrasi kepala anjing, kelinci, dan kucing tersenyum sebagai promise pet food yang disukai hewan peliharaan. Logotype custom sans-serif round corner yang lugas dan penuh energi, dipadu palet merah (#B2242D) dan kuning emas (#FDD841) yang menggambarkan warmth, love, dan joy.",
     excerpt:
       "Mini GSM Boop — identitas premium pet food berkarakter cute, premium & fun.",
-    coverImage: "/projects/boop/cover.webp",
-    heroImage: "/projects/boop/cover.webp",
+    coverImage: "/projects/boop/cover-b8686a71.webp",
+    heroImage: "/projects/boop/cover-b8686a71.webp",
     hoverImage: "/projects/boop/gallery/011.webp",
     galleryImages: [
       "/projects/boop/gallery/010.webp",
@@ -1308,9 +1305,8 @@ export const projects: Project[] = [
       "Visual Guideline Maitri Coffee & Social Hub — identitas visual untuk coffee & social hub dengan slogan \"Sekedar Bukan Teman\". Logogram dan logotype dapat diaplikasikan secara terpisah, dibangun di atas palet fuchsia pink (#e5008d) yang berani dipadu hitam dan putih untuk kesan muda, hangat, dan energik. Aplikasi mencakup paper cup, plastic cup, t-shirt, poster, key chain, dan billboard.",
     excerpt:
       "Identitas visual Maitri Coffee & Social Hub dengan slogan \"Sekedar Bukan Teman\".",
-    coverImage: "/projects/maitri/cover.webp",
-    heroImage: "/projects/maitri/cover.webp",
-    homepageCoverImage: "/projects/dashboard-covers/maitri.webp",
+    coverImage: "/projects/maitri/cover-5b158d4e.webp",
+    heroImage: "/projects/maitri/cover-5b158d4e.webp",
     gridCoverPosition: "center 32%",
     hoverImage: "/projects/maitri/gallery/006.webp",
     galleryImages: [
@@ -1361,8 +1357,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual Satu Titik Coffee and Creative Space — destinasi kafe dan ruang kreatif kolaboratif oleh PT PUS. Konsep logo menggabungkan inisial huruf 'S' yang mengadopsi bentuk uap dan leher teko seduh (kettle coffee) sebagai representasi proses seduhan kopi manual dan titik awal lahirnya ide-ide kreatif baru.",
     excerpt: "Mini GSM identitas visual Satu Titik Coffee & Space.",
-    coverImage: "/projects/satu-titik/cover.webp",
-    heroImage: "/projects/satu-titik/cover.webp",
+    coverImage: "/projects/satu-titik/cover-662f1169.webp",
+    heroImage: "/projects/satu-titik/cover-662f1169.webp",
     hoverImage: "/projects/satu-titik/gallery/010.webp",
     galleryImages: [
       "/projects/satu-titik/gallery/010.webp",
@@ -1407,8 +1403,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual CV Amarta Wisesa — perusahaan jasa konstruksi, renovasi, dan pengadaan infrastruktur sipil. Mengusung identitas visual kokoh dengan palet warna emas prestise (#D89640) dan hitam solid (#000000) yang melambangkan keandalan struktur, ketepatan waktu, dan integritas kemitraan proyek.",
     excerpt: "Graphic Standard Manual identitas korporasi Amarta Wisesa.",
-    coverImage: "/projects/amarta-wisesa/cover.webp",
-    heroImage: "/projects/amarta-wisesa/cover.webp",
+    coverImage: "/projects/amarta-wisesa/cover-1ca5a8cb.webp",
+    heroImage: "/projects/amarta-wisesa/cover-1ca5a8cb.webp",
     hoverImage: "/projects/amarta-wisesa/gallery/011.webp",
     galleryImages: [
       "/projects/amarta-wisesa/gallery/007.webp",
@@ -1455,8 +1451,8 @@ export const projects: Project[] = [
     description:
       "Visual Guideline PLUT-KUMKM — Pusat Layanan Usaha Terpadu Koperasi dan Usaha Mikro, Kecil, dan Menengah (Kementerian Koperasi dan UKM RI). Identitas visual dirancang terpadu untuk merepresentasikan 10 bidang layanan konsultasi bisnis, pendampingan perizinan, dan pemberdayaan wirausaha di seluruh sentra daerah Indonesia.",
     excerpt: "Visual guideline Pusat Layanan Usaha Terpadu Koperasi dan UKM.",
-    coverImage: "/projects/plut-kumkm/cover.webp",
-    heroImage: "/projects/plut-kumkm/cover.webp",
+    coverImage: "/projects/plut-kumkm/cover-2a30228c.webp",
+    heroImage: "/projects/plut-kumkm/cover-2a30228c.webp",
     hoverImage: "/projects/plut-kumkm/gallery/007.webp",
     galleryImages: [
       "/projects/plut-kumkm/gallery/006.webp",
@@ -1503,8 +1499,8 @@ export const projects: Project[] = [
     description:
       "Graphic Standard Manual PT Dailbana Prima Indonesia — perusahaan manufaktur benang bordir dan benang jahit tekstil berkualitas ekspor. Pedoman identitas visual GSM menetapkan sistem warna merah dinamis (#EC1C28) dan biru korporat (#1F4DA0) untuk memastikan konsistensi merek pada kemasan kelos benang, karton ekspor, dan materi pemasaran tekstil global.",
     excerpt: "Graphic Standard Manual identitas brand dan kemasan camilan Dailbana.",
-    coverImage: "/projects/dailbana/cover.webp",
-    heroImage: "/projects/dailbana/cover.webp",
+    coverImage: "/projects/dailbana/cover-1d89a402.webp",
+    heroImage: "/projects/dailbana/cover-1d89a402.webp",
     hoverImage: "/projects/dailbana/gallery/008.webp",
     galleryImages: [
       "/projects/dailbana/gallery/005.webp",
@@ -1552,8 +1548,8 @@ export const projects: Project[] = [
       "Sistem penanda dan wayfinding untuk gedung \"Idea And Concept Factory\" karya Wismari. Pedoman mencakup pylon utama, direktori lantai dengan denah fasilitas (lobby, cafetaria, lift barang dan penumpang, ruang genset dan listrik pelanggan, gudang, toilet), penomoran ruang dan unit, penunjuk arah eksterior dan interior, hingga rambu EXIT dan area PARKIR.",
     excerpt:
       "Sistem signage dan wayfinding gedung Idea And Concept Factory — pylon, direktori lantai, dan penanda ruang.",
-    coverImage: "/projects/wismari/cover.webp",
-    heroImage: "/projects/wismari/cover.webp",
+    coverImage: "/projects/wismari/cover-8c79d7a8.webp",
+    heroImage: "/projects/wismari/cover-8c79d7a8.webp",
     hoverImage: "/projects/wismari/gallery/006.webp",
     galleryImages: [
       "/projects/wismari/gallery/003.webp",
@@ -1603,8 +1599,8 @@ export const projects: Project[] = [
       "Pedoman Identitas Visual peringatan 73 Tahun Kemerdekaan Republik Indonesia. Logogram 73TH dan logotype \"INDONESIA MAJU BERKARYA\" dibentuk dari sudut 45 derajat yang melambangkan Semangat 1945, dengan konsep negative space angka 73 yang membentuk huruf I dan B — Indonesia Bekerja, Indonesia Bersama, Indonesia Berkarya. Pedoman mencakup struktur dan zona pengecualian logo, variasi logo, palet warna monokrom, serta tipografi Montserrat dan Myriad Pro.",
     excerpt:
       "Pedoman identitas visual peringatan 73 Tahun Kemerdekaan RI — logogram 73TH dan logotype \"Indonesia Maju Berkarya\".",
-    coverImage: "/projects/logo-73-indonesia/cover.webp",
-    heroImage: "/projects/logo-73-indonesia/cover.webp",
+    coverImage: "/projects/logo-73-indonesia/cover-94a185be.webp",
+    heroImage: "/projects/logo-73-indonesia/cover-94a185be.webp",
     video: undefined,
     featured: false,
     priority: 86,
@@ -1647,8 +1643,8 @@ export const projects: Project[] = [
       "Graphic Standard Manual untuk La Tobas Cigar Premium, merek cerutu premium Indonesia. Logo dibangun dari filosofi Sword (kebenaran/trust), Guard (kegigihan dan ketahanan), Pray (kebaikan Tuhan), serta Bintang yang merujuk pada nama Tobias — terlahir dengan bintang. Pedoman mencakup standardisasi logo, komponen dan filosofi, sistem warna, tipografi, serta aplikasi pada kemasan dan materi komunikasi.",
     excerpt:
       "Graphic Standard Manual La Tobas Cigar Premium — identitas cerutu premium Indonesia dengan filosofi Sword, Guard, Pray, dan Bintang.",
-    coverImage: "/projects/latobas-cigar/cover.webp",
-    heroImage: "/projects/latobas-cigar/cover.webp",
+    coverImage: "/projects/latobas-cigar/cover-6c6b27f8.webp",
+    heroImage: "/projects/latobas-cigar/cover-6c6b27f8.webp",
     video: undefined,
     featured: false,
     priority: 85,
@@ -1691,8 +1687,8 @@ export const projects: Project[] = [
       "Graphic Standard Manual brand identity Apartemen Dhika Universe dengan konsep \"The Future Sight\" — pandangan masa depan. Brand personality-nya berjiwa muda dan energik: workholic, up to date, risk taker, dan ekspresif. Pedoman memuat proses perancangan (brainstorming, thumbnails, sketsa, digitalisasi, review logogram), komponen logo, versi primer & sekunder, co-branded logo, konfigurasi dan skala minimal, clear space, grid lines, konsep warna (solid, gradient, colour tone), image & layout style, hingga target penempatan logo.",
     excerpt:
       "Graphic Standard Manual brand identity Apartemen Dhika Universe dengan konsep \"The Future Sight\" — muda, energik, dan visioner.",
-    coverImage: "/projects/dhika-universe/cover.webp",
-    heroImage: "/projects/dhika-universe/cover.webp",
+    coverImage: "/projects/dhika-universe/cover-e606d2f6.webp",
+    heroImage: "/projects/dhika-universe/cover-e606d2f6.webp",
     video: undefined,
     featured: false,
     priority: 84,

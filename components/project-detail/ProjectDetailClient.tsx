@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/types";
+import { getProjectCover, getProjectGallery } from "@/lib/projectMedia";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import ProjectGallery from "./ProjectGallery";
 import ProjectNavigation from "./ProjectNavigation";
@@ -29,8 +30,8 @@ export default function ProjectDetailClient({
   industryLabel,
 }: ProjectDetailClientProps) {
   const t = useTranslations();
-  const coverSrc = project.coverImage || project.heroImage;
-  const gallery = project.galleryImages || project.gallery || [];
+  const coverSrc = getProjectCover(project);
+  const gallery = getProjectGallery(project);
   const [showVideo, setShowVideo] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const playButtonRef = useRef<HTMLButtonElement>(null);

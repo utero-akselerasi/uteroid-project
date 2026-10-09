@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "@/lib/useTranslations";
+import { getProjectCover, getProjectHover } from "@/lib/projectMedia";
 import type { Project } from "@/lib/types";
 import { disciplineLabels } from "@/lib/types";
 
@@ -15,9 +16,8 @@ export default function ProjectEntry({
 }) {
   const t = useTranslations();
 
-  const coverSrc =
-    project.homepageCoverImage || project.coverImage || project.heroImage || "";
-  const hoverSrc = project.hoverImage ?? null;
+  const coverSrc = getProjectCover(project);
+  const hoverSrc = getProjectHover(project);
   const num = String(index + 1).padStart(2, "0");
   const disciplines = project.disciplines
     .map((d) => disciplineLabels[d])

@@ -68,12 +68,9 @@ export interface Project {
   excerpt?: string;            // Backwards-compat alias for shortDescription
 
   // ── Media ────────────────────────────────────────────────
-  coverImage: string;          // Primary cover image for grid + detail hero
+  coverImage: string;          // Primary cover image (homepage grid + /work grid + detail hero)
   heroImage?: string;          // Backwards-compat alias for coverImage
-  homepageCoverImage?: string; // Optional curated cover used on the homepage Selected Work
-                              // section AND the /work grid. Does NOT affect the detail hero,
-                              // which always uses coverImage.
-  gridCoverPosition?: string;  // Optional CSS object-position for the /work grid card cover image
+  gridCoverPosition?: string;  // Optional CSS object-position for the grid card cover image
   hoverImage?: string;         // Curated rich interior mockup image to preview on hover
   galleryImages?: string[];    // Case study gallery (1–N images)
   gallery?: string[];          // Backwards-compat alias for galleryImages

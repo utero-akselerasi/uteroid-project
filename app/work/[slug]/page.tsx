@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProjectByRouteSlug, getAllRouteSlugs, getAdjacentProjects } from "@/lib/projects";
+import { getProjectCover } from "@/lib/projectMedia";
 import { disciplineLabels, industryLabels } from "@/lib/types";
 import ProjectDetailClient from "@/components/project-detail/ProjectDetailClient";
 
@@ -22,6 +23,14 @@ export async function generateMetadata({
       project.shortDescription ||
       project.excerpt ||
       `${project.title} — ${project.client}`,
+    openGraph: {
+      title: `${project.title} — Utero`,
+      description:
+        project.shortDescription ||
+        project.excerpt ||
+        `${project.title} — ${project.client}`,
+      images: [{ url: getProjectCover(project) }],
+    },
   };
 }
 
@@ -55,8 +64,8 @@ export default async function ProjectPage({
   return (
     <ProjectDetailClient
       project={project}
-      prev={prev ? { slug: prev.routeSlug, title: prev.title, year: prev.year, coverImage: prev.coverImage } : null}
-      next={next ? { slug: next.routeSlug, title: next.title, year: next.year, coverImage: next.coverImage } : null}
+      prev={prev ? { slug: prev.routeSlug, title: prev.title, year: prev.year, coverImage: getProjectCover(prev) } : null}
+      next={next ? { slug: next.routeSlug, title: next.title, year: next.year, coverImage: getProjectCover(next) } : null}
       projectNum={num}
       disciplines={disciplines}
       industryLabel={industryLabel}
