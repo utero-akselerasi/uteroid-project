@@ -443,8 +443,8 @@ export const projects: Project[] = [
       "Visual Guideline Startup For Industry — program akselerasi transformasi teknologi bagi pelaku industri Indonesia dari Kementerian Perindustrian Republik Indonesia bertajuk \"An Ecosystem Of Technology Solution\". Logo menggabungkan elemen heksagonal yang saling terhubung, terinspirasi dari pola jaringan (network) pada logo referensi SFI yang melambangkan kolaborasi dan sinergi — inti semangat startup di Indonesia — dengan bentuk konektivitas antar elemen yang menyerupai rantai industri yang kuat. Palet warna gradasi kuning, hijau, dan merah mewakili energi, pertumbuhan, dan optimisme, didukung tipografi Chambers Sans Pro (judul) dan Inter (isi).",
     excerpt:
       "Sistem identitas visual program Startup For Industry — \"An Ecosystem Of Technology Solution\" dari Kementerian Perindustrian RI.",
-    coverImage: "/projects/sfi/cover.png",
-    heroImage: "/projects/sfi/cover.png",
+    coverImage: "/projects/sfi/cover.webp",
+    heroImage: "/projects/sfi/cover.webp",
     hoverImage: "/projects/sfi/gallery/014.webp",
     galleryImages: [
       "/projects/sfi/gallery/014.webp",
@@ -1156,8 +1156,8 @@ export const projects: Project[] = [
     description:
       "Mini Graphic Standard Manual Yin Yam — brand kuliner street food Chinese food otentik siap saji. Visualisasi logo mengadopsi filosofi Yin & Yang (keseimbangan dan saling melengkapi) yang dipadukan dengan ornamen simbol kemakmuran Tionghoa dan tipografi aksara oriental dalam palet warna biru navy (#023473) dan merah (#F10732).",
     excerpt: "Mini graphic standard manual brand street food Yin Yam.",
-    coverImage: "/projects/yin-yam/cover.png",
-    heroImage: "/projects/yin-yam/cover.png",
+    coverImage: "/projects/yin-yam/cover.webp",
+    heroImage: "/projects/yin-yam/cover.webp",
     hoverImage: "/projects/yin-yam/gallery/008.webp",
     galleryImages: [
       "/projects/yin-yam/gallery/008.webp",
@@ -1603,8 +1603,8 @@ export const projects: Project[] = [
       "Pedoman Identitas Visual peringatan 73 Tahun Kemerdekaan Republik Indonesia. Logogram 73TH dan logotype \"INDONESIA MAJU BERKARYA\" dibentuk dari sudut 45 derajat yang melambangkan Semangat 1945, dengan konsep negative space angka 73 yang membentuk huruf I dan B — Indonesia Bekerja, Indonesia Bersama, Indonesia Berkarya. Pedoman mencakup struktur dan zona pengecualian logo, variasi logo, palet warna monokrom, serta tipografi Montserrat dan Myriad Pro.",
     excerpt:
       "Pedoman identitas visual peringatan 73 Tahun Kemerdekaan RI — logogram 73TH dan logotype \"Indonesia Maju Berkarya\".",
-    coverImage: "/projects/logo-73-indonesia/deck/001.webp",
-    heroImage: "/projects/logo-73-indonesia/deck/001.webp",
+    coverImage: "/projects/logo-73-indonesia/cover.webp",
+    heroImage: "/projects/logo-73-indonesia/cover.webp",
     video: undefined,
     featured: false,
     priority: 86,
@@ -1647,8 +1647,8 @@ export const projects: Project[] = [
       "Graphic Standard Manual untuk La Tobas Cigar Premium, merek cerutu premium Indonesia. Logo dibangun dari filosofi Sword (kebenaran/trust), Guard (kegigihan dan ketahanan), Pray (kebaikan Tuhan), serta Bintang yang merujuk pada nama Tobias — terlahir dengan bintang. Pedoman mencakup standardisasi logo, komponen dan filosofi, sistem warna, tipografi, serta aplikasi pada kemasan dan materi komunikasi.",
     excerpt:
       "Graphic Standard Manual La Tobas Cigar Premium — identitas cerutu premium Indonesia dengan filosofi Sword, Guard, Pray, dan Bintang.",
-    coverImage: "/projects/latobas-cigar/deck/001.webp",
-    heroImage: "/projects/latobas-cigar/deck/001.webp",
+    coverImage: "/projects/latobas-cigar/cover.webp",
+    heroImage: "/projects/latobas-cigar/cover.webp",
     video: undefined,
     featured: false,
     priority: 85,
@@ -1691,8 +1691,8 @@ export const projects: Project[] = [
       "Graphic Standard Manual brand identity Apartemen Dhika Universe dengan konsep \"The Future Sight\" — pandangan masa depan. Brand personality-nya berjiwa muda dan energik: workholic, up to date, risk taker, dan ekspresif. Pedoman memuat proses perancangan (brainstorming, thumbnails, sketsa, digitalisasi, review logogram), komponen logo, versi primer & sekunder, co-branded logo, konfigurasi dan skala minimal, clear space, grid lines, konsep warna (solid, gradient, colour tone), image & layout style, hingga target penempatan logo.",
     excerpt:
       "Graphic Standard Manual brand identity Apartemen Dhika Universe dengan konsep \"The Future Sight\" — muda, energik, dan visioner.",
-    coverImage: "/projects/dhika-universe/deck/001.webp",
-    heroImage: "/projects/dhika-universe/deck/001.webp",
+    coverImage: "/projects/dhika-universe/cover.webp",
+    heroImage: "/projects/dhika-universe/cover.webp",
     video: undefined,
     featured: false,
     priority: 84,
@@ -1812,3 +1812,5 @@ export function getFilterCounts(): Record<string, number> {
 
   return counts;
 }
+
+
