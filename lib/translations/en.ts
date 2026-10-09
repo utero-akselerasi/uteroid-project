@@ -66,6 +66,7 @@ export const en = {
     recentWorksLabel: "03 / RECENT WORKS",
     recentWorksHeading: "Selected Work",
     recentWorksCta: "See All Works",
+    worksHeading: "WORKS",
     featuredCaseStudy: "Featured Case Study",
     manifestoLabel: "Philosophy & Execution",
     manifestoHeading: "Ide Tanpa Realisasi Sama Dengan Sampah",

@@ -373,7 +373,7 @@ export default function HeroSection() {
         }}
       >
         <Link
-          href="#recent-works"
+          href="#works"
           style={{
             fontSize: "clamp(0.55rem, 0.7vw, 0.75rem)",
             fontWeight: 500,

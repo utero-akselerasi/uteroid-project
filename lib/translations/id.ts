@@ -66,6 +66,7 @@ export const id = {
     recentWorksLabel: "03 / KARYA TERBARU",
     recentWorksHeading: "Karya Pilihan",
     recentWorksCta: "Lihat Semua Karya",
+    worksHeading: "KARYA",
     featuredCaseStudy: "Studi Kasus Unggulan",
     manifestoLabel: "Filosofi & Eksekusi",
     manifestoHeading: "Ide tanpa realisasi sama dengan sampah.",
