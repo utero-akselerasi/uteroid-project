@@ -35,8 +35,8 @@ export const projects: Project[] = [
       "GaragePlug adalah platform cloud terintegrasi untuk manajemen bengkel mobil dan detailing center modern yang dipercaya lebih dari 5.000 pengguna global. Di Indonesia, Utero merancang sistem standarisasi identitas visual (GSM) komprehensif mencakup logogram generator daya, supergrafik turunan geometris, palet warna hijau tua (#003D2E) melambangkan pertumbuhan bisnis, panduan fotografi monokrom terfokus, sarana korporasi, seragam teknisi, signage totem pylon, hingga livery armada operasional.",
     excerpt:
       "Platform cloud terintegrasi untuk bengkel mobil dan detailing center, dilengkapi sistem pedoman identitas brand (GSM) komprehensif dari logo hingga armada transportasi.",
-    coverImage: "/projects/garageplug/cover-bbd0a0d8.webp",
-    heroImage: "/projects/garageplug/cover-bbd0a0d8.webp",
+    coverImage: "/projects/garageplug/cover-8f447feb.webp",
+    heroImage: "/projects/garageplug/cover-8f447feb.webp",
     gridCoverPosition: "center 50%",
     hoverImage: "/projects/garageplug/gallery/074.webp",
     galleryImages: [
@@ -494,8 +494,8 @@ export const projects: Project[] = [
     description:
       "Brand Guideline Wajan Giok — identitas visual restoran Chinese food halal bernuansa modern otentik. Visualisasi logotype mengadopsi gaya kaligrafi aksara Tionghoa (Han) yang dipadukan dengan simbol naga kayu pembawa kemakmuran, menghadirkan kehangatan sajian oriental sehari-hari yang berkelas dan ramah keluarga.",
     excerpt: "Pedoman identitas brand kuliner Wajan Giok — sistem visual F&B yang kuat.",
-    coverImage: "/projects/wajan-giok/cover-2b23cd55.webp",
-    heroImage: "/projects/wajan-giok/cover-2b23cd55.webp",
+    coverImage: "/projects/wajan-giok/cover-114bfbf8.webp",
+    heroImage: "/projects/wajan-giok/cover-114bfbf8.webp",
     hoverImage: "/projects/wajan-giok/gallery/015.webp",
     galleryImages: [
       "/projects/wajan-giok/gallery/010.webp",
@@ -646,8 +646,8 @@ export const projects: Project[] = [
     description:
       "Pedoman Identitas Visual Baiturrokhman Tour & Travel — biro perjalanan ibadah Umroh dan Haji Khusus. Logo dirancang dengan penuh kehati-hatian untuk mencerminkan esensi ibadah: mengintegrasikan siluet kubah masjid suci, garis lengkung orbit thawaf Ka'bah, dan sayap kemudahan pelayanan dalam palet warna hijau zamrud dan emas kemuliaan.",
     excerpt: "Pedoman identitas visual institusi Baiturrohman.",
-    coverImage: "/projects/baiturrohman/cover-36d766e5.webp",
-    heroImage: "/projects/baiturrohman/cover-36d766e5.webp",
+    coverImage: "/projects/baiturrohman/cover-549de739.webp",
+    heroImage: "/projects/baiturrohman/cover-549de739.webp",
     hoverImage: "/projects/baiturrohman/gallery/019.webp",
     galleryImages: [
       "/projects/baiturrohman/gallery/019.webp",
@@ -695,8 +695,8 @@ export const projects: Project[] = [
       "Visual Guideline JMT — brand makanan dengan nama yang memiliki dua makna kuat: \"Juaranya Makan Terenak\" sebagai positioning rasa terbaik dan unggul, serta terinspirasi slang Korea \"jon-mat-taeng\" (enak banget / super lezat) yang memberi nuansa modern, kekinian, dan relevan dengan tren anak muda. Kura-kura dipilih sebagai maskot karena citra positifnya — ketenangan dan kenyamanan — merepresentasikan JMT sebagai tempat santai tanpa terburu-buru, sekaligus harapan bisnis yang fokus pada fondasi kuat dan loyalitas pelanggan agar berumur panjang. Maskot John dihadirkan sebagai pribadi yang kehadirannya selalu dinantikan, didukung palet biru (#0136fe) dan hijau (#b9f602), tipografi Grandstander yang playful, serta pattern motif cangkang kura-kura.",
     excerpt:
       "Identitas food brand dengan maskot kura-kura John — delightful, kekinian, terinspirasi slang Korea \"jon-mat-taeng\".",
-    coverImage: "/projects/jmt/cover-f5383c62.webp",
-    heroImage: "/projects/jmt/cover-f5383c62.webp",
+    coverImage: "/projects/jmt/cover-826e221d.webp",
+    heroImage: "/projects/jmt/cover-826e221d.webp",
     gridCoverPosition: "center 60%",
     hoverImage: "/projects/jmt/gallery/016.webp",
     galleryImages: [
@@ -747,8 +747,8 @@ export const projects: Project[] = [
       "Visual Guideline Lacamino — brand cerutu premium yang terinspirasi dari rute ziarah kuno Spanyol, El Camino de Santiago (The Way of St. James). Lacamino (bahasa Spanyol, \"Jalan\") mencerminkan perjalanan hidup manusia yang penuh lika-liku, tantangan, dan pembelajaran. Iconography kerang digunakan sebagai penanda sepanjang jalan menuju Santiago sekaligus simbol pelindung para peziarah, dipadu ornament bergaya Victoria dari Katedral Santiago de Compostela dalam palet ungu gelap (#2C0B60) dan emas kemuliaan.",
     excerpt:
       "Identitas visual cerutu premium yang terinspirasi rute ziarah El Camino de Santiago — kerang, ornament Victoria, dan warna violet-emas.",
-    coverImage: "/projects/lacamino/cover-656b19b3.webp",
-    heroImage: "/projects/lacamino/cover-656b19b3.webp",
+    coverImage: "/projects/lacamino/cover-740144d7.webp",
+    heroImage: "/projects/lacamino/cover-740144d7.webp",
     gridCoverPosition: "45% 45%",
     hoverImage: "/projects/lacamino/gallery/016.webp",
     galleryImages: [
@@ -1305,8 +1305,8 @@ export const projects: Project[] = [
       "Visual Guideline Maitri Coffee & Social Hub — identitas visual untuk coffee & social hub dengan slogan \"Sekedar Bukan Teman\". Logogram dan logotype dapat diaplikasikan secara terpisah, dibangun di atas palet fuchsia pink (#e5008d) yang berani dipadu hitam dan putih untuk kesan muda, hangat, dan energik. Aplikasi mencakup paper cup, plastic cup, t-shirt, poster, key chain, dan billboard.",
     excerpt:
       "Identitas visual Maitri Coffee & Social Hub dengan slogan \"Sekedar Bukan Teman\".",
-    coverImage: "/projects/maitri/cover-5b158d4e.webp",
-    heroImage: "/projects/maitri/cover-5b158d4e.webp",
+    coverImage: "/projects/maitri/cover-ee85a777.webp",
+    heroImage: "/projects/maitri/cover-ee85a777.webp",
     gridCoverPosition: "center 32%",
     hoverImage: "/projects/maitri/gallery/006.webp",
     galleryImages: [
