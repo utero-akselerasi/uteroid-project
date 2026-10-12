@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
 import emailjs from "@emailjs/browser";
-import { getInquiryLabels } from "@/lib/services";
+import { useTranslatedInquiryLabels } from "@/lib/useTranslatedServices";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useTranslations, type Translations } from "@/lib/useTranslations";
 
@@ -64,11 +64,10 @@ const topNavItemsStatic: { labelKey: NavKey; href: string }[] = [
   { labelKey: "insights", href: "/insights" },
 ];
 
-const inquiryDisciplines = getInquiryLabels();
-
 export default function Header() {
   const { language, toggleLanguage } = useLanguage();
   const t = useTranslations();
+  const inquiryDisciplines = useTranslatedInquiryLabels();
   const [scrolled, setScrolled] = useState(false);
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
   const [menuOpen, setMenuOpen] = useState(false);

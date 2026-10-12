@@ -5,15 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import RevealOnScroll from "./RevealOnScroll";
-import { disciplinesData } from "@/lib/disciplines";
+import { useTranslatedDisciplines } from "@/lib/useTranslatedServices";
 import { useTranslations } from "@/lib/useTranslations";
 
 export default function ServicesSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   const router = useRouter();
   const t = useTranslations();
+  const disciplines = useTranslatedDisciplines();
 
-  const activeCapability = disciplinesData[activeIdx] || disciplinesData[0];
+  const activeCapability = disciplines[activeIdx] || disciplines[0];
 
   return (
     <section
@@ -115,7 +116,7 @@ export default function ServicesSection() {
           {/* Left Column: 6 Capabilities */}
           <div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              {disciplinesData.map((item, idx) => {
+              {disciplines.map((item, idx) => {
                 const isActive = activeIdx === idx;
                 return (
                     <button
@@ -124,7 +125,7 @@ export default function ServicesSection() {
                       onMouseEnter={() => setActiveIdx(idx)}
                       onFocus={() => setActiveIdx(idx)}
                       aria-label={`View ${item.name} services`}
-                      data-cursor="EXPLORE"
+                      data-cursor={t.servicesPage.explore}
                     style={{
                       display: "flex",
                       alignItems: "center",

@@ -3,13 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import emailjs from "@emailjs/browser";
-import { getInquiryLabels } from "@/lib/services";
+import { useTranslatedInquiryLabels } from "@/lib/useTranslatedServices";
 import { useTranslations } from "@/lib/useTranslations";
-
-const SERVICE_OPTIONS = getInquiryLabels();
 
 export default function ContactPage() {
   const t = useTranslations();
+  const serviceOptions = useTranslatedInquiryLabels();
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -554,7 +553,7 @@ export default function ContactPage() {
                         {t.contact.interestedDisciplines}
                       </label>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                        {SERVICE_OPTIONS.map((opt) => {
+                        {serviceOptions.map((opt) => {
                           const isSelected = selectedServices.includes(opt);
                           return (
                             <button

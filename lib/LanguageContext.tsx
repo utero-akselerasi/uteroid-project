@@ -25,13 +25,21 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // Synchronize document.documentElement.lang
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = language;
+    }
+  }, [language]);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem(STORAGE_KEY, lang);
   };
 
   const toggleLanguage = () => {
-    setLanguage(language === "en" ? "id" : "en");
+    const nextLang = language === "en" ? "id" : "en";
+    setLanguage(nextLang);
   };
 
   // Always provide the context to avoid hook errors

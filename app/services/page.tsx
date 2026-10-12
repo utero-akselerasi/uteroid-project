@@ -4,13 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { disciplinesData } from "@/lib/disciplines";
+import { useTranslatedDisciplines } from "@/lib/useTranslatedServices";
+import { useTranslations } from "@/lib/useTranslations";
 
 export default function ServicesPage() {
   const [activeIdx, setActiveIdx] = useState(0);
   const router = useRouter();
+  const t = useTranslations();
+  const disciplines = useTranslatedDisciplines();
 
-  const activeDiscipline = disciplinesData[activeIdx] || disciplinesData[0];
+  const activeDiscipline = disciplines[activeIdx] || disciplines[0];
 
   return (
     <>
@@ -72,7 +75,7 @@ export default function ServicesPage() {
                   color: "#c91a1f",
                 }}
               >
-                03 / CAPABILITIES &amp; PRACTICE
+                {t.servicesPage.label}
               </span>
             </div>
 
@@ -98,7 +101,7 @@ export default function ServicesPage() {
                     margin: 0,
                   }}
                 >
-                  Services
+                  {t.servicesPage.heading}
                 </h1>
                 <p
                   style={{
@@ -110,7 +113,7 @@ export default function ServicesPage() {
                     maxWidth: "540px",
                   }}
                 >
-                  Six integrated design disciplines engineered to resolve complex strategic challenges and command enduring enterprise equity.
+                  {t.servicesPage.description}
                 </p>
               </div>
 
@@ -132,7 +135,7 @@ export default function ServicesPage() {
                     lineHeight: 1,
                   }}
                 >
-                  06
+                  {String(disciplines.length).padStart(2, "0")}
                 </span>
                 <span
                   style={{
@@ -143,13 +146,13 @@ export default function ServicesPage() {
                     color: "rgba(10, 10, 10, 0.35)",
                   }}
                 >
-                  Disciplines
+                  {t.servicesPage.disciplinesCount}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* ── Services List (Homepage-style layout) ────────────── */}
+          {/* ── Services List ────────────────────────────────────────── */}
           <div
             style={{
               display: "grid",
@@ -164,7 +167,7 @@ export default function ServicesPage() {
             {/* Left Column: 6 Disciplines */}
             <div>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                {disciplinesData.map((item, idx) => {
+                {disciplines.map((item, idx) => {
                   const isActive = activeIdx === idx;
                   return (
                     <button
@@ -172,8 +175,8 @@ export default function ServicesPage() {
                       onClick={() => router.push(`/services/${item.slug}`)}
                       onMouseEnter={() => setActiveIdx(idx)}
                       onFocus={() => setActiveIdx(idx)}
-                      aria-label={`View ${item.name} services`}
-                      data-cursor="EXPLORE"
+                      aria-label={t.servicesPage.viewAria(item.name)}
+                      data-cursor={t.servicesPage.explore}
                       style={{
                         display: "flex",
                         alignItems: "center",
@@ -290,7 +293,7 @@ export default function ServicesPage() {
                       padding: "0.3rem 0.6rem",
                     }}
                   >
-                    CATEGORY {activeDiscipline.id}
+                    {t.servicesPage.category} {activeDiscipline.id}
                   </div>
                 </div>
 
@@ -333,7 +336,7 @@ export default function ServicesPage() {
                         marginBottom: "0.8rem",
                       }}
                     >
-                      CORE DELIVERABLES:
+                      {t.servicesPage.coreDeliverables}
                     </div>
                     <div
                       style={{
@@ -383,7 +386,7 @@ export default function ServicesPage() {
                       (e.currentTarget.style.backgroundColor = "#0d0d0d")
                     }
                   >
-                    <span>VIEW DETAILS &amp; ARCHIVE</span>
+                    <span>{t.servicesPage.viewDetails}</span>
                     <span>&rarr;</span>
                   </Link>
                 </div>
@@ -405,7 +408,7 @@ export default function ServicesPage() {
           >
             <Link
               href="/work"
-              data-cursor="VIEW WORKS"
+              data-cursor={t.servicesPage.explore}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -420,12 +423,12 @@ export default function ServicesPage() {
                 paddingBottom: "2px",
               }}
             >
-              ← See Portfolio Works
+              {t.servicesPage.seePortfolio}
             </Link>
 
             <Link
               href="/contact"
-              data-cursor="START A PROJECT"
+              data-cursor={t.servicesPage.explore}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -447,7 +450,7 @@ export default function ServicesPage() {
                 e.currentTarget.style.backgroundColor = "#c91a1f";
               }}
             >
-              Inquire Capability →
+              {t.servicesPage.inquireCapability}
             </Link>
           </div>
         </div>

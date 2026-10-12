@@ -89,22 +89,32 @@ export const id = {
   },
   // Chrome halaman daftar /services
   servicesPage: {
-    label: "03 / YANG KAMI DESAIN",
-    heading: "Disiplin",
+    label: "03 / KAPABILITAS & PRAKTIK",
+    heading: "Layanan",
     description:
-      "Enam praktik terintegrasi yang berjalan di bawah satu filosofi. Pilih disiplin untuk melihat cakupannya, atau buka ringkasan lengkapnya.",
-    viewDetails: "Lihat Detail & Arsip",
+      "Enam disiplin desain terintegrasi yang dirancang untuk menjawab tantangan strategis kompleks dan membangun ekuitas bisnis yang bertahan lama.",
+    disciplinesCount: "Disiplin",
+    explore: "JELAJAHI",
+    category: "KATEGORI",
+    coreDeliverables: "DELIVERABLE UTAMA:",
+    viewDetails: "LIHAT DETAIL & ARSIP",
+    seePortfolio: "← Lihat Karya Portofolio",
+    inquireCapability: "Konsultasi Kapabilitas →",
     viewAria: (name: string) => `Lihat layanan ${name}`,
   },
   // Chrome halaman detail /services/[slug]
   servicesDetail: {
     backToServices: "Kembali ke Layanan",
+    disciplinePrefix: "Disiplin",
     overview: "Ikhtisar Disiplin",
     approach: "Pendekatan Strategis",
     capabilities: "Kapabilitas Utama",
     deliverables: "Ruang Lingkup Hasil Kerja",
-    relatedWork: "Karya Pilihan pada Disiplin Ini",
+    relatedWork: "Karya Pilihan dalam Disiplin Ini",
     relatedWorkEmpty: "Belum ada proyek arsip yang terkait dengan disiplin ini.",
+    allServices: "← Semua Layanan",
+    inquireProject: (name: string) => `Konsultasikan Proyek ${name} →`,
+    viewCase: "LIHAT KASUS →",
   },
   // Chrome /insights (isi artikel tetap dalam bahasa Inggris — materieditorial)
   insights: {
@@ -199,7 +209,7 @@ export const id = {
       inquiryLabel: "Identitas Brand",
     },
     product: {
-      name: "PRODUK",
+      name: "PRODUCT",
       tagline: "Kemasan & Bentuk Struktural",
       heroHeadline:
         "Merancang kemasan fisik yang terasa nyata dan meninggalkan kesan pertama yang tak terlupakan.",
@@ -235,7 +245,7 @@ export const id = {
       inquiryLabel: "Produk & Kemasan",
     },
     promotion: {
-      name: "PROMOSI",
+      name: "PROMOTION",
       tagline: "Kampanye Kreatif Berdampak Tinggi",
       heroHeadline:
         "Menciptakan narasi promosi yang disruptif dan menghasilkan momentum yang terukur.",
@@ -307,7 +317,7 @@ export const id = {
       inquiryLabel: "Digital & Web",
     },
     environmental: {
-      name: "LINGKUNGAN",
+      name: "ENVIRONMENTAL",
       tagline: "Wayfinding & Desain Lingkungan",
       heroHeadline:
         "Mengubah arsitektur yang diam menjadi pengalaman spasial yang intuitif dan berpusat pada manusia.",
@@ -361,7 +371,7 @@ export const id = {
       inquiryLabel: "Lingkungan & Wayfinding",
     },
     outdoor: {
-      name: "LUAR RUANGAN",
+      name: "OUTDOOR",
       tagline: "Komunikasi Publik Skala Besar",
       heroHeadline:
         "Mendominasi siluet kota dengan martabat struktural dan keterbacaan maksimal.",

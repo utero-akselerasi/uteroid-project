@@ -89,22 +89,32 @@ export const en = {
   },
   // /services list page chrome
   servicesPage: {
-    label: "03 / WHAT WE DESIGN",
-    heading: "Disciplines",
+    label: "03 / CAPABILITIES & PRACTICE",
+    heading: "Services",
     description:
-      "Six integrated practices operating under one philosophy. Select a discipline to preview its scope, or open the full brief.",
-    viewDetails: "View Details & Archive",
+      "Six integrated design disciplines engineered to resolve complex strategic challenges and command enduring enterprise equity.",
+    disciplinesCount: "Disciplines",
+    explore: "EXPLORE",
+    category: "CATEGORY",
+    coreDeliverables: "CORE DELIVERABLES:",
+    viewDetails: "VIEW DETAILS & ARCHIVE",
+    seePortfolio: "← See Portfolio Works",
+    inquireCapability: "Inquire Capability →",
     viewAria: (name: string) => `View ${name} services`,
   },
   // /services/[slug] detail page chrome
   servicesDetail: {
     backToServices: "Back to Services",
+    disciplinePrefix: "Discipline",
     overview: "Discipline Overview",
     approach: "Strategic Approach",
     capabilities: "Core Capabilities",
     deliverables: "Scope of Deliverables",
     relatedWork: "Selected Work in this Discipline",
     relatedWorkEmpty: "No archived projects are linked to this discipline yet.",
+    allServices: "← All Services",
+    inquireProject: (name: string) => `Inquire ${name} Project →`,
+    viewCase: "VIEW CASE →",
   },
   // /insights chrome (article bodies stay untranslated — authored editorial)
   insights: {
