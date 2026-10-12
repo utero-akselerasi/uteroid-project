@@ -255,7 +255,13 @@ export default function Header() {
           transform:
             scrollDirection === "down" && scrolled && !menuOpen && !contactOpen
               ? "translateY(-100%)"
-          <div
+              : "translateY(0)",
+          transition:
+            "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease",
+          pointerEvents: "none",
+        }}
+      >
+        <div
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
@@ -650,13 +656,6 @@ export default function Header() {
               </div>
             </button>
           </nav>
-        </div> alignSelf: "flex-end",
-                    transition: "width 0.25s ease",
-                  }}
-                />
-              </div>
-            </button>
-          </nav>
         </div>
       </header>
 
@@ -722,6 +721,7 @@ export default function Header() {
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",
+          height: "100dvh",
         }}
       >
         {/* Dynamic Interactive Visual Preview Backdrop */}
@@ -823,6 +823,42 @@ export default function Header() {
             </span>
           </Link>
 
+          {/* Language Toggle in Mobile Menu */}
+          <button
+            onClick={toggleLanguage}
+            aria-label={t.header.toggleLanguage}
+            style={{
+              background: "rgba(255, 255, 255, 0.1)",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
+              borderRadius: "9999px",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              padding: "6px 14px",
+              color: "#ffffff",
+              backdropFilter: "blur(10px)",
+              fontSize: "11px",
+              fontWeight: 700,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              transition:
+                "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+              e.currentTarget.style.borderColor = "#ffffff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+              e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+            }}
+          >
+            <span style={{ color: "#e31e24" }}>{language === "en" ? "EN" : "ID"}</span>
+            <span style={{ opacity: 0.3 }}>/</span>
+            <span>{language === "en" ? "ID" : "EN"}</span>
+          </button>
+
           {/* Close Button */}
           <button
             onClick={() => setMenuOpen(false)}
@@ -875,6 +911,8 @@ export default function Header() {
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "clamp(1rem, 2vw, 3rem)",
             padding: "clamp(0.6rem, 1.5vw, 1.5rem) clamp(1rem, 3vw, 3.5rem)",
+            paddingTop: "clamp(0.6rem, 1.5vw, 1.5rem)",
+            paddingBottom: "clamp(0.6rem, 1.5vw, 1.5rem)",
             alignItems: "center",
             position: "relative",
             zIndex: 10,
@@ -1238,7 +1276,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
@@ -1283,7 +1321,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
@@ -1339,7 +1377,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
@@ -1384,7 +1422,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
