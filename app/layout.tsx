@@ -6,6 +6,7 @@ import CustomCursor from "@/components/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
 import { LanguageProvider } from "@/lib/LanguageContext";
+import HtmlLang from "@/components/HtmlLang";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://utero.id"),
@@ -42,9 +43,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html data-scroll-behavior="smooth">
       <body className="antialiased">
         <LanguageProvider>
+          <HtmlLang />
           <SmoothScroll>
             <CustomCursor />
             <Header />

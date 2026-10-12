@@ -25,13 +25,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Synchronize document.documentElement.lang
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.lang = language;
-    }
-  }, [language]);
-
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem(STORAGE_KEY, lang);
