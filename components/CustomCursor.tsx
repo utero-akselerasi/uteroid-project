@@ -14,10 +14,12 @@ export default function CustomCursor() {
   const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
-    // Disable on touch devices
+    // Disable on touch and coarse pointer devices
     if (
       typeof window !== "undefined" &&
-      ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      (window.matchMedia("(pointer: coarse)").matches ||
+        "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0)
     ) {
       setIsTouch(true);
       return;

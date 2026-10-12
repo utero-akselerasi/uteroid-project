@@ -255,40 +255,39 @@ export default function Header() {
           transform:
             scrollDirection === "down" && scrolled && !menuOpen && !contactOpen
               ? "translateY(-100%)"
-              : "translateY(0)",
-          transition:
-            "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease",
-          pointerEvents: "none",
-        }}
-      >
-        <div
+          <div
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "0.5rem",
+            gap: "var(--hdr-gap)",
             pointerEvents: "auto",
           }}
         >
-          {/* LEFT: Wordmark + Live Studio Status Badge */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+          {/* LEFT: Wordmark + Live Studio Status Badge + Lang Toggle */}
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--hdr-gap)" }}>
             <Link
               href="/"
+              className="hdr-pill"
               style={{
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.3rem",
-                padding: "5px 10px",
-                borderRadius: "9999px",
+                justifyContent: "center",
+                gap: "0.4rem",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
-                border: `1px solid ${borderColor}`,
+                border: `var(--hdr-border-width) solid ${borderColor}`,
                 boxShadow: scrolled
                   ? "0 8px 32px rgba(0, 0, 0, 0.25)"
                   : "0 4px 16px rgba(0, 0, 0, 0.08)",
+                whiteSpace: "nowrap",
                 transition:
                   "background-color 0.3s ease, border-color 0.3s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
@@ -303,8 +302,8 @@ export default function Header() {
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   fontWeight: 900,
-                  fontSize: "10px",
-                  letterSpacing: "0.12em",
+                  fontSize: "var(--hdr-font-size)",
+                  letterSpacing: "var(--hdr-letter-spacing)",
                   textTransform: "uppercase",
                   color: scrolled ? "#ffffff" : textColor,
                   transition: "color 0.3s ease",
@@ -315,8 +314,8 @@ export default function Header() {
               <span
                 style={{
                   display: "inline-block",
-                  width: "4px",
-                  height: "4px",
+                  width: "5px",
+                  height: "5px",
                   borderRadius: "50%",
                   backgroundColor: "#e31e24",
                 }}
@@ -325,19 +324,23 @@ export default function Header() {
 
             {/* Desktop City & Live Time Pill */}
             <div
-              className="hidden xl:flex"
+              className="hdr-location hdr-pill"
               style={{
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.5rem",
-                padding: "8px 14px",
-                borderRadius: "9999px",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
-                border: `1px solid ${borderColor}`,
-                fontSize: "11px",
+                border: `var(--hdr-border-width) solid ${borderColor}`,
+                fontSize: "var(--hdr-font-size)",
                 fontWeight: 600,
-                letterSpacing: "0.08em",
+                letterSpacing: "var(--hdr-letter-spacing)",
                 textTransform: "uppercase",
+                whiteSpace: "nowrap",
                 color: scrolled ? "rgba(255, 255, 255, 0.8)" : mutedTextColor,
                 transition: "all 0.3s ease",
               }}
@@ -353,21 +356,26 @@ export default function Header() {
             {/* Language Toggle Button */}
             <button
               onClick={toggleLanguage}
-              aria-label="Toggle language"
+              aria-label={t.header.toggleLanguage}
+              className="hdr-lang-toggle hdr-pill"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.4rem",
-                padding: "6px 12px",
-                borderRadius: "9999px",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
-                border: `1px solid ${borderColor}`,
+                border: `var(--hdr-border-width) solid ${borderColor}`,
                 cursor: "pointer",
-                fontSize: "10px",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
+                fontSize: "var(--hdr-font-size)",
+                fontWeight: "var(--hdr-font-weight)",
+                letterSpacing: "var(--hdr-letter-spacing)",
                 textTransform: "uppercase",
+                whiteSpace: "nowrap",
                 color: scrolled ? "rgba(255, 255, 255, 0.85)" : textColor,
                 transition: "all 0.3s ease",
               }}
@@ -392,27 +400,28 @@ export default function Header() {
 
           {/* RIGHT: ALL NAVIGATION ITEMS PLACED TOGETHER (WORK, SERVICES, STUDIO, INSIGHTS, CONTACT, MENU) */}
           <nav
-            aria-label="Top primary navigation"
+            aria-label={t.header.primaryNav}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "clamp(0.3rem, 0.8vw, 0.6rem)",
+              gap: "var(--hdr-gap)",
             }}
           >
             {/* Desktop Links: WORK, SERVICES, STUDIO, INSIGHTS */}
             <div
-              className="hidden md:flex"
+              className="hdr-nav-links"
               style={{
                 alignItems: "center",
-                gap: "clamp(0.2rem, 0.6vw, 0.5rem)",
-                padding: "4px 8px",
-                borderRadius: "9999px",
+                height: "var(--hdr-pill-height)",
+                padding: "0 6px",
+                borderRadius: "var(--hdr-pill-radius)",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
-                border: `1px solid ${borderColor}`,
+                border: `var(--hdr-border-width) solid ${borderColor}`,
                 boxShadow: scrolled
                   ? "0 8px 32px rgba(0, 0, 0, 0.2)"
                   : "0 4px 16px rgba(0, 0, 0, 0.05)",
+                boxSizing: "border-box",
                 transition: "all 0.3s ease",
               }}
             >
@@ -428,12 +437,14 @@ export default function Header() {
                     onMouseLeave={() => setHoveredTopNav(null)}
                     style={{
                       position: "relative",
-                      padding: "6px 14px",
+                      height: "100%",
+                      padding: "0 12px",
                       textDecoration: "none",
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
+                      fontSize: "var(--hdr-font-size)",
+                      fontWeight: "var(--hdr-font-weight)",
+                      letterSpacing: "var(--hdr-letter-spacing)",
                       textTransform: "uppercase",
+                      whiteSpace: "nowrap",
                       color: isHovered
                         ? "#e31e24"
                         : isActive
@@ -441,12 +452,13 @@ export default function Header() {
                         : scrolled
                         ? "rgba(255, 255, 255, 0.85)"
                         : textColor,
-                      transform: isHovered ? "translateY(-1.5px)" : "translateY(0)",
+                      transform: isHovered ? "translateY(-1px)" : "translateY(0)",
                       transition:
                         "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      boxSizing: "border-box",
                     }}
                   >
                     <span>{item.label}</span>
@@ -455,9 +467,9 @@ export default function Header() {
                     <span
                       style={{
                         position: "absolute",
-                        bottom: "2px",
-                        left: "14px",
-                        right: "14px",
+                        bottom: "6px",
+                        left: "12px",
+                        right: "12px",
                         height: "2px",
                         backgroundColor: "#e31e24",
                         borderRadius: "1px",
@@ -478,13 +490,17 @@ export default function Header() {
               onMouseEnter={() => setIsContactHovered(true)}
               onMouseLeave={() => setIsContactHovered(false)}
               aria-expanded={contactOpen}
-              aria-label="Toggle contact channels"
+              aria-label={t.header.toggleContact}
+              className="hdr-pill"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.3rem",
-                padding: "5px 10px",
-                borderRadius: "9999px",
+                justifyContent: "center",
+                gap: "0.4rem",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: contactOpen
                   ? "#e31e24"
                   : isContactHovered
@@ -496,15 +512,16 @@ export default function Header() {
                   : pillBg,
                 backdropFilter: "blur(18px)",
                 border: contactOpen
-                  ? "1px solid #e31e24"
+                  ? "var(--hdr-border-width) solid #e31e24"
                   : isContactHovered
-                  ? "1px solid #e31e24"
-                  : `1px solid ${borderColor}`,
+                  ? "var(--hdr-border-width) solid #e31e24"
+                  : `var(--hdr-border-width) solid ${borderColor}`,
                 cursor: "pointer",
-                fontSize: "9px",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
+                fontSize: "var(--hdr-font-size)",
+                fontWeight: "var(--hdr-font-weight)",
+                letterSpacing: "var(--hdr-letter-spacing)",
                 textTransform: "uppercase",
+                whiteSpace: "nowrap",
                 color: contactOpen
                   ? "#ffffff"
                   : isContactHovered
@@ -528,7 +545,7 @@ export default function Header() {
               <span
                 style={{
                   color: contactOpen ? "#ffffff" : "#25D366",
-                  fontSize: "8px",
+                  fontSize: "9px",
                   display: "inline-block",
                   transform: contactOpen ? "rotate(45deg)" : "none",
                   transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -546,13 +563,17 @@ export default function Header() {
               }}
               onMouseEnter={() => setIsMenuHovered(true)}
               onMouseLeave={() => setIsMenuHovered(false)}
-              aria-label="Open studio menu"
+              aria-label={t.header.openMenu}
+              className="hdr-pill"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.4rem",
-                padding: "5px 12px",
-                borderRadius: "9999px",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: isMenuHovered
                   ? "#e31e24"
                   : scrolled
@@ -569,6 +590,11 @@ export default function Header() {
                   : "#0a0a0a",
                 border: "none",
                 cursor: "pointer",
+                fontSize: "var(--hdr-font-size)",
+                fontWeight: "var(--hdr-font-weight)",
+                letterSpacing: "var(--hdr-letter-spacing)",
+                textTransform: "uppercase",
+                whiteSpace: "nowrap",
                 boxShadow: isMenuHovered
                   ? "0 8px 24px rgba(227, 30, 36, 0.4)"
                   : "0 6px 20px rgba(0, 0, 0, 0.15)",
@@ -576,15 +602,15 @@ export default function Header() {
                   ? "translateY(-1.5px) scale(1.03)"
                   : "translateY(0) scale(1)",
                 transition:
-                  "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease",
+                  "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease",
               }}
             >
               <span
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontWeight: 600,
-                  fontSize: "9px",
-                  letterSpacing: "0.08em",
+                  fontWeight: "var(--hdr-font-weight)",
+                  fontSize: "var(--hdr-font-size)",
+                  letterSpacing: "var(--hdr-letter-spacing)",
                   textTransform: "uppercase",
                 }}
               >
@@ -618,6 +644,13 @@ export default function Header() {
                     backgroundColor: "currentColor",
                     borderRadius: "1px",
                     alignSelf: "flex-end",
+                    transition: "width 0.25s ease",
+                  }}
+                />
+              </div>
+            </button>
+          </nav>
+        </div> alignSelf: "flex-end",
                     transition: "width 0.25s ease",
                   }}
                 />

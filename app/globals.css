@@ -95,6 +95,54 @@
   --z-header: 100;
   --z-overlay: 200;
   --z-modal: 300;
+
+  /* Header Pill Control System Tokens */
+  --hdr-pill-height: 40px;
+  --hdr-font-size: 11px;
+  --hdr-font-weight: 700;
+  --hdr-letter-spacing: 0.12em;
+  --hdr-pill-px: 14px;
+  --hdr-pill-radius: 9999px;
+  --hdr-gap: 8px;
+  --hdr-border-width: 1px;
+}
+
+/* Header Responsive Hiding & Pill Utilities */
+.hdr-pill {
+  height: var(--hdr-pill-height);
+  font-size: var(--hdr-font-size);
+  font-weight: var(--hdr-font-weight);
+  letter-spacing: var(--hdr-letter-spacing);
+  border-radius: var(--hdr-pill-radius);
+  white-space: nowrap;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .hdr-location {
+    display: none !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .hdr-nav-links {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hdr-lang-toggle {
+    display: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
 }
 
 /* ─────────────────────────────────────────────
