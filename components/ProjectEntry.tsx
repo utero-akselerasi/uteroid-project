@@ -33,172 +33,103 @@ export default function ProjectEntry({
       href={`/work/${project.routeSlug}`}
       className="pe-link"
       aria-label={`${project.title} — ${project.client}`}
-      style={{ display: "block", textDecoration: "none", color: "inherit" }}
     >
-      <article>
-        <div
-          className="pe-image-wrap"
-          style={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: "4/3",
-            overflow: "hidden",
-            marginBottom: "1rem",
-            borderRadius: "8px",
-            backgroundColor: "#f0efed",
-          }}
-        >
-          {coverSrc && (
-            <Image
-              src={coverSrc}
-              alt={project.title}
-              fill
-              priority={index < 4}
-              loading={index < 4 ? "eager" : "lazy"}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              style={{
-                objectFit: "cover",
-                objectPosition: project.gridCoverPosition || "center",
-              }}
-              className={
-                hoverSrc
-                  ? "pe-image pe-image--cover"
-                  : "pe-image pe-image--cover pe-image--only"
-              }
-            />
+      <article className="pe-card">
+        {/* ── Image Container (Strict 4:3 Aspect Ratio) ──────────── */}
+        <div className="pe-image-wrap">
+          {coverSrc ? (
+            <>
+              <Image
+                src={coverSrc}
+                alt={project.title}
+                fill
+                priority={index < 4}
+                loading={index < 4 ? "eager" : "lazy"}
+                sizes="(max-width: 440px) 50vw, (max-width: 768px) 50vw, (max-width: 1140px) 33vw, 25vw"
+                style={{
+                  objectFit: "cover",
+                  objectPosition: project.gridCoverPosition || "center",
+                }}
+                className={
+                  hoverSrc
+                    ? "pe-image pe-image--cover"
+                    : "pe-image pe-image--cover pe-image--only"
+                }
+              />
+
+              {hoverSrc && (
+                <Image
+                  src={hoverSrc}
+                  alt={`${project.title} — preview detail`}
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 440px) 50vw, (max-width: 768px) 50vw, (max-width: 1140px) 33vw, 25vw"
+                  style={{ objectFit: "cover" }}
+                  className="pe-image pe-image--hover"
+                  aria-hidden="true"
+                />
+              )}
+            </>
+          ) : (
+            /* Elegant editorial fallback for projects without covers */
+            <div className="pe-placeholder">
+              <span className="pe-placeholder__num">{num}</span>
+              <span className="pe-placeholder__logo">UTERO.ID</span>
+              <span className="pe-placeholder__cat">{project.category}</span>
+            </div>
           )}
 
-          {hoverSrc && (
-            <Image
-              src={hoverSrc}
-              alt={`${project.title} — gallery detail`}
-              fill
-              loading="lazy"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              style={{ objectFit: "cover" }}
-              className="pe-image pe-image--hover"
-              aria-hidden="true"
-            />
-          )}
+          {/* Pinterest-inspired floating corner index pill */}
+          <div className="pe-card__badge" aria-hidden="true">
+            <span>{num}</span>
+          </div>
 
+          {/* Hover overlay with Pinterest-style action pill */}
           <div className="pe-overlay" aria-hidden="true">
             <div className="pe-overlay__inner">
               <span className="pe-overlay__scope">{scopeSummary}</span>
-              <span className="pe-overlay__cta">{t.work.viewProject}</span>
+              <div className="pe-overlay__btn">
+                <span>{t.work.viewProject}</span>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="7 7 17 7 17 17" />
+                </svg>
+              </div>
             </div>
           </div>
 
+          {/* Mobile persistent scope tag */}
           <div className="pe-scope-mobile" aria-hidden="true">
             <span>{scopeSummary}</span>
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.2rem",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "0.62rem",
-                fontWeight: 800,
-                letterSpacing: "0.1em",
-                color: "#c91a1f",
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                lineHeight: 1,
-              }}
-            >
-              {num}
-            </span>
-            <span
-              style={{
-                width: "0.75rem",
-                height: "1px",
-                backgroundColor: "rgba(201,26,31,0.35)",
-                display: "inline-block",
-                flexShrink: 0,
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.6rem",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "rgba(10,10,10,0.4)",
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                minWidth: 0,
-                flexShrink: 1,
-              }}
-            >
-              {disciplines}
-            </span>
+        {/* ── Metadata Area (Strictly uniform heights across all cards) ── */}
+        <div className="pe-meta">
+          {/* Top row: Discipline indicator */}
+          <div className="pe-meta__top">
+            <span className="pe-meta__discipline">{disciplines}</span>
           </div>
 
-          <h3
-            className="pe-title"
-            style={{
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              fontSize: "clamp(1rem, 1.4vw, 1.3rem)",
-              fontWeight: 900,
-              letterSpacing: "-0.025em",
-              textTransform: "uppercase",
-              color: "#0a0a0a",
-              lineHeight: 1.1,
-              margin: 0,
-            }}
-          >
+          {/* Title: 2 lines height allocated for exact grid row alignment */}
+          <h3 className="pe-title pe-meta__title">
             {project.title}
           </h3>
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-              gap: "0.5rem",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "0.7rem",
-                fontWeight: 500,
-                color: "rgba(10,10,10,0.42)",
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                letterSpacing: "0.01em",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                minWidth: 0,
-              }}
-            >
-              {project.client}
-            </span>
+          {/* Bottom row: Client & Year */}
+          <div className="pe-meta__bottom">
+            <span className="pe-meta__client">{project.client}</span>
             {project.year && (
-              <span
-                style={{
-                  fontSize: "0.62rem",
-                  fontWeight: 700,
-                  color: "rgba(10,10,10,0.3)",
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  letterSpacing: "0.06em",
-                  flexShrink: 0,
-                }}
-              >
-                {project.year}
-              </span>
+              <span className="pe-meta__year">{project.year}</span>
             )}
           </div>
         </div>

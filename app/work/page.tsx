@@ -202,20 +202,28 @@ export default async function WorkPage({
           }
         }
 
-        /* ── Grid layout (unchanged) ─────────────────────────────── */
+        /* ── Grid layout: Pinterest-inspired uniform 4-column ─────── */
         .pe-grid-root {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: clamp(1.5rem, 2.5vw, 2.5rem);
+          grid-template-columns: repeat(4, 1fr);
+          gap: clamp(1rem, 1.8vw, 1.75rem);
         }
-        @media (max-width: 1024px) {
+        @media (max-width: 1140px) {
           .pe-grid-root {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
           }
         }
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .pe-grid-root {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+          }
+        }
+        @media (max-width: 440px) {
+          .pe-grid-root {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.65rem;
           }
         }
 
@@ -246,6 +254,196 @@ export default async function WorkPage({
           animation: wk-fadein 0.5s 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
+        /* ── Pinterest-inspired Card Styling ──────────────────────── */
+        .pe-card {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          position: relative;
+        }
+
+        .pe-image-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4 / 3;
+          overflow: hidden;
+          margin-bottom: 0.75rem;
+          border-radius: 12px;
+          background-color: #f1efe9;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+          transition: box-shadow 0.35s ease, transform 0.35s ease;
+        }
+
+        .pe-link:hover .pe-image-wrap {
+          box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.14), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ── Floating Index Badge (Pinterest Pin indicator) ─────── */
+        .pe-card__badge {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          z-index: 4;
+          padding: 3px 7px;
+          border-radius: 6px;
+          background: rgba(255, 255, 255, 0.88);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.62rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          color: #111111;
+          line-height: 1;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+          pointer-events: none;
+          transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+        }
+        .pe-link:hover .pe-card__badge {
+          background: #e31e24;
+          color: #ffffff;
+        }
+
+        /* ── Editorial Placeholder for projects without images ───── */
+        .pe-placeholder {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(145deg, #f7f6f2 0%, #ebe8e1 100%);
+          color: #0a0a0a;
+          padding: 1.5rem;
+          text-align: center;
+          gap: 0.35rem;
+        }
+        .pe-placeholder__num {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 1.6rem;
+          font-weight: 900;
+          color: rgba(227, 30, 36, 0.25);
+          line-height: 1;
+          letter-spacing: -0.04em;
+        }
+        .pe-placeholder__logo {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.72rem;
+          font-weight: 900;
+          letter-spacing: 0.18em;
+          color: rgba(10, 10, 10, 0.6);
+        }
+        .pe-placeholder__cat {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(10, 10, 10, 0.38);
+        }
+
+        /* ── Pinterest-style Floating Action Button ──────────────── */
+        .pe-overlay__btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: #e31e24;
+          color: #ffffff;
+          padding: 0.45rem 0.85rem;
+          border-radius: 9999px;
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.65rem;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          line-height: 1;
+          box-shadow: 0 4px 14px rgba(227, 30, 36, 0.45);
+          transform: translateY(4px);
+          transition: transform 0.25s ease;
+          align-self: flex-start;
+        }
+        .pe-link:hover .pe-overlay__btn {
+          transform: translateY(0);
+        }
+
+        /* ── Card Metadata (Uniform heights across all items) ───── */
+        .pe-meta {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          padding: 0 0.15rem;
+        }
+
+        .pe-meta__top {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          height: 1rem;
+          overflow: hidden;
+        }
+
+        .pe-meta__discipline {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(10, 10, 10, 0.4);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          min-width: 0;
+        }
+
+        /* Title: strictly 2-line fixed height box for seamless row alignment */
+        .pe-meta__title {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: clamp(0.88rem, 1.05vw, 1.05rem);
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #0a0a0a;
+          line-height: 1.2;
+          margin: 0;
+          height: 2.4em;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          transition: color 0.2s ease;
+        }
+
+        .pe-meta__bottom {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 0.5rem;
+          height: 1.15rem;
+          overflow: hidden;
+        }
+
+        .pe-meta__client {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.68rem;
+          font-weight: 500;
+          color: rgba(10, 10, 10, 0.45);
+          letter-spacing: 0.01em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          min-width: 0;
+        }
+
+        .pe-meta__year {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.62rem;
+          font-weight: 700;
+          color: rgba(10, 10, 10, 0.32);
+          letter-spacing: 0.06em;
+          flex-shrink: 0;
+        }
+
         /* ── Divider ─────────────────────────────────────────────── */
         .wk-rule {
           width: 100%;
@@ -267,9 +465,9 @@ export default async function WorkPage({
       >
         <div
           style={{
-            maxWidth: "1400px",
+            maxWidth: "1520px",
             margin: "0 auto",
-            padding: "0 clamp(1.25rem, 4vw, 3.5rem)",
+            padding: "0 clamp(1.25rem, 3.5vw, 3rem)",
           }}
         >
           {/* ── Page Introduction ───────────────────────────────────── */}
