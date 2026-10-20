@@ -5,7 +5,57 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
+import JsonLd from "@/components/JsonLd";
 import { LanguageProvider } from "@/lib/LanguageContext";
+
+const siteStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://utero.id/#organization",
+      name: "PT. Utero Kreatif Indonesia",
+      alternateName: ["Utero.id", "UTERO.ID", "Utero Indonesia"],
+      url: "https://utero.id",
+      logo: "https://utero.id/icon.svg",
+      foundingDate: "1998",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Jl. Bantaran 1 No. 25, Purwantoro, Blimbing",
+        addressLocality: "Malang",
+        addressRegion: "Jawa Timur",
+        postalCode: "65141",
+        addressCountry: "ID",
+      },
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: "+62-819-9990-0900",
+          contactType: "customer service",
+          email: "marketingutero@gmail.com",
+          availableLanguage: ["Indonesian", "English"],
+        },
+      ],
+      sameAs: [
+        "https://www.instagram.com/uteroindonesia/?hl=en",
+        "https://www.facebook.com/uteroadvertisingindonesia/",
+        "https://www.youtube.com/@uteroindonesia",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://utero.id/#website",
+      name: "Utero.id",
+      alternateName: "PT. Utero Kreatif Indonesia",
+      url: "https://utero.id",
+      description:
+        "Utero is an Indonesian brand consultancy and multidisciplinary creative design studio based in Malang, delivering brand, product, digital, spatial, and environmental design solutions since 1998.",
+      publisher: {
+        "@id": "https://utero.id/#organization",
+      },
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://utero.id"),
@@ -82,6 +132,7 @@ export default function RootLayout({
   return (
     <html data-scroll-behavior="smooth">
       <body className="antialiased">
+        <JsonLd data={siteStructuredData} />
         <LanguageProvider>
           <SmoothScroll>
             <CustomCursor />

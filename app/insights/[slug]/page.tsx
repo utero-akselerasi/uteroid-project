@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getInsightBySlug, getAllInsightSlugs } from "@/lib/insights";
+import JsonLd from "@/components/JsonLd";
 
 export async function generateStaticParams() {
   const slugs = getAllInsightSlugs();
@@ -63,8 +64,65 @@ export default async function InsightsSlugPage({
     notFound();
   }
 
+  const articleImageUrl = article.coverImage
+    ? article.coverImage.startsWith("http")
+      ? article.coverImage
+      : `https://utero.id${article.coverImage}`
+    : "https://utero.id/img/unnamed.webp";
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://utero.id",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Insights",
+            "item": "https://utero.id/insights",
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": article.title,
+            "item": `https://utero.id/insights/${article.slug}`,
+          },
+        ],
+      },
+      {
+        "@type": "Article",
+        "@id": `https://utero.id/insights/${article.slug}#article`,
+        "headline": article.title,
+        "description": article.excerpt,
+        "articleBody": article.content,
+        "image": articleImageUrl,
+        "author": {
+          "@type": "Organization",
+          "name": "PT. Utero Kreatif Indonesia",
+          "url": "https://utero.id",
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "PT. Utero Kreatif Indonesia",
+          "url": "https://utero.id",
+          "logo": "https://utero.id/icon.svg",
+        },
+        "url": `https://utero.id/insights/${article.slug}`,
+        "genre": article.category,
+      },
+    ],
+  };
+
   return (
     <>
+      <JsonLd data={articleSchema} />
       <style>{`
         .ins-back:hover { color: #c91a1f !important; }
         .ins-cta:hover { background-color: #0a0a0a !important; }

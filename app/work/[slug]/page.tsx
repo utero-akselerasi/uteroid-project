@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getProjectByRouteSlug, getAllRouteSlugs, getAdjacentProjects } from "@/lib/projects";
 import { getProjectCover } from "@/lib/projectMedia";
 import { disciplineLabels, industryLabels } from "@/lib/types";
+import JsonLd from "@/components/JsonLd";
 import ProjectDetailClient from "@/components/project-detail/ProjectDetailClient";
 
 export async function generateStaticParams() {
@@ -79,14 +80,77 @@ export default async function ProjectPage({
   // Industry label
   const industryLabel = industryLabels[project.industry] || project.industry;
 
+  const rawCover = getProjectCover(project);
+  const coverUrl = rawCover
+    ? rawCover.startsWith("http")
+      ? rawCover
+      : `https://utero.id${rawCover}`
+    : "https://utero.id/img/unnamed.webp";
+
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://utero.id",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Work",
+            "item": "https://utero.id/work",
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": project.title,
+            "item": `https://utero.id/work/${project.routeSlug}`,
+          },
+        ],
+      },
+      {
+        "@type": "CreativeWork",
+        "@id": `https://utero.id/work/${project.routeSlug}#creativework`,
+        "name": project.title,
+        "headline": `${project.title} — ${project.client}`,
+        "description":
+          project.shortDescription ||
+          project.excerpt ||
+          project.description,
+        "dateCreated": project.year,
+        "creator": {
+          "@type": "Organization",
+          "name": "PT. Utero Kreatif Indonesia",
+          "url": "https://utero.id",
+        },
+        "customer": {
+          "@type": "Organization",
+          "name": project.client,
+        },
+        "image": coverUrl,
+        "url": `https://utero.id/work/${project.routeSlug}`,
+        "genre": project.category,
+        ...(project.tags ? { keywords: project.tags.join(", ") } : {}),
+      },
+    ],
+  };
+
   return (
-    <ProjectDetailClient
-      project={project}
-      prev={prev ? { slug: prev.routeSlug, title: prev.title, year: prev.year, coverImage: getProjectCover(prev) } : null}
-      next={next ? { slug: next.routeSlug, title: next.title, year: next.year, coverImage: getProjectCover(next) } : null}
-      projectNum={num}
-      disciplines={disciplines}
-      industryLabel={industryLabel}
-    />
+    <>
+      <JsonLd data={projectSchema} />
+      <ProjectDetailClient
+        project={project}
+        prev={prev ? { slug: prev.routeSlug, title: prev.title, year: prev.year, coverImage: getProjectCover(prev) } : null}
+        next={next ? { slug: next.routeSlug, title: next.title, year: next.year, coverImage: getProjectCover(next) } : null}
+        projectNum={num}
+        disciplines={disciplines}
+        industryLabel={industryLabel}
+      />
+    </>
   );
 }
