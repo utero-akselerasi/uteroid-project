@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslations } from "@/lib/useTranslations";
 import type { ProjectVideo } from "@/lib/types";
 
 interface VideoPlayerProps {
@@ -41,6 +42,7 @@ function getEmbedUrl(video: ProjectVideo): string {
 }
 
 export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps) {
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -110,12 +112,12 @@ export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps
       onClick={handleClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Video presentation"
+      aria-label={t.projectChrome.videoPresentation}
     >
       <button
         className="pd-video-modal__close"
         onClick={handleClose}
-        aria-label="Close video"
+        aria-label={t.projectChrome.closeVideo}
       >
         ✕
       </button>

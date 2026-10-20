@@ -27,6 +27,7 @@ export const id = {
     capabilities: ["IDENTITAS", "CETAK", "LAINNYA", "DIGITAL", "LINGKUNGAN"],
     exploreWork: "JELAJAHI KARYA KAMI",
     studioTag: "BAGIAN DARI UTERO INDONESIA — BERDIRI SEJAK 1998",
+    slideAria: (n: number) => `Buka slide ${n}`,
   },
   // Services Section
   services: {
@@ -53,6 +54,9 @@ export const id = {
       "Identitas, ruang, produk, kampanye, dan pengalaman pilihan yang diciptakan oleh Utero.",
     noProjects: "Tidak ada proyek yang cocok dengan filter saat ini.",
     clearFilters: "Hapus Filter →",
+    openFilter: "Buka filter",
+    closeFilter: "Tutup filter",
+    filterAria: "Filter proyek",
   },
   // Halaman utama
   home: {
@@ -147,6 +151,9 @@ export const id = {
     toggleThumbnails: "Beralih thumbnail",
     thumbnails: "Thumbnail",
     deckAria: (label: string) => `Deck ${label}`,
+    enterFullscreen: "Masuk layar penuh",
+    exitFullscreen: "Keluar layar penuh",
+    goToSlide: (n: number) => `Buka slide ${n}`,
   },
   // Chrome header / menu overlay
   header: {
@@ -508,5 +515,9 @@ export const id = {
     retail: "Ritel",
     property: "Properti",
     event: "Acara",
+  },
+  // Aksesibilitas
+  accessibility: {
+    skipToContent: "Lompat ke konten utama",
   },
 };

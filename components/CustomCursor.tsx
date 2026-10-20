@@ -14,16 +14,26 @@ export default function CustomCursor() {
   const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
-    // Disable on touch and coarse pointer devices
+    // Disable on touch, coarse pointer devices, or when reduced motion is preferred
+    const motionQuery = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+
     if (
       typeof window !== "undefined" &&
-      (window.matchMedia("(pointer: coarse)").matches ||
+      (motionQuery?.matches ||
+        window.matchMedia("(pointer: coarse)").matches ||
         "ontouchstart" in window ||
         navigator.maxTouchPoints > 0)
     ) {
       setIsTouch(true);
       return;
     }
+
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setIsTouch(true);
+      }
+    };
+    motionQuery?.addEventListener("change", handleMotionChange);
 
     const handleMouseMove = (e: MouseEvent) => {
       targetPosRef.current = { x: e.clientX, y: e.clientY };
@@ -66,6 +76,7 @@ export default function CustomCursor() {
     document.documentElement.addEventListener("mouseenter", handleMouseEnter);
 
     return () => {
+      motionQuery?.removeEventListener("change", handleMotionChange);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);

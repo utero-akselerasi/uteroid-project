@@ -8,6 +8,9 @@ export default function PageTransition({ children }: { children: React.ReactNode
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
     setIsTransitioning(true);
     const timer = setTimeout(() => {
       setIsTransitioning(false);
@@ -20,7 +23,9 @@ export default function PageTransition({ children }: { children: React.ReactNode
       style={{
         opacity: isTransitioning ? 0.85 : 1,
         transform: isTransitioning ? "translateY(6px)" : "translateY(0)",
-        transition: "opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+        transition: isTransitioning
+          ? "opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)"
+          : "none",
       }}
     >
       {children}

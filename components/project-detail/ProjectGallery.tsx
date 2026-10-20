@@ -147,7 +147,13 @@ function buildLayout(count: number): LayoutSlot[] {
 // ─────────────────────────────────────────────
 // ProjectGallery Component
 // ─────────────────────────────────────────────
-export default function ProjectGallery({ images }: { images: string[] }) {
+export default function ProjectGallery({
+  images,
+  projectTitle,
+}: {
+  images: string[];
+  projectTitle?: string;
+}) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const openLightbox = useCallback((index: number) => {
@@ -170,19 +176,21 @@ export default function ProjectGallery({ images }: { images: string[] }) {
       const idx1 = slot.indices[0];
       const idx2 = slot.indices[1];
       imageIdx = idx2 + 1;
+      const alt1 = projectTitle ? `${projectTitle} — visual highlight ${idx1 + 1}` : `Project image ${idx1 + 1}`;
+      const alt2 = projectTitle ? `${projectTitle} — visual highlight ${idx2 + 1}` : `Project image ${idx2 + 1}`;
       return (
         <GalleryReveal key={`slot-${slotIndex}`}>
           <div className="pd-gallery__row-pair">
             <GalleryImage
               src={images[idx1]}
-              alt={`Project image ${idx1 + 1}`}
+              alt={alt1}
               variant="half"
               sizes="(max-width: 768px) 100vw, 50vw"
               onClick={() => openLightbox(idx1)}
             />
             <GalleryImage
               src={images[idx2]}
-              alt={`Project image ${idx2 + 1}`}
+              alt={alt2}
               variant="half"
               sizes="(max-width: 768px) 100vw, 50vw"
               onClick={() => openLightbox(idx2)}
@@ -194,11 +202,12 @@ export default function ProjectGallery({ images }: { images: string[] }) {
 
     const idx = imageIdx;
     imageIdx++;
+    const alt = projectTitle ? `${projectTitle} — visual highlight ${idx + 1}` : `Project image ${idx + 1}`;
     return (
       <GalleryReveal key={`slot-${slotIndex}`}>
         <GalleryImage
           src={images[idx]}
-          alt={`Project image ${idx + 1}`}
+          alt={alt}
           variant={slot.type === "inset" ? "inset" : "full"}
           onClick={() => openLightbox(idx)}
         />
@@ -230,6 +239,7 @@ export default function ProjectGallery({ images }: { images: string[] }) {
         <Lightbox
           images={images}
           initialIndex={lightboxIndex}
+          projectTitle={projectTitle}
           onClose={closeLightbox}
         />
       )}

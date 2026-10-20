@@ -355,7 +355,7 @@ export default function ServiceDetailClient({
                         {cover && (
                           <Image
                             src={cover}
-                            alt={proj.title}
+                            alt={`${proj.title} — ${proj.client}`}
                             fill
                             sizes="(max-width: 768px) 100vw, 50vw"
                             style={{

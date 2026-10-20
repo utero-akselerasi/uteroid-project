@@ -41,7 +41,7 @@ export default function ProjectEntry({
             <>
               <Image
                 src={coverSrc}
-                alt={project.title}
+                alt={`${project.title} — ${project.client}`}
                 fill
                 priority={index < 4}
                 loading={index < 4 ? "eager" : "lazy"}
@@ -60,7 +60,7 @@ export default function ProjectEntry({
               {hoverSrc && (
                 <Image
                   src={hoverSrc}
-                  alt={`${project.title} — preview detail`}
+                  alt=""
                   fill
                   loading="lazy"
                   sizes="(max-width: 440px) 50vw, (max-width: 768px) 50vw, (max-width: 1140px) 33vw, 25vw"

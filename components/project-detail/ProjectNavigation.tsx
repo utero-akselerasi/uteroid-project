@@ -19,7 +19,7 @@ export default function ProjectNavigation({ prev, next }: ProjectNavigationProps
           <div className="pd-nav__link-thumb">
             <Image
               src={prev.coverImage}
-              alt={prev.title}
+              alt={`${prev.title} (${prev.year})`}
               fill
               sizes="100px"
               style={{ objectFit: "cover" }}
@@ -40,7 +40,7 @@ export default function ProjectNavigation({ prev, next }: ProjectNavigationProps
           <div className="pd-nav__link-thumb">
             <Image
               src={next.coverImage}
-              alt={next.title}
+              alt={`${next.title} (${next.year})`}
               fill
               sizes="100px"
               style={{ objectFit: "cover" }}

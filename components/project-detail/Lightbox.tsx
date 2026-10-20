@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useCallback, useState, useRef } from "react";
+import { useTranslations } from "@/lib/useTranslations";
 
 interface LightboxProps {
   images: string[];
   initialIndex: number;
+  projectTitle?: string;
   onClose: () => void;
 }
 
-export default function Lightbox({ images, initialIndex, onClose }: LightboxProps) {
+export default function Lightbox({ images, initialIndex, projectTitle, onClose }: LightboxProps) {
+  const t = useTranslations();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isOpen, setIsOpen] = useState(false);
   const touchStartX = useRef(0);
@@ -72,12 +75,15 @@ export default function Lightbox({ images, initialIndex, onClose }: LightboxProp
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
+      role="dialog"
+      aria-modal="true"
+      aria-label={projectTitle ? `${projectTitle} — ${t.projectChrome.highlights}` : t.projectChrome.highlights}
     >
       {/* Close */}
       <button
         className="pd-lightbox__close"
         onClick={handleClose}
-        aria-label="Close lightbox"
+        aria-label={t.projectChrome.closeLightbox}
       >
         ✕
       </button>
@@ -87,7 +93,7 @@ export default function Lightbox({ images, initialIndex, onClose }: LightboxProp
         <button
           className="pd-lightbox__nav pd-lightbox__nav--prev"
           onClick={(e) => { e.stopPropagation(); goPrev(); }}
-          aria-label="Previous image"
+          aria-label={t.projectChrome.previousImage}
         >
           ←
         </button>
@@ -101,7 +107,11 @@ export default function Lightbox({ images, initialIndex, onClose }: LightboxProp
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={images[currentIndex]}
-          alt={`Gallery image ${currentIndex + 1}`}
+          alt={
+            projectTitle
+              ? `${projectTitle} — ${t.projectChrome.highlights} ${currentIndex + 1}`
+              : `Gallery image ${currentIndex + 1}`
+          }
           draggable={false}
         />
       </div>
@@ -111,7 +121,7 @@ export default function Lightbox({ images, initialIndex, onClose }: LightboxProp
         <button
           className="pd-lightbox__nav pd-lightbox__nav--next"
           onClick={(e) => { e.stopPropagation(); goNext(); }}
-          aria-label="Next image"
+          aria-label={t.projectChrome.nextImage}
         >
           →
         </button>

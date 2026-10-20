@@ -27,6 +27,7 @@ export const en = {
     capabilities: ["IDENTITY", "PRINTED", "MISC", "DIGITAL", "ENVIRONMENTAL"],
     exploreWork: "EXPLORE OUR WORK",
     studioTag: "PART OF UTERO INDONESIA — EST. 1998",
+    slideAria: (n: number) => `Go to slide ${n}`,
   },
   // Services Section
   services: {
@@ -53,6 +54,9 @@ export const en = {
       "Selected identities, spaces, products, campaigns and experiences created by Utero.",
     noProjects: "No projects match the current filters.",
     clearFilters: "Clear Filters →",
+    openFilter: "Open filters",
+    closeFilter: "Close filters",
+    filterAria: "Work filters",
   },
   // Home page sections
   home: {
@@ -147,6 +151,9 @@ export const en = {
     toggleThumbnails: "Toggle thumbnails",
     thumbnails: "Thumbnails",
     deckAria: (label: string) => `${label} Deck`,
+    enterFullscreen: "Enter fullscreen",
+    exitFullscreen: "Exit fullscreen",
+    goToSlide: (n: number) => `Go to slide ${n}`,
   },
   // Header / menu overlay chrome
   header: {
@@ -510,5 +517,9 @@ export const en = {
     retail: "Retail",
     property: "Property",
     event: "Event",
+  },
+  // Accessibility
+  accessibility: {
+    skipToContent: "Skip to main content",
   },
 };

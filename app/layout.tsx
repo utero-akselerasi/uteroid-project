@@ -6,6 +6,7 @@ import CustomCursor from "@/components/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
 import JsonLd from "@/components/JsonLd";
+import SkipToContent from "@/components/SkipToContent";
 import { LanguageProvider } from "@/lib/LanguageContext";
 
 const siteStructuredData = {
@@ -130,14 +131,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className="antialiased">
         <JsonLd data={siteStructuredData} />
         <LanguageProvider>
           <SmoothScroll>
+            <SkipToContent />
             <CustomCursor />
             <Header />
-            <main>
+            <main id="main-content" tabIndex={-1} style={{ outline: "none" }}>
               <PageTransition>{children}</PageTransition>
             </main>
             <Footer />

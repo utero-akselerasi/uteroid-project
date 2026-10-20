@@ -27,7 +27,8 @@ export default function StatementBanner() {
       >
         <Image
           src="/img/unnamed.webp"
-          alt="Utero Studio Storefront - Creative Since 1998"
+          alt=""
+          role="presentation"
           fill
           style={{
             objectFit: "cover",

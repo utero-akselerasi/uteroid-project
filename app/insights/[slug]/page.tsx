@@ -244,7 +244,7 @@ export default async function InsightsSlugPage({
             >
               <Image
                 src={article.coverImage}
-                alt={article.title}
+                alt={`${article.title} — ${article.category}`}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 960px"

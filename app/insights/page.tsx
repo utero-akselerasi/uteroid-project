@@ -328,7 +328,7 @@ export default function InsightsPage() {
                       {featured.coverImage && (
                         <Image
                           src={featured.coverImage}
-                          alt={featured.title}
+                          alt={`${featured.title} — ${featured.category}`}
                           fill
                           priority
                           sizes="(max-width: 1024px) 100vw, 600px"
@@ -384,7 +384,7 @@ export default function InsightsPage() {
                         {article.coverImage && (
                           <Image
                             src={article.coverImage}
-                            alt={article.title}
+                            alt={`${article.title} — ${article.category}`}
                             fill
                             sizes="(max-width: 768px) 100vw, 50vw"
                             style={{

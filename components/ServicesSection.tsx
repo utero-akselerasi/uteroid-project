@@ -124,7 +124,7 @@ export default function ServicesSection() {
                       onClick={() => router.push(`/services/${item.slug}`)}
                       onMouseEnter={() => setActiveIdx(idx)}
                       onFocus={() => setActiveIdx(idx)}
-                      aria-label={`View ${item.name} services`}
+                      aria-label={t.servicesPage.viewAria(item.name)}
                       data-cursor={t.servicesPage.explore}
                     style={{
                       display: "flex",

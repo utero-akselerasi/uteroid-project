@@ -268,7 +268,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
             className="pd-deck-slider__control-btn"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage === 0}
-            aria-label="Previous slide"
+            aria-label={t.projectChrome.previousSlide}
           >
             ←
           </button>
@@ -287,7 +287,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
             className="pd-deck-slider__control-btn"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === manifest.total_pages - 1}
-            aria-label="Next slide"
+            aria-label={t.projectChrome.nextSlide}
           >
             →
           </button>
@@ -297,8 +297,8 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
               showThumbnails ? "pd-deck-slider__control-btn--active" : ""
             }`}
             onClick={() => setShowThumbnails((prev) => !prev)}
-            aria-label="Toggle thumbnails"
-            title="Thumbnails"
+            aria-label={t.projectChrome.toggleThumbnails}
+            title={t.projectChrome.thumbnails}
           >
             ☰
           </button>
@@ -306,8 +306,8 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
           <button
             className="pd-deck-slider__control-btn pd-deck-slider__control-btn--secondary"
             onClick={toggleFullscreen}
-            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-            title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+            aria-label={isFullscreen ? t.projectChrome.exitFullscreen : t.projectChrome.enterFullscreen}
+            title={isFullscreen ? t.projectChrome.exitFullscreen : t.projectChrome.enterFullscreen}
           >
             {isFullscreen ? "✕" : "⛶"}
           </button>
@@ -336,7 +336,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
               {isLoaded ? (
                 <Image
                   src={image}
-                  alt={`Slide ${index + 1}`}
+                  alt={`${slug} — slide ${index + 1}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
                   style={{ objectFit: "contain" }}
@@ -365,11 +365,11 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
                 currentPage === index ? "pd-deck-slider__thumbnail--active" : ""
               }`}
               onClick={() => goToPage(index)}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={t.projectChrome.goToSlide(index + 1)}
             >
               <Image
                 src={thumb}
-                alt={`Slide ${index + 1} thumbnail`}
+                alt={`${slug} — slide ${index + 1} thumbnail`}
                 fill
                 sizes="100px"
                 style={{ objectFit: "cover" }}

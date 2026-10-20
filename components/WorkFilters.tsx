@@ -248,6 +248,7 @@ export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps)
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="wf-drawer"
+          aria-label={open ? t.work.closeFilter : t.work.openFilter}
         >
           <span className="wf-toggle-icon">{open ? "×" : "+"}</span>
           <span>{t.work.filter}</span>
@@ -263,7 +264,7 @@ export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps)
         id="wf-drawer"
         className={`wf-drawer${open ? " open" : ""}`}
         role="region"
-        aria-label="Work filters"
+        aria-label={t.work.filterAria}
         style={{ marginBottom: open ? "clamp(3rem, 5vw, 5rem)" : "0" }}
       >
         <div className="wf-drawer-inner">

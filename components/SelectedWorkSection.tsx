@@ -154,7 +154,7 @@ function WorkCard({
             {coverSrc(cur) && (
               <Image
                 src={coverSrc(cur)}
-                alt={cur.title}
+                alt={`${cur.title} — ${cur.client}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 style={{
@@ -173,7 +173,7 @@ function WorkCard({
               {coverSrc(inc) && (
                 <Image
                   src={coverSrc(inc)}
-                  alt={inc.title}
+                  alt={`${inc.title} — ${inc.client}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   style={{

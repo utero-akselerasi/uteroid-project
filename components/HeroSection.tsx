@@ -54,6 +54,7 @@ export default function HeroSection() {
           zIndex: 1,
           pointerEvents: "none",
         }}
+        aria-hidden="true"
       >
         {slides.map((slide, index) => {
           const isActive = index === currentSlide;
@@ -71,7 +72,8 @@ export default function HeroSection() {
             >
               <Image
                 src={slide.image}
-                alt={slide.alt}
+                alt=""
+                role="presentation"
                 fill
                 priority={index === 0}
                 style={{
@@ -312,7 +314,8 @@ export default function HeroSection() {
             <button
               key={s.id}
               onClick={() => setCurrentSlide(idx)}
-              aria-label={`Slide ${idx + 1}`}
+              aria-label={t.hero.slideAria(idx + 1)}
+              aria-current={isActive ? "true" : undefined}
               style={{
                 display: "flex",
                 alignItems: "center",

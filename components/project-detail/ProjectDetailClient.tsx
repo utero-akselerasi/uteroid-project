@@ -72,7 +72,7 @@ export default function ProjectDetailClient({
           {coverSrc ? (
             <Image
               src={coverSrc}
-              alt={project.title}
+              alt={`${project.title} — ${project.client}`}
               fill
               priority
               loading="eager"
@@ -234,7 +234,7 @@ export default function ProjectDetailClient({
           )}
 
           {/* ── Gallery ──────────────────────────────────── */}
-          <ProjectGallery images={gallery} />
+          <ProjectGallery images={gallery} projectTitle={project.title} />
 
           {/* ── Full Presentation Deck ──────────────────────── */}
           <RevealOnScroll>

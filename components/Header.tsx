@@ -738,7 +738,8 @@ export default function Header() {
           {activePreview && (
             <Image
               src={activePreview}
-              alt="Utero Studio Preview"
+              alt=""
+              role="presentation"
               fill
               sizes="100vw"
               style={{
@@ -862,7 +863,7 @@ export default function Header() {
           {/* Close Button */}
           <button
             onClick={() => setMenuOpen(false)}
-            aria-label="Close studio menu"
+            aria-label={t.header.closeMenu}
             style={{
               background: "rgba(255, 255, 255, 0.15)",
               border: "1px solid rgba(255, 255, 255, 0.25)",
