@@ -7,6 +7,31 @@ export const metadata: Metadata = {
   title: "Insights & Media — Perspectives from Utero",
   description:
     "Critical reflections, case perspectives, and studio philosophies on branding, environmental spatial design, and execution.",
+  openGraph: {
+    type: "website",
+    title: "Insights & Media — Perspectives from Utero",
+    description:
+      "Critical reflections, case perspectives, and studio philosophies on branding, environmental spatial design, and execution.",
+    url: "https://utero.id/insights",
+    images: [
+      {
+        url: "/img/unnamed.webp",
+        width: 1280,
+        height: 720,
+        alt: "Utero Insights & Perspectives",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Insights & Media — Perspectives from Utero",
+    description:
+      "Critical reflections, case perspectives, and studio philosophies on branding, environmental spatial design, and execution.",
+    images: ["/img/unnamed.webp"],
+  },
+  alternates: {
+    canonical: "/insights",
+  },
 };
 
 function SectionLabel({ children }: { children: React.ReactNode }) {

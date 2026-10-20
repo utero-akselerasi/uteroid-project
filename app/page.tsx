@@ -1,9 +1,43 @@
+import type { Metadata } from "next";
 import HeroSection from "@/components/HeroSection";
 import IntroductionSection from "@/components/IntroductionSection";
 import StatementBanner from "@/components/StatementBanner";
 import SelectedWorkSection from "@/components/SelectedWorkSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import ServicesSection from "@/components/ServicesSection";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "UTERO.ID — Design as a Solution",
+  },
+  description:
+    "Indonesian creative design studio based in Malang since 1998. Crafting enduring brand systems, packaging, interactive digital experiences, and environmental spatial wayfinding.",
+  openGraph: {
+    type: "website",
+    title: "UTERO.ID — Design as a Solution",
+    description:
+      "Indonesian creative design studio based in Malang since 1998. Crafting enduring brand systems, packaging, interactive digital experiences, and environmental spatial wayfinding.",
+    url: "https://utero.id",
+    images: [
+      {
+        url: "/img/unnamed.webp",
+        width: 1280,
+        height: 720,
+        alt: "UTERO.ID — Design as a Solution",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UTERO.ID — Design as a Solution",
+    description:
+      "Indonesian creative design studio based in Malang since 1998. Crafting enduring brand systems, packaging, interactive digital experiences, and environmental spatial wayfinding.",
+    images: ["/img/unnamed.webp"],
+  },
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function Home() {
   return (

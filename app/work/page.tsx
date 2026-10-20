@@ -8,9 +8,34 @@ import WorkPageSubtitle from "@/components/WorkPageSubtitle";
 import ProjectGrid from "@/components/ProjectGrid";
 
 export const metadata: Metadata = {
-  title: "Work — Utero",
+  title: "Work — Selected Projects",
   description:
-    "Selected identities, spaces, products and experiences created by Utero design studio.",
+    "Explore selected brand identities, packaging, digital systems, environmental wayfinding, and spatial experiences by Utero design studio.",
+  openGraph: {
+    type: "website",
+    title: "Work — Selected Projects",
+    description:
+      "Explore selected brand identities, packaging, digital systems, environmental wayfinding, and spatial experiences by Utero design studio.",
+    url: "https://utero.id/work",
+    images: [
+      {
+        url: "/img/unnamed.webp",
+        width: 1280,
+        height: 720,
+        alt: "Utero Design Studio Work Archive",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Work — Selected Projects",
+    description:
+      "Explore selected brand identities, packaging, digital systems, environmental wayfinding, and spatial experiences by Utero design studio.",
+    images: ["/img/unnamed.webp"],
+  },
+  alternates: {
+    canonical: "/work",
+  },
 };
 
 

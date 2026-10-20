@@ -16,20 +16,38 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = getProjectByRouteSlug(slug);
-  if (!project) return { title: "Project Not Found" };
+  if (!project) notFound();
+
+  const pageTitle = `${project.title} — ${project.client}`;
+  const description =
+    project.excerpt ||
+    project.shortDescription ||
+    `${project.title} designed for ${project.client} by Utero.`;
+  const coverUrl = getProjectCover(project) || "/img/unnamed.webp";
+
   return {
-    title: `${project.title} — Utero`,
-    description:
-      project.shortDescription ||
-      project.excerpt ||
-      `${project.title} — ${project.client}`,
+    title: pageTitle,
+    description,
     openGraph: {
-      title: `${project.title} — Utero`,
-      description:
-        project.shortDescription ||
-        project.excerpt ||
-        `${project.title} — ${project.client}`,
-      images: [{ url: getProjectCover(project) }],
+      type: "article",
+      title: pageTitle,
+      description,
+      url: `https://utero.id/work/${project.routeSlug}`,
+      images: [
+        {
+          url: coverUrl,
+          alt: `${project.title} by Utero`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: pageTitle,
+      description,
+      images: [coverUrl],
+    },
+    alternates: {
+      canonical: `/work/${project.routeSlug}`,
     },
   };
 }

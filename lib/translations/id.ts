@@ -489,6 +489,14 @@ export const id = {
     copyright: "© 1998 — [YEAR] UTERO.ID. Hak cipta dilindungi.",
     location: "MALANG, INDONESIA — STUDIO DESAIN KREATIF",
   },
+  // 404 Not Found Page
+  notFound: {
+    label: "404 / TIDAK DITEMUKAN",
+    headline: "HALAMAN TIDAK DITEMUKAN",
+    description: "Halaman yang Anda cari tidak ada, telah dihapus, atau dipindahkan ke alamat baru.",
+    backHome: "Kembali ke Beranda",
+    viewWork: "Lihat Karya Kami",
+  },
   // Industry Labels (filter taxonomy - translated to Indonesian)
   industries: {
     corporate: "Korporat",

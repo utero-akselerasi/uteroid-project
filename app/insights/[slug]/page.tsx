@@ -18,12 +18,36 @@ export async function generateMetadata({
   const article = getInsightBySlug(slug);
 
   if (!article) {
-    return { title: "Article Not Found" };
+    notFound();
   }
 
+  const pageTitle = `${article.title} — Insights`;
+  const coverImage = article.coverImage || "/img/unnamed.webp";
+
   return {
-    title: `${article.title} — Insights`,
+    title: pageTitle,
     description: article.excerpt,
+    openGraph: {
+      type: "article",
+      title: pageTitle,
+      description: article.excerpt,
+      url: `https://utero.id/insights/${article.slug}`,
+      images: [
+        {
+          url: coverImage,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: pageTitle,
+      description: article.excerpt,
+      images: [coverImage],
+    },
+    alternates: {
+      canonical: `/insights/${article.slug}`,
+    },
   };
 }
 

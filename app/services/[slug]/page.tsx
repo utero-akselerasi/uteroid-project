@@ -15,10 +15,32 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
-  if (!service) return { title: "Service Not Found" };
+  if (!service) notFound();
+  const pageTitle = `${service.name} — Capabilities & Practice`;
   return {
-    title: `${service.name} — Capabilities & Practice`,
+    title: pageTitle,
     description: service.description,
+    openGraph: {
+      type: "website",
+      title: pageTitle,
+      description: service.description,
+      url: `https://utero.id/services/${service.slug}`,
+      images: [
+        {
+          url: service.image,
+          alt: service.imageAlt || `${service.name} capabilities by Utero`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: pageTitle,
+      description: service.description,
+      images: [service.image],
+    },
+    alternates: {
+      canonical: `/services/${service.slug}`,
+    },
   };
 }
 

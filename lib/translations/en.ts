@@ -491,6 +491,14 @@ export const en = {
     copyright: "© 1998 — [YEAR] UTERO.ID. All rights reserved.",
     location: "MALANG, INDONESIA — CREATIVE DESIGN STUDIO",
   },
+  // 404 Not Found Page
+  notFound: {
+    label: "404 / NOT FOUND",
+    headline: "PAGE NOT FOUND",
+    description: "The page you are looking for doesn't exist, has been removed, or has moved to a new address.",
+    backHome: "Back to Home",
+    viewWork: "View Our Work",
+  },
   // Industry Labels (filter taxonomy - kept as data labels, not translated)
   industries: {
     corporate: "Corporate",
