@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useTranslations } from "@/lib/useTranslations";
 import type { ProjectVideo } from "@/lib/types";
 
 interface VideoPlayerProps {
@@ -40,25 +42,33 @@ function getEmbedUrl(video: ProjectVideo): string {
 }
 
 export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps) {
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    setMounted(true);
     // Save previously focused element to return focus on close
     previousFocusRef.current = document.activeElement as HTMLElement | null;
 
     requestAnimationFrame(() => setIsOpen(true));
+
+    // Prevent background scrolling while modal is open, without jumping scroll position
+    const scrollY = window.scrollY;
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = originalOverflow;
+      // Guarantee scroll position is preserved without jumping
+      window.scrollTo({ top: scrollY, behavior: "instant" });
       // Return focus to trigger button
       if (previousFocusRef.current && typeof previousFocusRef.current.focus === "function") {
-        previousFocusRef.current.focus();
+        previousFocusRef.current.focus({ preventScroll: true });
       }
     };
   }, []);
@@ -94,18 +104,20 @@ export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps
 
   const embedUrl = video.type !== "file" ? getEmbedUrl(video) : "";
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       className={`pd-video-modal ${isOpen ? "pd-video-modal--open" : ""}`}
       onClick={handleClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Video presentation"
+      aria-label={t.projectChrome.videoPresentation}
     >
       <button
         className="pd-video-modal__close"
         onClick={handleClose}
-        aria-label="Close video"
+        aria-label={t.projectChrome.closeVideo}
       >
         ✕
       </button>
@@ -138,6 +150,7 @@ export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps
           />
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

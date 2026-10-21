@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "@/lib/useTranslations";
 
-const mainNavLinks = [
+const mainNavLinksStatic = [
   { label: "WORK", href: "/work" },
   { label: "SERVICES", href: "/services" },
   { label: "STUDIO", href: "/studio" },
@@ -26,7 +27,13 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const t = useTranslations();
   const currentYear = new Date().getFullYear();
+
+  const mainNavLinks = mainNavLinksStatic.map((item) => ({
+    ...item,
+    label: t.nav[item.label.toLowerCase() as keyof typeof t.nav] || item.label,
+  }));
 
   return (
     <footer
@@ -83,7 +90,7 @@ export default function Footer() {
                 margin: "0 0 1rem",
               }}
             >
-              DESIGN AS A SOLUTION.
+              {t.footer.tagline}
             </p>
 
             <p
@@ -94,7 +101,7 @@ export default function Footer() {
                 margin: 0,
               }}
             >
-              A premier Indonesian brand consultant and creative design agency. Transforming vision into reality with strategic craft since 1998.
+              {t.footer.description}
             </p>
           </div>
 
@@ -111,7 +118,7 @@ export default function Footer() {
                 marginBottom: "1rem",
               }}
             >
-              NAVIGATION
+              {t.footer.navigation}
             </span>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               {mainNavLinks.map((item) => (
@@ -159,7 +166,7 @@ export default function Footer() {
                 marginBottom: "1rem",
               }}
             >
-              WHATSAPP INQUIRIES
+              {t.footer.whatsappInquiries}
             </span>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
@@ -240,7 +247,7 @@ export default function Footer() {
                 marginBottom: "1rem",
               }}
             >
-              EMAIL &amp; SOCIAL
+              {t.footer.emailSocial}
             </span>
 
             <a
@@ -317,7 +324,7 @@ export default function Footer() {
           }}
         >
           <div style={{ fontSize: "0.75rem", color: "rgba(255, 255, 255, 0.5)" }}>
-            &copy; 1998 — {currentYear} UTERO.ID. All rights reserved.
+            {t.footer.copyright.replace("[YEAR]", String(currentYear))}
           </div>
 
           <div
@@ -329,7 +336,7 @@ export default function Footer() {
               color: "rgba(255, 255, 255, 0.6)",
             }}
           >
-            MALANG, INDONESIA — CREATIVE DESIGN STUDIO
+            {t.footer.location}
           </div>
         </div>
       </div>

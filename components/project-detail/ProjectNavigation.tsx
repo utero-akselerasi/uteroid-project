@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/types";
+import { useTranslations } from "@/lib/useTranslations";
 
 interface ProjectNavigationProps {
   prev: Pick<Project, "slug" | "title" | "year" | "coverImage"> | null;
@@ -8,6 +11,7 @@ interface ProjectNavigationProps {
 }
 
 export default function ProjectNavigation({ prev, next }: ProjectNavigationProps) {
+  const t = useTranslations();
   return (
     <div className="pd-nav">
       {prev ? (
@@ -15,14 +19,14 @@ export default function ProjectNavigation({ prev, next }: ProjectNavigationProps
           <div className="pd-nav__link-thumb">
             <Image
               src={prev.coverImage}
-              alt={prev.title}
+              alt={`${prev.title} (${prev.year})`}
               fill
               sizes="100px"
               style={{ objectFit: "cover" }}
             />
           </div>
           <div className="pd-nav__link-info">
-            <span className="pd-nav__link-dir">← Previous</span>
+            <span className="pd-nav__link-dir">{t.projectDetail.previous}</span>
             <span className="pd-nav__link-title">{prev.title}</span>
             <span className="pd-nav__link-year">{prev.year}</span>
           </div>
@@ -36,14 +40,14 @@ export default function ProjectNavigation({ prev, next }: ProjectNavigationProps
           <div className="pd-nav__link-thumb">
             <Image
               src={next.coverImage}
-              alt={next.title}
+              alt={`${next.title} (${next.year})`}
               fill
               sizes="100px"
               style={{ objectFit: "cover" }}
             />
           </div>
           <div className="pd-nav__link-info">
-            <span className="pd-nav__link-dir">Next →</span>
+            <span className="pd-nav__link-dir">{t.projectDetail.next}</span>
             <span className="pd-nav__link-title">{next.title}</span>
             <span className="pd-nav__link-year">{next.year}</span>
           </div>

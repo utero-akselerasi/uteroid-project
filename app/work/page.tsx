@@ -1,317 +1,44 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import { Suspense } from "react";
 import { getProjectsByFilters, getFilterCounts } from "@/lib/projects";
-import { disciplineLabels, type WorkFilter } from "@/lib/types";
+import { type WorkFilter } from "@/lib/types";
 import WorkFilters from "@/components/WorkFilters";
-import type { Project } from "@/lib/types";
+import WorkPageContent from "@/components/WorkPageContent";
+import WorkPageSubtitle from "@/components/WorkPageSubtitle";
+import ProjectGrid from "@/components/ProjectGrid";
 
 export const metadata: Metadata = {
-  title: "Work — Utero",
+  title: "Work — Selected Projects",
   description:
-    "Selected identities, spaces, products and experiences created by Utero design studio.",
+    "Explore selected brand identities, packaging, digital systems, environmental wayfinding, and spatial experiences by Utero design studio.",
+  openGraph: {
+    type: "website",
+    title: "Work — Selected Projects",
+    description:
+      "Explore selected brand identities, packaging, digital systems, environmental wayfinding, and spatial experiences by Utero design studio.",
+    url: "https://utero.id/work",
+    images: [
+      {
+        url: "/img/unnamed.webp",
+        width: 1280,
+        height: 720,
+        alt: "Utero Design Studio Work Archive",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Work — Selected Projects",
+    description:
+      "Explore selected brand identities, packaging, digital systems, environmental wayfinding, and spatial experiences by Utero design studio.",
+    images: ["/img/unnamed.webp"],
+  },
+  alternates: {
+    canonical: "/work",
+  },
 };
 
-// ─────────────────────────────────────────────────────────────────────
-// ProjectEntry — editorial card with hover crossfade + info reveal
-//
-// Implementation: pure CSS, server component safe (no client JS).
-//
-// Image layers:
-//   – .pe-image--cover: z-index 1, opacity 1 → 0 on hover (if hoverImage)
-//   – .pe-image--cover.pe-image--only: z-index 1, opacity stays 1 (no hoverImage)
-//   – .pe-image--hover: z-index 2, opacity 0 → 1 on hover
-// Both scale 1 → 1.04 simultaneously.
-//
-// Overlay (.pe-overlay): z-index 3, gradient scrim + scope + CTA.
-// Fades in + slides up from bottom on :hover.
-//
-// Grid dimming: .pe-grid-root:hover dims siblings to 0.72.
-//
-// Border radius: 8px — matches menu-form-panel in Header.tsx L901.
-//
-// Mobile (≤768px): overlay hidden; .pe-scope-mobile always shown
-// at the bottom of the image with reduced opacity.
-// ─────────────────────────────────────────────────────────────────────
-function ProjectEntry({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) {
-  // Grid base image: prefer the curated AI cover when one exists, else the
-  // project's own cover. Scoped to the grid only — the detail hero
-  // (ProjectDetailClient) still uses coverImage, and hoverSrc below is
-  // independent so the crossfade is unaffected.
-  const coverSrc =
-    project.homepageCoverImage || project.coverImage || project.heroImage || "";
-  const hoverSrc = project.hoverImage ?? null;
-  const num = String(index + 1).padStart(2, "0");
-  const disciplines = project.disciplines
-    .map((d) => disciplineLabels[d])
-    .join(" · ");
 
-  // Scope summary: first 2 scope items joined, fallback to category
-  const scopeSummary =
-    project.details?.scope && project.details.scope.length > 0
-      ? project.details.scope.slice(0, 2).join(" · ")
-      : project.category;
-
-  return (
-    <Link
-      href={`/work/${project.slug}`}
-      className="pe-link"
-      aria-label={`${project.title} — ${project.client}`}
-      style={{ display: "block", textDecoration: "none", color: "inherit" }}
-    >
-      <article>
-        {/* ── Image container ── */}
-        <div
-          className="pe-image-wrap"
-          style={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: "4/3",
-            overflow: "hidden",
-            marginBottom: "1rem",
-            borderRadius: "8px",
-            backgroundColor: "#f0efed",
-          }}
-        >
-          {/* Layer 1: Cover image */}
-          {coverSrc && (
-            <Image
-              src={coverSrc}
-              alt={project.title}
-              fill
-              priority={index < 4}
-              loading={index < 4 ? "eager" : "lazy"}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              style={{
-                objectFit: "cover",
-                objectPosition: project.gridCoverPosition || "center",
-              }}
-              className={
-                hoverSrc
-                  ? "pe-image pe-image--cover"
-                  : "pe-image pe-image--cover pe-image--only"
-              }
-            />
-          )}
-
-          {/* Layer 2: Hover image (crossfades in on hover) */}
-          {hoverSrc && (
-            <Image
-              src={hoverSrc}
-              alt={`${project.title} — gallery detail`}
-              fill
-              loading="lazy"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              style={{ objectFit: "cover" }}
-              className="pe-image pe-image--hover"
-              aria-hidden="true"
-            />
-          )}
-
-          {/* ── Overlay: scope summary + View Project CTA ── */}
-          {/* Fades + slides up from bottom on card hover (desktop) */}
-          <div className="pe-overlay" aria-hidden="true">
-            <div className="pe-overlay__inner">
-              <span className="pe-overlay__scope">{scopeSummary}</span>
-              <span className="pe-overlay__cta">View Project →</span>
-            </div>
-          </div>
-
-          {/* ── Mobile fallback: scope line always visible ── */}
-          {/* On touch devices hover never fires; show info statically */}
-          <div className="pe-scope-mobile" aria-hidden="true">
-            <span>{scopeSummary}</span>
-          </div>
-        </div>
-
-        {/* ── Metadata below image ── */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.2rem",
-          }}
-        >
-          {/* Row 1: number · disciplines */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "0.62rem",
-                fontWeight: 800,
-                letterSpacing: "0.1em",
-                color: "#c91a1f",
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                lineHeight: 1,
-              }}
-            >
-              {num}
-            </span>
-            <span
-              style={{
-                width: "0.75rem",
-                height: "1px",
-                backgroundColor: "rgba(201,26,31,0.35)",
-                display: "inline-block",
-                flexShrink: 0,
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.6rem",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "rgba(10,10,10,0.4)",
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                minWidth: 0,
-                flexShrink: 1,
-              }}
-            >
-              {disciplines}
-            </span>
-          </div>
-
-          {/* Row 2: Project title */}
-          <h3
-            className="pe-title"
-            style={{
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              fontSize: "clamp(1rem, 1.4vw, 1.3rem)",
-              fontWeight: 900,
-              letterSpacing: "-0.025em",
-              textTransform: "uppercase",
-              color: "#0a0a0a",
-              lineHeight: 1.1,
-              margin: 0,
-            }}
-          >
-            {project.title}
-          </h3>
-
-          {/* Row 3: client · year */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-              gap: "0.5rem",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "0.7rem",
-                fontWeight: 500,
-                color: "rgba(10,10,10,0.42)",
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                letterSpacing: "0.01em",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                minWidth: 0,
-              }}
-            >
-              {project.client}
-            </span>
-            {project.year && (
-              <span
-                style={{
-                  fontSize: "0.62rem",
-                  fontWeight: 700,
-                  color: "rgba(10,10,10,0.3)",
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  letterSpacing: "0.06em",
-                  flexShrink: 0,
-                }}
-              >
-                {project.year}
-              </span>
-            )}
-          </div>
-        </div>
-      </article>
-    </Link>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────
-// EmptyState
-// ─────────────────────────────────────────────────────────────────────
-function EmptyState() {
-  return (
-    <div
-      style={{
-        padding: "6rem 0",
-        borderTop: "1px solid rgba(0,0,0,0.07)",
-      }}
-    >
-      <p
-        style={{
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          fontSize: "clamp(1rem, 2vw, 1.4rem)",
-          fontWeight: 900,
-          textTransform: "uppercase",
-          letterSpacing: "-0.02em",
-          color: "#0a0a0a",
-          marginBottom: "1.5rem",
-        }}
-      >
-        No projects match the current filters.
-      </p>
-      <Link
-        href="/work"
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          fontSize: "0.7rem",
-          fontWeight: 800,
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-          color: "#c91a1f",
-          textDecoration: "none",
-          borderBottom: "1px solid rgba(201,26,31,0.4)",
-          paddingBottom: "2px",
-        }}
-      >
-        Clear Filters →
-      </Link>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────
-// Project Grid — strict 3/2/1 column layout, uniform aspect ratio
-// Grid structure intentionally unchanged.
-// ─────────────────────────────────────────────────────────────────────
-function ProjectGrid({ projects }: { projects: Project[] }) {
-  if (projects.length === 0) return <EmptyState />;
-
-  return (
-    <div className="pe-grid-root">
-      {projects.map((project, index) => (
-        <div key={project.slug} className="pe-col-item">
-          <ProjectEntry project={project} index={index} />
-        </div>
-      ))}
-    </div>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────────────
 // Page — Server Component
@@ -326,7 +53,8 @@ export default async function WorkPage({
   const industry = params.industry || "";
 
   const filtered = getProjectsByFilters({ filter, industry });
-  const total = getFilterCounts().all;
+  const counts = getFilterCounts();
+  const total = counts.all;
 
   return (
     <>
@@ -499,20 +227,28 @@ export default async function WorkPage({
           }
         }
 
-        /* ── Grid layout (unchanged) ─────────────────────────────── */
+        /* ── Grid layout: Pinterest-inspired uniform 4-column ─────── */
         .pe-grid-root {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: clamp(1.5rem, 2.5vw, 2.5rem);
+          grid-template-columns: repeat(4, 1fr);
+          gap: clamp(1rem, 1.8vw, 1.75rem);
         }
-        @media (max-width: 1024px) {
+        @media (max-width: 1140px) {
           .pe-grid-root {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
           }
         }
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .pe-grid-root {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+          }
+        }
+        @media (max-width: 440px) {
+          .pe-grid-root {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.65rem;
           }
         }
 
@@ -543,6 +279,196 @@ export default async function WorkPage({
           animation: wk-fadein 0.5s 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
+        /* ── Pinterest-inspired Card Styling ──────────────────────── */
+        .pe-card {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          position: relative;
+        }
+
+        .pe-image-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4 / 3;
+          overflow: hidden;
+          margin-bottom: 0.75rem;
+          border-radius: 12px;
+          background-color: #f1efe9;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+          transition: box-shadow 0.35s ease, transform 0.35s ease;
+        }
+
+        .pe-link:hover .pe-image-wrap {
+          box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.14), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ── Floating Index Badge (Pinterest Pin indicator) ─────── */
+        .pe-card__badge {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          z-index: 4;
+          padding: 3px 7px;
+          border-radius: 6px;
+          background: rgba(255, 255, 255, 0.88);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.62rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          color: #111111;
+          line-height: 1;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+          pointer-events: none;
+          transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+        }
+        .pe-link:hover .pe-card__badge {
+          background: #e31e24;
+          color: #ffffff;
+        }
+
+        /* ── Editorial Placeholder for projects without images ───── */
+        .pe-placeholder {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(145deg, #f7f6f2 0%, #ebe8e1 100%);
+          color: #0a0a0a;
+          padding: 1.5rem;
+          text-align: center;
+          gap: 0.35rem;
+        }
+        .pe-placeholder__num {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 1.6rem;
+          font-weight: 900;
+          color: rgba(227, 30, 36, 0.25);
+          line-height: 1;
+          letter-spacing: -0.04em;
+        }
+        .pe-placeholder__logo {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.72rem;
+          font-weight: 900;
+          letter-spacing: 0.18em;
+          color: rgba(10, 10, 10, 0.6);
+        }
+        .pe-placeholder__cat {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(10, 10, 10, 0.38);
+        }
+
+        /* ── Pinterest-style Floating Action Button ──────────────── */
+        .pe-overlay__btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: #e31e24;
+          color: #ffffff;
+          padding: 0.45rem 0.85rem;
+          border-radius: 9999px;
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.65rem;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          line-height: 1;
+          box-shadow: 0 4px 14px rgba(227, 30, 36, 0.45);
+          transform: translateY(4px);
+          transition: transform 0.25s ease;
+          align-self: flex-start;
+        }
+        .pe-link:hover .pe-overlay__btn {
+          transform: translateY(0);
+        }
+
+        /* ── Card Metadata (Uniform heights across all items) ───── */
+        .pe-meta {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          padding: 0 0.15rem;
+        }
+
+        .pe-meta__top {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          height: 1rem;
+          overflow: hidden;
+        }
+
+        .pe-meta__discipline {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(10, 10, 10, 0.4);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          min-width: 0;
+        }
+
+        /* Title: strictly 2-line fixed height box for seamless row alignment */
+        .pe-meta__title {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: clamp(0.88rem, 1.05vw, 1.05rem);
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #0a0a0a;
+          line-height: 1.2;
+          margin: 0;
+          height: 2.4em;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          transition: color 0.2s ease;
+        }
+
+        .pe-meta__bottom {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 0.5rem;
+          height: 1.15rem;
+          overflow: hidden;
+        }
+
+        .pe-meta__client {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.68rem;
+          font-weight: 500;
+          color: rgba(10, 10, 10, 0.45);
+          letter-spacing: 0.01em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          min-width: 0;
+        }
+
+        .pe-meta__year {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: 0.62rem;
+          font-weight: 700;
+          color: rgba(10, 10, 10, 0.32);
+          letter-spacing: 0.06em;
+          flex-shrink: 0;
+        }
+
         /* ── Divider ─────────────────────────────────────────────── */
         .wk-rule {
           width: 100%;
@@ -564,134 +490,23 @@ export default async function WorkPage({
       >
         <div
           style={{
-            maxWidth: "1400px",
+            maxWidth: "1520px",
             margin: "0 auto",
-            padding: "0 clamp(1.25rem, 4vw, 3.5rem)",
+            padding: "0 clamp(1.25rem, 3.5vw, 3rem)",
           }}
         >
           {/* ── Page Introduction ───────────────────────────────────── */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr auto",
-              alignItems: "end",
-              gap: "2rem",
-              marginBottom: "clamp(1.5rem, 2.5vw, 2.5rem)",
-            }}
-          >
-            <div>
-              {/* Section label */}
-              <div
-                className="wk-intro"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.6rem",
-                  marginBottom: "1rem",
-                }}
-              >
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "1.5rem",
-                    height: "1px",
-                    backgroundColor: "#c91a1f",
-                    flexShrink: 0,
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    fontSize: "0.65rem",
-                    fontWeight: 800,
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    color: "#c91a1f",
-                  }}
-                >
-                  Archive
-                </span>
-              </div>
-
-              {/* Headline */}
-              <h1
-                className="wk-intro"
-                style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontSize: "clamp(3rem, 6.5vw, 6.5rem)",
-                  fontWeight: 900,
-                  letterSpacing: "-0.04em",
-                  textTransform: "uppercase",
-                  color: "#0a0a0a",
-                  lineHeight: 0.92,
-                  margin: 0,
-                }}
-              >
-                Work
-              </h1>
-            </div>
-
-            {/* Project count — large ghost number */}
-            <div
-              className="wk-intro"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end",
-                gap: "0.25rem",
-                paddingBottom: "0.25rem",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontSize: "clamp(3rem, 6vw, 5.5rem)",
-                  fontWeight: 900,
-                  letterSpacing: "-0.04em",
-                  color: "rgba(0,0,0,0.06)",
-                  lineHeight: 1,
-                }}
-              >
-                {String(total).padStart(2, "0")}
-              </span>
-              <span
-                style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontSize: "0.6rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "rgba(10,10,10,0.28)",
-                }}
-              >
-                Projects
-              </span>
-            </div>
-          </div>
+          <WorkPageContent total={total} />
 
           {/* Subtitle */}
-          <p
-            className="wk-subtitle"
-            style={{
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              fontSize: "clamp(0.875rem, 1.1vw, 1.05rem)",
-              color: "rgba(10,10,10,0.45)",
-              letterSpacing: "0.01em",
-              lineHeight: 1.6,
-              maxWidth: "460px",
-              margin: "0 0 clamp(2.5rem, 4vw, 4rem) 0",
-            }}
-          >
-            Selected identities, spaces, products, campaigns and experiences
-            created by Utero.
-          </p>
+          <WorkPageSubtitle />
 
           <hr className="wk-rule" style={{ marginBottom: "clamp(1.5rem, 3vw, 2.5rem)" }} />
 
           {/* ── Filter Bar ──────────────────────────────────────────── */}
           <div className="wk-filter-bar">
             <Suspense fallback={<div style={{ height: "1.5rem" }} />}>
-              <WorkFilters filteredCount={filtered.length} />
+              <WorkFilters filteredCount={filtered.length} counts={counts} />
             </Suspense>
           </div>
 

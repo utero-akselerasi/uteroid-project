@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
+import { useTranslations } from "@/lib/useTranslations";
 
 const slides = [
   {
@@ -18,6 +19,7 @@ const slides = [
 ];
 
 export default function HeroSection() {
+  const t = useTranslations();
   const [mounted, setMounted] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -52,6 +54,7 @@ export default function HeroSection() {
           zIndex: 1,
           pointerEvents: "none",
         }}
+        aria-hidden="true"
       >
         {slides.map((slide, index) => {
           const isActive = index === currentSlide;
@@ -69,7 +72,8 @@ export default function HeroSection() {
             >
               <Image
                 src={slide.image}
-                alt={slide.alt}
+                alt=""
+                role="presentation"
                 fill
                 priority={index === 0}
                 style={{
@@ -147,7 +151,7 @@ export default function HeroSection() {
               color: "rgba(247, 242, 236, 0.85)",
             }}
           >
-            UTERO.ID &mdash; BRAND &amp; DESIGN COMPANY
+            {t.hero.tagline}
           </span>
         </div>
         {/* Headline */}
@@ -172,7 +176,7 @@ export default function HeroSection() {
                     "transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s",
                 }}
               >
-                SOLVE PROBLEM
+                {t.hero.headline1}
               </span>
             </div>
 
@@ -193,7 +197,7 @@ export default function HeroSection() {
                     "transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s",
                 }}
               >
-                THROUGH
+                {t.hero.headline2}
               </span>
 
               {/* Bold DESIGN pill inspired by PDF reference */}
@@ -210,7 +214,7 @@ export default function HeroSection() {
                     "transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.42s",
                 }}
               >
-                DESIGN
+                {t.hero.headline3}
               </span>
             </div>
 
@@ -224,7 +228,7 @@ export default function HeroSection() {
                     "transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s",
                 }}
               >
-                SOLUTION.
+                {t.hero.headline4}
               </span>
             </div>
           </h1>
@@ -248,8 +252,7 @@ export default function HeroSection() {
               margin: 0,
             }}
           >
-            A comprehensive branding and design company helping organizations build
-            distinctive presence, market authority, and lasting cultural value since 1998.
+            {t.hero.description}
           </p>
         </div>
 
@@ -267,7 +270,7 @@ export default function HeroSection() {
               "opacity 0.9s ease 0.7s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s",
           }}
         >
-          {["IDENTITY", "PRINTED", "MISC", "DIGITAL", "ENVIRONMENTAL"].map(
+          {t.hero.capabilities.map(
             (cap, idx) => (
               <span
                 key={cap}
@@ -311,7 +314,8 @@ export default function HeroSection() {
             <button
               key={s.id}
               onClick={() => setCurrentSlide(idx)}
-              aria-label={`Slide ${idx + 1}`}
+              aria-label={t.hero.slideAria(idx + 1)}
+              aria-current={isActive ? "true" : undefined}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -372,7 +376,7 @@ export default function HeroSection() {
         }}
       >
         <Link
-          href="#recent-works"
+          href="#works"
           style={{
             fontSize: "clamp(0.55rem, 0.7vw, 0.75rem)",
             fontWeight: 500,
@@ -388,7 +392,7 @@ export default function HeroSection() {
           onMouseEnter={(e) => (e.currentTarget.style.color = "#e31e24")}
           onMouseLeave={(e) => (e.currentTarget.style.color = "#F7F2EC")}
         >
-          <span>EXPLORE OUR WORK</span>
+          <span>{t.hero.exploreWork}</span>
           <span>&darr;</span>
         </Link>
       </div>
@@ -413,7 +417,7 @@ export default function HeroSection() {
             color: "rgba(247, 242, 236, 0.6)",
           }}
         >
-          PART OF UTERO INDONESIA &mdash; EST. 1998
+          {t.hero.studioTag}
         </span>
       </div>
     </section>

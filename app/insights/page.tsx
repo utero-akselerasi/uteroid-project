@@ -8,6 +8,31 @@ export const metadata: Metadata = {
   title: "Insights & Media — Perspectives from Utero",
   description:
     "Critical reflections, case perspectives, and studio philosophies on branding, environmental spatial design, and execution.",
+  openGraph: {
+    type: "website",
+    title: "Insights & Media — Perspectives from Utero",
+    description:
+      "Critical reflections, case perspectives, and studio philosophies on branding, environmental spatial design, and execution.",
+    url: "https://utero.id/insights",
+    images: [
+      {
+        url: "/img/unnamed.webp",
+        width: 1280,
+        height: 720,
+        alt: "Utero Insights & Perspectives",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Insights & Media — Perspectives from Utero",
+    description:
+      "Critical reflections, case perspectives, and studio philosophies on branding, environmental spatial design, and execution.",
+    images: ["/img/unnamed.webp"],
+  },
+  alternates: {
+    canonical: "/insights",
+  },
 };
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -327,7 +352,7 @@ export default async function InsightsPage() {
                       {featured.coverImage && (
                         <Image
                           src={featured.coverImage}
-                          alt={featured.title}
+                          alt={`${featured.title} — ${featured.category}`}
                           fill
                           priority
                           sizes="(max-width: 1024px) 100vw, 600px"
@@ -383,7 +408,7 @@ export default async function InsightsPage() {
                         {article.coverImage && (
                           <Image
                             src={article.coverImage}
-                            alt={article.title}
+                            alt={`${article.title} — ${article.category}`}
                             fill
                             sizes="(max-width: 768px) 100vw, 50vw"
                             style={{

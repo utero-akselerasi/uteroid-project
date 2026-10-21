@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getInsight, getInsightSlugs } from "@/lib/insights-source";
+import JsonLd from "@/components/JsonLd";
 
 // Route-level ISR — see the note in app/insights/page.tsx. Literal, not an
 // imported constant: segment config is read statically.
@@ -33,11 +34,29 @@ export async function generateMetadata({
     return { title: "Article Not Found" };
   }
 
-  // No openGraph image here on purpose: CMS image URLs are signed and
-  // expire after an hour, so a crawled og:image would break.
+  const { insight: article, origin } = result;
+  const pageTitle = article.title + " — Insights";
+  const stableCoverImage =
+    origin === "local" ? article.coverImage || "/img/unnamed.webp" : undefined;
+  const articleUrl = "https://utero.id/insights/" + article.slug;
+
   return {
-    title: `${result.insight.title} — Insights`,
-    description: result.insight.excerpt,
+    title: pageTitle,
+    description: article.excerpt,
+    openGraph: {
+      type: "article",
+      title: pageTitle,
+      description: article.excerpt,
+      url: articleUrl,
+      ...(stableCoverImage ? { images: [{ url: stableCoverImage, alt: article.title }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: pageTitle,
+      description: article.excerpt,
+      ...(stableCoverImage ? { images: [stableCoverImage] } : {}),
+    },
+    alternates: { canonical: "/insights/" + article.slug },
   };
 }
 
@@ -54,9 +73,40 @@ export default async function InsightsSlugPage({
   }
 
   const { insight: article, origin, contentHtml } = result;
+  const articleUrl = "https://utero.id/insights/" + article.slug;
+  const articleImageUrl =
+    origin === "local" && article.coverImage
+      ? new URL(article.coverImage, "https://utero.id").toString()
+      : undefined;
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://utero.id" },
+          { "@type": "ListItem", position: 2, name: "Insights", item: "https://utero.id/insights" },
+          { "@type": "ListItem", position: 3, name: article.title, item: articleUrl },
+        ],
+      },
+      {
+        "@type": "Article",
+        "@id": articleUrl + "#article",
+        headline: article.title,
+        description: article.excerpt,
+        ...(origin === "local" ? { articleBody: article.content } : {}),
+        ...(articleImageUrl ? { image: articleImageUrl } : {}),
+        author: { "@type": "Organization", name: "PT. Utero Kreatif Indonesia", url: "https://utero.id" },
+        publisher: { "@type": "Organization", name: "PT. Utero Kreatif Indonesia", url: "https://utero.id", logo: "https://utero.id/icon.svg" },
+        url: articleUrl,
+        genre: article.category,
+      },
+    ],
+  };
 
   return (
     <>
+      <JsonLd data={articleSchema} />
       <style>{`
         .ins-back:hover { color: #c91a1f !important; }
         .ins-cta:hover { background-color: #0a0a0a !important; }

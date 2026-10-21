@@ -8,7 +8,13 @@ import {
   industryLabels,
   type Industry,
 } from "@/lib/types";
-import { getFilterCounts } from "@/lib/projects";
+import {
+  useTranslations,
+  type Translations,
+  type IndustryTranslationKey,
+} from "@/lib/useTranslations";
+
+type IndustryType = Industry | "";
 
 const PRIMARY_FILTERS: WorkFilter[] = [
   "all",
@@ -21,46 +27,52 @@ const PRIMARY_FILTERS: WorkFilter[] = [
   "outdoor",
 ];
 
-const INDUSTRY_FILTERS: Array<{ key: Industry; label: string }> = [
-  { key: "corporate", label: "Corporate" },
-  { key: "fnb", label: "F&B" },
-  { key: "government", label: "Government" },
-  { key: "education", label: "Education" },
-  { key: "arts", label: "Arts & Culture" },
-  { key: "services", label: "Services" },
-  { key: "retail", label: "Retail" },
-  { key: "property", label: "Property" },
-  { key: "event", label: "Event" },
-];
+function isValidWorkFilter(value: string): value is WorkFilter {
+  return value in workFilterLabels;
+}
 
-// Derive a short label for the "currently active" state shown in the bar
+function isValidIndustry(value: string): value is IndustryTranslationKey {
+  return value in industryLabels;
+}
+
+/** Derive a short label for the "currently active" state shown in the bar */
 function getActiveLabel(
   activeFilter: WorkFilter,
-  activeIndustry: string,
+  activeIndustry: IndustryType,
   totalFiltered: number,
-  totalAll: number
+  t: Translations
 ): string {
   const parts: string[] = [];
   if (activeFilter !== "all") parts.push(workFilterLabels[activeFilter].toUpperCase());
-  if (activeIndustry) {
-    const ind = INDUSTRY_FILTERS.find((f) => f.key === activeIndustry);
-    if (ind) parts.push(ind.label.toUpperCase());
+  if (activeIndustry && activeIndustry in t.industries) {
+    parts.push(t.industries[activeIndustry as IndustryTranslationKey].toUpperCase());
   }
-  const label = parts.length > 0 ? parts.join(" · ") : "ALL WORK";
-  return `${label} · ${totalFiltered} ${totalFiltered === 1 ? "PROJECT" : "PROJECTS"}`;
+  const label = parts.length > 0 ? parts.join(" · ") : t.work.allWork;
+  return `${label} · ${totalFiltered} ${totalFiltered === 1 ? t.work.project : t.work.projects}`;
 }
 
-export default function WorkFilters({ filteredCount }: { filteredCount: number }) {
+interface WorkFiltersProps {
+  filteredCount: number;
+  counts: Record<string, number>;
+}
+
+export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
+  const t = useTranslations();
 
-  const activeFilter = (searchParams.get("filter") || "all") as WorkFilter;
-  const activeIndustry = searchParams.get("industry") || "";
-  const counts = getFilterCounts();
-  const totalAll = counts.all;
+  const filterParam = searchParams.get("filter") || "all";
+  const activeFilter: WorkFilter = isValidWorkFilter(filterParam)
+    ? filterParam
+    : "all";
 
-  const hasActiveFilters = activeFilter !== "all" || activeIndustry;
+  const industryParam = searchParams.get("industry") || "";
+  const activeIndustry: IndustryType = isValidIndustry(industryParam)
+    ? (industryParam as Industry)
+    : "";
+
+  const hasActiveFilters = activeFilter !== "all" || activeIndustry !== "";
 
   const createQuery = useCallback(
     (updates: Record<string, string>) => {
@@ -79,8 +91,8 @@ export default function WorkFilters({ filteredCount }: { filteredCount: number }
     router.push(`/work?${qs}`, { scroll: false });
   };
 
-  const setIndustry = (industry: Industry | "") => {
-    const qs = createQuery({ industry });
+  const setIndustry = (industry: IndustryType) => {
+    const qs = createQuery({ industry: industry || "" });
     router.push(`/work?${qs}`, { scroll: false });
   };
 
@@ -89,7 +101,7 @@ export default function WorkFilters({ filteredCount }: { filteredCount: number }
     setOpen(false);
   };
 
-  const activeLabel = getActiveLabel(activeFilter, activeIndustry, filteredCount, totalAll);
+  const activeLabel = getActiveLabel(activeFilter, activeIndustry, filteredCount, t);
 
   return (
     <>
@@ -145,7 +157,11 @@ export default function WorkFilters({ filteredCount }: { filteredCount: number }
           opacity: 0;
         }
         .wf-drawer.open {
-          max-height: 600px;
+          /* Cap on the viewport, not a fixed px value: the 18 discipline +
+             industry chips overflow short phone screens, so let it scroll. */
+          max-height: min(1200px, 78vh);
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
           opacity: 1;
         }
         .wf-drawer-inner {
@@ -232,9 +248,10 @@ export default function WorkFilters({ filteredCount }: { filteredCount: number }
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="wf-drawer"
+          aria-label={open ? t.work.closeFilter : t.work.openFilter}
         >
           <span className="wf-toggle-icon">{open ? "×" : "+"}</span>
-          <span>Filter</span>
+          <span>{t.work.filter}</span>
         </button>
 
         <span className={`wf-status${hasActiveFilters ? " wf-status-active" : ""}`}>
@@ -247,13 +264,13 @@ export default function WorkFilters({ filteredCount }: { filteredCount: number }
         id="wf-drawer"
         className={`wf-drawer${open ? " open" : ""}`}
         role="region"
-        aria-label="Work filters"
+        aria-label={t.work.filterAria}
         style={{ marginBottom: open ? "clamp(3rem, 5vw, 5rem)" : "0" }}
       >
         <div className="wf-drawer-inner">
 
           {/* Discipline */}
-          <div className="wf-section-label">By Discipline</div>
+          <div className="wf-section-label">{t.work.byDiscipline}</div>
           <div className="wf-chips">
             {PRIMARY_FILTERS.map((f) => {
               const isActive = f === activeFilter;
@@ -274,19 +291,19 @@ export default function WorkFilters({ filteredCount }: { filteredCount: number }
           </div>
 
           {/* Industry */}
-          <div className="wf-section-label">By Industry</div>
+          <div className="wf-section-label">{t.work.byIndustry}</div>
           <div className="wf-chips">
             <button
               className={`wf-chip${!activeIndustry ? " active" : ""}`}
               onClick={() => setIndustry("")}
             >
-              All Industries
+              {t.work.allIndustries}
             </button>
-            {INDUSTRY_FILTERS.map(({ key, label }) => (
+            {Object.entries(t.industries).map(([key, label]) => (
               <button
                 key={key}
                 className={`wf-chip${activeIndustry === key ? " active" : ""}`}
-                onClick={() => setIndustry(activeIndustry === key ? "" : key)}
+                onClick={() => setIndustry(activeIndustry === key ? "" : (key as IndustryType))}
               >
                 {label}
               </button>
@@ -296,7 +313,7 @@ export default function WorkFilters({ filteredCount }: { filteredCount: number }
           {/* Clear */}
           {hasActiveFilters && (
             <button className="wf-clear" onClick={clearAll}>
-              Clear All ×
+              {t.work.clearAll}
             </button>
           )}
         </div>

@@ -95,6 +95,54 @@
   --z-header: 100;
   --z-overlay: 200;
   --z-modal: 300;
+
+  /* Header Pill Control System Tokens */
+  --hdr-pill-height: 40px;
+  --hdr-font-size: 11px;
+  --hdr-font-weight: 700;
+  --hdr-letter-spacing: 0.12em;
+  --hdr-pill-px: 14px;
+  --hdr-pill-radius: 9999px;
+  --hdr-gap: 8px;
+  --hdr-border-width: 1px;
+}
+
+/* Header Responsive Hiding & Pill Utilities */
+.hdr-pill {
+  height: var(--hdr-pill-height);
+  font-size: var(--hdr-font-size);
+  font-weight: var(--hdr-font-weight);
+  letter-spacing: var(--hdr-letter-spacing);
+  border-radius: var(--hdr-pill-radius);
+  white-space: nowrap;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .hdr-location {
+    display: none !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .hdr-nav-links {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hdr-lang-toggle {
+    display: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
 }
 
 /* ─────────────────────────────────────────────
@@ -176,9 +224,48 @@ button {
    Focus States — Accessibility
    ───────────────────────────────────────────── */
 
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 :focus-visible {
-  outline: 2px solid var(--color-red);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-red) !important;
+  outline-offset: 2px !important;
+}
+
+/* ─────────────────────────────────────────────
+   Skip to Content Link — Accessibility
+   ───────────────────────────────────────────── */
+
+.skip-to-content {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  z-index: 100000;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-red);
+  color: #ffffff;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(201, 26, 31, 0.4);
+  border: 2px solid #ffffff;
+  border-radius: 0 0 6px 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  left: 1.5rem;
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
 }
 
 /* ─────────────────────────────────────────────
@@ -1378,20 +1465,26 @@ html {
 
 .pd-video-modal {
   position: fixed;
-  inset: 0;
-  z-index: var(--z-modal);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
   background-color: rgba(0, 0, 0, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 300ms ease;
+  transition: opacity 250ms ease;
   pointer-events: none;
+  touch-action: none;
 }
 
 .pd-video-modal--open {
   opacity: 1;
-  pointer-events: all;
+  pointer-events: auto;
 }
 
 .pd-video-modal__close {
@@ -1403,31 +1496,35 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
   font-size: 1.5rem;
   cursor: pointer;
-  transition: color 200ms ease;
-  z-index: 2;
+  transition: color 200ms ease, transform 200ms ease;
+  z-index: 10;
   background: none;
   border: none;
 }
 
 .pd-video-modal__close:hover {
   color: #ffffff;
+  transform: scale(1.1);
 }
 
 .pd-video-modal__content {
   position: relative;
-  width: 90vw;
-  max-width: 1200px;
+  width: min(92vw, 1200px);
   aspect-ratio: 16 / 9;
   background-color: #000000;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
 }
 
 .pd-video-modal__iframe,
 .pd-video-modal__video {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border: none;

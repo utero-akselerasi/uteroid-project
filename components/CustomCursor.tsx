@@ -3,29 +3,41 @@
 import { useEffect, useState, useRef } from "react";
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
+  const targetPosRef = useRef({ x: -100, y: -100 });
   const trailingPosRef = useRef({ x: -100, y: -100 });
   const cursorRingRef = useRef<HTMLDivElement>(null);
+  const cursorDotRef = useRef<HTMLDivElement>(null);
   const isClickingRef = useRef(false);
   const [cursorText, setCursorText] = useState("");
   const [isHovered, setIsHovered] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
-    // Disable on touch devices
+    // Disable on touch, coarse pointer devices, or when reduced motion is preferred
+    const motionQuery = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+
     if (
       typeof window !== "undefined" &&
-      ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+      (motionQuery?.matches ||
+        window.matchMedia("(pointer: coarse)").matches ||
+        "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0)
     ) {
       setIsTouch(true);
       return;
     }
 
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setIsTouch(true);
+      }
+    };
+    motionQuery?.addEventListener("change", handleMotionChange);
+
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+      targetPosRef.current = { x: e.clientX, y: e.clientY };
+      setIsVisible(true);
 
       // Check for elements with cursor attributes
       const target = e.target as HTMLElement | null;
@@ -49,11 +61,9 @@ export default function CustomCursor() {
     };
 
     const handleMouseDown = () => {
-      setIsClicking(true);
       isClickingRef.current = true;
     };
     const handleMouseUp = () => {
-      setIsClicking(false);
       isClickingRef.current = false;
     };
     const handleMouseLeave = () => setIsVisible(false);
@@ -66,40 +76,47 @@ export default function CustomCursor() {
     document.documentElement.addEventListener("mouseenter", handleMouseEnter);
 
     return () => {
+      motionQuery?.removeEventListener("change", handleMotionChange);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, [isVisible]);
+  }, []);
 
-  // Smooth lerp for trailing cursor ring using direct DOM manipulation
+  // Smooth lerp for trailing cursor ring using direct DOM manipulation.
+  // Single RAF loop for the lifetime of the component — NOT restarted on
+  // every mousemove (which previously caused frame drops under fast motion).
   useEffect(() => {
-    if (isTouch || !cursorRingRef.current) return;
-    let animationFrameId: number;
+    if (isTouch) return;
+    let animationFrameId = 0;
 
     const animate = () => {
-      // Update ref directly to avoid re-renders
-      const dx = position.x - trailingPosRef.current.x;
-      const dy = position.y - trailingPosRef.current.y;
+      const targetPos = targetPosRef.current;
+      const trailing = trailingPosRef.current;
+      const dx = targetPos.x - trailing.x;
+      const dy = targetPos.y - trailing.y;
       trailingPosRef.current = {
-        x: trailingPosRef.current.x + dx * 0.2,
-        y: trailingPosRef.current.y + dy * 0.2,
+        x: trailing.x + dx * 0.2,
+        y: trailing.y + dy * 0.2,
       };
-      
+
       // Update DOM directly to avoid React re-renders
       if (cursorRingRef.current) {
         const scale = isClickingRef.current ? 0.9 : 1;
         cursorRingRef.current.style.transform = `translate3d(${trailingPosRef.current.x}px, ${trailingPosRef.current.y}px, 0) translate(-50%, -50%) scale(${scale})`;
       }
-      
+      if (cursorDotRef.current) {
+        cursorDotRef.current.style.transform = `translate3d(${targetPos.x}px, ${targetPos.y}px, 0) translate(-50%, -50%)`;
+      }
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [position, isTouch]);
+  }, [isTouch]);
 
   if (isTouch || !isVisible) return null;
 
@@ -126,6 +143,7 @@ export default function CustomCursor() {
           position: "fixed",
           top: 0,
           left: 0,
+          transform: "translate3d(-100px, -100px, 0) translate(-50%, -50%)",
           width: hasCustomText ? "auto" : isHovered ? "48px" : "32px",
           height: hasCustomText ? "auto" : isHovered ? "48px" : "32px",
           padding: hasCustomText ? "8px 16px" : 0,
@@ -165,11 +183,12 @@ export default function CustomCursor() {
       {/* Center Precise Dot */}
       {!hasCustomText && (
         <div
+          ref={cursorDotRef}
           style={{
             position: "fixed",
             top: 0,
             left: 0,
-            transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
+            transform: "translate3d(-100px, -100px, 0) translate(-50%, -50%)",
             width: isHovered ? "6px" : "8px",
             height: isHovered ? "6px" : "8px",
             borderRadius: "50%",

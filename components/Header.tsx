@@ -5,75 +5,75 @@ import { useState, useEffect, useRef, FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
 import emailjs from "@emailjs/browser";
-import { getInquiryLabels } from "@/lib/services";
+import { useTranslatedInquiryLabels } from "@/lib/useTranslatedServices";
+import { useLanguage } from "@/lib/LanguageContext";
+import { useTranslations, type Translations } from "@/lib/useTranslations";
+
+type NavKey = keyof Translations["nav"];
+type NavSubtitleKey = keyof Translations["navSubtitles"];
 
 interface MenuNavItem {
   number: string;
-  label: string;
-  subtitle: string;
+  labelKey: NavKey;
   href: string;
   previewImage: string;
 }
 
-const menuNavLinks: MenuNavItem[] = [
+const menuNavLinksStatic: MenuNavItem[] = [
   {
     number: "01",
-    label: "WORK",
-    subtitle: "Selected Case Studies & Archive",
+    labelKey: "work",
     href: "/work",
     previewImage:
       "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "02",
-    label: "STUDIO",
-    subtitle: "Philosophy, 25+ Years & Culture",
+    labelKey: "studio",
     href: "/studio",
     previewImage:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "03",
-    label: "SERVICES",
-    subtitle: "Brand, Space, Digital & Capabilities",
+    labelKey: "services",
     href: "/services",
     previewImage:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "04",
-    label: "INSIGHTS",
-    subtitle: "Publications, Media & Case Notes",
+    labelKey: "insights",
     href: "/insights",
     previewImage:
       "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
   },
   {
     number: "05",
-    label: "CONTACT",
-    subtitle: "Direct Channels & Studio Base",
+    labelKey: "contact",
     href: "/contact",
     previewImage:
       "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
   },
 ];
 
-const topNavItems = [
-  { label: "WORK", href: "/work" },
-  { label: "SERVICES", href: "/services" },
-  { label: "STUDIO", href: "/studio" },
-  { label: "INSIGHTS", href: "/insights" },
+const topNavItemsStatic: { labelKey: NavKey; href: string }[] = [
+  { labelKey: "work", href: "/work" },
+  { labelKey: "services", href: "/services" },
+  { labelKey: "studio", href: "/studio" },
+  { labelKey: "insights", href: "/insights" },
 ];
 
-const inquiryDisciplines = getInquiryLabels();
-
 export default function Header() {
+  const { language, toggleLanguage } = useLanguage();
+  const t = useTranslations();
+  const inquiryDisciplines = useTranslatedInquiryLabels();
   const [scrolled, setScrolled] = useState(false);
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [activePreview, setActivePreview] = useState<string>(
-    menuNavLinks[0].previewImage
+    menuNavLinksStatic[0].previewImage
   );
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredTopNav, setHoveredTopNav] = useState<string | null>(null);
@@ -81,6 +81,22 @@ export default function Header() {
   const [isMenuHovered, setIsMenuHovered] = useState(false);
   const [localTime, setLocalTime] = useState<string>("");
   const [navTheme, setNavTheme] = useState<"light" | "dark">("light");
+
+  // Resolve nav labels and subtitles from the active language dictionary.
+  const menuNavLinks: { number: string; label: string; subtitle: string; href: string; previewImage: string }[] =
+    menuNavLinksStatic.map((item) => ({
+      number: item.number,
+      label: t.nav[item.labelKey],
+      subtitle: t.navSubtitles[item.labelKey as NavSubtitleKey],
+      href: item.href,
+      previewImage: item.previewImage,
+    }));
+
+  const topNavItems = topNavItemsStatic.map((item) => ({
+    labelKey: item.labelKey,
+    label: t.nav[item.labelKey],
+    href: item.href,
+  }));
 
   // Project Brief Inquiry Form States
   const [selectedDisciplines, setSelectedDisciplines] = useState<string[]>([]);
@@ -252,27 +268,32 @@ export default function Header() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "0.5rem",
+            gap: "var(--hdr-gap)",
             pointerEvents: "auto",
           }}
         >
-          {/* LEFT: Wordmark + Live Studio Status Badge */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+          {/* LEFT: Wordmark + Live Studio Status Badge + Lang Toggle */}
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--hdr-gap)" }}>
             <Link
               href="/"
+              className="hdr-pill"
               style={{
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.3rem",
-                padding: "5px 10px",
-                borderRadius: "9999px",
+                justifyContent: "center",
+                gap: "0.4rem",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
-                border: `1px solid ${borderColor}`,
+                border: `var(--hdr-border-width) solid ${borderColor}`,
                 boxShadow: scrolled
                   ? "0 8px 32px rgba(0, 0, 0, 0.25)"
                   : "0 4px 16px rgba(0, 0, 0, 0.08)",
+                whiteSpace: "nowrap",
                 transition:
                   "background-color 0.3s ease, border-color 0.3s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
@@ -287,8 +308,8 @@ export default function Header() {
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   fontWeight: 900,
-                  fontSize: "10px",
-                  letterSpacing: "0.12em",
+                  fontSize: "var(--hdr-font-size)",
+                  letterSpacing: "var(--hdr-letter-spacing)",
                   textTransform: "uppercase",
                   color: scrolled ? "#ffffff" : textColor,
                   transition: "color 0.3s ease",
@@ -299,8 +320,8 @@ export default function Header() {
               <span
                 style={{
                   display: "inline-block",
-                  width: "4px",
-                  height: "4px",
+                  width: "5px",
+                  height: "5px",
                   borderRadius: "50%",
                   backgroundColor: "#e31e24",
                 }}
@@ -309,19 +330,23 @@ export default function Header() {
 
             {/* Desktop City & Live Time Pill */}
             <div
-              className="hidden xl:flex"
+              className="hdr-location hdr-pill"
               style={{
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.5rem",
-                padding: "8px 14px",
-                borderRadius: "9999px",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
-                border: `1px solid ${borderColor}`,
-                fontSize: "11px",
+                border: `var(--hdr-border-width) solid ${borderColor}`,
+                fontSize: "var(--hdr-font-size)",
                 fontWeight: 600,
-                letterSpacing: "0.08em",
+                letterSpacing: "var(--hdr-letter-spacing)",
                 textTransform: "uppercase",
+                whiteSpace: "nowrap",
                 color: scrolled ? "rgba(255, 255, 255, 0.8)" : mutedTextColor,
                 transition: "all 0.3s ease",
               }}
@@ -333,31 +358,76 @@ export default function Header() {
                 {localTime || "13:00:00"} WIB
               </span>
             </div>
+
+            {/* Language Toggle Button */}
+            <button
+              onClick={toggleLanguage}
+              aria-label={t.header.toggleLanguage}
+              className="hdr-lang-toggle hdr-pill"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.4rem",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
+                backgroundColor: pillBg,
+                backdropFilter: "blur(18px)",
+                border: `var(--hdr-border-width) solid ${borderColor}`,
+                cursor: "pointer",
+                fontSize: "var(--hdr-font-size)",
+                fontWeight: "var(--hdr-font-weight)",
+                letterSpacing: "var(--hdr-letter-spacing)",
+                textTransform: "uppercase",
+                whiteSpace: "nowrap",
+                color: scrolled ? "rgba(255, 255, 255, 0.85)" : textColor,
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = scrolled
+                  ? "rgba(227, 30, 36, 0.2)"
+                  : isDarkText
+                  ? "rgba(10, 10, 10, 0.08)"
+                  : "rgba(255, 255, 255, 0.25)";
+                e.currentTarget.style.borderColor = "#e31e24";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = pillBg;
+                e.currentTarget.style.borderColor = borderColor;
+              }}
+            >
+              <span style={{ color: "#e31e24" }}>{language === "en" ? "EN" : "ID"}</span>
+              <span style={{ opacity: 0.3 }}>/</span>
+              <span>{language === "en" ? "ID" : "EN"}</span>
+            </button>
           </div>
 
           {/* RIGHT: ALL NAVIGATION ITEMS PLACED TOGETHER (WORK, SERVICES, STUDIO, INSIGHTS, CONTACT, MENU) */}
           <nav
-            aria-label="Top primary navigation"
+            aria-label={t.header.primaryNav}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "clamp(0.3rem, 0.8vw, 0.6rem)",
+              gap: "var(--hdr-gap)",
             }}
           >
             {/* Desktop Links: WORK, SERVICES, STUDIO, INSIGHTS */}
             <div
-              className="hidden md:flex"
+              className="hdr-nav-links"
               style={{
                 alignItems: "center",
-                gap: "clamp(0.2rem, 0.6vw, 0.5rem)",
-                padding: "4px 8px",
-                borderRadius: "9999px",
+                height: "var(--hdr-pill-height)",
+                padding: "0 6px",
+                borderRadius: "var(--hdr-pill-radius)",
                 backgroundColor: pillBg,
                 backdropFilter: "blur(18px)",
-                border: `1px solid ${borderColor}`,
+                border: `var(--hdr-border-width) solid ${borderColor}`,
                 boxShadow: scrolled
                   ? "0 8px 32px rgba(0, 0, 0, 0.2)"
                   : "0 4px 16px rgba(0, 0, 0, 0.05)",
+                boxSizing: "border-box",
                 transition: "all 0.3s ease",
               }}
             >
@@ -373,12 +443,14 @@ export default function Header() {
                     onMouseLeave={() => setHoveredTopNav(null)}
                     style={{
                       position: "relative",
-                      padding: "6px 14px",
+                      height: "100%",
+                      padding: "0 12px",
                       textDecoration: "none",
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
+                      fontSize: "var(--hdr-font-size)",
+                      fontWeight: "var(--hdr-font-weight)",
+                      letterSpacing: "var(--hdr-letter-spacing)",
                       textTransform: "uppercase",
+                      whiteSpace: "nowrap",
                       color: isHovered
                         ? "#e31e24"
                         : isActive
@@ -386,12 +458,13 @@ export default function Header() {
                         : scrolled
                         ? "rgba(255, 255, 255, 0.85)"
                         : textColor,
-                      transform: isHovered ? "translateY(-1.5px)" : "translateY(0)",
+                      transform: isHovered ? "translateY(-1px)" : "translateY(0)",
                       transition:
                         "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      boxSizing: "border-box",
                     }}
                   >
                     <span>{item.label}</span>
@@ -400,9 +473,9 @@ export default function Header() {
                     <span
                       style={{
                         position: "absolute",
-                        bottom: "2px",
-                        left: "14px",
-                        right: "14px",
+                        bottom: "6px",
+                        left: "12px",
+                        right: "12px",
                         height: "2px",
                         backgroundColor: "#e31e24",
                         borderRadius: "1px",
@@ -423,13 +496,17 @@ export default function Header() {
               onMouseEnter={() => setIsContactHovered(true)}
               onMouseLeave={() => setIsContactHovered(false)}
               aria-expanded={contactOpen}
-              aria-label="Toggle contact channels"
+              aria-label={t.header.toggleContact}
+              className="hdr-pill"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.3rem",
-                padding: "5px 10px",
-                borderRadius: "9999px",
+                justifyContent: "center",
+                gap: "0.4rem",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: contactOpen
                   ? "#e31e24"
                   : isContactHovered
@@ -441,15 +518,16 @@ export default function Header() {
                   : pillBg,
                 backdropFilter: "blur(18px)",
                 border: contactOpen
-                  ? "1px solid #e31e24"
+                  ? "var(--hdr-border-width) solid #e31e24"
                   : isContactHovered
-                  ? "1px solid #e31e24"
-                  : `1px solid ${borderColor}`,
+                  ? "var(--hdr-border-width) solid #e31e24"
+                  : `var(--hdr-border-width) solid ${borderColor}`,
                 cursor: "pointer",
-                fontSize: "9px",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
+                fontSize: "var(--hdr-font-size)",
+                fontWeight: "var(--hdr-font-weight)",
+                letterSpacing: "var(--hdr-letter-spacing)",
                 textTransform: "uppercase",
+                whiteSpace: "nowrap",
                 color: contactOpen
                   ? "#ffffff"
                   : isContactHovered
@@ -469,11 +547,11 @@ export default function Header() {
                   "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease",
               }}
             >
-              <span>{contactOpen ? "CLOSE" : "CONTACT"}</span>
+              <span>{contactOpen ? t.nav.close : t.nav.contact}</span>
               <span
                 style={{
                   color: contactOpen ? "#ffffff" : "#25D366",
-                  fontSize: "8px",
+                  fontSize: "9px",
                   display: "inline-block",
                   transform: contactOpen ? "rotate(45deg)" : "none",
                   transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -491,13 +569,17 @@ export default function Header() {
               }}
               onMouseEnter={() => setIsMenuHovered(true)}
               onMouseLeave={() => setIsMenuHovered(false)}
-              aria-label="Open studio menu"
+              aria-label={t.header.openMenu}
+              className="hdr-pill"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.4rem",
-                padding: "5px 12px",
-                borderRadius: "9999px",
+                height: "var(--hdr-pill-height)",
+                padding: "0 var(--hdr-pill-px)",
+                borderRadius: "var(--hdr-pill-radius)",
+                boxSizing: "border-box",
                 backgroundColor: isMenuHovered
                   ? "#e31e24"
                   : scrolled
@@ -514,6 +596,11 @@ export default function Header() {
                   : "#0a0a0a",
                 border: "none",
                 cursor: "pointer",
+                fontSize: "var(--hdr-font-size)",
+                fontWeight: "var(--hdr-font-weight)",
+                letterSpacing: "var(--hdr-letter-spacing)",
+                textTransform: "uppercase",
+                whiteSpace: "nowrap",
                 boxShadow: isMenuHovered
                   ? "0 8px 24px rgba(227, 30, 36, 0.4)"
                   : "0 6px 20px rgba(0, 0, 0, 0.15)",
@@ -521,19 +608,19 @@ export default function Header() {
                   ? "translateY(-1.5px) scale(1.03)"
                   : "translateY(0) scale(1)",
                 transition:
-                  "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease",
+                  "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease",
               }}
             >
               <span
                 style={{
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  fontWeight: 600,
-                  fontSize: "9px",
-                  letterSpacing: "0.08em",
+                  fontWeight: "var(--hdr-font-weight)",
+                  fontSize: "var(--hdr-font-size)",
+                  letterSpacing: "var(--hdr-letter-spacing)",
                   textTransform: "uppercase",
                 }}
               >
-                MENU
+                {t.nav.menu}
               </span>
 
               {/* Minimal Hamburger lines that animate on hover */}
@@ -634,6 +721,7 @@ export default function Header() {
           overflow: "hidden",
           display: "flex",
           flexDirection: "column",
+          height: "100dvh",
         }}
       >
         {/* Dynamic Interactive Visual Preview Backdrop */}
@@ -650,7 +738,8 @@ export default function Header() {
           {activePreview && (
             <Image
               src={activePreview}
-              alt="Utero Studio Preview"
+              alt=""
+              role="presentation"
               fill
               sizes="100vw"
               style={{
@@ -735,10 +824,46 @@ export default function Header() {
             </span>
           </Link>
 
+          {/* Language Toggle in Mobile Menu */}
+          <button
+            onClick={toggleLanguage}
+            aria-label={t.header.toggleLanguage}
+            style={{
+              background: "rgba(255, 255, 255, 0.1)",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
+              borderRadius: "9999px",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              padding: "6px 14px",
+              color: "#ffffff",
+              backdropFilter: "blur(10px)",
+              fontSize: "11px",
+              fontWeight: 700,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              transition:
+                "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+              e.currentTarget.style.borderColor = "#ffffff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+              e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+            }}
+          >
+            <span style={{ color: "#e31e24" }}>{language === "en" ? "EN" : "ID"}</span>
+            <span style={{ opacity: 0.3 }}>/</span>
+            <span>{language === "en" ? "ID" : "EN"}</span>
+          </button>
+
           {/* Close Button */}
           <button
             onClick={() => setMenuOpen(false)}
-            aria-label="Close studio menu"
+            aria-label={t.header.closeMenu}
             style={{
               background: "rgba(255, 255, 255, 0.15)",
               border: "1px solid rgba(255, 255, 255, 0.25)",
@@ -787,6 +912,8 @@ export default function Header() {
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "clamp(1rem, 2vw, 3rem)",
             padding: "clamp(0.6rem, 1.5vw, 1.5rem) clamp(1rem, 3vw, 3.5rem)",
+            paddingTop: "clamp(0.6rem, 1.5vw, 1.5rem)",
+            paddingBottom: "clamp(0.6rem, 1.5vw, 1.5rem)",
             alignItems: "center",
             position: "relative",
             zIndex: 10,
@@ -1150,7 +1277,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
@@ -1195,7 +1322,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
@@ -1251,7 +1378,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
@@ -1296,7 +1423,7 @@ export default function Header() {
                         border: "1px solid rgba(255, 255, 255, 0.16)",
                         borderRadius: "6px",
                         color: "#ffffff",
-                        fontSize: "0.75rem",
+                        fontSize: "16px",
                         outline: "none",
                         transition: "border-color 0.2s ease, box-shadow 0.2s ease",
                       }}
