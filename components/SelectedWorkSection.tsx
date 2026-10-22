@@ -24,22 +24,14 @@ import {
   useCallback,
   useMemo,
 }                  from "react";
-import { projects } from "@/lib/projects";
+import type { Project } from "@/lib/types";
 import { getProjectCover } from "@/lib/projectMedia";
 import { disciplineLabels } from "@/lib/types";
 import RevealOnScroll from "./RevealOnScroll";
 import { useTranslations } from "@/lib/useTranslations";
 
 // ── Pool helpers ──────────────────────────────────────────────────────────────
-type PoolProject = (typeof projects)[number];
-
-const POOL: PoolProject[] = projects.filter(
-  (p) => !HOMEPAGE_EXCLUDED_SLUGS.includes(p.routeSlug)
-);
-
-const SERVER_DEFAULT: PoolProject[] = [...POOL]
-  .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0))
-  .slice(0, SLOT_COUNT);
+type PoolProject = Project;
 
 function shuffle<T>(arr: T[]): T[] {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -49,15 +41,16 @@ function shuffle<T>(arr: T[]): T[] {
   return arr;
 }
 
-function makeBag(): PoolProject[] {
-  return shuffle([...POOL]);
+function makeBag(pool: PoolProject[]): PoolProject[] {
+  return shuffle([...pool]);
 }
 
 function pickNext(
   bag: PoolProject[],
-  displayed: PoolProject[]
+  displayed: PoolProject[],
+  pool: PoolProject[]
 ): [PoolProject, PoolProject[]] {
-  let currentBag = bag.length ? [...bag] : makeBag();
+  let currentBag = bag.length ? [...bag] : makeBag(pool);
   const displayedSlugs = new Set(displayed.map((p) => p.routeSlug));
   for (let i = 0; i < currentBag.length; i++) {
     if (!displayedSlugs.has(currentBag[i].routeSlug)) {
@@ -67,9 +60,9 @@ function pickNext(
     }
   }
   currentBag = shuffle(
-    [...POOL].filter((p) => !displayedSlugs.has(p.routeSlug))
+    [...pool].filter((p) => !displayedSlugs.has(p.routeSlug))
   );
-  if (currentBag.length === 0) return [POOL[0], []];
+  if (currentBag.length === 0) return [pool[0], []];
   const picked = currentBag.shift()!;
   return [picked, currentBag];
 }
@@ -298,12 +291,14 @@ function CardMeta({ project, disciplinesStr, isHovered }: CardMetaProps) {
 }
 
 // ── Main section ──────────────────────────────────────────────────────────────
-export default function SelectedWorkSection() {
+export default function SelectedWorkSection({ sourceProjects }: { sourceProjects: Project[] }) {
   const t = useTranslations();
+  const pool = useMemo(() => sourceProjects.filter((project) => !HOMEPAGE_EXCLUDED_SLUGS.includes(project.routeSlug)), [sourceProjects]);
+  const serverDefault = useMemo(() => [...pool].sort((first, second) => (second.priority ?? 0) - (first.priority ?? 0)).slice(0, SLOT_COUNT), [pool]);
 
   // Server-renders SERVER_DEFAULT so crawlers always see real links.
   // Client randomises on mount to ensure per-reload variety.
-  const [displayedProjects, setDisplayedProjects] = useState<PoolProject[]>(SERVER_DEFAULT);
+  const [displayedProjects, setDisplayedProjects] = useState<PoolProject[]>(serverDefault);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const [focusedSlug, setFocusedSlug] = useState<string | null>(null);
   const [incomingBySlot, setIncomingBySlot] = useState<(CardState | null)[]>([null, null, null, null]);
@@ -328,9 +323,9 @@ export default function SelectedWorkSection() {
 
   // Randomise initial set on mount (client-only)
   useEffect(() => {
-    setDisplayedProjects(shuffle([...POOL]).slice(0, SLOT_COUNT));
-    bagRef.current = makeBag();
-  }, []);
+    setDisplayedProjects(shuffle([...pool]).slice(0, SLOT_COUNT));
+    bagRef.current = makeBag(pool);
+  }, [pool]);
 
   // IntersectionObserver
   useEffect(() => {
@@ -353,6 +348,7 @@ export default function SelectedWorkSection() {
 
   // Swap one slot
   const performSwap = useCallback(() => {
+    if (pool.length === 0) return;
     const activeSlug = hoveredSlug || focusedSlug;
     setDisplayedProjects((prev) => {
       // Find a slot not under pointer/focus
@@ -364,7 +360,7 @@ export default function SelectedWorkSection() {
       }
       if (prev[slotToSwap]?.routeSlug === activeSlug) return prev; // all hovered — skip
 
-      const [incoming, newBag] = pickNext(bagRef.current, prev);
+      const [incoming, newBag] = pickNext(bagRef.current, prev, pool);
       bagRef.current = newBag;
 
       // Preload only the next image
@@ -400,7 +396,7 @@ export default function SelectedWorkSection() {
       nextSlotRef.current = (slotToSwap + 1) % SLOT_COUNT;
       return prev;
     });
-  }, [hoveredSlug, focusedSlug]);
+  }, [hoveredSlug, focusedSlug, pool]);
 
   // Rotation interval — pauses on all conditions
   useEffect(() => {
@@ -413,10 +409,10 @@ export default function SelectedWorkSection() {
 
   // Year range from entire eligible pool (not just displayed cards)
   const yearRangeText = useMemo(() => {
-    const validYears = POOL.map((p) => parseInt(p.year, 10)).filter((y) => !isNaN(y));
+    const validYears = pool.map((p) => parseInt(p.year, 10)).filter((y) => !isNaN(y));
     if (!validYears.length) return "";
     return `/ ${Math.min(...validYears)} — ${Math.max(...validYears)}`;
-  }, []);
+  }, [pool]);
 
   // Touch pause (3 s)
   const handleTouchStart = useCallback(() => {
@@ -425,6 +421,8 @@ export default function SelectedWorkSection() {
       setHoveredSlug((h) => (h === "__touch__" ? null : h));
     }, 3000);
   }, []);
+
+  if (pool.length === 0) return null;
 
   return (
     <section

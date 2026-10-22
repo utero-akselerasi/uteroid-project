@@ -1,14 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
-import SmoothScroll from "@/components/SmoothScroll";
-import PageTransition from "@/components/PageTransition";
 import JsonLd from "@/components/JsonLd";
-import SkipToContent from "@/components/SkipToContent";
 import { LanguageProvider } from "@/lib/LanguageContext";
+import SiteShell from "@/components/SiteShell";
 
 const siteStructuredData = {
   "@context": "https://schema.org",
@@ -172,15 +167,7 @@ export default function RootLayout({
         )}
         <JsonLd data={siteStructuredData} />
         <LanguageProvider>
-          <SmoothScroll>
-            <SkipToContent />
-            <CustomCursor />
-            <Header />
-            <main id="main-content" tabIndex={-1} style={{ outline: "none" }}>
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <Footer />
-          </SmoothScroll>
+          <SiteShell>{children}</SiteShell>
         </LanguageProvider>
       </body>
     </html>

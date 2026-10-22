@@ -15,9 +15,10 @@ interface DeckManifest {
 
 interface PDFDeckSliderProps {
   slug: string;
+  routeSlug: string;
 }
 
-export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
+export default function PDFDeckSlider({ slug, routeSlug }: PDFDeckSliderProps) {
   const t = useTranslations();
   const [manifest, setManifest] = useState<DeckManifest | null>(null);
   const [loading, setLoading] = useState(true);
@@ -38,7 +39,10 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
 
     async function loadManifest() {
       try {
-        const response = await fetch(`/projects/${slug}/deck/manifest.json`);
+        let response = await fetch(`/portfolio-api/projects/${encodeURIComponent(routeSlug)}/deck`);
+        if (!response.ok) {
+          response = await fetch(`/projects/${slug}/deck/manifest.json`);
+        }
         if (!response.ok) {
           throw new Error("Manifest not found");
         }
@@ -58,7 +62,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
     return () => {
       isMounted = false;
     };
-  }, [slug]);
+  }, [slug, routeSlug]);
 
   // Keep loaded pages set updated: load current, previous 1, and next 2 pages
   useEffect(() => {

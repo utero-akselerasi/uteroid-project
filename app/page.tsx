@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import IntroductionSection from "@/components/IntroductionSection";
 import StatementBanner from "@/components/StatementBanner";
 import SelectedWorkSection from "@/components/SelectedWorkSection";
+import { getPortfolioProjects } from "@/lib/portfolioApi";
 import ManifestoSection from "@/components/ManifestoSection";
 import ServicesSection from "@/components/ServicesSection";
 
@@ -39,7 +40,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const portfolioProjects = await getPortfolioProjects();
   return (
     <>
       {/* 01 — HERO WITH BACKGROUND SLIDER & INTEGRATED NAV */}
@@ -52,7 +56,7 @@ export default function Home() {
       <StatementBanner />
 
       {/* 03 — RECENT WORKS */}
-      <SelectedWorkSection />
+      <SelectedWorkSection sourceProjects={portfolioProjects} />
 
       {/* 04 — EXPERIENCE / PHILOSOPHY & REALISASI */}
       <ManifestoSection />

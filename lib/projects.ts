@@ -1739,7 +1739,15 @@ export function getProjectsByFilters(params: {
   discipline?: string;    // Backwards-compat: direct Discipline key
   industry?: string;
 }): Project[] {
-  let filtered = [...projects];
+  return filterProjects(projects, params);
+}
+
+export function filterProjects(source: Project[], params: {
+  filter?: string;
+  discipline?: string;
+  industry?: string;
+}): Project[] {
+  let filtered = [...source];
 
   // Primary: WorkFilter-based filtering (new filter bar)
   if (params.filter && params.filter !== "all") {
@@ -1791,7 +1799,11 @@ export function getAllRouteSlugs(): string[] {
 
 /** Returns a count of projects for each WorkFilter */
 export function getFilterCounts(): Record<string, number> {
-  const counts: Record<string, number> = { all: projects.length };
+  return getProjectFilterCounts(projects);
+}
+
+export function getProjectFilterCounts(source: Project[]): Record<string, number> {
+  const counts: Record<string, number> = { all: source.length };
 
   const filters: Array<WorkFilter> = [
     "brand", "product", "promotion", "space", "digital", "indoor", "outdoor",
@@ -1800,7 +1812,7 @@ export function getFilterCounts(): Record<string, number> {
   for (const filter of filters) {
     const disciplines = filterToDisciplines[filter];
     if (disciplines) {
-      counts[filter] = projects.filter((p) =>
+      counts[filter] = source.filter((p) =>
         p.disciplines.some((d) => disciplines.includes(d))
       ).length;
     }

@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getProjectByRouteSlug, getAllRouteSlugs, getAdjacentProjects } from "@/lib/projects";
+import { notFound, redirect } from "next/navigation";
+import { getPortfolioProject, getPortfolioProjects } from "@/lib/portfolioApi";
 import { getProjectCover } from "@/lib/projectMedia";
 import { disciplineLabels, industryLabels } from "@/lib/types";
 import JsonLd from "@/components/JsonLd";
 import ProjectDetailClient from "@/components/project-detail/ProjectDetailClient";
 
-export async function generateStaticParams() {
-  return getAllRouteSlugs().map((slug) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -16,8 +14,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProjectByRouteSlug(slug);
+  const project = await getPortfolioProject(slug);
   if (!project) notFound();
+  if (project.routeSlug !== slug) redirect(`/work/${project.routeSlug}`);
 
   const pageTitle = `${project.title} — ${project.client}`;
   const description =
@@ -62,13 +61,16 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = getProjectByRouteSlug(slug);
+  const project = await getPortfolioProject(slug);
   if (!project) notFound();
 
-  const { prev, next } = getAdjacentProjects(project.routeSlug);
+  const allProjects = await getPortfolioProjects();
+  const currentIndex = allProjects.findIndex((item) => item.routeSlug === project.routeSlug);
+  const prev = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+  const next = currentIndex >= 0 && currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
 
   // Project index for display number
-  const allRouteSlugs = getAllRouteSlugs();
+  const allRouteSlugs = allProjects.map((item) => item.routeSlug);
   const projectIndex = allRouteSlugs.indexOf(project.routeSlug);
   const num = String(projectIndex + 1).padStart(2, "0");
 

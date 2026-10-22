@@ -238,7 +238,7 @@ export default function ProjectDetailClient({
 
           {/* ── Full Presentation Deck ──────────────────────── */}
           <RevealOnScroll>
-            <PDFDeckSlider slug={project.slug} />
+            <PDFDeckSlider slug={project.slug} routeSlug={project.routeSlug} />
           </RevealOnScroll>
 
           {/* ── Prev / Next Navigation ────────────────────── */}
