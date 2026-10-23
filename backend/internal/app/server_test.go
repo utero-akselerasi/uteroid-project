@@ -77,7 +77,7 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	if len(cookies) != 1 || !cookies[0].HttpOnly {
 		t.Fatal("missing secure session cookie")
 	}
-	project := Project{Slug: "sample", RouteSlug: "sample-project", Title: "Sample", Client: "Test client", Status: "draft", Industry: "services", Disciplines: []string{"identity"}}
+	project := Project{Slug: "sample", RouteSlug: "sample-project", Title: "Sample", Client: "Test client", Status: "draft", Industry: "services", Disciplines: []string{"identity"}, GridCoverPosition: "top", Priority: 999, Tags: []string{"identity", "print"}, Details: ProjectDetails{Challenge: "Before", Solution: "After"}}
 	body, _ := json.Marshal(project)
 	withoutCSRF := httptest.NewRequest(http.MethodPost, "/api/v1/admin/projects", bytes.NewReader(body))
 	withoutCSRF.AddCookie(cookies[0])
@@ -86,6 +86,13 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	if blocked.Code != http.StatusForbidden {
 		t.Fatalf("CSRF not enforced: %d", blocked.Code)
 	}
+	refresh := httptest.NewRequest(http.MethodGet, "/api/v1/admin/auth/session", nil)
+	refresh.AddCookie(cookies[0])
+	refreshed := httptest.NewRecorder()
+	handler.ServeHTTP(refreshed, refresh)
+	if refreshed.Code != http.StatusOK || !bytes.Contains(refreshed.Body.Bytes(), []byte(session.CSRFToken)) {
+		t.Fatalf("session changed CSRF token: %d %s", refreshed.Code, refreshed.Body.String())
+	}
 	create := httptest.NewRequest(http.MethodPost, "/api/v1/admin/projects", bytes.NewReader(body))
 	create.AddCookie(cookies[0])
 	create.Header.Set("X-CSRF-Token", session.CSRFToken)
@@ -93,6 +100,9 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	handler.ServeHTTP(created, create)
 	if created.Code != http.StatusCreated {
 		t.Fatalf("create failed: %d %s", created.Code, created.Body.String())
+	}
+	if !bytes.Contains(created.Body.Bytes(), []byte(`"gridCoverPosition":"center"`)) || !bytes.Contains(created.Body.Bytes(), []byte(`"priority":1`)) {
+		t.Fatalf("defaults not applied: %s", created.Body.String())
 	}
 	public := httptest.NewRecorder()
 	handler.ServeHTTP(public, httptest.NewRequest(http.MethodGet, "/api/v1/projects", nil))
@@ -109,6 +119,9 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	handler.ServeHTTP(updated, update)
 	if updated.Code != http.StatusOK {
 		t.Fatalf("publish failed: %d %s", updated.Code, updated.Body.String())
+	}
+	if !bytes.Contains(updated.Body.Bytes(), []byte(`"priority":1`)) {
+		t.Fatalf("priority changed on update: %s", updated.Body.String())
 	}
 	public = httptest.NewRecorder()
 	handler.ServeHTTP(public, httptest.NewRequest(http.MethodGet, "/api/v1/projects", nil))

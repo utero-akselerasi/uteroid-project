@@ -152,7 +152,7 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	token, _ := randomToken(32)
-	csrf, _ := randomToken(32)
+	csrf := csrfToken(token)
 	expires := time.Now().Add(12 * time.Hour)
 	_, err = s.store.DB.ExecContext(r.Context(), `INSERT INTO admin_sessions(admin_id,token_hash,csrf_hash,ip_address,user_agent,expires_at,last_seen_at) VALUES(?,?,?,?,?,?,?)`, id, tokenHash(token), tokenHash(csrf), clientIP(r), r.UserAgent(), expires, time.Now())
 	if err != nil {
@@ -196,9 +196,15 @@ func currentSession(r *http.Request) sessionContext {
 	return r.Context().Value(sessionKey).(sessionContext)
 }
 func (s *Server) session(w http.ResponseWriter, r *http.Request) {
-	csrf, _ := randomToken(32)
+	cookie, _ := r.Cookie("utero_admin_session")
+	csrf := csrfToken(cookie.Value)
 	session := currentSession(r)
-	_, _ = s.store.DB.ExecContext(r.Context(), `UPDATE admin_sessions SET csrf_hash=? WHERE id=?`, tokenHash(csrf), session.ID)
+	if session.CSRFHash != tokenHash(csrf) {
+		if _, err := s.store.DB.ExecContext(r.Context(), `UPDATE admin_sessions SET csrf_hash=? WHERE id=?`, tokenHash(csrf), session.ID); err != nil {
+			apiError(w, 500, "unable to refresh session")
+			return
+		}
+	}
 	writeJSON(w, 200, map[string]any{"authenticated": true, "csrfToken": csrf})
 }
 func (s *Server) logout(w http.ResponseWriter, r *http.Request) {

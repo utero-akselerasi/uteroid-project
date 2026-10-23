@@ -69,7 +69,15 @@ CREATE TABLE IF NOT EXISTS project_slug_redirects (
 CREATE TABLE IF NOT EXISTS audit_logs (
  id INTEGER PRIMARY KEY, admin_id INTEGER, action TEXT NOT NULL, entity_type TEXT NOT NULL,
  entity_id TEXT, ip_address TEXT, metadata_json TEXT NOT NULL DEFAULT '{}', created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);`)
+ );`)
+	if err != nil {
+		return err
+	}
+	_, err = s.DB.Exec(`WITH ranked AS MATERIALIZED (
+ SELECT id, (SELECT COALESCE(MAX(priority),0) FROM projects) + ROW_NUMBER() OVER (ORDER BY id) AS next_priority
+ FROM projects WHERE priority=0 AND deleted_at IS NULL
+ ) UPDATE projects SET priority=(SELECT next_priority FROM ranked WHERE ranked.id=projects.id)
+ WHERE id IN (SELECT id FROM ranked)`)
 	return err
 }
 
@@ -176,6 +184,16 @@ func validateProject(p *Project) error {
 func (s *Store) SaveProject(ctx context.Context, p *Project) error {
 	if err := validateProject(p); err != nil {
 		return err
+	}
+	p.GridCoverPosition = "center"
+	if p.ID == 0 {
+		if err := s.DB.QueryRowContext(ctx, `SELECT COALESCE(MAX(priority),0)+1 FROM projects WHERE deleted_at IS NULL`).Scan(&p.Priority); err != nil {
+			return err
+		}
+	} else {
+		if err := s.DB.QueryRowContext(ctx, `SELECT priority FROM projects WHERE id=? AND deleted_at IS NULL`, p.ID).Scan(&p.Priority); err != nil {
+			return err
+		}
 	}
 	var video any
 	if p.Video != nil {

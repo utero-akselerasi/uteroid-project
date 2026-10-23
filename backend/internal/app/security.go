@@ -63,6 +63,8 @@ func tokenHash(token string) string {
 	return base64.RawURLEncoding.EncodeToString(sum[:])
 }
 
+func csrfToken(sessionToken string) string { return tokenHash(sessionToken + ":csrf") }
+
 func verifyTOTP(secret, code string, now time.Time) bool {
 	if secret == "" {
 		return true
