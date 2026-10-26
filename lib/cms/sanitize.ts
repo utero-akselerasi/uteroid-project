@@ -33,9 +33,8 @@ function installHooks(): void {
   DOMPurify.addHook("afterSanitizeAttributes", (node) => {
     const tag = node.nodeName?.toLowerCase();
 
-    // Stripping a blocked URL leaves the element behind: an <img> with no
-    // src renders as a broken-image icon. Drop it instead.
-    if (tag === "img" && !node.getAttribute("src")) {
+    // Remove images with missing or disallowed URLs, including data: payloads.
+    if (tag === "img" && !/^(?:https?:\/\/|\/)/i.test(node.getAttribute("src") ?? "")) {
       node.remove();
       return;
     }
