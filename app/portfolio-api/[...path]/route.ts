@@ -1,6 +1,8 @@
 import type { NextRequest } from "next/server";
+import { DeckImageError, processDeckImage } from "@/lib/processDeckImage";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const methods = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"] as const;
 
@@ -8,8 +10,65 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
   const { path } = await context.params;
   const baseUrl = (process.env.PORTFOLIO_API_URL || "http://127.0.0.1:8080/api/v1").replace(/\/$/, "");
   const target = `${baseUrl}/${path.map(encodeURIComponent).join("/")}${request.nextUrl.search}`;
+  const isMediaUpload = request.method === "POST" && path.length === 4 && path[0] === "admin" && path[1] === "projects" && path[3] === "media";
   const headers = new Headers();
+  let body: BodyInit | undefined;
+  let rebuildsMultipartBody = false;
+
+  if (isMediaUpload && Number(request.headers.get("content-length")) > 21 * 1024 * 1024) {
+    return Response.json({ error: "File melebihi batas 20 MB." }, { status: 413 });
+  }
+
+  if (isMediaUpload) {
+    const session = await fetch(`${baseUrl}/admin/auth/session`, {
+      headers: { cookie: request.headers.get("cookie") || "" },
+      cache: "no-store",
+    });
+    if (!session.ok) {
+      return new Response(session.body, { status: session.status, headers: { "content-type": "application/json" } });
+    }
+    const credentials = await session.json();
+    if (!request.headers.get("x-csrf-token") || request.headers.get("x-csrf-token") !== credentials.csrfToken) {
+      return Response.json({ error: "csrf validation failed" }, { status: 403 });
+    }
+  }
+
+  if (isMediaUpload && request.headers.get("content-type")?.startsWith("multipart/form-data")) {
+    const rawBody = await request.arrayBuffer();
+    if (rawBody.byteLength > 21 * 1024 * 1024) {
+      return Response.json({ error: "File melebihi batas 20 MB." }, { status: 413 });
+    }
+    const formData = await new Request(request.url, {
+      method: "POST",
+      headers: { "content-type": request.headers.get("content-type")! },
+      body: rawBody,
+    }).formData();
+    if (formData.get("mediaType") === "deck") {
+      const file = formData.get("file");
+      if (!(file instanceof File)) {
+        return Response.json({ error: "File DECK wajib dipilih." }, { status: 400 });
+      }
+
+      try {
+        const processed = await processDeckImage(Buffer.from(await file.arrayBuffer()));
+        const filename = `${file.name.replace(/\.[^.]+$/, "") || "deck-slide"}.webp`;
+        if (processed.buffer.length > 20 * 1024 * 1024) {
+          throw new DeckImageError("Hasil WebP melebihi batas 20 MB.");
+        }
+        formData.set("file", new File([new Uint8Array(processed.buffer)], filename, { type: "image/webp" }));
+      } catch (error) {
+        const message = error instanceof DeckImageError ? error.message : "Gambar DECK gagal diproses.";
+        const status = error instanceof DeckImageError ? 400 : 500;
+        return Response.json({ error: message }, { status });
+      }
+    }
+    body = formData;
+    rebuildsMultipartBody = true;
+  } else if (request.method !== "GET" && request.method !== "HEAD") {
+    body = await request.arrayBuffer();
+  }
   for (const name of ["accept", "content-type", "cookie", "origin", "user-agent", "x-csrf-token"]) {
+    if (name === "content-type" && rebuildsMultipartBody) continue;
     const value = request.headers.get(name);
     if (value) headers.set(name, value);
   }
@@ -18,7 +77,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
   const response = await fetch(target, {
     method: request.method,
     headers,
-    body: request.method === "GET" || request.method === "HEAD" ? undefined : await request.arrayBuffer(),
+    body,
     cache: "no-store",
   });
   const responseHeaders = new Headers();

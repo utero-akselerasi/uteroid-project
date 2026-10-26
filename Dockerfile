@@ -43,7 +43,8 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Run as non-root: a compromised process should not own the filesystem.
-RUN addgroup --system --gid 1001 nodejs \
+RUN apk add --no-cache font-liberation \
+ && addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 nextjs
 
 # standalone/ already contains server.js plus the traced node_modules.

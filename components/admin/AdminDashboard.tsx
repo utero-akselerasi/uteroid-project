@@ -97,8 +97,37 @@ export default function AdminDashboard() {
   }
   async function removeProject(project: AdminProject) { if(!session||!project.id||!confirm(`Arsipkan dan hapus ${project.title} dari dashboard?`))return;await api(`admin/projects/${project.id}`,{method:"DELETE"},session.csrfToken);setEditing(null);await loadProjects(); }
   async function upload(project: AdminProject, mediaType: string, files: File[]) {
-    if(!session||!project.id||files.length===0)return;setBusy(true);setError("");
-    try{for(const file of files){const form=new FormData();form.set("file",file);form.set("mediaType",mediaType);form.set("altText",project.title);await api(`admin/projects/${project.id}/media`,{method:"POST",body:form},session.csrfToken)}const refreshed=await api(`admin/projects/${project.id}`);setEditing(refreshed);setMedia(await api(`admin/projects/${project.id}/media`));await loadProjects();setNotice(`${files.length} media berhasil diunggah.`)}catch(caught){setError(caught instanceof Error?caught.message:"Upload gagal");}finally{setBusy(false)}
+    if (!session || !project.id || files.length === 0) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    let uploaded = 0;
+    try {
+      for (const file of files) {
+        const form = new FormData();
+        form.set("file", file);
+        form.set("mediaType", mediaType);
+        form.set("altText", project.title);
+        try {
+          await api(`admin/projects/${project.id}/media`, { method: "POST", body: form }, session.csrfToken);
+          uploaded++;
+        } catch (caught) {
+          const reason = caught instanceof Error ? caught.message : "Upload gagal";
+          setError(`${file.name}: ${reason}. ${uploaded} dari ${files.length} file berhasil diunggah.`);
+          break;
+        }
+      }
+      if (uploaded > 0) {
+        setEditing(await api(`admin/projects/${project.id}`));
+        setMedia(await api(`admin/projects/${project.id}/media`));
+        await loadProjects();
+        if (uploaded === files.length) setNotice(`${uploaded} media berhasil diunggah.`);
+      }
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Daftar media gagal diperbarui");
+    } finally {
+      setBusy(false);
+    }
   }
   async function deleteMedia(project:AdminProject,item:MediaItem){if(!session||!project.id||!confirm(`Hapus ${item.filename}?`))return;await api(`admin/projects/${project.id}/media/${item.id}`,{method:"DELETE"},session.csrfToken);setMedia(await api(`admin/projects/${project.id}/media`));setEditing(await api(`admin/projects/${project.id}`));await loadProjects()}
   async function moveMedia(project:AdminProject,item:MediaItem,direction:-1|1){if(!session||!project.id)return;const same=media.filter(value=>value.mediaType===item.mediaType);const index=same.findIndex(value=>value.id===item.id);const target=index+direction;if(target<0||target>=same.length)return;[same[index],same[target]]=[same[target],same[index]];await api(`admin/projects/${project.id}/media/order`,{method:"PUT",body:JSON.stringify({ids:same.map(value=>value.id)})},session.csrfToken);setMedia(await api(`admin/projects/${project.id}/media`))}
@@ -128,7 +157,7 @@ function MediaUpload({type,busy,onUpload}:{type:string;busy:boolean;onUpload:(fi
   const [dragging,setDragging]=useState(false);
   const multiple=type==="gallery"||type==="deck";
   const send=(files:FileList|null)=>{if(!files?.length)return;onUpload(Array.from(files).slice(0,multiple?undefined:1))};
-  return <label className={`${styles.upload} ${dragging?styles.uploadDragging:""}`} onDragOver={(event)=>{event.preventDefault();setDragging(true)}} onDragLeave={()=>setDragging(false)} onDrop={(event)=>{event.preventDefault();setDragging(false);send(event.dataTransfer.files)}}><strong>{type.toUpperCase()}</strong><p className={styles.muted}>{type==="deck"?"Tarik beberapa halaman JPG, PNG, atau WebP. Urutan file menjadi urutan slide.":`Tarik ${multiple?"satu atau beberapa":"satu"} gambar ke sini, atau klik untuk memilih. Maksimal 20 MB per file.`}</p><span className={styles.uploadAction}>{dragging?"Lepaskan untuk upload":"Pilih file"}</span><input className={styles.uploadInput} type="file" accept="image/jpeg,image/png,image/webp" multiple={multiple} disabled={busy} onChange={(event)=>{send(event.target.files);event.target.value=""}}/></label>
+  return <label className={`${styles.upload} ${dragging?styles.uploadDragging:""}`} onDragOver={(event)=>{event.preventDefault();setDragging(true)}} onDragLeave={()=>setDragging(false)} onDrop={(event)=>{event.preventDefault();setDragging(false);send(event.dataTransfer.files)}}><strong>{type.toUpperCase()}</strong><p className={styles.muted}>{type==="deck"?"Tarik beberapa halaman JPG, PNG, atau WebP. Otomatis menjadi WebP resolusi tinggi dengan watermark UTERO ID di tengah. Urutan file menjadi urutan slide. Maksimal 20 MB per file.":`Tarik ${multiple?"satu atau beberapa":"satu"} gambar ke sini, atau klik untuk memilih. Maksimal 20 MB per file.`}</p><span className={styles.uploadAction}>{dragging?"Lepaskan untuk upload":"Pilih file"}</span><input className={styles.uploadInput} type="file" accept="image/jpeg,image/png,image/webp" multiple={multiple} disabled={busy} onChange={(event)=>{send(event.target.files);event.target.value=""}}/></label>
 }
 
 function ProjectEditor({project,media,busy,onChange,onSave,onDelete,onDeleteMedia,onMoveMedia,onUpload,onMigrate,onBack}:{project:AdminProject;media:MediaItem[];busy:boolean;onChange:(p:AdminProject)=>void;onSave:(p:AdminProject)=>void;onDelete:(p:AdminProject)=>void;onDeleteMedia:(p:AdminProject,item:MediaItem)=>void;onMoveMedia:(p:AdminProject,item:MediaItem,direction:-1|1)=>void;onUpload:(p:AdminProject,type:string,files:File[])=>void;onMigrate:(p:AdminProject)=>void;onBack:()=>void}){
