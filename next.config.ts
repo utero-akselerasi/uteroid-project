@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Emits .next/standalone with a minimal server.js + only the traced
+  // node_modules, so the Docker runtime stage needs no npm install.
+  output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -15,9 +18,36 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "player.vimeo.com",
       },
+      {
+        // Signed article/OG images from CMS Artikel storage. The URLs carry
+        // a token and expire after 3600s, so next/image must be allowed to
+        // fetch them but must not be asked to cache them for longer.
+        protocol: "https",
+        hostname: "supabase.carubra.com",
+      },
     ],
+    // Keep the optimizer's cache under the signed-URL lifetime.
+    minimumCacheTTL: 300,
   },
   allowedDevOrigins: ['127.0.0.1'],
+  async headers() {
+    return [
+      {
+        source: '/admin/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "default-src 'self'; img-src 'self' data: blob: https: http:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https: http:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       // Redirect old short slugs to new full-name-based route slugs

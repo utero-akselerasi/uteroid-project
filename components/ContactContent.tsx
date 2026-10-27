@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import emailjs from "@emailjs/browser";
+import { submitProjectInquiry } from "@/lib/submitProjectInquiry";
 import { useTranslatedInquiryLabels } from "@/lib/useTranslatedServices";
 import { useTranslations } from "@/lib/useTranslations";
 
@@ -34,22 +34,18 @@ export default function ContactContent() {
     setError("");
     setSubmitting(true);
     try {
-      await emailjs.send(
-        "service_2tybtxo",
-        "template_s7p9ieh",
-        {
-          name: formName,
-          email: formEmail,
-          company: formCompany,
-          phone: formPhone,
-          disciplines: selectedServices.join(", ") || "Not specified",
-          brief: formBrief,
-        },
-        { publicKey: "4nKYv5KDnicRpdYv4" }
-      );
+      await submitProjectInquiry({
+        name: formName,
+        email: formEmail,
+        company: formCompany,
+        phone: formPhone,
+        disciplines: selectedServices,
+        brief: formBrief,
+        source: "contact-page",
+      });
       setSubmitted(true);
     } catch (err: unknown) {
-      console.error("EmailJS error:", err);
+      console.error("Project inquiry error:", err);
       setError(t.contact.errorTryAgain);
     } finally {
       setSubmitting(false);

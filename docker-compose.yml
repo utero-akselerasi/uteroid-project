@@ -1,0 +1,99 @@
+name: website-uteroid
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_GTM_ID: ${NEXT_PUBLIC_GTM_ID:-}
+        NEXT_PUBLIC_GA4_MEASUREMENT_ID: ${NEXT_PUBLIC_GA4_MEASUREMENT_ID:-}
+        NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION:-}
+    image: uteroid-web:latest
+    container_name: uteroid-web
+    ports:
+      # host:container — open http://localhost:3020
+      # 3020 because 3000-3011, 3100, 3180, 3200 are taken on this machine.
+      - "3020:3000"
+    environment:
+      NODE_ENV: production
+      PORTFOLIO_API_URL: ${PORTFOLIO_API_URL:-}
+      # CMS Artikel Public Read API. Server-side only — never NEXT_PUBLIC_*,
+      # or the key would be inlined into the browser bundle.
+      # Set ARTIKEL_API_KEY in an uncommitted .env next to this file.
+      ARTIKEL_API_URL: ${ARTIKEL_API_URL:-https://cms.carubra.com/api/v1}
+      ARTIKEL_API_KEY: ${ARTIKEL_API_KEY:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-}
+    depends_on:
+      portfolio-api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - carubra-network
+      - utero-id-network
+
+  portfolio-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: uteroid-portfolio-api:latest
+    container_name: uteroid-portfolio-api
+    environment:
+      API_ADDR: :8080
+      DATABASE_PATH: /data/utero.db
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:3020}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      ADMIN_TOTP_SECRET: ${ADMIN_TOTP_SECRET:-}
+      S3_ENDPOINT: object-storage:8333
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:?Set S3_ACCESS_KEY in .env}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:?Set S3_SECRET_KEY in .env}
+      S3_BUCKET: ${S3_BUCKET:-utero-media}
+      S3_USE_SSL: "false"
+      LEGACY_MEDIA_ROOT: /legacy-public
+    volumes:
+      - portfolio-db:/data
+      - ./public:/legacy-public:ro
+    depends_on:
+      object-storage:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+    networks:
+      - utero-id-network
+
+  object-storage:
+    image: chrislusf/seaweedfs:4.40
+    container_name: uteroid-object-storage
+    command: server -s3 -dir=/data
+    environment:
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?Set S3_ACCESS_KEY in .env}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?Set S3_SECRET_KEY in .env}
+    volumes:
+      - portfolio-objects:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9333/cluster/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    networks:
+      - utero-id-network
+
+volumes:
+  portfolio-db:
+  portfolio-objects:
+
+networks:
+  carubra-network:
+    # Pre-existing shared bridge (nginx_proxy_caubra, cloudflared-tunnel
+    # and ~29 other containers live here). external keeps Compose from
+    # creating a separate uteroid-project_carubra-network instead.
+    external: true
+  utero-id-network:
+    external: true

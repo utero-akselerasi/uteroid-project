@@ -1,11 +1,14 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/lib/projects";
 import { getAllServiceSlugs } from "@/lib/services";
-import { getAllInsightSlugs } from "@/lib/insights";
+import { getInsights } from "@/lib/insights-source";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 300;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://utero.id";
   const now = new Date();
+  const { insights } = await getInsights();
 
   // Core static marketing pages
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -56,7 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Insight article detail pages
-  const insightRoutes: MetadataRoute.Sitemap = getAllInsightSlugs().map((slug) => ({
+  const insightRoutes: MetadataRoute.Sitemap = insights.map(({ slug }) => ({
     url: `${baseUrl}/insights/${slug}`,
     lastModified: now,
     changeFrequency: "monthly",

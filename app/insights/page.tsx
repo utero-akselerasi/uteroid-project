@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { insights } from "@/lib/insights";
+import { connection } from "next/server";
+import { getInsights, getInsightsHeader } from "@/lib/insights-source";
 
 export const metadata: Metadata = {
   title: "Insights & Media — Perspectives from Utero",
@@ -67,7 +68,28 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function InsightsPage() {
+function titleFontSize(title: string, featured = false): string {
+  const length = Array.from(title.trim()).length;
+
+  if (featured) {
+    if (length >= 120) return "clamp(1.35rem, 2.35vw, 2.15rem)";
+    if (length >= 90) return "clamp(1.5rem, 2.75vw, 2.45rem)";
+    if (length >= 65) return "clamp(1.65rem, 3.1vw, 2.7rem)";
+    return "clamp(1.75rem, 3.5vw, 3rem)";
+  }
+
+  if (length >= 110) return "1.05rem";
+  if (length >= 75) return "1.15rem";
+  return "1.35rem";
+}
+
+export default async function InsightsPage() {
+  await connection();
+
+  // CMS is the source of truth; lib/insights.ts is the fallback when the
+  // CMS is unreachable or unconfigured. See lib/insights-source.ts.
+  const { insights } = await getInsights();
+  const header = getInsightsHeader();
   const [featured, ...rest] = insights;
 
   return (
@@ -132,7 +154,7 @@ export default function InsightsPage() {
                   color: "#c91a1f",
                 }}
               >
-                04 / PUBLICATIONS &amp; PERSPECTIVES
+                {header.headerTag}
               </span>
             </div>
 
@@ -158,7 +180,7 @@ export default function InsightsPage() {
                     margin: 0,
                   }}
                 >
-                  Insights
+                  {header.headerTitle}
                 </h1>
                 <p
                   style={{
@@ -170,7 +192,7 @@ export default function InsightsPage() {
                     maxWidth: "520px",
                   }}
                 >
-                  Critical perspectives, case reflections, and design philosophies on branding, spatial environments, and physical realization.
+                  {header.headerDescription}
                 </p>
               </div>
 
@@ -265,17 +287,20 @@ export default function InsightsPage() {
                           fontWeight: 600,
                         }}
                       >
-                        {featured.date} · {featured.readTime}
+                        {[featured.date, featured.readTime]
+                          .filter(Boolean)
+                          .join(" · ")}
                       </span>
                     </div>
 
                     <h2
                       style={{
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                        fontSize: "clamp(1.75rem, 3.5vw, 3rem)",
+                        fontSize: titleFontSize(featured.title, true),
                         fontWeight: 900,
                         letterSpacing: "-0.03em",
                         textTransform: "uppercase",
+                        textWrap: "balance",
                         color: "#0a0a0a",
                         lineHeight: 1.08,
                         margin: "0 0 1.25rem",
@@ -430,10 +455,11 @@ export default function InsightsPage() {
                       <h3
                         style={{
                           fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                          fontSize: "1.35rem",
+                          fontSize: titleFontSize(article.title),
                           fontWeight: 900,
                           letterSpacing: "-0.02em",
                           textTransform: "uppercase",
+                          textWrap: "balance",
                           color: "#0a0a0a",
                           lineHeight: 1.15,
                           margin: "0 0 0.6rem",

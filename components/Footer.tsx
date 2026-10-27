@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "@/lib/useTranslations";
+import { useSiteSettings } from "@/components/SiteSettingsProvider";
 
 const mainNavLinksStatic = [
   { label: "WORK", href: "/work" },
@@ -11,7 +12,7 @@ const mainNavLinksStatic = [
   { label: "CONTACT", href: "/contact" },
 ];
 
-const socialLinks = [
+const defaultSocialLinks = [
   {
     label: "Instagram",
     href: "https://www.instagram.com/uteroindonesia/?hl=en",
@@ -28,7 +29,15 @@ const socialLinks = [
 
 export default function Footer() {
   const t = useTranslations();
+  const { settings } = useSiteSettings();
   const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    { label: "Instagram", href: settings.contacts?.instagram || defaultSocialLinks[0].href },
+    { label: "Facebook", href: settings.contacts?.facebook || defaultSocialLinks[1].href },
+    { label: "YouTube", href: settings.contacts?.youtube || defaultSocialLinks[2].href },
+    ...(settings.contacts?.linkedin ? [{ label: "LinkedIn", href: settings.contacts.linkedin }] : []),
+  ];
 
   const mainNavLinks = mainNavLinksStatic.map((item) => ({
     ...item,

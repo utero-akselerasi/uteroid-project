@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef, FormEvent } from "react";
 import { usePathname } from "next/navigation";
 import ContactLauncher from "./ContactLauncher";
-import emailjs from "@emailjs/browser";
+import { submitProjectInquiry } from "@/lib/submitProjectInquiry";
 import { useTranslatedInquiryLabels } from "@/lib/useTranslatedServices";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useTranslations, type Translations } from "@/lib/useTranslations";
@@ -217,22 +217,18 @@ export default function Header() {
     setFormError("");
     setFormSubmitting(true);
     try {
-      await emailjs.send(
-        "service_2tybtxo",
-        "template_s7p9ieh",
-        {
-          name: formName,
-          email: formEmail,
-          company: formCompany,
-          phone: formPhone,
-          disciplines: selectedDisciplines.join(", ") || "Not specified",
-          brief: formBrief,
-        },
-        { publicKey: "4nKYv5KDnicRpdYv4" }
-      );
+      await submitProjectInquiry({
+        name: formName,
+        email: formEmail,
+        company: formCompany,
+        phone: formPhone,
+        disciplines: selectedDisciplines,
+        brief: formBrief,
+        source: "header-launcher",
+      });
       setFormSubmitted(true);
     } catch (err: unknown) {
-      console.error("EmailJS error:", err);
+      console.error("Project inquiry error:", err);
       setFormError("Something went wrong. Please try again.");
     } finally {
       setFormSubmitting(false);

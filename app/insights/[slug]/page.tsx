@@ -2,11 +2,23 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getInsightBySlug, getAllInsightSlugs } from "@/lib/insights";
+import { getInsight, getInsightSlugs } from "@/lib/insights-source";
 import JsonLd from "@/components/JsonLd";
 
+// Route-level ISR — see the note in app/insights/page.tsx. Literal, not an
+// imported constant: segment config is read statically.
+export const revalidate = 300;
+
+function articleTitleFontSize(title: string): string {
+  const length = Array.from(title.trim()).length;
+  if (length >= 120) return "clamp(1.5rem, 2.1vw, 2.25rem)";
+  if (length >= 90) return "clamp(1.65rem, 2.6vw, 2.7rem)";
+  if (length >= 65) return "clamp(1.85rem, 3.3vw, 3.3rem)";
+  return "clamp(2.25rem, 5vw, 4.5rem)";
+}
+
 export async function generateStaticParams() {
-  const slugs = getAllInsightSlugs();
+  const slugs = await getInsightSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
@@ -16,14 +28,17 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getInsightBySlug(slug);
+  const result = await getInsight(slug);
 
-  if (!article) {
-    notFound();
+  if (!result) {
+    return { title: "Article Not Found" };
   }
 
-  const pageTitle = `${article.title} — Insights`;
-  const coverImage = article.coverImage || "/img/unnamed.webp";
+  const { insight: article, origin } = result;
+  const pageTitle = article.title + " — Insights";
+  const stableCoverImage =
+    origin === "local" ? article.coverImage || "/img/unnamed.webp" : undefined;
+  const articleUrl = "https://utero.id/insights/" + article.slug;
 
   return {
     title: pageTitle,
@@ -32,23 +47,16 @@ export async function generateMetadata({
       type: "article",
       title: pageTitle,
       description: article.excerpt,
-      url: `https://utero.id/insights/${article.slug}`,
-      images: [
-        {
-          url: coverImage,
-          alt: article.title,
-        },
-      ],
+      url: articleUrl,
+      ...(stableCoverImage ? { images: [{ url: stableCoverImage, alt: article.title }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
       description: article.excerpt,
-      images: [coverImage],
+      ...(stableCoverImage ? { images: [stableCoverImage] } : {}),
     },
-    alternates: {
-      canonical: `/insights/${article.slug}`,
-    },
+    alternates: { canonical: "/insights/" + article.slug },
   };
 }
 
@@ -58,64 +66,40 @@ export default async function InsightsSlugPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = getInsightBySlug(slug);
+  const result = await getInsight(slug);
 
-  if (!article) {
+  if (!result) {
     notFound();
   }
 
-  const articleImageUrl = article.coverImage
-    ? article.coverImage.startsWith("http")
-      ? article.coverImage
-      : `https://utero.id${article.coverImage}`
-    : "https://utero.id/img/unnamed.webp";
-
+  const { insight: article, origin, contentHtml } = result;
+  const articleUrl = "https://utero.id/insights/" + article.slug;
+  const articleImageUrl =
+    origin === "local" && article.coverImage
+      ? new URL(article.coverImage, "https://utero.id").toString()
+      : undefined;
   const articleSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://utero.id",
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Insights",
-            "item": "https://utero.id/insights",
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": article.title,
-            "item": `https://utero.id/insights/${article.slug}`,
-          },
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://utero.id" },
+          { "@type": "ListItem", position: 2, name: "Insights", item: "https://utero.id/insights" },
+          { "@type": "ListItem", position: 3, name: article.title, item: articleUrl },
         ],
       },
       {
         "@type": "Article",
-        "@id": `https://utero.id/insights/${article.slug}#article`,
-        "headline": article.title,
-        "description": article.excerpt,
-        "articleBody": article.content,
-        "image": articleImageUrl,
-        "author": {
-          "@type": "Organization",
-          "name": "PT. Utero Kreatif Indonesia",
-          "url": "https://utero.id",
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "PT. Utero Kreatif Indonesia",
-          "url": "https://utero.id",
-          "logo": "https://utero.id/icon.svg",
-        },
-        "url": `https://utero.id/insights/${article.slug}`,
-        "genre": article.category,
+        "@id": articleUrl + "#article",
+        headline: article.title,
+        description: article.excerpt,
+        ...(origin === "local" ? { articleBody: article.content } : {}),
+        ...(articleImageUrl ? { image: articleImageUrl } : {}),
+        author: { "@type": "Organization", name: "PT. Utero Kreatif Indonesia", url: "https://utero.id" },
+        publisher: { "@type": "Organization", name: "PT. Utero Kreatif Indonesia", url: "https://utero.id", logo: "https://utero.id/icon.svg" },
+        url: articleUrl,
+        genre: article.category,
       },
     ],
   };
@@ -127,6 +111,58 @@ export default async function InsightsSlugPage({
         .ins-back:hover { color: #c91a1f !important; }
         .ins-cta:hover { background-color: #0a0a0a !important; }
         .ins-all:hover { color: #c91a1f !important; border-color: #c91a1f !important; }
+
+        /* CMS article body — the HTML comes from the editor, so style by tag. */
+        .ins-body > *:last-child { margin-bottom: 0; }
+        .ins-body p { margin: 0 0 1.75rem; }
+        .ins-body h2, .ins-body h3, .ins-body h4 {
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #0a0a0a;
+          line-height: 1.2;
+          margin: 2.5rem 0 1rem;
+        }
+        .ins-body h2 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+        .ins-body h3 { font-size: clamp(1.2rem, 1.8vw, 1.5rem); }
+        .ins-body h4 { font-size: clamp(1.05rem, 1.5vw, 1.25rem); }
+        .ins-body ul, .ins-body ol { margin: 0 0 1.75rem; padding-left: 1.5rem; }
+        .ins-body li { margin-bottom: 0.5rem; }
+        .ins-body a { color: #c91a1f; text-decoration: underline; }
+        .ins-body strong, .ins-body b { font-weight: 700; }
+        .ins-body img { max-width: 100%; height: auto; display: block; margin: 2rem 0; }
+        .ins-body figure { margin: 2rem 0; }
+        .ins-body figcaption {
+          font-size: 0.8rem;
+          color: #777777;
+          letter-spacing: 0.04em;
+          margin-top: 0.6rem;
+        }
+        .ins-body blockquote {
+          border-left: 2px solid #c91a1f;
+          padding-left: 1.75rem;
+          margin: 2.5rem 0;
+          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-size: clamp(1.2rem, 2vw, 1.6rem);
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          text-transform: uppercase;
+          color: #0a0a0a;
+          line-height: 1.25;
+        }
+        .ins-body pre {
+          background-color: #f4f4f4;
+          padding: 1.25rem;
+          overflow-x: auto;
+          margin: 0 0 1.75rem;
+          font-size: 0.875rem;
+        }
+        .ins-body code { font-family: ui-monospace, monospace; font-size: 0.9em; }
+        .ins-body hr { border: 0; border-top: 1px solid #e5e5e5; margin: 3rem 0; }
+        .ins-body table { width: 100%; border-collapse: collapse; margin: 0 0 1.75rem; font-size: 0.9rem; }
+        .ins-body th, .ins-body td { border: 1px solid #e5e5e5; padding: 0.6rem 0.8rem; text-align: left; }
+        .ins-body th { font-weight: 700; background-color: #fafafa; }
       `}</style>
 
       <section
@@ -196,17 +232,20 @@ export default async function InsightsSlugPage({
                   color: "#c91a1f",
                 }}
               >
-                {article.category} · {article.date} · {article.readTime}
+                {[article.category, article.date, article.readTime]
+                  .filter(Boolean)
+                  .join(" · ")}
               </span>
             </div>
 
             <h1
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(2.25rem, 5vw, 4.5rem)",
+                fontSize: articleTitleFontSize(article.title),
                 fontWeight: 900,
                 letterSpacing: "-0.035em",
                 textTransform: "uppercase",
+                textWrap: "balance",
                 color: "#0a0a0a",
                 lineHeight: 1.05,
                 margin: "0 0 1.5rem",
@@ -244,7 +283,7 @@ export default async function InsightsSlugPage({
             >
               <Image
                 src={article.coverImage}
-                alt={`${article.title} — ${article.category}`}
+                alt={article.title}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 960px"
@@ -262,34 +301,44 @@ export default async function InsightsSlugPage({
               marginBottom: "clamp(4rem, 6vw, 6rem)",
             }}
           >
-            <p style={{ marginBottom: "1.75rem" }}>
-              {article.content}
-            </p>
+            {origin === "cms" ? (
+              // Sanitized in lib/cms/sanitize.ts before it reaches here.
+              <div
+                className="ins-body"
+                dangerouslySetInnerHTML={{ __html: contentHtml ?? "" }}
+              />
+            ) : (
+              <>
+                <p style={{ marginBottom: "1.75rem" }}>
+                  {article.content}
+                </p>
 
-            <blockquote
-              style={{
-                borderLeft: "2px solid #c91a1f",
-                paddingLeft: "1.75rem",
-                margin: "2.5rem 0",
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
-                fontWeight: 800,
-                letterSpacing: "-0.02em",
-                textTransform: "uppercase",
-                color: "#0a0a0a",
-                lineHeight: 1.25,
-              }}
-            >
-              &ldquo;Design is not cosmetic dressing; it is the visual architecture of organizational purpose.&rdquo;
-            </blockquote>
+                <blockquote
+                  style={{
+                    borderLeft: "2px solid #c91a1f",
+                    paddingLeft: "1.75rem",
+                    margin: "2.5rem 0",
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
+                    fontWeight: 800,
+                    letterSpacing: "-0.02em",
+                    textTransform: "uppercase",
+                    color: "#0a0a0a",
+                    lineHeight: 1.25,
+                  }}
+                >
+                  &ldquo;Design is not cosmetic dressing; it is the visual architecture of organizational purpose.&rdquo;
+                </blockquote>
 
-            <p style={{ marginBottom: "1.75rem" }}>
-              At Utero, our 25+ years in Indonesian creative production have taught us that strategy without rigorous execution is merely academic. When developing master spatial wayfinding for facilities like Malang Creative Center (MCC) or crafting packaging for retail distribution, attention to micro-tolerances separates lasting influence from fleeting trends.
-            </p>
+                <p style={{ marginBottom: "1.75rem" }}>
+                  At Utero, our 25+ years in Indonesian creative production have taught us that strategy without rigorous execution is merely academic. When developing master spatial wayfinding for facilities like Malang Creative Center (MCC) or crafting packaging for retail distribution, attention to micro-tolerances separates lasting influence from fleeting trends.
+                </p>
 
-            <p style={{ margin: 0 }}>
-              Enduring identity systems do not chase ephemeral aesthetic cycles. Instead, they calibrate contrast, typographic dignity, and material integrity to command unshakeable trust across all consumer touchpoints.
-            </p>
+                <p style={{ margin: 0 }}>
+                  Enduring identity systems do not chase ephemeral aesthetic cycles. Instead, they calibrate contrast, typographic dignity, and material integrity to command unshakeable trust across all consumer touchpoints.
+                </p>
+              </>
+            )}
           </div>
 
           {/* ── Bottom Action Bar ────────────────────────────────── */}

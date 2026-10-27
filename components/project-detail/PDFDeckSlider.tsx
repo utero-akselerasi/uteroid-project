@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useTranslations } from "@/lib/useTranslations";
 
@@ -14,9 +15,10 @@ interface DeckManifest {
 
 interface PDFDeckSliderProps {
   slug: string;
+  routeSlug: string;
 }
 
-export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
+export default function PDFDeckSlider({ slug, routeSlug }: PDFDeckSliderProps) {
   const t = useTranslations();
   const [manifest, setManifest] = useState<DeckManifest | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,6 +26,8 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showThumbnails, setShowThumbnails] = useState(false);
   const [loadedPages, setLoadedPages] = useState<Set<number>>(new Set([0, 1]));
+  const [mounted, setMounted] = useState(false);
+  const [placeholderHeight, setPlaceholderHeight] = useState<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -35,7 +39,10 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
 
     async function loadManifest() {
       try {
-        const response = await fetch(`/projects/${slug}/deck/manifest.json`);
+        let response = await fetch(`/portfolio-api/projects/${encodeURIComponent(routeSlug)}/deck`);
+        if (!response.ok) {
+          response = await fetch(`/projects/${slug}/deck/manifest.json`);
+        }
         if (!response.ok) {
           throw new Error("Manifest not found");
         }
@@ -55,7 +62,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
     return () => {
       isMounted = false;
     };
-  }, [slug]);
+  }, [slug, routeSlug]);
 
   // Keep loaded pages set updated: load current, previous 1, and next 2 pages
   useEffect(() => {
@@ -76,68 +83,6 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
     });
   }, [currentPage, manifest]);
 
-  // Toggle fullscreen using native Fullscreen API
-  const toggleFullscreen = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    if (!document.fullscreenElement) {
-      // Enter fullscreen
-      const requestFullscreen = 
-        container.requestFullscreen ||
-        (container as any).webkitRequestFullscreen ||
-        (container as any).mozRequestFullScreen ||
-        (container as any).msRequestFullscreen;
-
-      if (requestFullscreen) {
-        requestFullscreen.call(container).catch((err: Error) => {
-          console.error('Fullscreen request failed:', err);
-          // Fallback to CSS-only fullscreen if native fullscreen fails
-          setIsFullscreen(true);
-        });
-      } else {
-        // Browser doesn't support fullscreen API, use CSS fallback
-        setIsFullscreen(true);
-      }
-    } else {
-      // Exit fullscreen
-      const exitFullscreen = 
-        document.exitFullscreen ||
-        (document as any).webkitExitFullscreen ||
-        (document as any).mozCancelFullScreen ||
-        (document as any).msExitFullscreen;
-
-      if (exitFullscreen) {
-        exitFullscreen.call(document).catch((err: Error) => {
-          console.error('Fullscreen exit failed:', err);
-          setIsFullscreen(false);
-        });
-      } else {
-        setIsFullscreen(false);
-      }
-    }
-  }, []);
-
-  // Sync fullscreen state with browser's fullscreen state
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      const isCurrentlyFullscreen = !!document.fullscreenElement;
-      setIsFullscreen(isCurrentlyFullscreen);
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
-
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
-      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
-    };
-  }, []);
-
   // Lock body scroll when in fullscreen (CSS fallback mode only)
   useEffect(() => {
     if (isFullscreen && !document.fullscreenElement) {
@@ -147,6 +92,21 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
         document.body.style.overflow = originalOverflow;
       };
     }
+  }, [isFullscreen]);
+
+  // Portals need document, which does not exist during SSR.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Measure while the slider is still inline, before the portal removes it.
+  // Kept out of the setState updater: updaters must stay pure, and React
+  // may invoke them twice in StrictMode.
+  const toggleFullscreen = useCallback(() => {
+    if (!isFullscreen && containerRef.current) {
+      setPlaceholderHeight(containerRef.current.offsetHeight);
+    }
+    setIsFullscreen((prev) => !prev);
   }, [isFullscreen]);
 
   // Scroll to page
@@ -250,7 +210,7 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
     return null;
   }
 
-  return (
+  const slider = (
     <div
       ref={containerRef}
       className={`pd-deck-slider pd-section ${isFullscreen ? "pd-deck-slider--fullscreen" : ""}`}
@@ -382,4 +342,25 @@ export default function PDFDeckSlider({ slug }: PDFDeckSliderProps) {
       )}
     </div>
   );
+
+  // In fullscreen the slider is position:fixed with inset:0, which resolves
+  // against the nearest transformed ancestor rather than the viewport. The
+  // parent <RevealOnScroll> sets transform: translateY(...), which collapsed
+  // the overlay to header height. Portalling to body escapes any such
+  // ancestor, so this stays correct wherever the component is placed.
+  if (isFullscreen && mounted) {
+    return (
+      <>
+        {/* Holds the slider's place in the flow so the page behind the
+            overlay does not jump when the portal removes it. */}
+        <div
+          aria-hidden
+          style={{ height: placeholderHeight ?? undefined }}
+        />
+        {createPortal(slider, document.body)}
+      </>
+    );
+  }
+
+  return slider;
 }

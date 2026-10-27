@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getProjectsByFilters, getFilterCounts } from "@/lib/projects";
+import { filterProjects, getProjectFilterCounts } from "@/lib/projects";
+import { getPortfolioProjects } from "@/lib/portfolioApi";
 import { type WorkFilter } from "@/lib/types";
 import WorkFilters from "@/components/WorkFilters";
 import WorkPageContent from "@/components/WorkPageContent";
@@ -38,6 +39,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const dynamic = "force-dynamic";
+
 
 
 // ─────────────────────────────────────────────────────────────────────
@@ -52,8 +55,9 @@ export default async function WorkPage({
   const filter = (params.filter || "all") as WorkFilter;
   const industry = params.industry || "";
 
-  const filtered = getProjectsByFilters({ filter, industry });
-  const counts = getFilterCounts();
+  const sourceProjects = await getPortfolioProjects();
+  const filtered = filterProjects(sourceProjects, { filter, industry });
+  const counts = getProjectFilterCounts(sourceProjects);
   const total = counts.all;
 
   return (
