@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "@/lib/useTranslations";
+import { useSiteSettings } from "@/components/SiteSettingsProvider";
 
 const slides = [
   {
@@ -20,12 +21,14 @@ const slides = [
 
 export default function HeroSection() {
   const t = useTranslations();
+  const { settings } = useSiteSettings();
+  const heroSlides = settings.banners?.heroSlides?.length ? settings.banners.heroSlides : slides;
   const [mounted, setMounted] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, []);
+    setCurrentSlide((prev) => (prev + 1) % (heroSlides.length || 1));
+  }, [heroSlides.length]);
 
   useEffect(() => {
     setMounted(true);
@@ -56,7 +59,7 @@ export default function HeroSection() {
         }}
         aria-hidden="true"
       >
-        {slides.map((slide, index) => {
+        {heroSlides.map((slide, index) => {
           const isActive = index === currentSlide;
           return (
             <div

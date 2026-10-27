@@ -6,12 +6,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslatedDisciplines } from "@/lib/useTranslatedServices";
 import { useTranslations } from "@/lib/useTranslations";
+import { useSiteSettings } from "@/components/SiteSettingsProvider";
 
 export default function ServicesContent() {
   const [activeIdx, setActiveIdx] = useState(0);
   const router = useRouter();
   const t = useTranslations();
-  const disciplines = useTranslatedDisciplines();
+  const { settings } = useSiteSettings();
+  const rawDisciplines = useTranslatedDisciplines();
+  const disciplines = rawDisciplines.map((d) => ({
+    ...d,
+    image: settings.serviceImages?.[d.slug] || d.image,
+  }));
 
   const activeDiscipline = disciplines[activeIdx] || disciplines[0];
 

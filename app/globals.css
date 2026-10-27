@@ -28,8 +28,9 @@
   --color-gray-900: #111827;
 
   /* Typography */
-  --font-sans: "Helvetica Neue", "Arial", "Inter", system-ui, -apple-system, sans-serif;
-  --font-display: "Helvetica Neue", "Arial", "Inter", system-ui, sans-serif;
+  --site-font: "Helvetica Neue", "Arial", "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--site-font, "Helvetica Neue", "Arial", "Inter", system-ui, -apple-system, sans-serif);
+  --font-display: var(--site-font, "Helvetica Neue", "Arial", "Inter", system-ui, sans-serif);
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "Fira Code", "Monaco", monospace;
 
@@ -2151,4 +2152,25 @@ html {
   .pd-nav__link-thumb > div:first-child {
     transition: none;
   }
+}
+
+/* ─────────────────────────────────────────────
+   Dynamic Typeface Override from Admin Settings
+   ───────────────────────────────────────────── */
+html[data-font-override] body,
+html[data-font-override] button,
+html[data-font-override] input,
+html[data-font-override] select,
+html[data-font-override] textarea,
+html[data-font-override] h1,
+html[data-font-override] h2,
+html[data-font-override] h3,
+html[data-font-override] h4,
+html[data-font-override] h5,
+html[data-font-override] h6,
+html[data-font-override] p,
+html[data-font-override] a,
+html[data-font-override] span,
+html[data-font-override] [style*="Helvetica Neue"] {
+  font-family: var(--site-font) !important;
 }

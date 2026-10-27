@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { connection } from "next/server";
-import { getInsights } from "@/lib/insights-source";
+import { getInsights, getInsightsHeader } from "@/lib/insights-source";
 
 export const metadata: Metadata = {
   title: "Insights & Media — Perspectives from Utero",
@@ -89,6 +89,7 @@ export default async function InsightsPage() {
   // CMS is the source of truth; lib/insights.ts is the fallback when the
   // CMS is unreachable or unconfigured. See lib/insights-source.ts.
   const { insights } = await getInsights();
+  const header = getInsightsHeader();
   const [featured, ...rest] = insights;
 
   return (
@@ -153,7 +154,7 @@ export default async function InsightsPage() {
                   color: "#c91a1f",
                 }}
               >
-                04 / PUBLICATIONS &amp; PERSPECTIVES
+                {header.headerTag}
               </span>
             </div>
 
@@ -179,7 +180,7 @@ export default async function InsightsPage() {
                     margin: 0,
                   }}
                 >
-                  Insights
+                  {header.headerTitle}
                 </h1>
                 <p
                   style={{
@@ -191,7 +192,7 @@ export default async function InsightsPage() {
                     maxWidth: "520px",
                   }}
                 >
-                  Critical perspectives, case reflections, and design philosophies on branding, spatial environments, and physical realization.
+                  {header.headerDescription}
                 </p>
               </div>
 

@@ -79,6 +79,9 @@ func (s *Server) routes() {
 	s.mux.Handle("GET /api/v1/admin/projects/{id}/media", s.requireSession(http.HandlerFunc(s.listMedia), false))
 	s.mux.Handle("DELETE /api/v1/admin/projects/{id}/media/{mediaId}", s.requireSession(http.HandlerFunc(s.deleteMedia), true))
 	s.mux.Handle("PUT /api/v1/admin/projects/{id}/media/order", s.requireSession(http.HandlerFunc(s.orderMedia), true))
+	s.mux.HandleFunc("GET /api/v1/settings", s.getPublicSettings)
+	s.mux.Handle("GET /api/v1/admin/settings", s.requireSession(http.HandlerFunc(s.getAdminSettings), false))
+	s.mux.Handle("PUT /api/v1/admin/settings", s.requireSession(http.HandlerFunc(s.updateAdminSettings), true))
 }
 
 func writeJSON(w http.ResponseWriter, status int, value any) {
@@ -738,21 +741,30 @@ func (s *Server) getMedia(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	parts := strings.Split(key, "/")
-	if len(parts) < 4 || parts[0] != "projects" {
+	if len(parts) < 2 {
 		apiError(w, 404, "media not found")
 		return
 	}
-	projectID, parseErr := strconv.ParseInt(parts[1], 10, 64)
-	if parseErr != nil {
-		apiError(w, 404, "media not found")
-		return
-	}
-	var status string
-	if err = s.store.DB.QueryRowContext(r.Context(), `SELECT status FROM projects WHERE id=? AND deleted_at IS NULL`, projectID).Scan(&status); err != nil {
-		apiError(w, 404, "media not found")
-		return
-	}
-	if status != "published" && !s.hasValidSession(r) {
+	if parts[0] == "projects" {
+		if len(parts) < 4 {
+			apiError(w, 404, "media not found")
+			return
+		}
+		projectID, parseErr := strconv.ParseInt(parts[1], 10, 64)
+		if parseErr != nil {
+			apiError(w, 404, "media not found")
+			return
+		}
+		var status string
+		if err = s.store.DB.QueryRowContext(r.Context(), `SELECT status FROM projects WHERE id=? AND deleted_at IS NULL`, projectID).Scan(&status); err != nil {
+			apiError(w, 404, "media not found")
+			return
+		}
+		if status != "published" && !s.hasValidSession(r) {
+			apiError(w, 404, "media not found")
+			return
+		}
+	} else if parts[0] != "site" && parts[0] != "banners" {
 		apiError(w, 404, "media not found")
 		return
 	}
@@ -782,3 +794,43 @@ func (s *Server) hasValidSession(r *http.Request) bool {
 	err = s.store.DB.QueryRowContext(r.Context(), `SELECT expires_at FROM admin_sessions WHERE token_hash=? AND revoked_at IS NULL`, tokenHash(cookie.Value)).Scan(&expires)
 	return err == nil && expires.After(time.Now())
 }
+
+func (s *Server) getPublicSettings(w http.ResponseWriter, r *http.Request) {
+	settings, err := s.store.GetAllSettings(r.Context())
+	if err != nil {
+		apiError(w, 500, "unable to load settings")
+		return
+	}
+	writeJSON(w, 200, settings)
+}
+
+func (s *Server) getAdminSettings(w http.ResponseWriter, r *http.Request) {
+	settings, err := s.store.GetAllSettings(r.Context())
+	if err != nil {
+		apiError(w, 500, "unable to load settings")
+		return
+	}
+	writeJSON(w, 200, settings)
+}
+
+func (s *Server) updateAdminSettings(w http.ResponseWriter, r *http.Request) {
+	var input map[string]any
+	if !decodeJSON(w, r, &input) {
+		return
+	}
+	for key, val := range input {
+		data, err := json.Marshal(val)
+		if err != nil {
+			apiError(w, 400, "invalid setting value for "+key)
+			return
+		}
+		if err := s.store.SaveSetting(r.Context(), key, string(data)); err != nil {
+			apiError(w, 500, "unable to save setting "+key)
+			return
+		}
+	}
+	session := currentSession(r)
+	s.store.Audit(r.Context(), session.AdminID, "settings.update", "settings", "site", clientIP(r))
+	writeJSON(w, 200, map[string]bool{"ok": true})
+}
+

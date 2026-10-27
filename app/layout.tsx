@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
 import { LanguageProvider } from "@/lib/LanguageContext";
+import { SiteSettingsProvider } from "@/components/SiteSettingsProvider";
 import SiteShell from "@/components/SiteShell";
 
 const siteStructuredData = {
@@ -166,9 +167,11 @@ export default function RootLayout({
           </noscript>
         )}
         <JsonLd data={siteStructuredData} />
-        <LanguageProvider>
-          <SiteShell>{children}</SiteShell>
-        </LanguageProvider>
+        <SiteSettingsProvider>
+          <LanguageProvider>
+            <SiteShell>{children}</SiteShell>
+          </LanguageProvider>
+        </SiteSettingsProvider>
       </body>
     </html>
   );

@@ -3,8 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealOnScroll from "./RevealOnScroll";
+import { useSiteSettings } from "@/components/SiteSettingsProvider";
 
 export default function StatementBanner() {
+  const { settings } = useSiteSettings();
+  const banner = settings.banners?.statementBanner;
+  const bannerImage = banner?.image || "/img/unnamed.webp";
   return (
     <section
       id="studio-statement"
@@ -26,7 +30,7 @@ export default function StatementBanner() {
         }}
       >
         <Image
-          src="/img/unnamed.webp"
+          src={bannerImage}
           alt=""
           role="presentation"
           fill

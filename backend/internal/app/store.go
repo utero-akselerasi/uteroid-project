@@ -69,7 +69,10 @@ CREATE TABLE IF NOT EXISTS project_slug_redirects (
 CREATE TABLE IF NOT EXISTS audit_logs (
  id INTEGER PRIMARY KEY, admin_id INTEGER, action TEXT NOT NULL, entity_type TEXT NOT NULL,
  entity_id TEXT, ip_address TEXT, metadata_json TEXT NOT NULL DEFAULT '{}', created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
- );`)
+);
+CREATE TABLE IF NOT EXISTS site_settings (
+ key TEXT PRIMARY KEY, value_json TEXT NOT NULL, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);`)
 	if err != nil {
 		return err
 	}
@@ -255,3 +258,38 @@ func (s *Store) SoftDeleteProject(ctx context.Context, id int64) error {
 func (s *Store) Audit(ctx context.Context, adminID int64, action, entityType, entityID, ip string) {
 	_, _ = s.DB.ExecContext(ctx, `INSERT INTO audit_logs(admin_id,action,entity_type,entity_id,ip_address) VALUES(?,?,?,?,?)`, adminID, action, entityType, entityID, ip)
 }
+
+func (s *Store) SaveSetting(ctx context.Context, key, valueJSON string) error {
+	_, err := s.DB.ExecContext(ctx, `INSERT INTO site_settings(key,value_json,updated_at) VALUES(?,?,CURRENT_TIMESTAMP)
+ON CONFLICT(key) DO UPDATE SET value_json=excluded.value_json, updated_at=CURRENT_TIMESTAMP`, key, valueJSON)
+	return err
+}
+
+func (s *Store) GetSetting(ctx context.Context, key string) (string, error) {
+	var value string
+	err := s.DB.QueryRowContext(ctx, `SELECT value_json FROM site_settings WHERE key=?`, key).Scan(&value)
+	return value, err
+}
+
+func (s *Store) GetAllSettings(ctx context.Context) (map[string]any, error) {
+	rows, err := s.DB.QueryContext(ctx, `SELECT key, value_json FROM site_settings`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	result := make(map[string]any)
+	for rows.Next() {
+		var key, val string
+		if err := rows.Scan(&key, &val); err != nil {
+			return nil, err
+		}
+		var parsed any
+		if err := json.Unmarshal([]byte(val), &parsed); err == nil {
+			result[key] = parsed
+		} else {
+			result[key] = val
+		}
+	}
+	return result, nil
+}
+

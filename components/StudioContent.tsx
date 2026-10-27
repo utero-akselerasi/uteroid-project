@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "@/lib/useTranslations";
+import { useSiteSettings } from "@/components/SiteSettingsProvider";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -39,6 +40,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export default function StudioContent() {
   const t = useTranslations();
+  const { settings } = useSiteSettings();
+  const studio = settings.studio;
 
   return (
     <>
@@ -127,7 +130,7 @@ export default function StudioContent() {
                     margin: 0,
                   }}
                 >
-                  {t.studio.heading}
+                  {studio?.heading || t.studio.heading}
                 </h1>
                 <p
                   style={{
@@ -139,7 +142,7 @@ export default function StudioContent() {
                     maxWidth: "680px",
                   }}
                 >
-                  {t.studio.description}
+                  {studio?.description || t.studio.description}
                 </p>
               </div>
 
@@ -161,7 +164,7 @@ export default function StudioContent() {
                     lineHeight: 1,
                   }}
                 >
-                  1998
+                  {studio?.established ? studio.established.replace(/[^0-9]/g, "") || studio.established : "1998"}
                 </span>
                 <span
                   style={{
@@ -172,7 +175,7 @@ export default function StudioContent() {
                     color: "rgba(10, 10, 10, 0.35)",
                   }}
                 >
-                  {t.studio.established}
+                  {studio?.established || t.studio.established}
                 </span>
               </div>
             </div>
@@ -188,12 +191,15 @@ export default function StudioContent() {
               marginBottom: "clamp(4rem, 7vw, 7rem)",
             }}
           >
-            {[
-              { num: "25+", label: t.studio.metrics.years, sub: t.studio.metrics.yearsSub },
-              { num: "06", label: t.studio.metrics.disciplines, sub: t.studio.metrics.disciplinesSub },
-              { num: "500+", label: t.studio.metrics.projects, sub: t.studio.metrics.projectsSub },
-              { num: "Malang", label: t.studio.metrics.hq, sub: t.studio.metrics.hqSub },
-            ].map((stat) => (
+            {(studio?.metrics && studio.metrics.length > 0
+              ? studio.metrics
+              : [
+                  { num: "25+", label: t.studio.metrics.years, sub: t.studio.metrics.yearsSub },
+                  { num: "06", label: t.studio.metrics.disciplines, sub: t.studio.metrics.disciplinesSub },
+                  { num: "500+", label: t.studio.metrics.projects, sub: t.studio.metrics.projectsSub },
+                  { num: "Malang", label: t.studio.metrics.hq, sub: t.studio.metrics.hqSub },
+                ]
+            ).map((stat) => (
               <div
                 key={stat.label}
                 style={{
@@ -268,7 +274,7 @@ export default function StudioContent() {
                   margin: "0 0 1.5rem",
                 }}
               >
-                {t.studio.philosophyQuote}
+                {studio?.philosophyQuote || t.studio.philosophyQuote}
               </blockquote>
               <p
                 style={{
@@ -278,7 +284,7 @@ export default function StudioContent() {
                   margin: 0,
                 }}
               >
-                {t.studio.philosophyText}
+                {studio?.philosophyText || t.studio.philosophyText}
               </p>
             </div>
 
@@ -292,7 +298,7 @@ export default function StudioContent() {
                   marginBottom: "1.5rem",
                 }}
               >
-                {t.studio.disciplinesText1}
+                {studio?.disciplinesText1 || t.studio.disciplinesText1}
               </p>
               <p
                 style={{
@@ -302,7 +308,7 @@ export default function StudioContent() {
                   margin: 0,
                 }}
               >
-                {t.studio.disciplinesText2}
+                {studio?.disciplinesText2 || t.studio.disciplinesText2}
               </p>
             </div>
           </div>
@@ -330,7 +336,7 @@ export default function StudioContent() {
                 }}
               >
                 <Image
-                  src="/img/studio.png"
+                  src={studio?.workspaceImage1 || "/img/studio.png"}
                   alt="Utero Studio Workspace"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -349,7 +355,7 @@ export default function StudioContent() {
                 }}
               >
                 <Image
-                  src="/img/stodio.png"
+                  src={studio?.workspaceImage2 || "/img/stodio.png"}
                   alt="Utero Studio Environment"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"

@@ -1,4 +1,6 @@
 import "server-only";
+import fs from "fs";
+import path from "path";
 import type { Insight } from "./types";
 import {
   getAllInsightSlugs as getLocalInsightSlugs,
@@ -6,6 +8,19 @@ import {
   insights as localInsights,
 } from "./insights";
 import { CMS_CATEGORY_SLUGS } from "./cms/config";
+
+function getFallbackInsights(): Insight[] {
+  try {
+    const file = path.join(process.cwd(), "data", "site-settings.json");
+    if (fs.existsSync(file)) {
+      const data = JSON.parse(fs.readFileSync(file, "utf-8"));
+      if (Array.isArray(data.insights?.articles) && data.insights.articles.length > 0) {
+        return data.insights.articles;
+      }
+    }
+  } catch {}
+  return localInsights;
+}
 import {
   CmsNotConfiguredError,
   getArticle,
@@ -60,7 +75,7 @@ export async function getInsights(): Promise<InsightsResult> {
     logCmsFailure("list", error);
   }
 
-  return { insights: localInsights, origin: "local" };
+  return { insights: getFallbackInsights(), origin: "local" };
 }
 
 export interface InsightDetail {
@@ -84,7 +99,8 @@ export async function getInsight(slug: string): Promise<InsightDetail | null> {
     logCmsFailure(`detail "${slug}"`, error);
   }
 
-  const local = getLocalInsightBySlug(slug);
+  const fallback = getFallbackInsights();
+  const local = fallback.find((i) => i.slug === slug) || getLocalInsightBySlug(slug);
   return local ? { insight: local, origin: "local" } : null;
 }
 
@@ -96,7 +112,8 @@ export async function getInsight(slug: string): Promise<InsightDetail | null> {
  * listed here are still rendered on demand.
  */
 export async function getInsightSlugs(): Promise<string[]> {
-  const slugs = new Set(getLocalInsightSlugs());
+  const fallback = getFallbackInsights();
+  const slugs = new Set([...getLocalInsightSlugs(), ...fallback.map((i) => i.slug)]);
 
   try {
     for (const category of CMS_CATEGORY_SLUGS) {
@@ -109,4 +126,28 @@ export async function getInsightSlugs(): Promise<string[]> {
   }
 
   return [...slugs];
+}
+
+export function getInsightsHeader(): { headerTitle: string; headerDescription: string; headerTag: string } {
+  try {
+    const file = path.join(process.cwd(), "data", "site-settings.json");
+    if (fs.existsSync(file)) {
+      const data = JSON.parse(fs.readFileSync(file, "utf-8"));
+      if (data.insights) {
+        return {
+          headerTitle: data.insights.headerTitle || "Insights",
+          headerDescription:
+            data.insights.headerDescription ||
+            "Critical perspectives, case reflections, and design philosophies on branding, spatial environments, and physical realization.",
+          headerTag: data.insights.headerTag || "04 / PUBLICATIONS & PERSPECTIVES",
+        };
+      }
+    }
+  } catch {}
+  return {
+    headerTitle: "Insights",
+    headerDescription:
+      "Critical perspectives, case reflections, and design philosophies on branding, spatial environments, and physical realization.",
+    headerTag: "04 / PUBLICATIONS & PERSPECTIVES",
+  };
 }
