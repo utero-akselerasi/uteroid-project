@@ -38,17 +38,19 @@ services:
       dockerfile: Dockerfile
     image: uteroid-portfolio-api:latest
     container_name: uteroid-portfolio-api
+    ports:
+      - "8080:8080"
     environment:
       API_ADDR: :8080
       DATABASE_PATH: /data/utero.db
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:3020}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}
       ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-uteroadminsecretpassword123}
       ADMIN_TOTP_SECRET: ${ADMIN_TOTP_SECRET:-}
       S3_ENDPOINT: object-storage:8333
-      S3_ACCESS_KEY: ${S3_ACCESS_KEY:?Set S3_ACCESS_KEY in .env}
-      S3_SECRET_KEY: ${S3_SECRET_KEY:?Set S3_SECRET_KEY in .env}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:-utero-admin}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:-utero-secret-key-1234567890}
       S3_BUCKET: ${S3_BUCKET:-utero-media}
       S3_USE_SSL: "false"
       LEGACY_MEDIA_ROOT: /legacy-public
@@ -71,9 +73,11 @@ services:
     image: chrislusf/seaweedfs:4.40
     container_name: uteroid-object-storage
     command: server -s3 -dir=/data
+    ports:
+      - "8333:8333"
     environment:
-      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:?Set S3_ACCESS_KEY in .env}
-      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:?Set S3_SECRET_KEY in .env}
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:-utero-admin}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:-utero-secret-key-1234567890}
     volumes:
       - portfolio-objects:/data
     healthcheck:
