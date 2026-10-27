@@ -1,8 +1,32 @@
 import type { NextRequest } from "next/server";
+import fs from "fs";
+import pathModule from "path";
 import { DeckImageError, processDeckImage } from "@/lib/processDeckImage";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+
+const LOCAL_PROJECTS_FILE = pathModule.join(process.cwd(), "data", "projects.json");
+
+function getStoredProjects(): any[] {
+  try {
+    if (fs.existsSync(LOCAL_PROJECTS_FILE)) {
+      const data = JSON.parse(fs.readFileSync(LOCAL_PROJECTS_FILE, "utf-8"));
+      if (Array.isArray(data)) return data;
+    }
+  } catch {}
+  return [];
+}
+
+function saveStoredProjects(list: any[]): void {
+  try {
+    const dir = pathModule.dirname(LOCAL_PROJECTS_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(LOCAL_PROJECTS_FILE, JSON.stringify(list, null, 2), "utf-8");
+  } catch (err) {
+    console.error("[portfolio-api] Failed to write data/projects.json:", err);
+  }
+}
 
 const methods = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"] as const;
 
@@ -116,12 +140,37 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
       return Response.json([]);
     }
 
+    if (subpath === "admin/projects/import") {
+      const { projects } = await import("@/lib/projects");
+      const imported = projects.map((p, idx) => ({ ...p, id: idx + 1, status: "published" }));
+      saveStoredProjects(imported);
+      return Response.json({ imported: imported.length });
+    }
+
     if (subpath === "admin/projects" || subpath === "projects" || subpath.startsWith("admin/projects/")) {
-      if (request.method === "POST" || request.method === "PUT") {
+      let stored = getStoredProjects();
+      if (stored.length === 0) {
+        const { projects } = await import("@/lib/projects");
+        stored = projects.map((p, idx) => ({ ...p, id: idx + 1, status: "published" }));
+        saveStoredProjects(stored);
+      }
+
+      const idParam = path[2] ? Number(path[2]) : NaN;
+
+      if (request.method === "GET") {
+        if (!isNaN(idParam)) {
+          const found = stored.find((p: any) => p.id === idParam);
+          if (found) return Response.json(found);
+          return Response.json({ error: "Project not found" }, { status: 404 });
+        }
+        return Response.json(stored);
+      }
+
+      if (request.method === "POST") {
         try {
           const body = (await request.json().catch(() => ({}))) || {};
-          const id = path[2] && !isNaN(Number(path[2])) ? Number(path[2]) : Date.now();
-          const saved = {
+          const nextId = stored.length > 0 ? Math.max(...stored.map((p: any) => Number(p.id) || 0)) + 1 : 1;
+          const newProject = {
             slug: "",
             routeSlug: "",
             title: "",
@@ -137,32 +186,51 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
             tags: [],
             galleryImages: [],
             details: { scope: [], challenge: "", solution: "" },
-            status: "published",
+            status: body.status || "draft",
             ...body,
-            id,
+            id: nextId,
             disciplines: Array.isArray(body.disciplines) && body.disciplines.length > 0 ? body.disciplines : ["identity"],
           };
-          return Response.json(saved);
+          stored = [newProject, ...stored];
+          saveStoredProjects(stored);
+          return Response.json(newProject);
         } catch {
-          return Response.json({
-            id: Date.now(),
-            title: "Proyek",
-            client: "Client",
-            status: "published",
-            disciplines: ["identity"],
-            year: new Date().getFullYear().toString(),
-            category: "Branding",
-            industry: "services",
-            slug: "proyek-baru",
-            routeSlug: "proyek-baru",
-          });
+          return Response.json({ error: "Gagal menyimpan proyek." }, { status: 400 });
         }
       }
+
+      if (request.method === "PUT") {
+        try {
+          const body = (await request.json().catch(() => ({}))) || {};
+          const targetId = !isNaN(idParam) ? idParam : Number(body.id);
+          const idx = stored.findIndex((p: any) => p.id === targetId);
+          const updated = {
+            ...(idx >= 0 ? stored[idx] : {}),
+            ...body,
+            id: targetId,
+            disciplines: Array.isArray(body.disciplines) && body.disciplines.length > 0 ? body.disciplines : (idx >= 0 ? stored[idx].disciplines : ["identity"]),
+          };
+          if (idx >= 0) {
+            stored[idx] = updated;
+          } else {
+            stored.push(updated);
+          }
+          saveStoredProjects(stored);
+          return Response.json(updated);
+        } catch {
+          return Response.json({ error: "Gagal memperbarui proyek." }, { status: 400 });
+        }
+      }
+
       if (request.method === "DELETE") {
+        if (!isNaN(idParam)) {
+          stored = stored.filter((p: any) => p.id !== idParam);
+          saveStoredProjects(stored);
+        }
         return Response.json({ ok: true });
       }
-      const { projects } = await import("@/lib/projects");
-      return Response.json(projects.map((p, idx) => ({ ...p, id: idx + 1, status: "published" })));
+
+      return Response.json(stored);
     }
 
     return Response.json(
