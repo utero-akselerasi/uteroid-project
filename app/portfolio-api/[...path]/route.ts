@@ -112,7 +112,55 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
       return res;
     }
 
-    if (subpath === "admin/projects" || subpath === "projects") {
+    if (subpath.includes("/media")) {
+      return Response.json([]);
+    }
+
+    if (subpath === "admin/projects" || subpath === "projects" || subpath.startsWith("admin/projects/")) {
+      if (request.method === "POST" || request.method === "PUT") {
+        try {
+          const body = (await request.json().catch(() => ({}))) || {};
+          const id = path[2] && !isNaN(Number(path[2])) ? Number(path[2]) : Date.now();
+          const saved = {
+            slug: "",
+            routeSlug: "",
+            title: "",
+            client: "",
+            year: new Date().getFullYear().toString(),
+            category: "",
+            industry: "services",
+            shortDescription: "",
+            description: "",
+            coverImage: "",
+            featured: false,
+            priority: 0,
+            tags: [],
+            galleryImages: [],
+            details: { scope: [], challenge: "", solution: "" },
+            status: "published",
+            ...body,
+            id,
+            disciplines: Array.isArray(body.disciplines) && body.disciplines.length > 0 ? body.disciplines : ["identity"],
+          };
+          return Response.json(saved);
+        } catch {
+          return Response.json({
+            id: Date.now(),
+            title: "Proyek",
+            client: "Client",
+            status: "published",
+            disciplines: ["identity"],
+            year: new Date().getFullYear().toString(),
+            category: "Branding",
+            industry: "services",
+            slug: "proyek-baru",
+            routeSlug: "proyek-baru",
+          });
+        }
+      }
+      if (request.method === "DELETE") {
+        return Response.json({ ok: true });
+      }
       const { projects } = await import("@/lib/projects");
       return Response.json(projects.map((p, idx) => ({ ...p, id: idx + 1, status: "published" })));
     }

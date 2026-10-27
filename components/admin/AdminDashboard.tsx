@@ -245,7 +245,19 @@ export default function AdminDashboard() {
       const path = project.id ? `admin/projects/${project.id}` : "admin/projects";
       const result = await api(path, { method: project.id ? "PUT" : "POST", body: JSON.stringify(project) }, session.csrfToken);
       setNotice("Proyek tersimpan.");
-      setEditing(result);
+      const saved: AdminProject =
+        result && typeof result === "object" && !Array.isArray(result) && result.id
+          ? {
+              ...emptyProject(),
+              ...result,
+              disciplines: Array.isArray(result.disciplines) && result.disciplines.length > 0 ? result.disciplines : project.disciplines || ["identity"],
+            }
+          : {
+              ...project,
+              id: project.id || (result && typeof result === "object" && !Array.isArray(result) && result.id ? result.id : Date.now()),
+              disciplines: Array.isArray(project.disciplines) && project.disciplines.length > 0 ? project.disciplines : ["identity"],
+            };
+      setEditing(saved);
       await loadProjects();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Penyimpanan gagal");
@@ -1960,7 +1972,13 @@ function ProjectEditor({
   onMigrate: (p: AdminProject) => void;
   onBack: () => void;
 }) {
-  const set = <K extends keyof AdminProject>(key: K, value: AdminProject[K]) => onChange({ ...project, [key]: value });
+  const safeDisciplines = Array.isArray(project.disciplines) ? project.disciplines : [];
+  const set = <K extends keyof AdminProject>(key: K, value: AdminProject[K]) =>
+    onChange({
+      ...project,
+      disciplines: Array.isArray(project.disciplines) ? project.disciplines : ["identity"],
+      [key]: value,
+    });
   const details = project.details || {};
   return (
     <div className={styles.editor}>
@@ -2020,11 +2038,11 @@ function ProjectEditor({
             <label className={styles.check} key={item}>
               <input
                 type="checkbox"
-                checked={project.disciplines.includes(item)}
+                checked={safeDisciplines.includes(item)}
                 onChange={(e) =>
                   set(
                     "disciplines",
-                    e.target.checked ? [...project.disciplines, item] : project.disciplines.filter((value) => value !== item)
+                    e.target.checked ? [...safeDisciplines, item] : safeDisciplines.filter((value) => value !== item)
                   )
                 }
               />
@@ -2076,7 +2094,7 @@ function ProjectEditor({
                 <MediaUpload key={type} type={type} busy={busy} onUpload={(files) => onUpload(project, type, files)} />
               ))}
             </div>
-            {project.coverImage.startsWith("/projects/") && (
+            {project.coverImage && typeof project.coverImage === "string" && project.coverImage.startsWith("/projects/") && (
               <button className={styles.secondary} style={{ marginTop: 18 }} disabled={busy} onClick={() => onMigrate(project)}>
                 Pindahkan media lama ke S3
               </button>

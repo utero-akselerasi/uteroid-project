@@ -39,7 +39,7 @@
     "product": "/img/Services/product.webp",
     "promotion": "/img/Services/promotion.webp",
     "digital": "/img/Services/digital.webp",
-    "environmental": "/img/Services/environmental.webp",
+    "environmental": "/uploads/Custom_Print_Studio_Display_e9010b451271.png",
     "outdoor": "/img/Services/outdoor.webp"
   },
   "contacts": {
@@ -133,5 +133,6 @@
         "content": "Great ideas are common; the discipline to resolve millimeter tolerances, print calibrations, and scalable identity guidelines across hundreds of applications is what separates real impact from wishful thinking."
       }
     ]
-  }
+  },
+  "updatedAt": "2026-10-27T05:59:17.082Z"
 }
