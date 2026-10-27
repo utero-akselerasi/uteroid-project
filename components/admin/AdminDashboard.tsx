@@ -23,6 +23,14 @@ type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "in
 const disciplines = ["identity", "packaging", "signage", "campaign", "print", "digital", "exhibition", "indoor", "outdoor"] as const;
 const industries = ["fnb", "corporate", "government", "education", "property", "retail", "arts", "event", "services", "products"] as const;
 
+function slugify(text: string): string {
+  return (text || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 100);
+}
+
 const emptyProject = (): AdminProject => ({
   slug: "",
   routeSlug: "",
@@ -77,6 +85,33 @@ export default function AdminDashboard() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [media, setMedia] = useState<MediaItem[]>([]);
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    isDanger?: boolean;
+    onConfirm: () => void;
+  } | null>(null);
+
+  const requestConfirm = (options: {
+    title: string;
+    message: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    isDanger?: boolean;
+    onConfirm: () => void;
+  }) => {
+    setConfirmDialog({
+      isOpen: true,
+      ...options,
+    });
+  };
+
+  const closeConfirm = () => {
+    setConfirmDialog(null);
+  };
 
   // Site Settings State
   const [siteSettings, setSiteSettings] = useState<SiteSettings>(defaultSiteSettings);
@@ -221,41 +256,72 @@ export default function AdminDashboard() {
   }
 
   async function importLegacy() {
-    if (!session || projects.length > 0 || !confirm("Impor 34 proyek lokal ke backend?")) return;
-    setBusy(true);
-    setError("");
-    try {
-      const payload = legacyProjects.map((project) => ({ ...project, status: "published" }));
-      const result = await api("admin/projects/import", { method: "POST", body: JSON.stringify(payload) }, session.csrfToken);
-      setNotice(`${result.imported} proyek berhasil diimpor.`);
-      await loadProjects();
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Impor gagal");
-    } finally {
-      setBusy(false);
-    }
+    if (!session || projects.length > 0) return;
+    requestConfirm({
+      title: "Impor Proyek Portofolio",
+      message: "Impor 34 proyek portofolio bawaan Utero ke dalam database studio?",
+      confirmLabel: "Impor 34 Proyek",
+      isDanger: false,
+      onConfirm: async () => {
+        closeConfirm();
+        setBusy(true);
+        setError("");
+        try {
+          const payload = legacyProjects.map((project) => ({ ...project, status: "published" }));
+          const result = await api("admin/projects/import", { method: "POST", body: JSON.stringify(payload) }, session.csrfToken);
+          setNotice(`${result.imported} proyek berhasil diimpor.`);
+          await loadProjects();
+        } catch (caught) {
+          setError(caught instanceof Error ? caught.message : "Impor gagal");
+        } finally {
+          setBusy(false);
+        }
+      },
+    });
   }
 
   async function saveProject(project: AdminProject) {
     if (!session) return;
+    const title = (project.title || "").trim();
+    const client = (project.client || "").trim();
+    if (!title) {
+      setError("Judul proyek wajib diisi.");
+      return;
+    }
+    if (!client) {
+      setError("Nama client wajib diisi.");
+      return;
+    }
+    const autoSlug = slugify(title) || "proyek-" + Date.now();
+    const cleanSlug = slugify(project.slug) || autoSlug;
+    const cleanRouteSlug = slugify(project.routeSlug) || cleanSlug;
+
+    const cleanProject: AdminProject = {
+      ...project,
+      title,
+      client,
+      slug: cleanSlug,
+      routeSlug: cleanRouteSlug,
+    };
+
     setBusy(true);
     setError("");
     setNotice("");
     try {
-      const path = project.id ? `admin/projects/${project.id}` : "admin/projects";
-      const result = await api(path, { method: project.id ? "PUT" : "POST", body: JSON.stringify(project) }, session.csrfToken);
+      const path = cleanProject.id ? `admin/projects/${cleanProject.id}` : "admin/projects";
+      const result = await api(path, { method: cleanProject.id ? "PUT" : "POST", body: JSON.stringify(cleanProject) }, session.csrfToken);
       setNotice("Proyek tersimpan.");
       const saved: AdminProject =
         result && typeof result === "object" && !Array.isArray(result) && result.id
           ? {
               ...emptyProject(),
               ...result,
-              disciplines: Array.isArray(result.disciplines) && result.disciplines.length > 0 ? result.disciplines : project.disciplines || ["identity"],
+              disciplines: Array.isArray(result.disciplines) && result.disciplines.length > 0 ? result.disciplines : cleanProject.disciplines || ["identity"],
             }
           : {
-              ...project,
-              id: project.id || (result && typeof result === "object" && !Array.isArray(result) && result.id ? result.id : Date.now()),
-              disciplines: Array.isArray(project.disciplines) && project.disciplines.length > 0 ? project.disciplines : ["identity"],
+              ...cleanProject,
+              id: cleanProject.id || (result && typeof result === "object" && !Array.isArray(result) && result.id ? result.id : Date.now()),
+              disciplines: Array.isArray(cleanProject.disciplines) && cleanProject.disciplines.length > 0 ? cleanProject.disciplines : ["identity"],
             };
       setEditing(saved);
       await loadProjects();
@@ -267,10 +333,25 @@ export default function AdminDashboard() {
   }
 
   async function removeProject(project: AdminProject) {
-    if (!session || !project.id || !confirm(`Arsipkan dan hapus ${project.title} dari dashboard?`)) return;
-    await api(`admin/projects/${project.id}`, { method: "DELETE" }, session.csrfToken);
-    setEditing(null);
-    await loadProjects();
+    if (!session || !project.id) return;
+    const label = project.title ? `"${project.title}"` : "draft proyek tanpa judul ini";
+    requestConfirm({
+      title: "Hapus Proyek",
+      message: `Apakah Anda yakin ingin menghapus proyek ${label} dari dashboard? Data proyek dan tautannya akan dihapus secara permanen.`,
+      confirmLabel: "Hapus Proyek",
+      isDanger: true,
+      onConfirm: async () => {
+        closeConfirm();
+        try {
+          await api(`admin/projects/${project.id}`, { method: "DELETE" }, session.csrfToken);
+          setEditing(null);
+          await loadProjects();
+          setNotice(`Proyek ${label} berhasil dihapus.`);
+        } catch (caught) {
+          setError(caught instanceof Error ? caught.message : "Gagal menghapus proyek");
+        }
+      },
+    });
   }
 
   async function upload(project: AdminProject, mediaType: string, files: File[]) {
@@ -308,11 +389,25 @@ export default function AdminDashboard() {
   }
 
   async function deleteMedia(project: AdminProject, item: MediaItem) {
-    if (!session || !project.id || !confirm(`Hapus ${item.filename}?`)) return;
-    await api(`admin/projects/${project.id}/media/${item.id}`, { method: "DELETE" }, session.csrfToken);
-    setMedia(await api(`admin/projects/${project.id}/media`));
-    setEditing(await api(`admin/projects/${project.id}`));
-    await loadProjects();
+    if (!session || !project.id) return;
+    requestConfirm({
+      title: "Hapus File Media",
+      message: `Apakah Anda yakin ingin menghapus file "${item.filename}" (${item.mediaType})? Tindakan ini tidak dapat dibatalkan.`,
+      confirmLabel: "Hapus File",
+      isDanger: true,
+      onConfirm: async () => {
+        closeConfirm();
+        try {
+          await api(`admin/projects/${project.id}/media/${item.id}`, { method: "DELETE" }, session.csrfToken);
+          setMedia(await api(`admin/projects/${project.id}/media`));
+          setEditing(await api(`admin/projects/${project.id}`));
+          await loadProjects();
+          setNotice(`File "${item.filename}" berhasil dihapus.`);
+        } catch (caught) {
+          setError(caught instanceof Error ? caught.message : "Gagal menghapus media");
+        }
+      },
+    });
   }
 
   async function moveMedia(project: AdminProject, item: MediaItem, direction: -1 | 1) {
@@ -630,12 +725,14 @@ export default function AdminDashboard() {
                                 <div className={styles.thumb} />
                               )}
                               <div>
-                                <div className={styles.title}>{project.title}</div>
-                                <div className={styles.slug}>/work/{project.routeSlug}</div>
+                                <div className={styles.title}>
+                                  {project.title || <span style={{ fontStyle: "italic", opacity: 0.6 }}>(Tanpa Judul)</span>}
+                                </div>
+                                <div className={styles.slug}>/work/{project.routeSlug || "..."}</div>
                               </div>
                             </div>
                           </td>
-                          <td>{project.client}</td>
+                          <td>{project.client || <span style={{ fontStyle: "italic", opacity: 0.5 }}>-</span>}</td>
                           <td>{project.year}</td>
                           <td>
                             <span className={`${styles.status} ${styles[project.status]}`}>{project.status}</span>
@@ -644,6 +741,7 @@ export default function AdminDashboard() {
                             <div className={styles.rowActions}>
                               <button onClick={() => setEditing(project)}>Edit</button>
                               <button onClick={() => window.open(`/admin/preview/${project.id}`, "_blank")}>Preview</button>
+                              <button style={{ color: "#a01015", borderColor: "#f1c0c2" }} onClick={() => removeProject(project)}>Hapus</button>
                             </div>
                           </td>
                         </tr>
@@ -752,6 +850,34 @@ export default function AdminDashboard() {
           )}
         </main>
       </div>
+
+      {/* Confirmation Modal Popup */}
+      {confirmDialog?.isOpen && (
+        <div className={styles.modalOverlay} onClick={closeConfirm}>
+          <div className={styles.modalBox} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+            <div className={styles.modalHead}>
+              <div className={styles.modalEyebrow}>Konfirmasi Tindakan</div>
+              <button type="button" className={styles.modalClose} onClick={closeConfirm} aria-label="Tutup">
+                ×
+              </button>
+            </div>
+            <h3 className={styles.modalTitle}>{confirmDialog.title}</h3>
+            <p className={styles.modalMessage}>{confirmDialog.message}</p>
+            <div className={styles.modalActions}>
+              <button type="button" className={styles.ghost} onClick={closeConfirm}>
+                {confirmDialog.cancelLabel || "Batal"}
+              </button>
+              <button
+                type="button"
+                className={confirmDialog.isDanger ? styles.danger : styles.primary}
+                onClick={confirmDialog.onConfirm}
+              >
+                {confirmDialog.confirmLabel || "Konfirmasi"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1979,6 +2105,21 @@ function ProjectEditor({
       disciplines: Array.isArray(project.disciplines) ? project.disciplines : ["identity"],
       [key]: value,
     });
+
+  const handleTitleChange = (newTitle: string) => {
+    const prevAuto = slugify(project.title);
+    const shouldSyncSlug = !project.slug || project.slug === prevAuto;
+    const shouldSyncRoute = !project.routeSlug || project.routeSlug === prevAuto;
+    const auto = slugify(newTitle);
+    onChange({
+      ...project,
+      disciplines: Array.isArray(project.disciplines) ? project.disciplines : ["identity"],
+      title: newTitle,
+      slug: shouldSyncSlug ? auto : project.slug,
+      routeSlug: shouldSyncRoute ? auto : project.routeSlug,
+    });
+  };
+
   const details = project.details || {};
   return (
     <div className={styles.editor}>
@@ -1992,17 +2133,37 @@ function ProjectEditor({
         </button>
       </div>
       <div className={styles.grid2}>
-        <Field label="Judul">
-          <input value={project.title} onChange={(e) => set("title", e.target.value)} required />
+        <Field label="Judul *">
+          <input
+            placeholder="Contoh: GaragePlug Indonesia"
+            value={project.title}
+            onChange={(e) => handleTitleChange(e.target.value)}
+            required
+          />
         </Field>
-        <Field label="Client">
-          <input value={project.client} onChange={(e) => set("client", e.target.value)} required />
+        <Field label="Client *">
+          <input
+            placeholder="Contoh: PT. Era Automotive Revolution"
+            value={project.client}
+            onChange={(e) => set("client", e.target.value)}
+            required
+          />
         </Field>
-        <Field label="Slug internal">
-          <input value={project.slug} onChange={(e) => set("slug", e.target.value.toLowerCase())} />
+        <Field label="Slug internal *">
+          <input
+            placeholder="otomatis dari judul"
+            value={project.slug}
+            onChange={(e) => set("slug", slugify(e.target.value))}
+            required
+          />
         </Field>
-        <Field label="Slug URL">
-          <input value={project.routeSlug} onChange={(e) => set("routeSlug", e.target.value.toLowerCase())} />
+        <Field label="Slug URL *">
+          <input
+            placeholder="otomatis dari judul (/work/slug-url)"
+            value={project.routeSlug}
+            onChange={(e) => set("routeSlug", slugify(e.target.value))}
+            required
+          />
         </Field>
         <Field label="Tahun">
           <input value={project.year} onChange={(e) => set("year", e.target.value)} />

@@ -133,7 +133,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {gaId && (
           <>
@@ -154,7 +154,7 @@ export default function RootLayout({
           </Script>
         )}
       </head>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         {gtmId && (
           <noscript>
             <iframe

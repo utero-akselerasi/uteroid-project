@@ -46,7 +46,7 @@ services:
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:3020}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}
       ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-uteroadminsecretpassword123}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-H1TZMz94knpTjuNxB8JiQK3fm}
       ADMIN_TOTP_SECRET: ${ADMIN_TOTP_SECRET:-}
       S3_ENDPOINT: object-storage:8333
       S3_ACCESS_KEY: ${S3_ACCESS_KEY:-utero-admin}
