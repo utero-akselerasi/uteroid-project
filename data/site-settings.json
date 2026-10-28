@@ -7,40 +7,47 @@
     "heroSlides": [
       {
         "id": 1,
-        "image": "/img/background1.png",
-        "alt": "Utero Design Studio Visual 1",
+        "image": "/img/Creative Print Studio in Action.png",
+        "alt": "Creative Print Studio in Action",
         "title": "DESIGN AS A SOLUTION",
         "subtitle": "EST. 1998 — MALANG, INDONESIA"
       },
       {
         "id": 2,
-        "image": "/img/background2.png",
-        "alt": "Utero Design Studio Visual 2",
+        "image": "/img/Creative Moodboard in Red and Black.png",
+        "alt": "Creative Moodboard in Red and Black",
         "title": "STRATEGIC BRAND SYSTEMS",
         "subtitle": "PHYSICAL EXECUTION & SPATIAL WAYFINDING"
+      },
+      {
+        "id": 3,
+        "image": "/img/Sunlit Creative Studio Workshop.png",
+        "alt": "Sunlit Creative Studio Workshop",
+        "title": "ENDURING CRAFT & IMPACT",
+        "subtitle": "HOLISTIC VISUAL & PHYSICAL ENVIRONMENTS"
       }
     ],
     "statementBanner": {
-      "image": "/img/unnamed.webp",
+      "image": "/img/Collaborative Design Moodboard Workspace.png",
       "tag": "STUDIO STATEMENT // 02B",
       "quote": "“Kami percaya desain bukan sekadar dekorasi, melainkan instrumen strategis yang mengakselerasi pertumbuhan bisnis dan memperjelas identitas kultural.”",
       "ctaText": "Pelajari Studio Utero",
       "ctaHref": "/studio"
     },
     "pageBanners": {
-      "servicesHeroImage": "/img/Services/brand.webp",
+      "servicesHeroImage": "/img/Services/brand.png",
       "insightsHeroImage": "/img/unnamed.webp",
       "studioHeroImage": "/img/unnamed.webp",
       "contactHeroImage": "/img/unnamed.webp"
     }
   },
   "serviceImages": {
-    "brand": "/img/Services/brand.webp",
-    "product": "/img/Services/product.webp",
-    "promotion": "/img/Services/promotion.webp",
-    "digital": "/img/Services/digital.webp",
-    "environmental": "/uploads/Custom_Print_Studio_Display_e9010b451271.png",
-    "outdoor": "/img/Services/outdoor.webp"
+    "brand": "/img/Services/brand.png",
+    "product": "/img/Services/product.png",
+    "promotion": "/img/Services/promotion.png",
+    "digital": "/img/Services/digital.png",
+    "environmental": "/img/Services/environment.png",
+    "outdoor": "/img/Services/outdoor.png"
   },
   "contacts": {
     "phone": "+62-819-9990-0900",
@@ -134,5 +141,5 @@
       }
     ]
   },
-  "updatedAt": "2026-10-27T05:59:17.082Z"
+  "updatedAt": "2026-10-28T04:05:26.438Z"
 }

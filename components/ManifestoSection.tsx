@@ -27,7 +27,7 @@ export default function ManifestoSection() {
         }}
       >
         <Image
-          src="/img/WhatsApp Image 2026-09-12 at 4.38.10 PM.jpeg"
+          src="/img/Red Studio Creative Brief.png"
           alt=""
           role="presentation"
           fill

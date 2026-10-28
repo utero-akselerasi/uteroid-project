@@ -9,13 +9,18 @@ import { useSiteSettings } from "@/components/SiteSettingsProvider";
 const slides = [
   {
     id: 1,
-    image: "/img/background1.png",
-    alt: "Utero Design Studio Visual 1",
+    image: "/img/Creative Print Studio in Action.png",
+    alt: "Utero Design Studio — Creative Print Studio in Action",
   },
   {
     id: 2,
-    image: "/img/background2.png",
-    alt: "Utero Design Studio Visual 2",
+    image: "/img/Creative Moodboard in Red and Black.png",
+    alt: "Utero Design Studio — Creative Moodboard in Red and Black",
+  },
+  {
+    id: 3,
+    image: "/img/Sunlit Creative Studio Workshop.png",
+    alt: "Utero Design Studio — Sunlit Creative Studio Workshop",
   },
 ];
 

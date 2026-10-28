@@ -54,7 +54,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Exhaustive technical documentation detailing safe zones, digital specs, and fabrication standards.",
       },
     ],
-    image: "/img/Services/brand.webp",
+    image: "/img/Services/brand.png",
     imageAlt:
       "Brand identity design and visual system work by Utero Studio",
     imagePosition: "center 30%",
@@ -96,7 +96,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Specifying sustainable paper stocks, soy inks, and recyclable finishes that fulfill environmental stewardship.",
       },
     ],
-    image: "/img/Services/product.webp",
+    image: "/img/Services/product.png",
     imageAlt:
       "Product packaging and structural container design by Utero Studio",
     imagePosition: "center 75%",
@@ -138,7 +138,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Engineering physical store displays, table-talkers, and wobblers that trigger final purchasing decisions.",
       },
     ],
-    image: "/img/Services/promotion.webp",
+    image: "/img/Services/promotion.png",
     imageAlt:
       "Promotional campaign key visual and print collateral by Utero Studio",
     imagePosition: "center 30%",
@@ -180,7 +180,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Zero layout shift, optimized image assets, and flawless cross-device fluidity from handheld to 4K displays.",
       },
     ],
-    image: "/img/Services/digital.webp",
+    image: "/img/Services/digital.png",
     imageAlt:
       "Digital web platform and user interface design by Utero Studio",
     imagePosition: "center 25%",
@@ -240,7 +240,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Turning corporate values and milestones into striking typography murals across team collaborative zones.",
       },
     ],
-    image: "/img/Services/environment.webp",
+    image: "/img/Services/environment.png",
     imageAlt:
       "Environmental wayfinding and architectural signage by Utero Studio",
     imagePosition: "center 25%",
@@ -282,7 +282,7 @@ export const servicesData: ServiceItem[] = [
         desc: "Utilizing industrial-grade vinyls, fade-resistant UV pigmentation, and heavy-duty tensioning systems.",
       },
     ],
-    image: "/img/Services/outdoor.webp",
+    image: "/img/Services/outdoor.png",
     imageAlt:
       "Large-scale outdoor billboard and architectural pylon advertising by Utero Studio",
     imagePosition: "center 75%",

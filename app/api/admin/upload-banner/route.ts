@@ -39,8 +39,13 @@ export async function POST(request: Request) {
 
     const publicUrl = `/uploads/${filename}`;
     return NextResponse.json({ url: publicUrl, filename, size: file.size });
-  } catch (err) {
+  } catch (err: any) {
     console.error("[upload-banner] Upload failed:", err);
+    if (err?.code === "EROFS") {
+      return NextResponse.json({
+        error: "Sistem file dalam mode read-only (serverless/Vercel). Diperlukan integrasi external object storage (S3/Vercel Blob) untuk upload runtime di produksi.",
+      }, { status: 500 });
+    }
     return NextResponse.json({ error: "Gagal mengunggah file gambar." }, { status: 500 });
   }
 }

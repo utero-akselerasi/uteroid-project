@@ -8,7 +8,7 @@ import { useSiteSettings } from "@/components/SiteSettingsProvider";
 export default function StatementBanner() {
   const { settings } = useSiteSettings();
   const banner = settings.banners?.statementBanner;
-  const bannerImage = banner?.image || "/img/unnamed.webp";
+  const bannerImage = banner?.image || "/img/Collaborative Design Moodboard Workspace.png";
   return (
     <section
       id="studio-statement"

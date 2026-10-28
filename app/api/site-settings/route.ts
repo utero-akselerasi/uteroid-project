@@ -68,8 +68,55 @@ function writeStoredSettings(settings: SiteSettings): void {
   }
 }
 
+function getBackendUrl(): string {
+  let url = (process.env.PORTFOLIO_API_URL || "").replace(/\/$/, "");
+  if (url && url.includes("portfolio-api") && !fs.existsSync("/.dockerenv")) {
+    url = url.replace("portfolio-api", "127.0.0.1");
+  }
+  return url;
+}
+
 export async function GET() {
-  const settings = readStoredSettings();
+  let settings = readStoredSettings();
+  const baseUrl = getBackendUrl();
+  if (baseUrl) {
+    try {
+      const res = await fetch(`${baseUrl}/settings`, {
+        cache: "no-store",
+        signal: AbortSignal.timeout(2500),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const remoteSettings = data?.site_settings;
+        if (remoteSettings && typeof remoteSettings === "object") {
+          settings = {
+            ...settings,
+            ...remoteSettings,
+            banners: {
+              ...settings.banners,
+              ...(remoteSettings.banners || {}),
+              heroSlides: remoteSettings.banners?.heroSlides || settings.banners.heroSlides,
+              statementBanner: {
+                ...settings.banners.statementBanner,
+                ...(remoteSettings.banners?.statementBanner || {}),
+              },
+              pageBanners: {
+                ...settings.banners.pageBanners,
+                ...(remoteSettings.banners?.pageBanners || {}),
+              },
+            },
+            serviceImages: {
+              ...settings.serviceImages,
+              ...(remoteSettings.serviceImages || {}),
+            },
+          };
+        }
+      }
+    } catch {
+      // Backend optional read failure, silently fallback to local stored settings
+    }
+  }
+
   return NextResponse.json(settings, {
     headers: {
       "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
@@ -126,10 +173,10 @@ export async function POST(request: Request) {
     writeStoredSettings(merged);
 
     // If Go backend is available, also attempt to synchronize settings there
-    const baseUrl = process.env.PORTFOLIO_API_URL;
-    if (baseUrl) {
+    const cleanUrl = getBackendUrl();
+    if (cleanUrl) {
       try {
-        await fetch(`${baseUrl.replace(/\/$/, "")}/admin/settings`, {
+        await fetch(`${cleanUrl}/admin/settings`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

@@ -1403,7 +1403,7 @@ function ServiceMediaManager({
 
       <div className={styles.serviceGrid}>
         {coreDisciplines.map((d) => {
-          const currentImg = images[d.slug] || `/img/Services/${d.slug}.webp`;
+          const currentImg = images[d.slug] || (d.slug === "environmental" ? "/img/Services/environment.png" : `/img/Services/${d.slug}.png`);
           return (
             <div key={d.slug} className={styles.serviceCard}>
               <div className={styles.serviceCardHeader}>
