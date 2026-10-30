@@ -132,6 +132,10 @@ export const id = {
     backToInsights: "Kembali ke Wawasan",
     minRead: (n: number) => `${n} menit baca`,
     minReadShort: (n: number) => `${n} mnt baca`,
+    articles: "Artikel",
+    explorePortfolioWorks: "← Jelajahi Karya Portofolio",
+    connectWithStudio: "Hubungi Studio →",
+    discussWithStudio: "Diskusikan Dengan Studio Kami →",
   },
   // Chrome detail proyek (konten proyek sendiri tetap dalam bahasa Inggris)
   projectChrome: {

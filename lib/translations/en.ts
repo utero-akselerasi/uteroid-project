@@ -132,6 +132,10 @@ export const en = {
     backToInsights: "Back to Insights",
     minRead: (n: number) => `${n} min read`,
     minReadShort: (n: number) => `${n} min read`,
+    articles: "Articles",
+    explorePortfolioWorks: "← Explore Portfolio Works",
+    connectWithStudio: "Connect with Studio →",
+    discussWithStudio: "Discuss With Our Studio →",
   },
   // Project detail chrome (project content itself stays untranslated)
   projectChrome: {
