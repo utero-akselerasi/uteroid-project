@@ -47,6 +47,7 @@ const emptyProject = (): AdminProject => ({
   priority: 0,
   tags: [],
   galleryImages: [],
+  video: { type: "youtube", src: "", poster: "" },
   details: { scope: [], challenge: "", solution: "" },
   status: "draft",
 });
