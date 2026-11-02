@@ -296,12 +296,20 @@ export default function AdminDashboard() {
     const cleanSlug = slugify(project.slug) || autoSlug;
     const cleanRouteSlug = slugify(project.routeSlug) || cleanSlug;
 
+    // Auto-assign priority for new projects
+    let autoPriority = project.priority || 0;
+    if (!project.id) {
+      const maxPriority = projects.reduce((max, p) => Math.max(max, p.priority || 0), 0);
+      autoPriority = maxPriority + 1;
+    }
+
     const cleanProject: AdminProject = {
       ...project,
       title,
       client,
       slug: cleanSlug,
       routeSlug: cleanRouteSlug,
+      priority: autoPriority,
     };
 
     setBusy(true);
@@ -2121,6 +2129,12 @@ function ProjectEditor({
   };
 
   const details = project.details || {};
+  const video = project.video || { type: "youtube", src: "", poster: "" };
+
+  const setVideo = (updates: Partial<typeof video>) => {
+    set("video", { ...video, ...updates });
+  };
+
   return (
     <div className={styles.editor}>
       <div className={styles.editorHead}>
@@ -2193,6 +2207,38 @@ function ProjectEditor({
         </Field>
       </div>
       <section className={styles.section}>
+        <h3>Video</h3>
+        <div className={styles.grid2}>
+          <Field label="Tipe video">
+            <select value={video.type} onChange={(e) => setVideo({ type: e.target.value as "youtube" | "vimeo" | "file" })}>
+              <option value="youtube">YouTube</option>
+              <option value="vimeo">Vimeo</option>
+              <option value="file">File (MP4)</option>
+            </select>
+          </Field>
+          <Field label="Link video (URL, ID, atau /projects/... .mp4)">
+            <input
+              placeholder={
+                video.type === "youtube"
+                  ? "https://youtube.com/watch?v=... atau ID video"
+                  : video.type === "vimeo"
+                  ? "https://vimeo.com/... atau ID video"
+                  : "/projects/[slug]/video.mp4"
+              }
+              value={video.src}
+              onChange={(e) => setVideo({ src: e.target.value })}
+            />
+          </Field>
+          <Field label="URL poster (opsional)" className={styles.wide}>
+            <input
+              placeholder="/projects/[slug]/poster.jpg"
+              value={video.poster || ""}
+              onChange={(e) => setVideo({ poster: e.target.value })}
+            />
+          </Field>
+        </div>
+      </section>
+      <section className={styles.section}>
         <h3>Disiplin & metadata</h3>
         <div className={styles.checkGrid}>
           {disciplines.map((item) => (
@@ -2223,6 +2269,26 @@ function ProjectEditor({
             <textarea
               value={(details.scope || []).join("\n")}
               onChange={(e) => set("details", { ...details, scope: split(e.target.value) })}
+            />
+          </Field>
+          <Field label="Posisi cover di grid">
+            <select
+              value={project.gridCoverPosition || "center"}
+              onChange={(e) => set("gridCoverPosition", e.target.value)}
+            >
+              <option value="center">Center</option>
+              <option value="top">Top</option>
+              <option value="bottom">Bottom</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </Field>
+          <Field label="Priority (urutan)">
+            <input
+              type="number"
+              value={project.priority || 0}
+              readOnly
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.03)", cursor: "not-allowed" }}
             />
           </Field>
         </div>
