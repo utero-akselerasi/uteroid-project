@@ -181,9 +181,10 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     if (value) headers.set(name, value);
   }
   // The Go backend validates Origin against FRONTEND_ORIGIN (e.g. http://localhost:3020)
-  // Ensure the forwarded origin matches so cross-port local dev (e.g. :3000 -> :8080) is accepted
+  // Forward the actual request origin if present, otherwise use the configured default
+  const requestOrigin = request.headers.get("origin");
   const configuredOrigin = process.env.FRONTEND_ORIGIN || "http://localhost:3020";
-  headers.set("origin", configuredOrigin);
+  headers.set("origin", requestOrigin || configuredOrigin);
   headers.set("x-forwarded-for", request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "127.0.0.1");
 
   function getBodyJson(): any {
