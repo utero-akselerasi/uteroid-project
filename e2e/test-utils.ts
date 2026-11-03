@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
 
@@ -12,6 +12,13 @@ export async function login(page: Page) {
   await page.goto('/admin');
   await page.waitForLoadState('networkidle');
 
+  // Check if already logged in (dashboard is visible)
+  const dashboardVisible = await page.locator('text=/projects|Portofolio|Daftar Proyek/i').count() > 0;
+  if (dashboardVisible) {
+    // Already logged in, return
+    return;
+  }
+
   // Wait for login form to be visible
   const usernameInput = page.locator('input[name="username"]');
   await usernameInput.waitFor({ state: 'visible', timeout: 10000 });
@@ -21,17 +28,26 @@ export async function login(page: Page) {
 
   await usernameInput.fill(ADMIN_USER);
   await passwordInput.fill(ADMIN_PASSWORD);
-  await totpInput.fill(''); // TOTP may be optional based on config
 
-  await page.click('button[type="submit"]');
+  // Check if TOTP field exists and is required
+  const totpExists = await totpInput.count() > 0;
+  if (totpExists) {
+    const totpRequired = await totpInput.getAttribute('required');
+    if (totpRequired !== null) {
+      await totpInput.fill(''); // Placeholder - will need actual TOTP code if required
+    }
+  }
+
+  // Click the submit button (try multiple selectors)
+  await page.click('button[type="submit"], button:has-text("Masuk Dashboard")');
   await page.waitForLoadState('networkidle');
 
   // Wait for dashboard to load - look for any dashboard element
-  await page.waitForSelector('text=/projects|studio|settings/i', { timeout: 10000 });
+  await page.waitForSelector('text=/projects|Portofolio|Daftar Proyek/i', { timeout: 10000 });
 }
 
 export async function logout(page: Page) {
-  await page.click('text=/logout/i');
+  await page.click('text=/Keluar|Logout/i');
   await page.waitForLoadState('networkidle');
 }
 

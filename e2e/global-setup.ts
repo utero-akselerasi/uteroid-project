@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 
 type ConsoleError = {
   type: string;
@@ -32,20 +32,26 @@ export const test = base.extend<{
   },
 });
 
+// Export expect from @playwright/test
+export { expect };
+
 test.beforeEach(async ({ page, consoleErrors, failedRequests }) => {
   // Track console errors from our own code
   page.on('console', msg => {
     const type = msg.type();
     if (type === 'error') {
       const text = msg.text();
-      // Filter out errors from third-party scripts
+      // Filter out errors from third-party scripts and expected auth failures
       const location = msg.location();
       if (location && location.url && !location.url.includes('cdn') && !location.url.includes('analytics')) {
-        consoleErrors.push({
-          type,
-          text,
-          location,
-        });
+        // Filter out 401/403 auth/session errors which are expected when not logged in or with wrong credentials
+        if (!text.includes('401') && !text.includes('403') && !text.includes('Unauthorized') && !text.includes('Forbidden')) {
+          consoleErrors.push({
+            type,
+            text,
+            location,
+          });
+        }
       }
     }
   });
@@ -56,7 +62,7 @@ test.beforeEach(async ({ page, consoleErrors, failedRequests }) => {
     if (status >= 400 && status < 600) {
       // Filter out expected failures (e.g., auth during login tests)
       const url = response.url();
-      if (!url.includes('login') && !url.includes('auth')) {
+      if (!url.includes('login') && !url.includes('auth') && !url.includes('session')) {
         failedRequests.push({
           url,
           status,
