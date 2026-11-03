@@ -39,7 +39,7 @@ services:
     image: uteroid-portfolio-api:latest
     container_name: uteroid-portfolio-api
     ports:
-      - "8080:8080"
+      - "127.0.0.1:18081:8080"
     environment:
       API_ADDR: :8080
       DATABASE_PATH: /data/utero.db
