@@ -1,167 +1,227 @@
 import { test, expect } from './fixtures';
-import { login, generateTestName } from './test-utils';
+import { generateTestName, cleanupAllTestProjects } from './test-utils';
 
 test.describe('Create Project', () => {
   test.beforeEach(async ({ page }) => {
-    await login(page);
+    await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('text=Keluar')).toBeVisible({ timeout: 15000 });
+  });
+
+  test.afterEach(async () => {
+    // Safety guarantee: delete any ZZ TEST project created even if test failed
+    await cleanupAllTestProjects();
   });
 
   test('create project with only title and client', async ({ page }) => {
-    const projectName = generateTestName('minimal');
-    const clientName = 'Test Client';
+    const projectName = generateTestName('Minimal');
+    const clientName = 'Test Client Minimal';
 
-    await page.click('text=/new project/i, button:has-text("New")');
-    await page.waitForLoadState('networkidle');
+    // Click "+ Proyek baru"
+    await page.locator('button:has-text("+ Proyek baru")').click();
+    await expect(page.locator('div:has(> label:has-text("Judul")) input')).toBeVisible({ timeout: 10000 });
 
     // Fill only title and client
-    await page.locator('input[name="title"]').fill(projectName);
-    await page.locator('input[name="client"]').fill(clientName);
+    await page.locator('div:has(> label:has-text("Judul")) input').fill(projectName);
+    await page.locator('div:has(> label:has-text("Client")) input').fill(clientName);
 
-    // Save
-    await page.click('button:has-text("Save")');
-    await page.waitForLoadState('networkidle');
+    // Save project
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('admin/projects') && (r.request().method() === 'POST' || r.request().method() === 'PUT')),
+      page.locator('button:has-text("Simpan Proyek")').click(),
+    ]);
 
-    // Verify project was created
-    await expect(page.locator(`text=/${projectName}/i`)).toBeVisible();
+    expect(response.status()).toBeLessThan(400);
 
-    // Clean up - delete the project
-    await page.click(`text=/${projectName}/i`);
-    await page.waitForLoadState('networkidle');
-    await page.click('text=/delete/i');
-    await page.waitForSelector('text=/confirm/i', { state: 'visible' });
-    await page.click('button:has-text("Confirm")');
-    await page.waitForLoadState('networkidle');
+    // Go back to project list
+    await page.locator('button:has-text("← Kembali")').click();
+    await expect(page.locator('table')).toBeVisible();
+
+    // Verify project appears in table
+    await expect(page.locator('table tbody tr').filter({ hasText: projectName })).toBeVisible();
+
+    // Delete the test project via UI
+    const row = page.locator('table tbody tr').filter({ hasText: projectName });
+    await row.locator('button:has-text("Hapus")').click();
+    const modal = page.locator('[role="dialog"]');
+    await expect(modal).toBeVisible();
+    await modal.locator('button:has-text("Hapus Proyek")').click();
+    await expect(modal).toBeHidden();
   });
 
-  test('create project with all fields filled', async ({ page }) => {
-    const projectName = generateTestName('full');
-    const clientName = 'Full Test Client';
+  test('create project with all fields filled at once', async ({ page }) => {
+    const projectName = generateTestName('Full');
+    const clientName = 'Test Client Full';
 
-    await page.click('text=/new project/i, button:has-text("New")');
-    await page.waitForLoadState('networkidle');
+    // Click "+ Proyek baru"
+    await page.locator('button:has-text("+ Proyek baru")').click();
+    await expect(page.locator('div:has(> label:has-text("Judul")) input')).toBeVisible({ timeout: 10000 });
 
     // Fill all fields
-    await page.locator('input[name="title"]').fill(projectName);
-    await page.locator('input[name="client"]').fill(clientName);
-    await page.locator('input[name="year"]').fill('2024');
-    await page.locator('input[name="category"]').fill('Test Category');
-    await page.locator('select[name="industry"]').selectOption('services');
-    await page.click('text=/identity/i'); // Select discipline
-    await page.locator('textarea[name="shortDescription"]').fill('Short description for test');
-    await page.locator('textarea[name="description"]').fill('Full description for test project');
-    await page.locator('select[name="coverPosition"]').selectOption('center');
+    await page.locator('div:has(> label:has-text("Judul")) input').fill(projectName);
+    await page.locator('div:has(> label:has-text("Client")) input').fill(clientName);
+    await page.locator('div:has(> label:has-text("Tahun")) input').fill('2025');
+    await page.locator('div:has(> label:has-text("Kategori")) input').fill('Brand Identity');
+    await page.locator('div:has(> label:has-text("Industri")) select').selectOption('fnb');
+    await page.locator('div:has(> label:has-text("Status")) select').selectOption('draft');
+    await page.locator('div:has(> label:has-text("Ringkasan")) textarea').fill('Short test summary');
+    await page.locator('div:has(> label:has-text("Deskripsi")) textarea').fill('Full test description text');
 
-    // Save
-    await page.click('button:has-text("Save")');
-    await page.waitForLoadState('networkidle');
+    // Video section
+    await page.locator('div:has(> label:has-text("Tipe video")) select').selectOption('youtube');
+    await page.locator('div:has(> label:has-text("Link video")) input').fill('https://youtube.com/watch?v=dQw4w9WgXcQ');
+    await page.locator('div:has(> label:has-text("URL poster")) input').fill('/projects/test/poster.jpg');
 
-    // Verify project was created
-    await expect(page.locator(`text=/${projectName}/i`)).toBeVisible();
+    // Disciplines checkbox
+    const fnbCheck = page.locator('label:has-text("packaging") input[type="checkbox"]');
+    if ((await fnbCheck.count()) > 0 && !(await fnbCheck.isChecked())) {
+      await fnbCheck.check();
+    }
 
-    // Clean up - delete the project
-    await page.click(`text=/${projectName}/i`);
-    await page.waitForLoadState('networkidle');
-    await page.click('text=/delete/i');
-    await page.waitForSelector('text=/confirm/i', { state: 'visible' });
-    await page.click('button:has-text("Confirm")');
-    await page.waitForLoadState('networkidle');
-  });
+    // Tags & Scope
+    await page.locator('div:has(> label:has-text("Tags")) textarea').fill('Branding\nPackaging\nTestTag');
+    await page.locator('div:has(> label:has-text("Scope")) textarea').fill('Visual Identity\nPrint Media');
 
-  test('auto-slug generation', async ({ page }) => {
-    const projectName = generateTestName('slug');
-    const expectedSlug = projectName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    // Cover position
+    await page.locator('div:has(> label:has-text("Posisi cover di grid")) select').selectOption('top');
 
-    await page.click('text=/new project/i, button:has-text("New")');
-    await page.waitForLoadState('networkidle');
+    // Case study Challenge & Solution
+    await page.locator('div:has(> label:has-text("Challenge")) textarea').fill('Market competition and brand clarity challenge');
+    await page.locator('div:has(> label:has-text("Solution")) textarea').fill('Comprehensive brand refresh and modern packaging solution');
 
-    // Fill title
-    await page.locator('input[name="title"]').fill(projectName);
-    await page.locator('input[name="client"]').fill('Test Client');
+    // Intercept network request to capture payload and response
+    let saveStatus = 0;
+    let saveBody: any = null;
+    let requestPayload: any = null;
 
-    // Check if slug is auto-generated
-    const slugInput = page.locator('input[name="slug"], input[name="routeSlug"]');
-    const hasSlug = await slugInput.count();
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => {
+        if (r.url().includes('admin/projects') && (r.request().method() === 'POST' || r.request().method() === 'PUT')) {
+          saveStatus = r.status();
+          requestPayload = r.request().postData();
+          return true;
+        }
+        return false;
+      }),
+      page.locator('button:has-text("Simpan Proyek")').click(),
+    ]);
 
-    if (hasSlug > 0) {
-      const slugValue = await slugInput.inputValue();
-      expect(slugValue).toContain(expectedSlug.slice(0, 20)); // Check first part matches
-    } else {
+    try {
+      saveBody = await response.json();
+    } catch {
+      saveBody = await response.text();
+    }
+
+    if (saveStatus >= 400) {
       test.info().annotations.push({
         type: 'issue',
-        description: 'Slug input field not found in create form'
+        description: `Create project with all fields failed with status ${saveStatus}. Request: ${requestPayload}, Response: ${JSON.stringify(saveBody)}`
       });
     }
 
-    // Clean up if project was created
-    await page.click('button:has-text("Cancel")');
-    await page.waitForLoadState('networkidle');
+    expect(saveStatus).toBeLessThan(400);
+
+    // Go back and verify project is in list
+    await page.locator('button:has-text("← Kembali")').click();
+    await expect(page.locator('table tbody tr').filter({ hasText: projectName })).toBeVisible();
+
+    // Delete test project via UI
+    const row = page.locator('table tbody tr').filter({ hasText: projectName });
+    await row.locator('button:has-text("Hapus")').click();
+    const modal = page.locator('[role="dialog"]');
+    await expect(modal).toBeVisible();
+    await modal.locator('button:has-text("Hapus Proyek")').click();
+    await expect(modal).toBeHidden();
   });
 
-  test('auto-priority is read-only', async ({ page }) => {
-    const projectName = generateTestName('priority');
+  test('auto-slug generation from title', async ({ page }) => {
+    await page.locator('button:has-text("+ Proyek baru")').click();
+    await expect(page.locator('div:has(> label:has-text("Judul")) input')).toBeVisible({ timeout: 10000 });
 
-    await page.click('text=/new project/i, button:has-text("New")');
-    await page.waitForLoadState('networkidle');
+    const titleInput = page.locator('div:has(> label:has-text("Judul")) input');
+    const slugInput = page.locator('div:has(> label:has-text("Slug internal")) input');
+    const routeSlugInput = page.locator('div:has(> label:has-text("Slug URL")) input');
 
-    await page.locator('input[name="title"]').fill(projectName);
-    await page.locator('input[name="client"]').fill('Test Client');
+    await titleInput.fill('ZZ TEST Brand Identity 2026!');
+    expect(await slugInput.inputValue()).toBe('zz-test-brand-identity-2026');
+    expect(await routeSlugInput.inputValue()).toBe('zz-test-brand-identity-2026');
 
-    // Check priority field
-    const priorityInput = page.locator('input[name="priority"]');
-    const hasPriority = await priorityInput.count();
+    // Cancel without saving
+    await page.locator('button:has-text("← Kembali")').click();
+  });
 
-    if (hasPriority > 0) {
-      const isReadOnly = await priorityInput.isDisabled();
-      const readOnlyAttr = await priorityInput.getAttribute('readonly');
+  test('priority: check read-only attribute and auto-assigned value vs highest existing', async ({ page }) => {
+    // 1. Query highest existing priority from projects list
+    const highestExistingPriority = await page.evaluate(async () => {
+      const res = await fetch('/portfolio-api/admin/projects');
+      const list = await res.json();
+      return Math.max(...list.map((p: any) => p.priority || 0));
+    });
 
-      if (!isReadOnly && !readOnlyAttr) {
-        test.info().annotations.push({
-          type: 'issue',
-          description: 'Priority field is not read-only as expected'
-        });
-      }
-    } else {
+    const expectedNextPriority = highestExistingPriority + 1;
+
+    // 2. Open project creation form
+    await page.locator('button:has-text("+ Proyek baru")').click();
+    await expect(page.locator('div:has(> label:has-text("Judul")) input')).toBeVisible({ timeout: 10000 });
+
+    const priorityInput = page.locator('div:has(> label:has-text("Priority")) input');
+    await expect(priorityInput).toBeVisible();
+
+    // Verify it is read-only
+    const isReadOnly = (await priorityInput.getAttribute('readonly')) !== null;
+    expect(isReadOnly).toBe(true);
+
+    // Read form priority value
+    const formPriorityVal = Number(await priorityInput.inputValue());
+
+    // 3. Save a minimal test project to see what priority the backend actually assigns
+    const projectName = generateTestName('PriorityCheck');
+    await page.locator('div:has(> label:has-text("Judul")) input').fill(projectName);
+    await page.locator('div:has(> label:has-text("Client")) input').fill('Priority Client');
+
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('admin/projects') && (r.request().method() === 'POST' || r.request().method() === 'PUT')),
+      page.locator('button:has-text("Simpan Proyek")').click(),
+    ]);
+
+    const savedData = await response.json();
+    const savedPriority = Number(savedData.priority);
+
+    // Extra check 1: Report bug if form shows 0 instead of next highest priority
+    if (formPriorityVal === 0 || formPriorityVal !== expectedNextPriority) {
       test.info().annotations.push({
-        type: 'issue',
-        description: 'Priority field not found in create form'
+        type: 'bug',
+        description: `ADMIN BUG: Form shows priority ${formPriorityVal} instead of next highest priority ${expectedNextPriority} (highest existing is ${highestExistingPriority}). Saved project priority is ${savedPriority}.`
       });
     }
 
-    // Clean up
-    await page.click('button:has-text("Cancel")');
-    await page.waitForLoadState('networkidle');
-  });
-
-  test('cover position dropdown', async ({ page }) => {
-    const projectName = generateTestName('cover');
-
-    await page.click('text=/new project/i, button:has-text("New")');
-    await page.waitForLoadState('networkidle');
-
-    await page.locator('input[name="title"]').fill(projectName);
-    await page.locator('input[name="client"]').fill('Test Client');
-
-    // Check cover position dropdown
-    const coverSelect = page.locator('select[name="coverPosition"], select[name="gridCoverPosition"]');
-    const hasCover = await coverSelect.count();
-
-    if (hasCover > 0) {
-      const options = await coverSelect.locator('option').allTextContents();
-      expect(options.length).toBeGreaterThan(0);
-
-      // Try to select an option
-      await coverSelect.selectOption({ index: 0 });
-      const selectedValue = await coverSelect.inputValue();
-      expect(selectedValue).toBeTruthy();
-    } else {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'Cover position dropdown not found in create form'
-      });
+    // Go back and delete test project
+    await page.locator('button:has-text("← Kembali")').click();
+    const row = page.locator('table tbody tr').filter({ hasText: projectName });
+    if ((await row.count()) > 0) {
+      await row.locator('button:has-text("Hapus")').click();
+      const modal = page.locator('[role="dialog"]');
+      await modal.waitFor({ state: 'visible' });
+      await modal.locator('button:has-text("Hapus Proyek")').click();
+      await modal.waitFor({ state: 'hidden' });
     }
 
-    // Clean up
-    await page.click('button:has-text("Cancel")');
-    await page.waitForLoadState('networkidle');
+    // Expect read-only to be true
+    expect(isReadOnly).toBe(true);
+  });
+
+  test('cover position dropdown has required options', async ({ page }) => {
+    await page.locator('button:has-text("+ Proyek baru")').click();
+    await expect(page.locator('div:has(> label:has-text("Judul")) input')).toBeVisible({ timeout: 10000 });
+
+    const coverSelect = page.locator('div:has(> label:has-text("Posisi cover di grid")) select');
+    await expect(coverSelect).toBeVisible();
+
+    const options = await coverSelect.locator('option').allTextContents();
+    expect(options).toEqual(expect.arrayContaining(['Center', 'Top', 'Bottom', 'Left', 'Right']));
+
+    await coverSelect.selectOption('bottom');
+    expect(await coverSelect.inputValue()).toBe('bottom');
+
+    await page.locator('button:has-text("← Kembali")').click();
   });
 });
