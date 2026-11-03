@@ -1,106 +1,98 @@
 import { test, expect } from './fixtures';
-import { login } from './test-utils';
 
 test.describe('Project List', () => {
   test.beforeEach(async ({ page }) => {
-    await login(page);
+    await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('text=Keluar')).toBeVisible({ timeout: 15000 });
   });
 
-  test('loads and displays projects', async ({ page }) => {
-    // Wait for projects to load
-    await page.waitForLoadState('networkidle');
+  test('loads and displays projects table', async ({ page }) => {
+    const table = page.locator('table');
+    await expect(table).toBeVisible({ timeout: 10000 });
 
-    // Check if projects are displayed
-    const projectCards = page.locator('[data-testid="project-card"], .project-card, tr[data-project-id]');
-    const count = await projectCards.count();
-
-    // At least one project should be visible
+    const rows = table.locator('tbody tr');
+    await expect(rows.first()).toBeVisible({ timeout: 10000 });
+    const count = await rows.count();
     expect(count).toBeGreaterThan(0);
   });
 
   test('status counts show', async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+    // Look inside the stats container for exact labels
+    const statsContainer = page.locator('div[class*="stats"]').first();
+    await expect(statsContainer).toBeVisible();
 
-    // Look for status count indicators
-    const statusElements = page.locator('text=/total|published|draft|archived|featured/i');
-    const count = await statusElements.count();
-
-    expect(count).toBeGreaterThan(0);
+    await expect(statsContainer.getByText('Total', { exact: true })).toBeVisible();
+    await expect(statsContainer.getByText('Published', { exact: true })).toBeVisible();
+    await expect(statsContainer.getByText('Draft', { exact: true })).toBeVisible();
+    await expect(statsContainer.getByText('Archived', { exact: true })).toBeVisible();
+    await expect(statsContainer.getByText('Featured', { exact: true })).toBeVisible();
   });
 
   test('filter by status works', async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+    const statusSelect = page.locator('select[aria-label="Filter status"]');
+    await expect(statusSelect).toBeVisible();
 
-    // Find status filter dropdown
-    const statusFilter = page.locator('select[name="status"], [data-testid="status-filter"]');
-    const hasFilter = await statusFilter.count();
+    await statusSelect.selectOption('published');
+    expect(await statusSelect.inputValue()).toBe('published');
 
-    if (hasFilter > 0) {
-      await statusFilter.selectOption('published');
-      await page.waitForLoadState('networkidle');
+    // Projects table should still be displayed
+    const rows = page.locator('table tbody tr');
+    expect(await rows.count()).toBeGreaterThan(0);
 
-      // Verify filter is applied
-      const selectedValue = await statusFilter.inputValue();
-      expect(selectedValue).toBe('published');
-    } else {
-      test.skip(true, 'Status filter not found');
-    }
+    // Switch to draft
+    await statusSelect.selectOption('draft');
+    expect(await statusSelect.inputValue()).toBe('draft');
+
+    // Reset to all
+    await statusSelect.selectOption('all');
+    expect(await statusSelect.inputValue()).toBe('all');
   });
 
   test('search by project name works', async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+    const searchInput = page.locator('input[aria-label="Filter nama proyek"]');
+    await expect(searchInput).toBeVisible();
 
-    // Find search input
-    const searchInput = page.locator('input[name="query"], input[placeholder*="search" i], [data-testid="search-input"]');
-    const hasSearch = await searchInput.count();
+    // Search for a known project
+    await searchInput.fill('GaragePlug');
+    await page.waitForTimeout(500);
 
-    if (hasSearch > 0) {
-      await searchInput.fill('test');
-      await page.waitForLoadState('networkidle');
+    // Result should contain the searched project
+    const tableText = await page.locator('table tbody').textContent();
+    expect(tableText).toContain('GaragePlug');
 
-      // Verify search is applied
-      const value = await searchInput.inputValue();
-      expect(value).toBe('test');
-    } else {
-      test.skip(true, 'Search input not found');
-    }
+    // Search for non-existent text
+    await searchInput.fill('XYZNONEXISTENT999');
+    await page.waitForTimeout(500);
+    const emptyRows = await page.locator('table tbody tr').count();
+    expect(emptyRows).toBe(0);
+
+    // Clear search
+    await searchInput.fill('');
   });
 
   test('filter by year works', async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+    const yearSelect = page.locator('select[aria-label="Filter tahun"]');
+    await expect(yearSelect).toBeVisible();
 
-    // Find year filter dropdown
-    const yearFilter = page.locator('select[name="year"], [data-testid="year-filter"]');
-    const hasFilter = await yearFilter.count();
-
-    if (hasFilter > 0) {
-      const years = await yearFilter.locator('option').allTextContents();
-      if (years.length > 1) {
-        await yearFilter.selectOption({ index: 1 });
-        await page.waitForLoadState('networkidle');
-
-        const selectedValue = await yearFilter.inputValue();
-        expect(selectedValue).not.toBe('all');
-      }
-    } else {
-      test.skip(true, 'Year filter not found');
+    const options = await yearSelect.locator('option').allTextContents();
+    if (options.length > 1) {
+      await yearSelect.selectOption({ index: 1 });
+      const selected = await yearSelect.inputValue();
+      expect(selected).not.toBe('all');
     }
   });
 
   test('archived widget is present (or report if missing)', async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+    // Check if there is a separate dedicated archived widget / drawer / section
+    const dedicatedArchivedWidget = page.locator('[data-testid="archived-widget"], .archived-section, aside:has-text("Archived")');
+    const count = await dedicatedArchivedWidget.count();
 
-    // Look for archived widget/section
-    const archivedWidget = page.locator('text=/archived/i, [data-testid="archived-widget"], .archived-section');
-    const hasArchived = await archivedWidget.count();
-
-    if (hasArchived === 0) {
+    if (count === 0) {
       test.info().annotations.push({
         type: 'issue',
-        description: 'Archived widget is missing from the admin dashboard'
+        description: 'Missing dedicated archived widget in admin dashboard (archived projects are only filtered via Status dropdown and Stat card).'
       });
     }
-
-    // Test continues regardless - we just report the missing widget
+    expect(true).toBe(true);
   });
 });
