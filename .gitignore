@@ -29,6 +29,7 @@ dist/
 test-results/
 playwright-report/
 /trace.zip
+e2e/.auth/
 
 # Logs
 *.log

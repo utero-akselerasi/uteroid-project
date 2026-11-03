@@ -1,4 +1,4 @@
-import { test, expect } from './global-setup';
+import { test, expect } from './fixtures';
 import { login, generateTestName } from './test-utils';
 import path from 'path';
 

@@ -1,4 +1,4 @@
-import { test, expect } from './global-setup';
+import { test, expect } from './fixtures';
 import { login } from './test-utils';
 
 test.describe('Project List', () => {
@@ -43,7 +43,7 @@ test.describe('Project List', () => {
       const selectedValue = await statusFilter.inputValue();
       expect(selectedValue).toBe('published');
     } else {
-      test.skip('Status filter not found');
+      test.skip(true, 'Status filter not found');
     }
   });
 
@@ -62,7 +62,7 @@ test.describe('Project List', () => {
       const value = await searchInput.inputValue();
       expect(value).toBe('test');
     } else {
-      test.skip('Search input not found');
+      test.skip(true, 'Search input not found');
     }
   });
 
@@ -83,7 +83,7 @@ test.describe('Project List', () => {
         expect(selectedValue).not.toBe('all');
       }
     } else {
-      test.skip('Year filter not found');
+      test.skip(true, 'Year filter not found');
     }
   });
 

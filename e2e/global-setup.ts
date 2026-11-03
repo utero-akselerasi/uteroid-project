@@ -1,97 +1,45 @@
-import { test as base, expect } from '@playwright/test';
+import { chromium, type FullConfig } from '@playwright/test';
+import * as dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 
-type ConsoleError = {
-  type: string;
-  text: string;
-  location: { url: string; lineNumber: number; columnNumber: number };
-};
+// Load .env.test
+dotenv.config({ path: path.resolve(process.cwd(), '.env.test') });
 
-type FailedRequest = {
-  url: string;
-  status: number;
-  method: string;
-};
+async function globalSetup(config: FullConfig) {
+  const baseURL = process.env.BASE_URL || 'http://localhost:3020';
+  const username = process.env.ADMIN_USER || '';
+  const password = process.env.ADMIN_PASSWORD || '';
 
-export const test = base.extend<{
-  consoleErrors: ConsoleError[];
-  failedRequests: FailedRequest[];
-}>({
-  consoleErrors: async ({}, use) => {
-    const errors: ConsoleError[] = [];
-    await use(errors);
-    if (errors.length > 0) {
-      throw new Error(`Console errors detected:\n${errors.map(e => `${e.type}: ${e.text} at ${e.location.url}:${e.location.lineNumber}`).join('\n')}`);
-    }
-  },
-  failedRequests: async ({}, use) => {
-    const failures: FailedRequest[] = [];
-    await use(failures);
-    if (failures.length > 0) {
-      throw new Error(`Failed network requests detected:\n${failures.map(f => `${f.method} ${f.url} - ${f.status}`).join('\n')}`);
-    }
-  },
-});
-
-// Export expect from @playwright/test
-export { expect };
-
-test.beforeEach(async ({ page, consoleErrors, failedRequests }) => {
-  // Track console errors from our own code
-  page.on('console', msg => {
-    const type = msg.type();
-    if (type === 'error') {
-      const text = msg.text();
-      // Filter out errors from third-party scripts and expected auth failures
-      const location = msg.location();
-      if (location && location.url && !location.url.includes('cdn') && !location.url.includes('analytics')) {
-        // Filter out 401/403 auth/session errors which are expected when not logged in or with wrong credentials
-        if (!text.includes('401') && !text.includes('403') && !text.includes('Unauthorized') && !text.includes('Forbidden')) {
-          consoleErrors.push({
-            type,
-            text,
-            location,
-          });
-        }
-      }
-    }
-  });
-
-  // Track failed network requests (4xx/5xx)
-  page.on('response', response => {
-    const status = response.status();
-    if (status >= 400 && status < 600) {
-      // Filter out expected failures (e.g., auth during login tests)
-      const url = response.url();
-      if (!url.includes('login') && !url.includes('auth') && !url.includes('session')) {
-        failedRequests.push({
-          url,
-          status,
-          method: response.request().method(),
-        });
-      }
-    }
-  });
-});
-
-test.afterEach(async ({ page }, testInfo) => {
-  // Check for horizontal overflow at 390px mobile width
-  if (testInfo.project.name === 'mobile') {
-    const overflow = await page.evaluate(() => {
-      const body = document.body;
-      const html = document.documentElement;
-      return {
-        bodyOverflow: body.scrollWidth > body.clientWidth,
-        htmlOverflow: html.scrollWidth > html.clientWidth,
-        bodyScrollWidth: body.scrollWidth,
-        bodyClientWidth: body.clientWidth,
-      };
-    });
-
-    if (overflow.bodyOverflow || overflow.htmlOverflow) {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: `Horizontal overflow detected at mobile width: body ${overflow.bodyScrollWidth}px vs ${overflow.bodyClientWidth}px`
-      });
-    }
+  if (!username || !password) {
+    throw new Error('Admin credentials (ADMIN_USER, ADMIN_PASSWORD) are missing from .env.test');
   }
-});
+
+  const authDir = path.resolve(process.cwd(), 'e2e/.auth');
+  if (!fs.existsSync(authDir)) {
+    fs.mkdirSync(authDir, { recursive: true });
+  }
+  const storageStatePath = path.join(authDir, 'admin.json');
+
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ baseURL });
+  const page = await context.newPage();
+
+  await page.goto(`${baseURL}/admin`, { waitUntil: 'domcontentloaded' });
+
+  // Check if already authenticated
+  const isDashboard = await page.locator('text=Keluar').isVisible().catch(() => false);
+  if (!isDashboard) {
+    await page.locator('input[name="username"]').fill(username);
+    await page.locator('input[name="password"]').fill(password);
+    // totpCode left empty as instructed
+    await page.getByRole('button', { name: 'Masuk Dashboard' }).click();
+    await page.waitForSelector('text=Keluar', { timeout: 15000 });
+  }
+
+  // Save the authenticated storageState to e2e/.auth/admin.json
+  await context.storageState({ path: storageStatePath });
+  await browser.close();
+}
+
+export default globalSetup;

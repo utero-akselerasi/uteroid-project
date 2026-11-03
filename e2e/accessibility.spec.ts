@@ -53,7 +53,7 @@ test.describe('Accessibility Scan', () => {
         });
       }
     } else {
-      test.skip('No projects found to test edit form');
+      test.skip(true, 'No projects found to test edit form');
     }
   });
 });

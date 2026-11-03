@@ -1,4 +1,4 @@
-import { test, expect } from './global-setup';
+import { test, expect } from './fixtures';
 import { login, logout, ADMIN_USER } from './test-utils';
 
 test.describe('Admin Login', () => {
@@ -27,7 +27,7 @@ test.describe('Admin Login', () => {
       expect(errorText).toBeTruthy();
     } else {
       // Skip if no error element - the backend might handle this differently
-      test.skip('No error element found after wrong password');
+      test.skip(true, 'No error element found after wrong password');
     }
   });
 
@@ -40,7 +40,7 @@ test.describe('Admin Login', () => {
   });
 
   test('logout works', async ({ page }) => {
-    test.skip('Logout test requires persistent session - TOTP may be required');
+    test.skip(true, 'Logout test requires persistent session - TOTP may be required');
     await login(page);
     await logout(page);
 

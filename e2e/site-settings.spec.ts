@@ -1,4 +1,4 @@
-import { test, expect } from './global-setup';
+import { test, expect } from './fixtures';
 import { login } from './test-utils';
 
 test.describe('Site Settings Tabs', () => {
@@ -52,7 +52,7 @@ test.describe('Site Settings Tabs', () => {
     const hasSettings = await settingsTab.count();
 
     if (hasSettings === 0) {
-      test.skip('Settings tab not found');
+      test.skip(true, 'Settings tab not found');
       return;
     }
 
