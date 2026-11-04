@@ -14,3 +14,4 @@ test.describe('Admin Dashboard Smoke Test', () => {
     await expect(page.locator('input[name="password"]')).not.toBeVisible();
   });
 });
+
