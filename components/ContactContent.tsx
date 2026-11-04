@@ -139,7 +139,7 @@ export default function ContactContent() {
               <div>
                 <h1
                   style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
                     fontWeight: 500,
                     letterSpacing: "-0.02em",
@@ -175,7 +175,7 @@ export default function ContactContent() {
               >
                 <span
                   style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(1rem, 2vw, 1.5rem)",
                     fontWeight: 500,
                     letterSpacing: "-0.02em",
@@ -469,7 +469,7 @@ export default function ContactContent() {
 
                 <h2
                   style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(1rem, 1.5vw, 1.5rem)",
                     fontWeight: 500,
                     letterSpacing: "-0.02em",
