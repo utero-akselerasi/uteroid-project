@@ -160,7 +160,7 @@ export default function StudioContent() {
                     fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.04em",
-                    color: "rgba(0, 0, 0, 0.06)",
+                    color: "rgba(201, 26, 31, 0.15)",
                     lineHeight: 1,
                   }}
                 >
