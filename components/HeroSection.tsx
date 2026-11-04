@@ -173,6 +173,7 @@ export default function HeroSection() {
               textTransform: "uppercase",
               color: "#F7F2EC",
               margin: 0,
+              textWrap: "balance",
             }}
           >
             <div style={{ overflow: "hidden" }}>
