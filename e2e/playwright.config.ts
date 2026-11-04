@@ -36,10 +36,11 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'mobile',
-      use: { ...devices['iPhone 12'] },
-    },
+    // Mobile disabled - only Chromium needed
+    // {
+    //   name: 'mobile',
+    //   use: { ...devices['iPhone 12'] },
+    // },
   ],
   // Disable webServer - user runs dev server manually
 });

@@ -1,9 +1,9 @@
 import { test, expect } from './fixtures';
+import { login } from './test-utils';
 
 test.describe('Project List', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/admin', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('text=Keluar')).toBeVisible({ timeout: 15000 });
+    await login(page);
   });
 
   test('loads and displays projects table', async ({ page }) => {

@@ -13,6 +13,43 @@ export function generateTestName(suffix: string = '') {
   return `ZZ TEST ${suffix} ${Date.now()}`;
 }
 
+export async function login(page: Page) {
+  await page.goto('/admin');
+  await page.waitForLoadState('networkidle');
+
+  // Check if already logged in (dashboard is visible)
+  const dashboardVisible = await page.locator('text=/projects|Portofolio|Daftar Proyek/i').count() > 0;
+  if (dashboardVisible) {
+    return;
+  }
+
+  // Wait for login form to be visible
+  const usernameInput = page.locator('input[name="username"]');
+  await usernameInput.waitFor({ state: 'visible', timeout: 10000 });
+
+  const passwordInput = page.locator('input[name="password"]');
+  const totpInput = page.locator('input[name="totpCode"]');
+
+  await usernameInput.fill(ADMIN_USER);
+  await passwordInput.fill(ADMIN_PASSWORD);
+
+  // Check if TOTP field exists and is required
+  const totpExists = await totpInput.count() > 0;
+  if (totpExists) {
+    const totpRequired = await totpInput.getAttribute('required');
+    if (totpRequired !== null) {
+      await totpInput.fill('');
+    }
+  }
+
+  // Click the submit button
+  await page.click('button[type="submit"], button:has-text("Masuk Dashboard")');
+  await page.waitForLoadState('networkidle');
+
+  // Wait for dashboard to load
+  await page.waitForSelector('text=/projects|Portofolio|Daftar Proyek/i', { timeout: 10000 });
+}
+
 export async function cleanupAllTestProjects(baseURL: string = BASE_URL) {
   try {
     const authPath = path.resolve(process.cwd(), 'e2e/.auth/admin.json');
