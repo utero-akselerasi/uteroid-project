@@ -61,7 +61,7 @@ export default function IntroductionSection() {
           <RevealOnScroll delay={1}>
             <h2
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "clamp(1.5rem, 3vw, 2.6rem)",
                 fontWeight: 700,
                 lineHeight: 1.25,
