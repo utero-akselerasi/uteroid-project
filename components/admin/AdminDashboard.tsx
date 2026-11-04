@@ -913,6 +913,20 @@ function TypographyManager({
     (t) => t.fontFamily === activeFont || t.name === activeFont
   );
 
+  // Load Google Font dynamically for preview
+  useEffect(() => {
+    if (selectedOption?.googleFontUrl) {
+      const linkId = `google-font-preview-${selectedOption.id}`;
+      if (!document.getElementById(linkId)) {
+        const link = document.createElement("link");
+        link.id = linkId;
+        link.rel = "stylesheet";
+        link.href = selectedOption.googleFontUrl;
+        document.head.appendChild(link);
+      }
+    }
+  }, [selectedOption]);
+
   const handleSelect = (fontFamily: string) => {
     setActiveFont(fontFamily);
     onSelectFont(fontFamily);
