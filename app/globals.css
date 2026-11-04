@@ -28,9 +28,9 @@
   --color-gray-900: #111827;
 
   /* Typography */
-  --site-font: "Helvetica Neue", "Arial", "Inter", system-ui, -apple-system, sans-serif;
-  --font-sans: var(--site-font, "Helvetica Neue", "Arial", "Inter", system-ui, -apple-system, sans-serif);
-  --font-display: var(--site-font, "Helvetica Neue", "Arial", "Inter", system-ui, sans-serif);
+  --site-font: "Helvetica Neue", "Arial", sans-serif;
+  --font-sans: var(--site-font, "Helvetica Neue", "Arial", sans-serif);
+  --font-display: var(--site-font, "Helvetica Neue", "Arial", sans-serif);
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "Fira Code", "Monaco", monospace;
 

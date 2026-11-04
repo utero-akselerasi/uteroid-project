@@ -5,6 +5,7 @@ import JsonLd from "@/components/JsonLd";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import { SiteSettingsProvider } from "@/components/SiteSettingsProvider";
 import SiteShell from "@/components/SiteShell";
+import ServerFontLoader from "@/components/ServerFontLoader";
 
 const siteStructuredData = {
   "@context": "https://schema.org",
@@ -135,6 +136,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        <ServerFontLoader />
         {gaId && (
           <>
             <script
