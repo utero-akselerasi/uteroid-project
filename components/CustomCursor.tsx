@@ -172,7 +172,7 @@ export default function CustomCursor() {
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               whiteSpace: "nowrap",
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
             }}
           >
             {cursorText}

@@ -76,7 +76,7 @@ export default function NotFoundContent() {
               />
               <span
                 style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                   fontSize: "0.72rem",
                   fontWeight: 800,
                   letterSpacing: "0.18em",
@@ -91,7 +91,7 @@ export default function NotFoundContent() {
             {/* Headline */}
             <h1
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "clamp(2.5rem, 6.5vw, 4.75rem)",
                 fontWeight: 900,
                 letterSpacing: "-0.04em",
@@ -107,7 +107,7 @@ export default function NotFoundContent() {
             {/* Calm sentence */}
             <p
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "clamp(0.95rem, 1.2vw, 1.1rem)",
                 lineHeight: 1.65,
                 color: "rgba(10, 10, 10, 0.6)",
@@ -137,7 +137,7 @@ export default function NotFoundContent() {
                   padding: "0.875rem 2rem",
                   borderRadius: "9999px",
                   border: "none",
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                   fontSize: "0.72rem",
                   fontWeight: 800,
                   letterSpacing: "0.14em",
@@ -159,7 +159,7 @@ export default function NotFoundContent() {
                   gap: "0.5rem",
                   padding: "0.875rem 2rem",
                   borderRadius: "9999px",
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                   fontSize: "0.72rem",
                   fontWeight: 800,
                   letterSpacing: "0.14em",
