@@ -1,4 +1,5 @@
 import { test as base, expect } from '@playwright/test';
+import { ADMIN_USER, ADMIN_PASSWORD } from './test-utils';
 
 export type ConsoleError = {
   type: string;
@@ -55,4 +56,35 @@ export const test = base.extend<{
 });
 
 export { expect };
+
+// Global setup for authentication
+test.beforeAll(async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  
+  await page.goto('/admin');
+  await page.waitForLoadState('networkidle');
+  
+  const usernameInput = page.locator('input[name="username"]');
+  await usernameInput.waitFor({ state: 'visible', timeout: 10000 });
+  
+  await usernameInput.fill(ADMIN_USER);
+  await page.locator('input[name="password"]').fill(ADMIN_PASSWORD);
+  
+  const totpInput = page.locator('input[name="totpCode"]');
+  const totpExists = await totpInput.count() > 0;
+  if (totpExists) {
+    await totpInput.fill('');
+  }
+  
+  await page.click('button[type="submit"], button:has-text("Masuk Dashboard")');
+  await page.waitForLoadState('networkidle');
+  
+  // Wait for dashboard
+  await page.waitForSelector('text=/projects|Portofolio|Daftar Proyek/i', { timeout: 10000 });
+  
+  // Save storage state
+  await context.storageState({ path: 'e2e/.auth/admin.json' });
+  await context.close();
+});
 

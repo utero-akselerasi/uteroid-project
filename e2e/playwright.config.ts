@@ -29,7 +29,8 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    actionTimeout: 30000, // Increase action timeout to 30 seconds
+    actionTimeout: 30000,
+    storageState: 'e2e/.auth/admin.json',
   },
   projects: [
     {
