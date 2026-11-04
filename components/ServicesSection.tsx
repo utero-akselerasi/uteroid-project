@@ -77,7 +77,7 @@ export default function ServicesSection() {
           <RevealOnScroll delay={1}>
             <h2
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "clamp(2rem, 5vw, 4rem)",
                 fontWeight: 900,
                 letterSpacing: "-0.03em",
@@ -171,7 +171,7 @@ export default function ServicesSection() {
                       </span>
                       <span
                         style={{
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                           fontSize: "clamp(1.2rem, 1.8vw, 1.75rem)",
                           fontWeight: 700,
                           letterSpacing: "-0.01em",

@@ -75,7 +75,7 @@ export default function Footer() {
               href="/"
               data-cursor="HOME"
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "1.2rem",
                 fontWeight: 500,
                 letterSpacing: "0.1em",
@@ -136,7 +136,7 @@ export default function Footer() {
                     href={item.href}
                     data-cursor="OPEN &rarr;"
                     style={{
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                       fontSize: "0.9rem",
                       fontWeight: 500,
                       letterSpacing: "0.01em",

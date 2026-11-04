@@ -302,7 +302,7 @@ export default function Header() {
             >
               <span
                 style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                   fontWeight: 900,
                   fontSize: "var(--hdr-font-size)",
                   letterSpacing: "var(--hdr-letter-spacing)",

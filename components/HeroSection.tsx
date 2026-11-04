@@ -51,7 +51,7 @@ export default function HeroSection() {
         backgroundColor: "#0d0d0d",
         color: "#F7F2EC",
         overflow: "hidden",
-        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
       }}
     >
       {/* ─── FULL BACKGROUND IMAGE SLIDER ─── */}
