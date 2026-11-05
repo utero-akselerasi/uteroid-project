@@ -144,7 +144,7 @@ export default function InsightsContent({ insights, header }: InsightsContentPro
               <div>
                 <h1
                   style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(3.5rem, 9vw, 8.5rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.04em",
@@ -180,7 +180,7 @@ export default function InsightsContent({ insights, header }: InsightsContentPro
               >
                 <span
                   style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.04em",
@@ -269,7 +269,7 @@ export default function InsightsContent({ insights, header }: InsightsContentPro
 
                     <h2
                       style={{
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                        fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                         fontSize: titleFontSize(featured.title, true),
                         fontWeight: 900,
                         letterSpacing: "-0.03em",
@@ -428,7 +428,7 @@ export default function InsightsContent({ insights, header }: InsightsContentPro
 
                       <h3
                         style={{
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                           fontSize: titleFontSize(article.title),
                           fontWeight: 900,
                           letterSpacing: "-0.02em",

@@ -113,7 +113,7 @@ export default function ServiceDetailClient({
 
             <h1
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "clamp(2rem, 4vw, 3.5rem)",
                 fontWeight: 900,
                 letterSpacing: "-0.03em",
@@ -398,7 +398,7 @@ export default function ServiceDetailClient({
 
                       <h3
                         style={{
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                           fontSize: "1.35rem",
                           fontWeight: 900,
                           letterSpacing: "-0.02em",

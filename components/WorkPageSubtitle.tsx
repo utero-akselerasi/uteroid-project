@@ -8,7 +8,7 @@ export default function WorkPageSubtitle() {
   return (
     <p
       style={{
-        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
         fontSize: "clamp(0.875rem, 1.1vw, 1.05rem)",
         color: "rgba(10,10,10,0.45)",
         letterSpacing: "0.01em",

@@ -33,7 +33,7 @@ export default function InsightArticleContent({ article, origin, contentHtml }: 
         .ins-body > *:last-child { margin-bottom: 0; }
         .ins-body p { margin: 0 0 1.75rem; }
         .ins-body h2, .ins-body h3, .ins-body h4 {
-          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-family: var(--font-display, 'Helvetica Neue', Arial, sans-serif);
           font-weight: 900;
           letter-spacing: -0.02em;
           text-transform: uppercase;
@@ -60,7 +60,7 @@ export default function InsightArticleContent({ article, origin, contentHtml }: 
           border-left: 2px solid #c91a1f;
           padding-left: 1.75rem;
           margin: 2.5rem 0;
-          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-family: var(--font-display, 'Helvetica Neue', Arial, sans-serif);
           font-size: clamp(1.2rem, 2vw, 1.6rem);
           font-weight: 800;
           letter-spacing: -0.02em;
@@ -157,7 +157,7 @@ export default function InsightArticleContent({ article, origin, contentHtml }: 
 
             <h1
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: articleTitleFontSize(article.title),
                 fontWeight: 900,
                 letterSpacing: "-0.035em",
@@ -235,7 +235,7 @@ export default function InsightArticleContent({ article, origin, contentHtml }: 
                     borderLeft: "2px solid #c91a1f",
                     paddingLeft: "1.75rem",
                     margin: "2.5rem 0",
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(1.2rem, 2vw, 1.6rem)",
                     fontWeight: 800,
                     letterSpacing: "-0.02em",

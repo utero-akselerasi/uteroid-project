@@ -120,7 +120,7 @@ export default function StudioContent() {
               <div>
                 <h1
                   style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(3.5rem, 9vw, 8.5rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.04em",
@@ -156,11 +156,11 @@ export default function StudioContent() {
               >
                 <span
                   style={{
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.04em",
-                    color: "rgba(0, 0, 0, 0.06)",
+                    color: "rgba(201, 26, 31, 0.15)",
                     lineHeight: 1,
                   }}
                 >
@@ -211,7 +211,7 @@ export default function StudioContent() {
                 <span
                   style={{
                     display: "block",
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                     fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
                     fontWeight: 900,
                     letterSpacing: "-0.04em",
@@ -264,7 +264,7 @@ export default function StudioContent() {
               <SectionLabel>{t.studio.executionPhilosophy}</SectionLabel>
               <blockquote
                 style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                   fontSize: "clamp(1.75rem, 3vw, 2.75rem)",
                   fontWeight: 900,
                   letterSpacing: "-0.03em",

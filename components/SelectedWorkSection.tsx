@@ -254,7 +254,7 @@ function CardMeta({ project, disciplinesStr, isHovered }: CardMetaProps) {
       {/* Title — clamped to 1 line */}
       <h3
         style={{
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
           fontSize: "clamp(0.85rem, 1.2vw, 1.2rem)",
           fontWeight: 500,
           letterSpacing: "-0.01em",
@@ -493,7 +493,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
             <RevealOnScroll delay={1}>
               <h2
                 style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                   fontSize: "clamp(1.2rem, 2vw, 2rem)",
                   fontWeight: 500,
                   letterSpacing: "-0.02em",

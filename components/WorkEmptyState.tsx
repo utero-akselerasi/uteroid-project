@@ -15,7 +15,7 @@ export default function WorkEmptyState() {
     >
       <p
         style={{
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
           fontSize: "clamp(1rem, 2vw, 1.4rem)",
           fontWeight: 900,
           textTransform: "uppercase",

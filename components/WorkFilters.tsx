@@ -114,7 +114,7 @@ export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps)
           border: none;
           padding: 0;
           cursor: pointer;
-          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
           font-size: 0.7rem;
           font-weight: 800;
           letter-spacing: 0.14em;
@@ -140,7 +140,7 @@ export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps)
           color: #fff;
         }
         .wf-status {
-          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
           font-size: 0.65rem;
           font-weight: 700;
           letter-spacing: 0.12em;
@@ -169,7 +169,7 @@ export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps)
           border-top: 1px solid rgba(0,0,0,0.08);
         }
         .wf-section-label {
-          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
           font-size: 0.6rem;
           font-weight: 800;
           letter-spacing: 0.18em;
@@ -190,7 +190,7 @@ export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps)
           padding: 0.3rem 0.75rem;
           border: 1px solid rgba(0,0,0,0.12);
           background: transparent;
-          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
           font-size: 0.65rem;
           font-weight: 700;
           letter-spacing: 0.1em;
@@ -219,7 +219,7 @@ export default function WorkFilters({ filteredCount, counts }: WorkFiltersProps)
           border: none;
           padding: 0;
           cursor: pointer;
-          font-family: 'Helvetica Neue', Arial, sans-serif;
+          font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
           font-size: 0.65rem;
           font-weight: 700;
           letter-spacing: 0.12em;

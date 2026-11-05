@@ -110,7 +110,7 @@ export default function ManifestoSection() {
           >
             <h2
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
                 fontWeight: 900,
                 lineHeight: 1.1,

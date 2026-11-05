@@ -98,7 +98,7 @@ export default function StatementBanner() {
           <RevealOnScroll delay={1}>
             <h2
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "clamp(1.8rem, 4.2vw, 3.8rem)",
                 fontWeight: 900,
                 lineHeight: 1.1,

@@ -302,7 +302,7 @@ export default function Header() {
             >
               <span
                 style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                   fontWeight: 900,
                   fontSize: "var(--hdr-font-size)",
                   letterSpacing: "var(--hdr-letter-spacing)",
@@ -609,7 +609,7 @@ export default function Header() {
             >
               <span
                 style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                   fontWeight: "var(--hdr-font-weight)",
                   fontSize: "var(--hdr-font-size)",
                   letterSpacing: "var(--hdr-letter-spacing)",
@@ -799,7 +799,7 @@ export default function Header() {
           >
             <span
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                 fontWeight: 900,
                 fontSize: "12px",
                 letterSpacing: "0.12em",
@@ -887,7 +887,7 @@ export default function Header() {
           >
             <span
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "10px",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
@@ -967,7 +967,7 @@ export default function Header() {
                       </span>
                       <span
                         style={{
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                           fontSize: "clamp(0.9rem, 2vw, 2rem)",
                           fontWeight: 900,
                           textTransform: "uppercase",
@@ -1061,7 +1061,7 @@ export default function Header() {
               </div>
               <h3
                 style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
                   fontSize: "clamp(0.8rem, 1.1vw, 1.1rem)",
                   fontWeight: 900,
                   letterSpacing: "-0.02em",

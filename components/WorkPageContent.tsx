@@ -58,7 +58,7 @@ export default function WorkPageContent({ total }: { total: number }) {
             />
             <span
               style={{
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
                 fontSize: "0.65rem",
                 fontWeight: 800,
                 letterSpacing: "0.18em",
@@ -73,7 +73,7 @@ export default function WorkPageContent({ total }: { total: number }) {
           {/* Headline */}
           <h1
             style={{
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
               fontSize: "clamp(3rem, 6.5vw, 6.5rem)",
               fontWeight: 900,
               letterSpacing: "-0.04em",
@@ -91,7 +91,7 @@ export default function WorkPageContent({ total }: { total: number }) {
         <div className="wk-head__count">
           <span
             style={{
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
               fontSize: "clamp(3rem, 6vw, 5.5rem)",
               fontWeight: 900,
               letterSpacing: "-0.04em",
@@ -103,7 +103,7 @@ export default function WorkPageContent({ total }: { total: number }) {
           </span>
           <span
             style={{
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
               fontSize: "0.6rem",
               fontWeight: 700,
               letterSpacing: "0.14em",
