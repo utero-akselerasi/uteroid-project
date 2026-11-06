@@ -461,6 +461,13 @@ export const id = {
     errorRequired: "Harap isi semua kolom yang wajib (*)",
     errorTryAgain: "Terjadi kesalahan. Silakan coba lagi.",
     openMaps: "Buka di Google Maps →",
+    // New for redesigned contact page
+    intro: "Saluran kontak langsung dan markas studio kami di Malang, Jawa Timur.",
+    channelsLabel: "Saluran Kontak",
+    locationLabel: "Lokasi Studio",
+    socialLabel: "Ikuti Utero",
+    closing: "Buat sesuatu yang berarti bersama kami.",
+    exploreWork: "Jelajahi Karya Kami",
   },
   // Studio Page
   studio: {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { submitProjectInquiry } from "@/lib/submitProjectInquiry";
 import { useTranslatedInquiryLabels } from "@/lib/useTranslatedServices";
 import { useTranslations } from "@/lib/useTranslations";
+import { contactChannels, studioLocation } from "@/lib/contactData";
 
 export default function ContactContent() {
   const t = useTranslations();
@@ -59,11 +60,11 @@ export default function ContactContent() {
           0%, 100% { opacity: 1; transform: scale(1); }
           50%       { opacity: 0.5; transform: scale(0.75); }
         }
-        .contact-channel:hover {
+        .contact-channel-row:hover {
           border-color: #c91a1f !important;
           background-color: rgba(201, 26, 31, 0.02) !important;
         }
-        .contact-channel:hover .contact-arrow {
+        .contact-channel-row:hover .contact-arrow {
           color: #c91a1f !important;
           transform: translateX(4px);
         }
@@ -74,8 +75,8 @@ export default function ContactContent() {
 
       <section
         style={{
-          paddingTop: "clamp(2rem, 4vw, 3rem)",
-          paddingBottom: "clamp(2rem, 4vw, 3rem)",
+          paddingTop: "clamp(6rem, 10vw, 9rem)",
+          paddingBottom: "clamp(4rem, 8vw, 8rem)",
           backgroundColor: "#ffffff",
           minHeight: "100vh",
           color: "#0a0a0a",
@@ -83,32 +84,32 @@ export default function ContactContent() {
       >
         <div
           style={{
-            maxWidth: "1200px",
+            maxWidth: "1400px",
             margin: "0 auto",
-            padding: "0 clamp(1rem, 2vw, 2rem)",
+            padding: "0 clamp(1.25rem, 4vw, 3.5rem)",
           }}
         >
           {/* ── Header ───────────────────────────────────────────── */}
           <div
             style={{
               borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-              paddingBottom: "clamp(1rem, 2vw, 1.5rem)",
-              marginBottom: "clamp(1.5rem, 3vw, 2rem)",
+              paddingBottom: "clamp(2.5rem, 4vw, 4rem)",
+              marginBottom: "clamp(3.5rem, 6vw, 6rem)",
             }}
           >
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                marginBottom: "0.75rem",
+                gap: "0.75rem",
+                marginBottom: "1.25rem",
               }}
             >
               <span
                 style={{
                   display: "inline-block",
-                  width: "6px",
-                  height: "6px",
+                  width: "8px",
+                  height: "8px",
                   backgroundColor: "#c91a1f",
                   borderRadius: "50%",
                   animation: "pulse-red 2s ease-in-out infinite",
@@ -116,9 +117,9 @@ export default function ContactContent() {
               />
               <span
                 style={{
-                  fontSize: "0.65rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.1em",
+                  fontSize: "0.75rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.15em",
                   textTransform: "uppercase",
                   color: "#c91a1f",
                 }}
@@ -140,12 +141,12 @@ export default function ContactContent() {
                 <h1
                   style={{
                     fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
-                    fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
-                    fontWeight: 500,
-                    letterSpacing: "-0.02em",
+                    fontSize: "clamp(3.5rem, 9vw, 8.5rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.04em",
                     textTransform: "uppercase",
                     color: "#0a0a0a",
-                    lineHeight: 1.1,
+                    lineHeight: 0.92,
                     margin: 0,
                   }}
                 >
@@ -153,15 +154,15 @@ export default function ContactContent() {
                 </h1>
                 <p
                   style={{
-                    marginTop: "0.75rem",
-                    fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
+                    marginTop: "1.25rem",
+                    fontSize: "clamp(0.95rem, 1.3vw, 1.25rem)",
                     color: "#555555",
                     letterSpacing: "0.01em",
-                    lineHeight: 1.5,
-                    maxWidth: "540px",
+                    lineHeight: 1.6,
+                    maxWidth: "680px",
                   }}
                 >
-                  {t.contact.description}
+                  {t.contact.intro}
                 </p>
               </div>
 
@@ -176,14 +177,14 @@ export default function ContactContent() {
                 <span
                   style={{
                     fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
-                    fontSize: "clamp(1rem, 2vw, 1.5rem)",
-                    fontWeight: 500,
-                    letterSpacing: "-0.02em",
-                    color: "rgba(0, 0, 0, 0.06)",
+                    fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.04em",
+                    color: "rgba(201, 26, 31, 0.15)",
                     lineHeight: 1,
                   }}
                 >
-                  {t.contact.malang}
+                  {studioLocation.city}
                 </span>
                 <span
                   style={{
@@ -200,247 +201,162 @@ export default function ContactContent() {
             </div>
           </div>
 
-          {/* ── 2-Column Contact Grid ────────────────────────────── */}
+          {/* ── Contact Channels & Form Grid ────────────────────── */}
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(12, 1fr)",
-              gap: "clamp(1rem, 2vw, 1.5rem)",
+              gap: "clamp(2rem, 5vw, 5rem)",
+              marginBottom: "clamp(4rem, 7vw, 7rem)",
             }}
           >
-            {/* Left Column: Direct Channels & Studio Location */}
+            {/* Left Column: Contact Channels */}
             <div style={{ gridColumn: "span 12" }} className="lg:!col-span-5">
               <div style={{ marginBottom: "1.5rem" }}>
                 <span
                   style={{
                     display: "block",
-                    fontSize: "0.6rem",
-                    fontWeight: 500,
-                    letterSpacing: "0.08em",
+                    fontSize: "0.68rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.14em",
                     textTransform: "uppercase",
                     color: "#c91a1f",
-                    marginBottom: "0.5rem",
+                    marginBottom: "0.35rem",
                   }}
                 >
-                  {t.contact.directWhatsApp}
+                  {t.contact.channelsLabel}
                 </span>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  <a
-                    href="https://wa.me/6281999900900"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cursor="CHAT"
-                    className="contact-channel"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "0.75rem 1rem",
-                      border: "1px solid rgba(0, 0, 0, 0.08)",
-                      textDecoration: "none",
-                      color: "inherit",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <div>
-                      <span
-                        style={{
-                          display: "block",
-                          fontSize: "0.6rem",
-                          fontWeight: 500,
-                          letterSpacing: "0.06em",
-                          textTransform: "uppercase",
-                          color: "#555555",
-                          marginBottom: "0.2rem",
-                        }}
-                      >
-                        {t.contact.clientRelations}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "0.8rem",
-                          fontWeight: 500,
-                          color: "#0a0a0a",
-                        }}
-                      >
-                        081 999 900 900 (Wahyu)
-                      </span>
-                    </div>
-                    <span
-                      className="contact-arrow"
-                      style={{
-                        fontSize: "1.1rem",
-                        color: "#25D366",
-                        fontWeight: 800,
-                        transition: "all 0.2s ease",
-                      }}
-                    >
-                      →
-                    </span>
-                  </a>
-
-                  <a
-                    href="https://wa.me/62817388616"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cursor="CHAT"
-                    className="contact-channel"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "0.75rem 1rem",
-                      border: "1px solid rgba(0, 0, 0, 0.08)",
-                      textDecoration: "none",
-                      color: "inherit",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <div>
-                      <span
-                        style={{
-                          display: "block",
-                          fontSize: "0.6rem",
-                          fontWeight: 500,
-                          letterSpacing: "0.06em",
-                          textTransform: "uppercase",
-                          color: "#555555",
-                          marginBottom: "0.2rem",
-                        }}
-                      >
-                        {t.contact.studioManagement}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "0.8rem",
-                          fontWeight: 500,
-                          color: "#0a0a0a",
-                        }}
-                      >
-                        081 7388 616 (Utero)
-                      </span>
-                    </div>
-                    <span
-                      className="contact-arrow"
-                      style={{
-                        fontSize: "1.1rem",
-                        color: "#25D366",
-                        fontWeight: 800,
-                        transition: "all 0.2s ease",
-                      }}
-                    >
-                      →
-                    </span>
-                  </a>
-                </div>
               </div>
 
-              {/* Studio Address & Email */}
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {contactChannels.map((channel, idx) => (
+                  <Link
+                    key={channel.id}
+                    href={channel.href}
+                    target={channel.type === "email" ? "_self" : "_blank"}
+                    rel="noopener noreferrer"
+                    data-cursor={channel.type === "email" ? "EMAIL" : "OPEN"}
+                    className="contact-channel-row"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "clamp(1.1rem, 2vw, 1.6rem) 0",
+                      borderBottom: "1px solid rgba(10, 10, 10, 0.1)",
+                      backgroundColor: "transparent",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      borderTop: "none",
+                      textAlign: "left",
+                      cursor: "pointer",
+                      textDecoration: "none",
+                      color: "inherit",
+                      transition: "padding-left 0.25s ease, border-color 0.2s ease",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: "1.25rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
+                          color: "rgba(10, 10, 10, 0.4)",
+                          fontFamily: "monospace",
+                        }}
+                      >
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <span
+                          style={{
+                            display: "block",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                            color: "rgba(10, 10, 10, 0.5)",
+                            marginBottom: "0.2rem",
+                          }}
+                        >
+                          {channel.label}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "0.9rem",
+                            fontWeight: 500,
+                            color: "#0a0a0a",
+                          }}
+                        >
+                          {channel.value}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span
+                      className="contact-arrow"
+                      style={{
+                        fontSize: "1.25rem",
+                        color: "rgba(10, 10, 10, 0.3)",
+                        transition: "transform 0.2s ease, color 0.2s ease",
+                      }}
+                    >
+                      &rarr;
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Location */}
               <div
                 style={{
-                  paddingTop: "1rem",
+                  paddingTop: "1.5rem",
                   borderTop: "1px solid rgba(0, 0, 0, 0.08)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
+                  marginTop: "1.5rem",
                 }}
               >
-                <div>
-                  <span
-                    style={{
-                      display: "block",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: "rgba(10, 10, 10, 0.4)",
-                      marginBottom: "0.4rem",
-                    }}
-                  >
-                    {t.contact.emailCommunication}
-                  </span>
-                  <a
-                    href="mailto:marketingutero@gmail.com"
-                    data-cursor="EMAIL"
-                    style={{
-                      fontSize: "1.05rem",
-                      fontWeight: 800,
-                      color: "#0a0a0a",
-                      textDecoration: "none",
-                      transition: "color 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "#c91a1f";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "#0a0a0a";
-                    }}
-                  >
-                    marketingutero@gmail.com
-                  </a>
-                </div>
-
-                <div>
-                  <span
-                    style={{
-                      display: "block",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: "rgba(10, 10, 10, 0.4)",
-                      marginBottom: "0.4rem",
-                    }}
-                  >
-                    {t.contact.malangHQ}
-                  </span>
-                  <p
-                    style={{
-                      fontSize: "0.95rem",
-                      lineHeight: 1.6,
-                      color: "#333333",
-                      margin: "0 0 0.5rem",
-                    }}
-                  >
-                    Jl. Bantaran 1 No. 25, Purwantoro, Blimbing, Malang, Jawa Timur 65141, Indonesia
-                  </p>
-                  <a
-                    href="https://maps.google.com/?q=Utero+Indonesia+Malang"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontSize: "0.75rem",
-                      fontWeight: 800,
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: "#c91a1f",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {t.contact.openMaps}
-                  </a>
-                </div>
-
-                <div>
-                  <span
-                    style={{
-                      display: "block",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: "rgba(10, 10, 10, 0.4)",
-                      marginBottom: "0.4rem",
-                    }}
-                  >
-                    {t.contact.operatingHours}
-                  </span>
-                  <p style={{ fontSize: "0.875rem", color: "#555555", margin: 0 }}>
-                    Monday – Friday: 08:30 – 17:00 WIB<br />
-                    Saturday: 08:30 – 14:00 WIB
-                  </p>
-                </div>
+                <span
+                  style={{
+                    display: "block",
+                    fontSize: "0.68rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(10, 10, 10, 0.4)",
+                    marginBottom: "0.4rem",
+                  }}
+                >
+                  {t.contact.locationLabel}
+                </span>
+                <p
+                  style={{
+                    fontSize: "0.95rem",
+                    lineHeight: 1.6,
+                    color: "#333333",
+                    margin: "0 0 0.5rem",
+                  }}
+                >
+                  {studioLocation.address}
+                </p>
+                <a
+                  href={studioLocation.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "#c91a1f",
+                    textDecoration: "none",
+                  }}
+                >
+                  {t.contact.openMaps}
+                </a>
               </div>
             </div>
 
@@ -790,6 +706,65 @@ export default function ContactContent() {
                 )}
               </div>
             </div>
+          </div>
+
+          {/* ── Closing Statement Band ───────────────────────────── */}
+          <div
+            style={{
+              backgroundColor: "#c91a1f",
+              color: "#ffffff",
+              padding: "clamp(2rem, 4vw, 3rem)",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "1.5rem",
+            }}
+          >
+            <div>
+              <p
+                style={{
+                  fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
+                  fontSize: "clamp(1.2rem, 2vw, 1.8rem)",
+                  fontWeight: 900,
+                  letterSpacing: "-0.02em",
+                  textTransform: "uppercase",
+                  margin: 0,
+                  lineHeight: 1.1,
+                }}
+              >
+                {t.contact.closing}
+              </p>
+            </div>
+
+            <Link
+              href="/work"
+              data-cursor="VIEW WORKS"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                padding: "0.875rem 2rem",
+                backgroundColor: "#ffffff",
+                color: "#c91a1f",
+                fontSize: "0.72rem",
+                fontWeight: 800,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                transition: "background-color 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#0a0a0a";
+                e.currentTarget.style.color = "#ffffff";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#ffffff";
+                e.currentTarget.style.color = "#c91a1f";
+              }}
+            >
+              {t.contact.exploreWork}
+            </Link>
           </div>
         </div>
       </section>
