@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "@/lib/useTranslations";
+import PageCounter from "@/components/PageCounter";
 
 export default function WorkPageContent({ total }: { total: number }) {
   const t = useTranslations();
@@ -15,13 +16,6 @@ export default function WorkPageContent({ total }: { total: number }) {
           gap: 2rem;
           margin-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
         }
-        .wk-head__count {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 0.25rem;
-          padding-bottom: 0.25rem;
-        }
         /* Single column below 640px — the ghost number sits under the
            headline instead of crowding it beside the oversized h1. */
         @media (max-width: 640px) {
@@ -30,9 +24,8 @@ export default function WorkPageContent({ total }: { total: number }) {
             align-items: start;
             gap: 1.25rem;
           }
-          .wk-head__count {
-            align-items: flex-start;
-            padding-bottom: 0;
+          .wk-head .page-counter {
+            align-items: flex-start !important;
           }
         }
       `}</style>
@@ -88,31 +81,11 @@ export default function WorkPageContent({ total }: { total: number }) {
         </div>
 
         {/* Project count — large ghost number */}
-        <div className="wk-head__count">
-          <span
-            style={{
-              fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
-              fontSize: "clamp(3rem, 6vw, 5.5rem)",
-              fontWeight: 900,
-              letterSpacing: "-0.04em",
-              color: "rgba(0,0,0,0.06)",
-              lineHeight: 1,
-            }}
-          >
-            {String(total).padStart(2, "0")}
-          </span>
-          <span
-            style={{
-              fontFamily: "var(--font-sans, 'Helvetica Neue', Arial, sans-serif)",
-              fontSize: "0.6rem",
-              fontWeight: 700,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "rgba(10,10,10,0.28)",
-            }}
-          >
-            {t.work.projects}
-          </span>
+        <div className="page-counter">
+          <PageCounter
+            number={String(total).padStart(2, "0")}
+            label={t.work.projects}
+          />
         </div>
       </div>
     </>
