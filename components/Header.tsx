@@ -24,36 +24,31 @@ const menuNavLinksStatic: MenuNavItem[] = [
     number: "01",
     labelKey: "work",
     href: "/work",
-    previewImage:
-      "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/unnamed.webp",
   },
   {
     number: "02",
     labelKey: "studio",
     href: "/studio",
-    previewImage:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/studio.png",
   },
   {
     number: "03",
     labelKey: "services",
     href: "/services",
-    previewImage:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/Services/brand.png",
   },
   {
     number: "04",
     labelKey: "insights",
     href: "/insights",
-    previewImage:
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/remote/insight-identity.jpg",
   },
   {
     number: "05",
     labelKey: "contact",
     href: "/contact",
-    previewImage:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
+    previewImage: "/img/Sunlit Creative Studio Workshop.png",
   },
 ];
 
