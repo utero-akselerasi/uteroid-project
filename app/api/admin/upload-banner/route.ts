@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import crypto from "crypto";
+import { put } from "@vercel/blob";
 
 export async function POST(request: Request) {
   try {
@@ -21,31 +19,28 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Format file harus JPEG, PNG, WebP, SVG, atau GIF." }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-
-    const ext = path.extname(file.name) || (file.type === "image/png" ? ".png" : file.type === "image/webp" ? ".webp" : ".jpg");
-    const sanitizedBase = path.basename(file.name, ext).replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 30);
-    const uniqueHash = crypto.randomBytes(6).toString("hex");
-    const filename = `${sanitizedBase}_${uniqueHash}${ext}`;
-    const destination = path.join(uploadsDir, filename);
-
-    fs.writeFileSync(destination, buffer);
-
-    const publicUrl = `/uploads/${filename}`;
-    return NextResponse.json({ url: publicUrl, filename, size: file.size });
-  } catch (err: any) {
-    console.error("[upload-banner] Upload failed:", err);
-    if (err?.code === "EROFS") {
+    // Check if Vercel Blob is configured
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
+    if (!blobToken) {
       return NextResponse.json({
-        error: "Sistem file dalam mode read-only (serverless/Vercel). Diperlukan integrasi external object storage (S3/Vercel Blob) untuk upload runtime di produksi.",
+        error: "BLOB_READ_WRITE_TOKEN belum dikonfigurasi. Hubungi administrator untuk mengatur Vercel Blob Storage.",
       }, { status: 500 });
     }
-    return NextResponse.json({ error: "Gagal mengunggah file gambar." }, { status: 500 });
+
+    // Upload to Vercel Blob
+    const ext = file.name.split('.').pop() || (file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg");
+    const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 50);
+    const uniqueSuffix = Date.now() + "-" + Math.random().toString(36).substring(2, 9);
+    const filename = `uploads/${sanitizedName}-${uniqueSuffix}.${ext}`;
+
+    const blob = await put(filename, file, {
+      access: 'public',
+      token: blobToken,
+    });
+
+    return NextResponse.json({ url: blob.url, filename: blob.pathname, size: file.size });
+  } catch (err: any) {
+    console.error("[upload-banner] Upload failed:", err);
+    return NextResponse.json({ error: "Gagal mengunggah file gambar: " + (err?.message || "Unknown error") }, { status: 500 });
   }
 }
