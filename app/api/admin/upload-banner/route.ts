@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
+export const runtime = "nodejs";
+
+const s3Endpoint = process.env.S3_ENDPOINT;
 const s3Client = new S3Client({
-  region: "auto",
-  endpoint: process.env.S3_ENDPOINT || "https://s3.amazonaws.com",
+  region: process.env.S3_REGION || "us-east-1",
+  ...(s3Endpoint ? { endpoint: s3Endpoint, forcePathStyle: true } : {}),
   credentials: {
     accessKeyId: process.env.S3_ACCESS_KEY || "",
     secretAccessKey: process.env.S3_SECRET_KEY || "",
@@ -40,10 +43,10 @@ export async function POST(request: Request) {
     }
 
     // Generate unique filename
-    const ext = file.name.split('.').pop() || (file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg");
-    const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 50);
+    const ext = file.name.split(".").pop() || (file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg");
+    const sanitizedName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 50);
     const uniqueSuffix = Date.now() + "-" + Math.random().toString(36).substring(2, 9);
-    const filename = `uploads/${sanitizedName}-${uniqueSuffix}.${ext}`;
+    const filename = `banners/${sanitizedName}-${uniqueSuffix}.${ext}`;
 
     // Upload to S3
     const bytes = await file.arrayBuffer();
@@ -58,9 +61,7 @@ export async function POST(request: Request) {
 
     await s3Client.send(command);
 
-    // Construct public URL (adjust if using custom domain)
-    const endpoint = process.env.S3_ENDPOINT || "https://s3.amazonaws.com";
-    const publicUrl = `${endpoint}/${bucket}/${filename}`;
+    const publicUrl = `/portfolio-api/media/${filename}`;
 
     return NextResponse.json({ url: publicUrl, filename, size: file.size });
   } catch (err: any) {

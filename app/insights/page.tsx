@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { getInsights, getInsightsHeader } from "@/lib/insights-source";
 import InsightsContent from "@/components/InsightsContent";
 
@@ -34,6 +35,8 @@ export const metadata: Metadata = {
 };
 
 export default async function InsightsPage() {
+  await connection();
+
   // CMS is the source of truth; lib/insights.ts is the fallback when the
   // CMS is unreachable or unconfigured. See lib/insights-source.ts.
   const { insights } = await getInsights();
