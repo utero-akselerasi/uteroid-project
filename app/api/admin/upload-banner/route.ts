@@ -1,5 +1,14 @@
 import { NextResponse } from "next/server";
-import { put } from "@vercel/blob";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client({
+  region: "auto",
+  endpoint: process.env.S3_ENDPOINT || "https://s3.amazonaws.com",
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY || "",
+    secretAccessKey: process.env.S3_SECRET_KEY || "",
+  },
+});
 
 export async function POST(request: Request) {
   try {
@@ -19,26 +28,41 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Format file harus JPEG, PNG, WebP, SVG, atau GIF." }, { status: 400 });
     }
 
-    // Check if Vercel Blob is configured
-    const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!blobToken) {
+    // Check if S3 is configured
+    const accessKey = process.env.S3_ACCESS_KEY;
+    const secretKey = process.env.S3_SECRET_KEY;
+    const bucket = process.env.S3_BUCKET;
+
+    if (!accessKey || !secretKey || !bucket) {
       return NextResponse.json({
-        error: "BLOB_READ_WRITE_TOKEN belum dikonfigurasi. Hubungi administrator untuk mengatur Vercel Blob Storage.",
+        error: "S3 storage belum dikonfigurasi. Pastikan S3_ACCESS_KEY, S3_SECRET_KEY, dan S3_BUCKET diatur di environment variables.",
       }, { status: 500 });
     }
 
-    // Upload to Vercel Blob
+    // Generate unique filename
     const ext = file.name.split('.').pop() || (file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg");
     const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 50);
     const uniqueSuffix = Date.now() + "-" + Math.random().toString(36).substring(2, 9);
     const filename = `uploads/${sanitizedName}-${uniqueSuffix}.${ext}`;
 
-    const blob = await put(filename, file, {
-      access: 'public',
-      token: blobToken,
+    // Upload to S3
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const command = new PutObjectCommand({
+      Bucket: bucket,
+      Key: filename,
+      Body: buffer,
+      ContentType: file.type,
     });
 
-    return NextResponse.json({ url: blob.url, filename: blob.pathname, size: file.size });
+    await s3Client.send(command);
+
+    // Construct public URL (adjust if using custom domain)
+    const endpoint = process.env.S3_ENDPOINT || "https://s3.amazonaws.com";
+    const publicUrl = `${endpoint}/${bucket}/${filename}`;
+
+    return NextResponse.json({ url: publicUrl, filename, size: file.size });
   } catch (err: any) {
     console.error("[upload-banner] Upload failed:", err);
     return NextResponse.json({ error: "Gagal mengunggah file gambar: " + (err?.message || "Unknown error") }, { status: 500 });
