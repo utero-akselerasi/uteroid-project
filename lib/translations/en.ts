@@ -463,6 +463,13 @@ export const en = {
     errorRequired: "Please fill in all required fields (*)",
     errorTryAgain: "Something went wrong. Please try again.",
     openMaps: "Open in Google Maps →",
+    // New for redesigned contact page
+    intro: "Direct contact channels and our studio base in Malang, East Java.",
+    channelsLabel: "Contact Channels",
+    locationLabel: "Studio Location",
+    socialLabel: "Follow Utero",
+    closing: "Create something with us that matters.",
+    exploreWork: "Explore Our Work",
   },
   // Studio Page
   studio: {

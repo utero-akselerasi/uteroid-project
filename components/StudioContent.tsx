@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "@/lib/useTranslations";
 import { useSiteSettings } from "@/components/SiteSettingsProvider";
+import PageCounter from "@/components/PageCounter";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -146,38 +147,10 @@ export default function StudioContent() {
                 </p>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                  gap: "0.5rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
-                    fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-                    fontWeight: 900,
-                    letterSpacing: "-0.04em",
-                    color: "rgba(201, 26, 31, 0.15)",
-                    lineHeight: 1,
-                  }}
-                >
-                  {studio?.established ? studio.established.replace(/[^0-9]/g, "") || studio.established : "1998"}
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    color: "rgba(10, 10, 10, 0.35)",
-                  }}
-                >
-                  {studio?.established || t.studio.established}
-                </span>
-              </div>
+              <PageCounter
+                number={studio?.established ? studio.established.replace(/[^0-9]/g, "") || studio.established : "1998"}
+                label={studio?.established || t.studio.established}
+              />
             </div>
           </div>
 

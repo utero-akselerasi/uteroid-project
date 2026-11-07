@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useTranslatedDisciplines } from "@/lib/useTranslatedServices";
 import { useTranslations } from "@/lib/useTranslations";
 import { useSiteSettings } from "@/components/SiteSettingsProvider";
+import PageCounter from "@/components/PageCounter";
 
 export default function ServicesContent() {
   const [activeIdx, setActiveIdx] = useState(0);
@@ -123,38 +124,10 @@ export default function ServicesContent() {
                 </p>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                  gap: "0.5rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
-                    fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                    fontWeight: 900,
-                    letterSpacing: "-0.03em",
-                    color: "rgba(0, 0, 0, 0.06)",
-                    lineHeight: 1,
-                  }}
-                >
-                  {String(disciplines.length).padStart(2, "0")}
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.7rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    color: "rgba(10, 10, 10, 0.35)",
-                  }}
-                >
-                  {t.servicesPage.disciplinesCount}
-                </span>
-              </div>
+              <PageCounter
+                number={String(disciplines.length).padStart(2, "0")}
+                label={t.servicesPage.disciplinesCount}
+              />
             </div>
           </div>
 
