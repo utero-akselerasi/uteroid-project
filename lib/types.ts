@@ -49,6 +49,17 @@ export interface ProjectVideo {
   type: "youtube" | "vimeo" | "file";
   src: string;
   poster?: string;
+  aspectRatio?: string;
+}
+
+export interface CampaignPost {
+  type: "video" | "image";
+  src: string;
+  poster?: string;
+  label: "video" | "feed";
+  headline: string;
+  cta?: string;
+  role: string;
 }
 
 export interface Project {
@@ -87,6 +98,8 @@ export interface Project {
 
   // ── Case study content (fill from PDF) ───────────────────
   details?: ProjectDetails;
+  hasDeck?: boolean;
+  campaignSequence?: CampaignPost[];
 }
 
 // ─────────────────────────────────────────────

@@ -1946,5 +1946,63 @@
     },
     "id": 34,
     "status": "published"
+  },
+  {
+    "id": 35,
+    "slug": "transition-feed-campaign",
+    "routeSlug": "transition-feed-campaign",
+    "title": "Transition Feed Campaign",
+    "client": "Utero Indonesia",
+    "year": "",
+    "category": "Campaign & Digital",
+    "industry": "services",
+    "disciplines": [
+      "campaign",
+      "digital"
+    ],
+    "shortDescription": "Transition Feed Campaign digunakan sebagai jembatan visual dari tampilan Instagram lama menuju sistem visual yang baru.",
+    "description": "Transition Feed Campaign digunakan sebagai jembatan visual dari tampilan Instagram lama menuju sistem visual yang baru. Tiga konten diunggah secara berurutan untuk menciptakan rasa penasaran, memberi sinyal perubahan, sekaligus memperkenalkan arah baru Utero Indonesia secara bertahap.\n\nKonsep ini dirancang sebagai satu rangkaian teaser, bukan tiga konten yang berdiri sendiri. Setiap post memiliki fungsi komunikasi yang berbeda, namun tetap saling terhubung melalui tone visual, typography, warna, dan storytelling yang konsisten.",
+    "excerpt": "Transition Feed Campaign digunakan sebagai jembatan visual dari tampilan Instagram lama menuju sistem visual yang baru.",
+    "coverImage": "/projects/transition-feed-campaign/cover-9b98f119.webp",
+    "heroImage": "/projects/transition-feed-campaign/cover-9b98f119.webp",
+    "gridCoverPosition": "center 50%",
+    "galleryImages": [],
+    "video": {
+      "type": "file",
+      "src": "/projects/transition-feed-campaign/video-left.mp4"
+    },
+    "hasDeck": false,
+    "priority": 83,
+    "featured": false,
+    "status": "published",
+    "details": {
+      "deliverables": [
+        "Instagram transition teaser series: 3 posts (2 video, 1 feed post)"
+      ]
+    },
+    "campaignSequence": [
+      {
+        "type": "video",
+        "src": "/projects/transition-feed-campaign/video-left.mp4",
+        "label": "video",
+        "headline": "A NEW ERA OF DESIGN",
+        "role": "Konten ini berfungsi sebagai penanda bahwa Utero Indonesia memasuki fase visual yang baru. Pesan ini menjadi simbol transisi sekaligus penegasan bahwa pembaruan yang dilakukan bukan sekadar pergantian tampilan, tetapi sebuah langkah menuju pendekatan desain yang lebih segar, terarah, dan relevan."
+      },
+      {
+        "type": "image",
+        "src": "/projects/transition-feed-campaign/feed-middle.webp",
+        "label": "feed",
+        "headline": "UTERO HAS SOMETHING BIG FOR YOU",
+        "cta": "TAKE A LOOK",
+        "role": "Konten tengah menjadi pesan utama dari rangkaian transisi. Layout dibuat lebih sederhana dan fokus pada typography agar menjadi pusat perhatian dalam komposisi tiga grid. CTA \"Take a Look\" digunakan sebagai ajakan yang ringan, langsung, dan tetap terasa engaging, sehingga audiens terdorong untuk memperhatikan perubahan visual yang sedang diperkenalkan."
+      },
+      {
+        "type": "video",
+        "src": "/projects/transition-feed-campaign/video-right.mp4",
+        "label": "video",
+        "headline": "ARE YOU READY?",
+        "role": "Konten ini menjadi pembuka teaser dengan pendekatan yang membangun curiosity. Visual dapat menampilkan seseorang yang mengangkat telepon yang sedang berdering, sebagai metafora bahwa sebuah pesan atau perubahan penting sedang datang. Pesan ini berfungsi untuk memancing perhatian audiens sebelum mereka melihat pengumuman utama di post berikutnya."
+      }
+    ]
   }
 ]

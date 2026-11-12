@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Project } from "@/lib/types";
+import type { Project, ProjectVideo } from "@/lib/types";
 import { getProjectCover, getProjectGallery } from "@/lib/projectMedia";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import ProjectGallery from "./ProjectGallery";
@@ -32,9 +32,10 @@ export default function ProjectDetailClient({
   const t = useTranslations();
   const coverSrc = getProjectCover(project);
   const gallery = getProjectGallery(project);
-  const [showVideo, setShowVideo] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<ProjectVideo | null>(null);
   const [showToast, setShowToast] = useState(false);
   const playButtonRef = useRef<HTMLButtonElement>(null);
+  const lastActiveTriggerRef = useRef<HTMLElement | null>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Reliable scroll to top on mount and route/slug change
@@ -46,12 +47,23 @@ export default function ProjectDetailClient({
 
   const handlePlayClick = () => {
     if (project.video && project.video.src) {
-      setShowVideo(true);
+      lastActiveTriggerRef.current = playButtonRef.current;
+      setActiveVideo(project.video);
     } else {
       setShowToast(true);
       if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
       toastTimeoutRef.current = setTimeout(() => setShowToast(false), 2400);
     }
+  };
+
+  const handleSequenceVideoClick = (src: string, poster: string | undefined, triggerEl: HTMLElement | null) => {
+    lastActiveTriggerRef.current = triggerEl;
+    setActiveVideo({
+      type: "file",
+      src,
+      poster,
+      aspectRatio: "3 / 4",
+    });
   };
 
   // Determine which detail fields exist
@@ -233,13 +245,88 @@ export default function ProjectDetailClient({
             </RevealOnScroll>
           )}
 
+          {/* ── Campaign Sequence ────────────────────────── */}
+          {project.campaignSequence && project.campaignSequence.length > 0 && (
+            <RevealOnScroll>
+              <div className="pd-section">
+                <div className="pd-section__label">
+                  <span className="pd-section__label-line" />
+                  <span className="pd-section__label-text">
+                    {t.projectDetail.campaignSequence}
+                  </span>
+                </div>
+
+                <div className="pd-campaign-grid">
+                  {project.campaignSequence.map((item, idx) => (
+                    <article key={idx} className="pd-campaign-item">
+                      <div className="pd-campaign-item__media-wrap">
+                        {item.type === "video" ? (
+                          <div className="pd-campaign-item__video-card">
+                            <video
+                              src={`${item.src}#t=0.1`}
+                              preload="metadata"
+                              playsInline
+                              muted
+                              className="pd-campaign-item__media"
+                              aria-hidden="true"
+                            />
+                            <button
+                              type="button"
+                              className="pd-campaign-item__play-btn"
+                              onClick={(e) => handleSequenceVideoClick(item.src, item.poster, e.currentTarget)}
+                              aria-label={`${t.projectDetail.playVideo}: ${item.headline}`}
+                            >
+                              <span className="pd-campaign-item__play-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                                  <path d="M8 5v14l11-7z" />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="pd-campaign-item__image-card">
+                            <Image
+                              src={item.src}
+                              alt={`${item.headline} — ${project.title}`}
+                              fill
+                              sizes="(max-width: 840px) 100vw, 33vw"
+                              className="pd-campaign-item__media"
+                              style={{ objectFit: "cover" }}
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="pd-campaign-item__caption">
+                        <span className="pd-campaign-item__label">
+                          {item.label === "video" ? t.projectDetail.videoPost : t.projectDetail.feedPost}
+                        </span>
+                        <h3 className="pd-campaign-item__headline">{item.headline}</h3>
+                        {item.cta && (
+                          <div className="pd-campaign-item__cta-badge">
+                            CTA: {item.cta}
+                          </div>
+                        )}
+                        <p className="pd-campaign-item__role">{item.role}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </RevealOnScroll>
+          )}
+
           {/* ── Gallery ──────────────────────────────────── */}
-          <ProjectGallery images={gallery} projectTitle={project.title} />
+          {gallery && gallery.length > 0 && (
+            <ProjectGallery images={gallery} projectTitle={project.title} />
+          )}
 
           {/* ── Full Presentation Deck ──────────────────────── */}
-          <RevealOnScroll>
-            <PDFDeckSlider slug={project.slug} routeSlug={project.routeSlug} />
-          </RevealOnScroll>
+          {project.hasDeck !== false && (
+            <RevealOnScroll>
+              <PDFDeckSlider slug={project.slug} routeSlug={project.routeSlug} />
+            </RevealOnScroll>
+          )}
 
           {/* ── Prev / Next Navigation ────────────────────── */}
           <RevealOnScroll type="fade">
@@ -259,13 +346,13 @@ export default function ProjectDetailClient({
       </section>
 
       {/* Video Player Modal */}
-      {showVideo && project.video && (
+      {activeVideo && (
         <VideoPlayer
-          video={project.video}
-          poster={coverSrc}
+          video={activeVideo}
+          poster={activeVideo.poster || coverSrc}
           onClose={() => {
-            setShowVideo(false);
-            playButtonRef.current?.focus();
+            setActiveVideo(null);
+            lastActiveTriggerRef.current?.focus();
           }}
         />
       )}
