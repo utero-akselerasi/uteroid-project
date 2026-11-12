@@ -113,27 +113,87 @@ export default function TransitionCampaignSpotlight() {
           flex-wrap: wrap;
         }
 
-        .tfc-pill {
+        /* ── Category / Format Pill ──────────────────────────────── */
+        .tfc-badge-pill {
           display: inline-flex;
           align-items: center;
-          padding: 0.3rem 0.65rem;
-          background-color: #0a0a0a;
-          color: #ffffff;
+          gap: 0.45rem;
+          padding: 0.38rem 0.75rem;
+          background-color: rgba(10, 10, 10, 0.04);
+          border: 1px solid rgba(10, 10, 10, 0.08);
+          border-radius: 9999px;
+          color: #555555;
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: 0.58rem;
-          font-weight: 800;
-          letter-spacing: 0.14em;
+          font-size: 0.62rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
           text-transform: uppercase;
-          border-radius: 2px;
+          line-height: 1;
+          user-select: none;
         }
 
-        .tfc-handle {
-          font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: 0.68rem;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
+        .tfc-badge-pill__icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           color: #e31e24;
+          opacity: 0.9;
+        }
+
+        /* ── Instagram Action Button ─────────────────────────────── */
+        .tfc-ig-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          padding: 0.38rem 0.85rem;
+          background-color: #0a0a0a;
+          color: #ffffff;
+          border: 1px solid #0a0a0a;
+          border-radius: 9999px;
+          font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
+          font-size: 0.64rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          text-decoration: none;
+          line-height: 1;
+          transition:
+            background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+            border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+            box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          cursor: pointer;
+        }
+
+        .tfc-ig-btn:hover {
+          background-color: #e31e24;
+          border-color: #e31e24;
+          color: #ffffff;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(227, 30, 36, 0.35);
+        }
+
+        .tfc-ig-btn:active {
+          transform: translateY(0);
+        }
+
+        .tfc-ig-btn:focus-visible {
+          outline: 2px solid #e31e24;
+          outline-offset: 2px;
+        }
+
+        .tfc-ig-btn__icon {
+          flex-shrink: 0;
+          opacity: 0.9;
+        }
+
+        .tfc-ig-btn__arrow {
+          flex-shrink: 0;
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tfc-ig-btn:hover .tfc-ig-btn__arrow {
+          transform: translate(2px, -2px);
         }
 
         .tfc-subtitle {
@@ -317,8 +377,57 @@ export default function TransitionCampaignSpotlight() {
               </div>
 
               <div className="tfc-header__meta">
-                <span className="tfc-pill">{campaign.tagPill}</span>
-                <span className="tfc-handle">{campaign.handle}</span>
+                <span className="tfc-badge-pill">
+                  <span className="tfc-badge-pill__icon" aria-hidden="true">
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor">
+                      <rect x="1" y="2" width="3.5" height="12" rx="1" />
+                      <rect x="6.25" y="2" width="3.5" height="12" rx="1" />
+                      <rect x="11.5" y="2" width="3.5" height="12" rx="1" />
+                    </svg>
+                  </span>
+                  <span>{campaign.tagPill}</span>
+                </span>
+
+                <a
+                  href="https://www.instagram.com/utero.design/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tfc-ig-btn"
+                  aria-label="Visit Utero Design on Instagram (opens in new tab)"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="tfc-ig-btn__icon"
+                    aria-hidden="true"
+                  >
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                  </svg>
+                  <span>{campaign.handle || "@UTERO.DESIGN"}</span>
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="tfc-ig-btn__arrow"
+                    aria-hidden="true"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
