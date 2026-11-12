@@ -124,6 +124,7 @@ export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps
 
       <div
         className="pd-video-modal__content"
+        style={video.aspectRatio ? { aspectRatio: video.aspectRatio, maxWidth: "min(85vw, 600px)" } : undefined}
         onClick={(e) => e.stopPropagation()}
       >
         {(video.type === "youtube" || video.type === "vimeo") && !isClosing && (

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import HeroSection from "@/components/HeroSection";
 import IntroductionSection from "@/components/IntroductionSection";
 import StatementBanner from "@/components/StatementBanner";
+import TransitionCampaignSpotlight from "@/components/TransitionCampaignSpotlight";
 import SelectedWorkSection from "@/components/SelectedWorkSection";
 import { getPortfolioProjects } from "@/lib/portfolioApi";
 import ManifestoSection from "@/components/ManifestoSection";
@@ -54,6 +55,9 @@ export default async function Home() {
 
       {/* 02B — STATEMENT BANNER WITH STUDIO STOREFRONT */}
       <StatementBanner />
+
+      {/* 02 — TRANSITION FEED CAMPAIGN (STUDIO TEASER) */}
+      <TransitionCampaignSpotlight />
 
       {/* 03 — RECENT WORKS */}
       <SelectedWorkSection sourceProjects={portfolioProjects} />

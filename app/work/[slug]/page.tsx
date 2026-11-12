@@ -14,6 +14,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === "transition-feed-campaign") {
+    redirect("/#transition-feed-campaign");
+  }
   const project = await getPortfolioProject(slug);
   if (!project) notFound();
   if (project.routeSlug !== slug) redirect(`/work/${project.routeSlug}`);
@@ -61,6 +64,9 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  if (slug === "transition-feed-campaign") {
+    redirect("/#transition-feed-campaign");
+  }
   const project = await getPortfolioProject(slug);
   if (!project) notFound();
 

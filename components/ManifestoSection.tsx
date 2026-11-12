@@ -76,7 +76,7 @@ export default function ManifestoSection() {
                 color: "rgba(255, 255, 255, 0.95)",
               }}
             >
-              03 / PHILOSOPHY &amp; EXECUTION
+              04 / PHILOSOPHY &amp; EXECUTION
             </span>
           </div>
         </RevealOnScroll>

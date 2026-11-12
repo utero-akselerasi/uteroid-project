@@ -234,7 +234,9 @@ export default function ProjectDetailClient({
           )}
 
           {/* ── Gallery ──────────────────────────────────── */}
-          <ProjectGallery images={gallery} projectTitle={project.title} />
+          {gallery && gallery.length > 0 && (
+            <ProjectGallery images={gallery} projectTitle={project.title} />
+          )}
 
           {/* ── Full Presentation Deck ──────────────────────── */}
           <RevealOnScroll>
@@ -262,7 +264,7 @@ export default function ProjectDetailClient({
       {showVideo && project.video && (
         <VideoPlayer
           video={project.video}
-          poster={coverSrc}
+          poster={project.video.poster || coverSrc}
           onClose={() => {
             setShowVideo(false);
             playButtonRef.current?.focus();

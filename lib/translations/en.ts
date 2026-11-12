@@ -31,7 +31,7 @@ export const en = {
   },
   // Services Section
   services: {
-    sectionLabel: "04 / CREATIVE CAPABILITIES",
+    sectionLabel: "05 / CREATIVE CAPABILITIES",
     heading: "WHAT CAN WE DESIGN FOR YOU?",
     description: "Six integrated design disciplines tailored to your strategic needs — from foundational brand identity to physical packaging, digital platforms, and environmental spatial experiences.",
     categoryLabel: "CATEGORY",
@@ -67,7 +67,7 @@ export const en = {
     aboutCta: "Explore Studio Story",
     archiveLabel: "Studio Archive • Editorial Catalog",
     archiveVolume: "Vol. 1998–2026",
-    recentWorksLabel: "03 / RECENT WORKS",
+    recentWorksLabel: "03 / PORTFOLIO",
     recentWorksHeading: "Selected Work",
     recentWorksCta: "See All Works",
     worksHeading: "WORKS",
@@ -83,6 +83,36 @@ export const en = {
     statsYears: "Years",
     ctaHeading: "Ready to solve your brand or spatial challenge?",
     ctaButton: "Start a Project",
+  },
+  // Transition feed campaign (homepage section 02)
+  transitionCampaign: {
+    sectionAria: "02 / Studio Campaign — Transition Feed Campaign",
+    badgeLabel: "02 / STUDIO CAMPAIGN",
+    title: "TRANSITION FEED CAMPAIGN",
+    subtitle:
+      "A visual bridge introducing Utero Indonesia's new design era through a coordinated three-part Instagram sequence.",
+    tagPill: "INSTAGRAM 3-GRID TEASER",
+    handle: "@UTERO.DESIGN",
+    postLeft: {
+      position: "LEFT POSITION · VIDEO",
+      headline: "NEW ERA OF DESIGN",
+      description:
+        "This content marks Utero Indonesia entering a new visual phase. It serves as both a symbol of transition and an assertion that this renewal is not merely a cosmetic change, but a bold step toward a fresher, more purposeful, and relevant design approach.",
+      playAria: "Play video: NEW ERA OF DESIGN",
+    },
+    postMiddle: {
+      position: "CENTER POSITION · FEED",
+      headline: "UTERO HAS SOMETHING BIG FOR YOU",
+      description:
+        "The center post serves as the core announcement of this transition sequence. The layout is kept clean and typography-focused to anchor the three-grid composition, engaging the audience directly to discover the new visual direction.",
+    },
+    postRight: {
+      position: "RIGHT POSITION · VIDEO",
+      headline: "ARE YOU READY?",
+      description:
+        "This content opens the teaser campaign by building curiosity. The visual features someone answering a ringing phone as a metaphor for an incoming message or pivotal change, capturing audience attention before the primary announcement is revealed.",
+      playAria: "Play video: ARE YOU READY?",
+    },
   },
   // Media scope (homepage capability grid)
   mediaScope: {

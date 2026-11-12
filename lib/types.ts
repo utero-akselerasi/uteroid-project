@@ -49,6 +49,7 @@ export interface ProjectVideo {
   type: "youtube" | "vimeo" | "file";
   src: string;
   poster?: string;
+  aspectRatio?: string;
 }
 
 export interface Project {
