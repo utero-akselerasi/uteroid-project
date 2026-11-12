@@ -424,8 +424,8 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
       aria-live="off"
       style={{
         padding: "clamp(2.5rem, 4.5vh, 3.5rem) 0",
-        backgroundColor: "#0d0d0d",
-        color: "#ffffff",
+        backgroundColor: "#ffffff",
+        color: "#0a0a0a",
         position: "relative",
       }}
       onTouchStart={handleTouchStart}
@@ -451,7 +451,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           position: relative;
         }
 
-        /* ── Image container & frame ──────────────────────────────── */
+        /* ── Image container & frame (White background /work style) ── */
         .pe-image-wrap {
           position: relative;
           width: 100%;
@@ -459,15 +459,14 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           overflow: hidden;
           margin-bottom: 0.65rem;
           border-radius: 12px;
-          background-color: #161616;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-          transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+          background-color: #f1efe9;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+          transition: box-shadow 0.35s ease, transform 0.35s ease;
         }
 
         .pe-link:hover .pe-image-wrap {
-          box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(227, 30, 36, 0.35);
-          border-color: rgba(227, 30, 36, 0.4);
+          box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.14), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
         }
 
         /* ── Image transitions ────────────────────────────────────── */
@@ -512,25 +511,23 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           z-index: 4;
           padding: 3px 7px;
           border-radius: 6px;
-          background: rgba(18, 18, 18, 0.85);
+          background: rgba(255, 255, 255, 0.88);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
           font-size: 0.62rem;
           font-weight: 800;
           letter-spacing: 0.08em;
-          color: #ffffff;
-          border: 1px solid rgba(255, 255, 255, 0.12);
+          color: #111111;
           line-height: 1;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
           pointer-events: none;
-          transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+          transition: background-color 0.25s ease, color 0.25s ease;
         }
 
         .pe-link:hover .pe-card__badge {
           background: #e31e24;
           color: #ffffff;
-          border-color: #e31e24;
         }
 
         /* ── Hover Overlay with red action button ─────────────────── */
@@ -543,8 +540,8 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           pointer-events: none;
           background: linear-gradient(
             to top,
-            rgba(0, 0, 0, 0.85) 0%,
-            rgba(0, 0, 0, 0.35) 45%,
+            rgba(0, 0, 0, 0.62) 0%,
+            rgba(0, 0, 0, 0.18) 45%,
             transparent 75%
           );
           opacity: 0;
@@ -575,7 +572,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           font-weight: 700;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.8);
+          color: rgba(255, 255, 255, 0.75);
           line-height: 1.3;
         }
 
@@ -625,7 +622,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           font-weight: 700;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.4);
+          color: rgba(10, 10, 10, 0.4);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -638,7 +635,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           font-weight: 900;
           letter-spacing: -0.02em;
           text-transform: uppercase;
-          color: #ffffff;
+          color: #0a0a0a;
           line-height: 1.25;
           margin: 0;
           height: 2.5em;
@@ -666,7 +663,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
           font-size: 0.68rem;
           font-weight: 500;
-          color: rgba(255, 255, 255, 0.5);
+          color: rgba(10, 10, 10, 0.45);
           letter-spacing: 0.01em;
           white-space: nowrap;
           overflow: hidden;
@@ -678,7 +675,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
           font-size: 0.62rem;
           font-weight: 700;
-          color: rgba(255, 255, 255, 0.35);
+          color: rgba(10, 10, 10, 0.32);
           letter-spacing: 0.06em;
           flex-shrink: 0;
         }
@@ -735,7 +732,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
             alignItems: "flex-end",
             gap: "1rem",
             marginBottom: "clamp(1rem, 1.8vh, 1.4rem)",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
+            borderBottom: "1px solid rgba(10, 10, 10, 0.08)",
             paddingBottom: "0.75rem",
           }}
         >
@@ -780,7 +777,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
                   fontWeight: 500,
                   letterSpacing: "-0.02em",
                   textTransform: "uppercase",
-                  color: "#ffffff",
+                  color: "#0a0a0a",
                   lineHeight: 1.1,
                   margin: 0,
                 }}
@@ -797,7 +794,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
                   fontSize: "0.75rem",
                   fontWeight: 400,
                   letterSpacing: "0.08em",
-                  color: "rgba(255, 255, 255, 0.5)",
+                  color: "rgba(10, 10, 10, 0.45)",
                 }}
               >
                 {yearRangeText}
@@ -813,14 +810,14 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
                   fontWeight: 500,
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
-                  color: "#ffffff",
+                  color: "#0a0a0a",
                   textDecoration: "none",
                   borderBottom: "1px solid #c91a1f",
                   paddingBottom: "2px",
                   transition: "color 0.2s ease",
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = "#c91a1f"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = "#ffffff"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "#0a0a0a"; }}
               >
                 <span>{t.home.recentWorksCta ? t.home.recentWorksCta.toUpperCase() : "SEE ALL WORKS"}</span>
                 <span>&rarr;</span>
