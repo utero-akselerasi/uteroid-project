@@ -67,7 +67,7 @@ export const id = {
     aboutCta: "Jelajahi Cerita Studio",
     archiveLabel: "Arsip Studio • Katalog Editorial",
     archiveVolume: "Vol. 1998–2026",
-    recentWorksLabel: "03 / KARYA TERBARU",
+    recentWorksLabel: "03 / PORTFOLIO",
     recentWorksHeading: "Karya Pilihan",
     recentWorksCta: "Lihat Semua Karya",
     worksHeading: "KARYA",
@@ -83,6 +83,36 @@ export const id = {
     statsYears: "Tahun",
     ctaHeading: "Siap menyelesaikan tantangan brand atau spasial Anda?",
     ctaButton: "Mulai Proyek",
+  },
+  // Kampanye transition feed (halaman utama seksi 02)
+  transitionCampaign: {
+    sectionAria: "02 / Kampanye Studio — Transition Feed Campaign",
+    badgeLabel: "02 / KAMPANYE STUDIO",
+    title: "TRANSITION FEED CAMPAIGN",
+    subtitle:
+      "Jembatan visual yang memperkenalkan era baru desain Utero Indonesia melalui rangkaian tiga bagian Instagram yang terkoordinasi.",
+    tagPill: "TEASER 3-GRID INSTAGRAM",
+    handle: "@UTERO.DESIGN",
+    postLeft: {
+      position: "POSISI KIRI · VIDEO",
+      headline: "NEW ERA OF DESIGN",
+      description:
+        "Konten ini berfungsi sebagai penanda bahwa Utero Indonesia memasuki fase visual yang baru. Pesan ini menjadi simbol transisi sekaligus penegasan bahwa pembaruan yang dilakukan bukan sekadar pergantian tampilan, tetapi sebuah langkah menuju pendekatan desain yang lebih segar, terarah, dan relevan.",
+      playAria: "Putar video: NEW ERA OF DESIGN",
+    },
+    postMiddle: {
+      position: "POSISI TENGAH · FEED",
+      headline: "UTERO HAS SOMETHING BIG FOR YOU",
+      description:
+        "Konten tengah menjadi pesan utama dari rangkaian transisi. Layout dibuat lebih sederhana dan fokus pada typography agar menjadi pusat perhatian dalam komposisi tiga grid, mengajak audiens secara langsung dan engaging untuk memperhatikan perubahan visual yang sedang diperkenalkan.",
+    },
+    postRight: {
+      position: "POSISI KANAN · VIDEO",
+      headline: "ARE YOU READY?",
+      description:
+        "Konten ini menjadi pembuka teaser dengan pendekatan yang membangun curiosity. Visual menampilkan seseorang yang mengangkat telepon yang sedang berdering, sebagai metafora bahwa sebuah pesan atau perubahan penting sedang datang. Pesan ini memancing perhatian audiens sebelum pengumuman utama di post berikutnya.",
+      playAria: "Putar video: ARE YOU READY?",
+    },
   },
   // Lingkup media (grid kapabilitas halaman utama)
   mediaScope: {

@@ -123,15 +123,16 @@ function WorkCard({
       onBlur={onBlur}
     >
       <article>
-        {/* Fixed 4:3 image box with dual-layer crossfade */}
+        {/* Fixed 16:10 image box with dual-layer crossfade (sleek, compact) */}
         <div
           style={{
             position: "relative",
             width: "100%",
-            aspectRatio: "4/3",
+            aspectRatio: "16 / 10",
             backgroundColor: "#161616",
+            borderRadius: "3px",
             overflow: "hidden",
-            marginBottom: "0.5rem",
+            marginBottom: "0.45rem",
           }}
         >
           {/* Bottom layer: current project (fades out on swap) */}
@@ -181,7 +182,7 @@ function WorkCard({
         </div>
 
         {/* Fixed-height text block — prevents CLS when cards swap */}
-        <div style={{ position: "relative", height: "5rem" }}>
+        <div style={{ position: "relative", height: "4.25rem" }}>
           {/* Current text (fades out) */}
           <div
             style={{
@@ -219,14 +220,14 @@ function CardMeta({ project, disciplinesStr, isHovered }: CardMetaProps) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "0.2rem",
+          marginBottom: "0.15rem",
           gap: "0.5rem",
         }}
       >
         {/* Year — omitted (no text) when blank */}
         <span
           style={{
-            fontSize: "0.65rem",
+            fontSize: "0.62rem",
             color: "#c91a1f",
             fontWeight: 500,
             letterSpacing: "0.06em",
@@ -238,7 +239,7 @@ function CardMeta({ project, disciplinesStr, isHovered }: CardMetaProps) {
         {/* Discipline tags — single line, overflow ellipsis */}
         <span
           style={{
-            fontSize: "0.6rem",
+            fontSize: "0.58rem",
             color: "rgba(255, 255, 255, 0.4)",
             textTransform: "uppercase",
             whiteSpace: "nowrap",
@@ -255,11 +256,11 @@ function CardMeta({ project, disciplinesStr, isHovered }: CardMetaProps) {
       <h3
         style={{
           fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
-          fontSize: "clamp(0.85rem, 1.2vw, 1.2rem)",
+          fontSize: "clamp(0.82rem, 1.05vw, 1.05rem)",
           fontWeight: 500,
           letterSpacing: "-0.01em",
           textTransform: "uppercase",
-          margin: "0 0 0.2rem",
+          margin: "0 0 0.15rem",
           color: isHovered ? "#c91a1f" : "#ffffff",
           transition: "color 0.2s ease, transform 0.2s ease",
           transform: isHovered ? "translateX(2px)" : "translateX(0)",
@@ -274,7 +275,7 @@ function CardMeta({ project, disciplinesStr, isHovered }: CardMetaProps) {
       {/* Excerpt — clamped to 2 lines */}
       <p
         style={{
-          fontSize: "0.7rem",
+          fontSize: "0.68rem",
           lineHeight: 1.4,
           color: "rgba(255, 255, 255, 0.65)",
           margin: 0,
@@ -430,18 +431,32 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
       ref={sectionRef}
       aria-live="off"
       style={{
-        padding: "clamp(2rem, 4vw, 3rem) 0",
+        padding: "clamp(2rem, 3.5vh, 2.75rem) 0",
         backgroundColor: "#0d0d0d",
         color: "#ffffff",
         position: "relative",
       }}
       onTouchStart={handleTouchStart}
     >
+      <style>{`
+        .sw-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: clamp(0.85rem, 1.2vw, 1.2rem);
+        }
+        @media (max-width: 640px) {
+          .sw-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+        }
+      `}</style>
       <div
         style={{
-          maxWidth: "1200px",
+          width: "90%",
+          maxWidth: "1060px",
           margin: "0 auto",
-          padding: "0 clamp(1rem, 2vw, 2rem)",
+          padding: 0,
         }}
       >
         {/* ── Section Header ── */}
@@ -452,9 +467,9 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
             justifyContent: "space-between",
             alignItems: "flex-end",
             gap: "1rem",
-            marginBottom: "clamp(1.5rem, 3vw, 2rem)",
+            marginBottom: "clamp(1rem, 1.8vh, 1.4rem)",
             borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
-            paddingBottom: "1rem",
+            paddingBottom: "0.75rem",
           }}
         >
           <div>
@@ -464,7 +479,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
                   display: "flex",
                   alignItems: "center",
                   gap: "0.75rem",
-                  marginBottom: "0.75rem",
+                  marginBottom: "0.6rem",
                 }}
               >
                 <span
@@ -478,14 +493,14 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
                 />
                 <span
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: "0.68rem",
                     fontWeight: 500,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     color: "#c91a1f",
                   }}
                 >
-                  03 / PORTFOLIO
+                  {t.home.recentWorksLabel || "03 / PORTFOLIO"}
                 </span>
               </div>
             </RevealOnScroll>
@@ -494,7 +509,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
               <h2
                 style={{
                   fontFamily: "var(--font-display, 'Helvetica Neue', Arial, sans-serif)",
-                  fontSize: "clamp(1.2rem, 2vw, 2rem)",
+                  fontSize: "clamp(1.1rem, 1.8vw, 1.6rem)",
                   fontWeight: 500,
                   letterSpacing: "-0.02em",
                   textTransform: "uppercase",
@@ -540,7 +555,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
                 onMouseEnter={(e) => { e.currentTarget.style.color = "#c91a1f"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = "#ffffff"; }}
               >
-                <span>SEE ALL WORKS</span>
+                <span>{t.home.recentWorksCta ? t.home.recentWorksCta.toUpperCase() : "SEE ALL WORKS"}</span>
                 <span>&rarr;</span>
               </Link>
             </div>
@@ -548,13 +563,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
         </div>
 
         {/* ── 2×2 Card Grid ── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "clamp(1rem, 2vw, 1.5rem)",
-          }}
-        >
+        <div className="sw-grid">
           {displayedProjects.map((project, idx) => (
             <RevealOnScroll key={slotKeys[idx]} delay={idx + 1}>
               <WorkCard

@@ -4,9 +4,12 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import VideoPlayer from "@/components/project-detail/VideoPlayer";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import { useTranslations } from "@/lib/useTranslations";
 import type { ProjectVideo } from "@/lib/types";
 
 export default function TransitionCampaignSpotlight() {
+  const t = useTranslations();
+  const campaign = t.transitionCampaign;
   const [activeVideo, setActiveVideo] = useState<ProjectVideo | null>(null);
   const lastActiveTriggerRef = useRef<HTMLElement | null>(null);
 
@@ -23,7 +26,7 @@ export default function TransitionCampaignSpotlight() {
     <section
       id="transition-feed-campaign"
       className="tfc-section"
-      aria-label="02 / Studio Campaign — Transition Feed Campaign"
+      aria-label={campaign.sectionAria}
     >
       <style>{`
         /* ═══════════════════════════════════════════════════════════
@@ -304,21 +307,18 @@ export default function TransitionCampaignSpotlight() {
           <div className="tfc-header">
             <div className="tfc-badge">
               <span className="tfc-badge__dot" />
-              <span className="tfc-badge__label">02 / STUDIO CAMPAIGN</span>
+              <span className="tfc-badge__label">{campaign.badgeLabel}</span>
             </div>
 
             <div className="tfc-header__row">
               <div>
-                <h2 className="tfc-title">TRANSITION FEED CAMPAIGN</h2>
-                <p className="tfc-subtitle">
-                  A visual bridge introducing Utero Indonesia&apos;s new design era through a coordinated three-part
-                  Instagram sequence.
-                </p>
+                <h2 className="tfc-title">{campaign.title}</h2>
+                <p className="tfc-subtitle">{campaign.subtitle}</p>
               </div>
 
               <div className="tfc-header__meta">
-                <span className="tfc-pill">INSTAGRAM 3-GRID TEASER</span>
-                <span className="tfc-handle">@UTERO.DESIGN</span>
+                <span className="tfc-pill">{campaign.tagPill}</span>
+                <span className="tfc-handle">{campaign.handle}</span>
               </div>
             </div>
           </div>
@@ -344,7 +344,7 @@ export default function TransitionCampaignSpotlight() {
                   onClick={(e) =>
                     handlePlayVideo("/projects/transition-feed-campaign/video-left.mp4", e.currentTarget)
                   }
-                  aria-label="Putar video: NEW ERA OF DESIGN"
+                  aria-label={campaign.postLeft.playAria}
                 >
                   <span className="tfc-card__play-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
@@ -356,15 +356,10 @@ export default function TransitionCampaignSpotlight() {
 
               <div className="tfc-card__caption">
                 <div className="tfc-card__meta-bar">
-                  <span className="tfc-card__pos">POSISI KIRI · VIDEO</span>
+                  <span className="tfc-card__pos">{campaign.postLeft.position}</span>
                 </div>
-                <h3 className="tfc-card__headline">NEW ERA OF DESIGN</h3>
-                <p className="tfc-card__role">
-                  Konten ini berfungsi sebagai penanda bahwa Utero Indonesia memasuki fase visual yang baru. Pesan
-                  ini menjadi simbol transisi sekaligus penegasan bahwa pembaruan yang dilakukan bukan sekadar
-                  pergantian tampilan, tetapi sebuah langkah menuju pendekatan desain yang lebih segar, terarah, dan
-                  relevan.
-                </p>
+                <h3 className="tfc-card__headline">{campaign.postLeft.headline}</h3>
+                <p className="tfc-card__role">{campaign.postLeft.description}</p>
               </div>
             </article>
 
@@ -383,15 +378,10 @@ export default function TransitionCampaignSpotlight() {
 
               <div className="tfc-card__caption">
                 <div className="tfc-card__meta-bar">
-                  <span className="tfc-card__pos">POSISI TENGAH · FEED</span>
+                  <span className="tfc-card__pos">{campaign.postMiddle.position}</span>
                 </div>
-                <h3 className="tfc-card__headline">UTERO HAS SOMETHING BIG FOR YOU</h3>
-                <p className="tfc-card__role">
-                  Konten tengah menjadi pesan utama dari rangkaian transisi. Layout dibuat lebih sederhana dan fokus
-                  pada typography agar menjadi pusat perhatian dalam komposisi tiga grid. CTA “Take a Look” digunakan
-                  sebagai ajakan yang ringan, langsung, dan tetap terasa engaging, sehingga audiens terdorong untuk
-                  memperhatikan perubahan visual yang sedang diperkenalkan.
-                </p>
+                <h3 className="tfc-card__headline">{campaign.postMiddle.headline}</h3>
+                <p className="tfc-card__role">{campaign.postMiddle.description}</p>
               </div>
             </article>
 
@@ -412,7 +402,7 @@ export default function TransitionCampaignSpotlight() {
                   onClick={(e) =>
                     handlePlayVideo("/projects/transition-feed-campaign/video-right.mp4", e.currentTarget)
                   }
-                  aria-label="Putar video: ARE YOU READY?"
+                  aria-label={campaign.postRight.playAria}
                 >
                   <span className="tfc-card__play-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
@@ -424,15 +414,10 @@ export default function TransitionCampaignSpotlight() {
 
               <div className="tfc-card__caption">
                 <div className="tfc-card__meta-bar">
-                  <span className="tfc-card__pos">POSISI KANAN · VIDEO</span>
+                  <span className="tfc-card__pos">{campaign.postRight.position}</span>
                 </div>
-                <h3 className="tfc-card__headline">ARE YOU READY?</h3>
-                <p className="tfc-card__role">
-                  Konten ini menjadi pembuka teaser dengan pendekatan yang membangun curiosity. Visual dapat
-                  menampilkan seseorang yang mengangkat telepon yang sedang berdering, sebagai metafora bahwa sebuah
-                  pesan atau perubahan penting sedang datang. Pesan ini berfungsi untuk memancing perhatian audiens
-                  sebelum mereka melihat pengumuman utama di post berikutnya.
-                </p>
+                <h3 className="tfc-card__headline">{campaign.postRight.headline}</h3>
+                <p className="tfc-card__role">{campaign.postRight.description}</p>
               </div>
             </article>
           </div>
