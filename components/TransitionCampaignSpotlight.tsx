@@ -39,7 +39,7 @@ export default function TransitionCampaignSpotlight() {
           align-items: flex-start;
           flex-wrap: wrap;
           gap: 0.75rem;
-          margin-bottom: clamp(0.85rem, 1.5vw, 1.25rem);
+          margin-bottom: clamp(1rem, 2vw, 1.5rem);
           padding-bottom: clamp(0.6rem, 1vw, 0.85rem);
           border-bottom: 1px solid rgba(10, 10, 10, 0.08);
         }
@@ -88,30 +88,6 @@ export default function TransitionCampaignSpotlight() {
           letter-spacing: 0.14em;
           text-transform: uppercase;
           border-radius: 2px;
-        }
-
-        .tfc-konsep {
-          margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
-          max-width: 820px;
-        }
-
-        .tfc-konsep__label {
-          font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: 0.6rem;
-          font-weight: 800;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          color: rgba(10, 10, 10, 0.45);
-          margin-bottom: 0.45rem;
-          display: block;
-        }
-
-        .tfc-konsep__text {
-          font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: clamp(0.84rem, 0.95vw, 0.92rem);
-          line-height: 1.6;
-          color: #444444;
-          margin: 0 0 0.65rem 0;
         }
 
         /* 3-grid row: tight gap like Instagram 3-grid */
@@ -261,17 +237,6 @@ export default function TransitionCampaignSpotlight() {
           <h2 className="tfc-title">Transition Feed Campaign</h2>
         </div>
         <span className="tfc-tag">Instagram Series</span>
-      </div>
-
-      {/* Konsep */}
-      <div className="tfc-konsep">
-        <span className="tfc-konsep__label">Konsep</span>
-        <p className="tfc-konsep__text">
-          Transition Feed Campaign digunakan sebagai jembatan visual dari tampilan Instagram lama menuju sistem visual yang baru. Tiga konten diunggah secara berurutan untuk menciptakan rasa penasaran, memberi sinyal perubahan, sekaligus memperkenalkan arah baru Utero Indonesia secara bertahap.
-        </p>
-        <p className="tfc-konsep__text">
-          Konsep ini dirancang sebagai satu rangkaian teaser, bukan tiga konten yang berdiri sendiri. Setiap post memiliki fungsi komunikasi yang berbeda, namun tetap saling terhubung melalui tone visual, typography, warna, dan storytelling yang konsisten.
-        </p>
       </div>
 
       {/* 3 Posts Grid */}
