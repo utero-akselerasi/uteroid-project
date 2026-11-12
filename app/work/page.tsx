@@ -6,7 +6,6 @@ import { type WorkFilter } from "@/lib/types";
 import WorkFilters from "@/components/WorkFilters";
 import WorkPageContent from "@/components/WorkPageContent";
 import WorkPageSubtitle from "@/components/WorkPageSubtitle";
-import TransitionCampaignSpotlight from "@/components/TransitionCampaignSpotlight";
 import ProjectGrid from "@/components/ProjectGrid";
 
 export const metadata: Metadata = {
@@ -505,9 +504,6 @@ export default async function WorkPage({
 
           {/* Subtitle */}
           <WorkPageSubtitle />
-
-          {/* ── Transition Feed Campaign Spotlight (Studio Feature) ──── */}
-          <TransitionCampaignSpotlight />
 
           <hr className="wk-rule" style={{ marginBottom: "clamp(1.5rem, 3vw, 2.5rem)" }} />
 

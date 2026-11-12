@@ -485,7 +485,7 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
                     color: "#c91a1f",
                   }}
                 >
-                  02 / PORTFOLIO
+                  03 / PORTFOLIO
                 </span>
               </div>
             </RevealOnScroll>

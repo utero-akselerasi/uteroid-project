@@ -31,7 +31,7 @@ export const en = {
   },
   // Services Section
   services: {
-    sectionLabel: "04 / CREATIVE CAPABILITIES",
+    sectionLabel: "05 / CREATIVE CAPABILITIES",
     heading: "WHAT CAN WE DESIGN FOR YOU?",
     description: "Six integrated design disciplines tailored to your strategic needs — from foundational brand identity to physical packaging, digital platforms, and environmental spatial experiences.",
     categoryLabel: "CATEGORY",

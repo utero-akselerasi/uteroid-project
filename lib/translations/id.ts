@@ -31,7 +31,7 @@ export const id = {
   },
   // Services Section
   services: {
-    sectionLabel: "04 / KAPABILITAS KREATIF",
+    sectionLabel: "05 / KAPABILITAS KREATIF",
     heading: "APA YANG BISA KAMI DESAIN UNTUK ANDA?",
     description: "Enam disiplin desain terintegrasi yang disesuaikan dengan kebutuhan strategis Anda — mulai dari identitas brand dasar hingga kemasan fisik, platform digital, dan pengalaman spasial lingkungan.",
     categoryLabel: "KATEGORI",
