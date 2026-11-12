@@ -27,49 +27,50 @@ export default function TransitionCampaignSpotlight() {
     >
       <style>{`
         /* ═══════════════════════════════════════════════════════════
-           TRANSITION FEED CAMPAIGN — Refined Editorial 3-Grid
+           TRANSITION FEED CAMPAIGN — Compact Editorial 3-Grid
+           Balanced for 100% browser zoom
            ═══════════════════════════════════════════════════════════ */
 
         .tfc-section {
           position: relative;
           background-color: #ffffff;
           color: #0a0a0a;
-          padding: clamp(3rem, 5vw, 4.75rem) 0;
+          padding: clamp(2.5rem, 4.5vh, 3.5rem) 0;
           overflow: hidden;
           width: 100%;
         }
 
-        /* Balanced content container (~92% viewport width, max 1440px) */
+        /* Compact, balanced content container (matches ~80% feel at 100% zoom) */
         .tfc-container {
-          width: 92%;
-          max-width: 1440px;
+          width: 90%;
+          max-width: 1140px;
           margin: 0 auto;
         }
 
         /* ── Header Area ─────────────────────────────────────────── */
         .tfc-header {
-          margin-bottom: clamp(1.5rem, 2.8vw, 2.25rem);
+          margin-bottom: clamp(1rem, 2vh, 1.5rem);
           border-bottom: 1px solid rgba(10, 10, 10, 0.08);
-          padding-bottom: clamp(1rem, 1.8vw, 1.5rem);
+          padding-bottom: clamp(0.65rem, 1.2vh, 0.95rem);
         }
 
         .tfc-badge {
           display: inline-flex;
           align-items: center;
-          gap: 0.65rem;
-          margin-bottom: 0.5rem;
+          gap: 0.55rem;
+          margin-bottom: 0.35rem;
         }
 
         .tfc-badge__dot {
-          width: 7px;
-          height: 7px;
+          width: 6px;
+          height: 6px;
           background-color: #e31e24;
           border-radius: 50%;
         }
 
         .tfc-badge__label {
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           font-weight: 700;
           letter-spacing: 0.16em;
           text-transform: uppercase;
@@ -81,13 +82,13 @@ export default function TransitionCampaignSpotlight() {
           justify-content: space-between;
           align-items: flex-end;
           flex-wrap: wrap;
-          gap: 1.25rem;
+          gap: 1rem;
         }
 
-        /* Editorial Heading: 44–54px on desktop, single-line when space permits */
+        /* Scaled heading: ~36–42px on desktop, single line when space allows */
         .tfc-title {
           font-family: var(--font-display, "Helvetica Neue", Arial, sans-serif);
-          font-size: clamp(1.85rem, 3.4vw, 3.25rem);
+          font-size: clamp(1.6rem, 2.6vw, 2.5rem);
           font-weight: 900;
           letter-spacing: -0.03em;
           text-transform: uppercase;
@@ -96,7 +97,7 @@ export default function TransitionCampaignSpotlight() {
           margin: 0;
         }
 
-        @media (min-width: 900px) {
+        @media (min-width: 860px) {
           .tfc-title {
             white-space: nowrap;
           }
@@ -105,18 +106,18 @@ export default function TransitionCampaignSpotlight() {
         .tfc-header__meta {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 0.65rem;
           flex-wrap: wrap;
         }
 
         .tfc-pill {
           display: inline-flex;
           align-items: center;
-          padding: 0.35rem 0.75rem;
+          padding: 0.3rem 0.65rem;
           background-color: #0a0a0a;
           color: #ffffff;
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: 0.62rem;
+          font-size: 0.58rem;
           font-weight: 800;
           letter-spacing: 0.14em;
           text-transform: uppercase;
@@ -125,7 +126,7 @@ export default function TransitionCampaignSpotlight() {
 
         .tfc-handle {
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           font-weight: 800;
           letter-spacing: 0.12em;
           text-transform: uppercase;
@@ -133,20 +134,19 @@ export default function TransitionCampaignSpotlight() {
         }
 
         .tfc-subtitle {
-          margin-top: 0.5rem;
+          margin-top: 0.35rem;
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: clamp(0.85rem, 1vw, 0.98rem);
-          line-height: 1.55;
+          font-size: clamp(0.82rem, 0.9vw, 0.9rem);
+          line-height: 1.5;
           color: #555555;
-          max-width: 680px;
+          max-width: 620px;
         }
 
-        /* ── Three-Panel Grid Composition ────────────────────────── */
-        /* Moderate, consistent gap (20–24px) for coordinated 3-grid look */
+        /* ── Coordinated 3-Panel Grid (Tight Instagram Gap) ──────── */
         .tfc-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: clamp(18px, 1.8vw, 24px);
+          gap: clamp(10px, 1.1vw, 14px);
           width: 100%;
         }
 
@@ -158,7 +158,7 @@ export default function TransitionCampaignSpotlight() {
           min-width: 0;
         }
 
-        /* Media Container: 4/5 portrait ratio, equal proportions across all 3 */
+        /* 4/5 portrait ratio, equal proportions across all 3 panels */
         .tfc-card__media-wrap {
           position: relative;
           width: 100%;
@@ -166,16 +166,16 @@ export default function TransitionCampaignSpotlight() {
           background-color: #c5201b;
           border-radius: 3px;
           overflow: hidden;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
         }
 
         .tfc-card:hover .tfc-card__media-wrap {
-          transform: translateY(-3px);
-          box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.09);
         }
 
-        /* Displays entire artwork with zero cropping or cutoffs */
+        /* Preserves complete artwork with zero cropping */
         .tfc-card__video,
         .tfc-card__img {
           width: 100%;
@@ -185,7 +185,7 @@ export default function TransitionCampaignSpotlight() {
           display: block;
         }
 
-        /* Video Play Button */
+        /* Play Button */
         .tfc-card__play-btn {
           position: absolute;
           inset: 0;
@@ -194,108 +194,105 @@ export default function TransitionCampaignSpotlight() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(0, 0, 0, 0.18);
+          background: rgba(0, 0, 0, 0.16);
           border: none;
           cursor: pointer;
-          transition: background 0.25s ease;
+          transition: background 0.2s ease;
           padding: 0;
         }
 
         .tfc-card__play-btn:hover {
-          background: rgba(0, 0, 0, 0.32);
+          background: rgba(0, 0, 0, 0.28);
         }
 
         .tfc-card__play-btn:focus-visible {
-          outline: 3px solid #ffffff;
-          outline-offset: -3px;
+          outline: 2px solid #ffffff;
+          outline-offset: -2px;
         }
 
         .tfc-card__play-icon {
-          width: 52px;
-          height: 52px;
+          width: 46px;
+          height: 46px;
           border-radius: 50%;
           background-color: #e31e24;
           color: #ffffff;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
-          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
         }
 
         .tfc-card__play-btn:hover .tfc-card__play-icon {
-          transform: scale(1.1);
+          transform: scale(1.08);
           background-color: #0a0a0a;
         }
 
-        /* ── Caption & Hierarchy ─────────────────────────────────── */
+        /* ── Caption: Aligned Structure & Starting Positions ─────── */
         .tfc-card__caption {
-          padding-top: clamp(0.85rem, 1.2vw, 1.25rem);
+          padding-top: clamp(0.75rem, 1vw, 0.95rem);
           display: flex;
           flex-direction: column;
-          border-top: 1.5px solid rgba(10, 10, 10, 0.12);
-          margin-top: clamp(0.85rem, 1.2vw, 1.25rem);
+          border-top: 1px solid rgba(10, 10, 10, 0.12);
+          margin-top: clamp(0.75rem, 1vw, 0.95rem);
         }
 
         .tfc-card__meta-bar {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 0.5rem;
-          margin-bottom: 0.45rem;
+          margin-bottom: 0.35rem;
         }
 
         .tfc-card__pos {
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: 0.62rem;
+          font-size: 0.58rem;
           font-weight: 800;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: #e31e24;
         }
 
+        /* Consistent min-height ensures all descriptions start at the exact same Y position */
         .tfc-card__headline {
           font-family: var(--font-display, "Helvetica Neue", Arial, sans-serif);
-          font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+          font-size: clamp(0.95rem, 1.15vw, 1.15rem);
           font-weight: 900;
           letter-spacing: -0.02em;
           text-transform: uppercase;
           color: #0a0a0a;
           line-height: 1.15;
           margin: 0 0 0.5rem 0;
+          min-height: 2.3em;
         }
 
+        /* Full natural description without artificial ellipsis */
         .tfc-card__role {
           font-family: var(--font-sans, "Helvetica Neue", Arial, sans-serif);
-          font-size: clamp(0.8rem, 0.88vw, 0.88rem);
+          font-size: clamp(0.76rem, 0.8vw, 0.82rem);
           line-height: 1.6;
-          color: #555555;
+          color: #505050;
           margin: 0;
         }
 
         /* ── Responsive Behavior ─────────────────────────────────── */
         @media (max-width: 1024px) {
-          .tfc-grid {
-            gap: 16px;
-          }
-          .tfc-card__play-icon {
-            width: 46px;
-            height: 46px;
+          .tfc-card__headline {
+            min-height: auto;
           }
         }
 
-        @media (max-width: 860px) {
+        @media (max-width: 840px) {
           .tfc-grid {
             grid-template-columns: 1fr;
-            gap: 2.75rem;
+            gap: 2.5rem;
           }
           .tfc-card__media-wrap {
-            max-width: 480px;
+            max-width: 440px;
             margin: 0 auto;
           }
           .tfc-card__caption {
-            max-width: 480px;
-            margin: 0.85rem auto 0;
+            max-width: 440px;
+            margin: 0.75rem auto 0;
             width: 100%;
           }
         }
@@ -350,7 +347,7 @@ export default function TransitionCampaignSpotlight() {
                   aria-label="Putar video: NEW ERA OF DESIGN"
                 >
                   <span className="tfc-card__play-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                   </span>
@@ -378,7 +375,7 @@ export default function TransitionCampaignSpotlight() {
                   src="/projects/transition-feed-campaign/feed-middle.webp"
                   alt="UTERO HAS SOMETHING BIG FOR YOU — Utero Indonesia"
                   fill
-                  sizes="(max-width: 860px) 100vw, 33vw"
+                  sizes="(max-width: 840px) 100vw, 33vw"
                   className="tfc-card__img"
                   priority
                 />
@@ -418,7 +415,7 @@ export default function TransitionCampaignSpotlight() {
                   aria-label="Putar video: ARE YOU READY?"
                 >
                   <span className="tfc-card__play-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                   </span>
