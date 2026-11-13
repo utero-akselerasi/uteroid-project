@@ -21,8 +21,11 @@ export async function getPortfolioProjects(): Promise<Project[]> {
       return localProjects;
     }
     return (await response.json()) as Project[];
-  } catch (err) {
-    console.warn(`[portfolioApi] Failed to fetch from Portfolio API (${apiBase}), falling back to local projects:`, err);
+  } catch (err: any) {
+    if (err?.cause?.code === "ECONNREFUSED" || err?.code === "ECONNREFUSED") {
+      return localProjects;
+    }
+    console.warn(`[portfolioApi] Failed to fetch from Portfolio API (${apiBase}), falling back to local projects:`, err?.message || err);
     return localProjects;
   }
 }
@@ -38,8 +41,11 @@ export async function getPortfolioProject(routeSlug: string): Promise<Project | 
       return localProjects.find((project) => project.routeSlug === routeSlug);
     }
     return (await response.json()) as Project;
-  } catch (err) {
-    console.warn(`[portfolioApi] Failed to fetch project "${routeSlug}" from Portfolio API (${apiBase}), falling back to local project:`, err);
+  } catch (err: any) {
+    if (err?.cause?.code === "ECONNREFUSED" || err?.code === "ECONNREFUSED") {
+      return localProjects.find((project) => project.routeSlug === routeSlug);
+    }
+    console.warn(`[portfolioApi] Failed to fetch project "${routeSlug}" from Portfolio API (${apiBase}), falling back to local project:`, err?.message || err);
     return localProjects.find((project) => project.routeSlug === routeSlug);
   }
 }
