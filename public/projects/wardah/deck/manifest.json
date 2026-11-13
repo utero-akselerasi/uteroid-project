@@ -1,0 +1,49 @@
+{
+  "slug": "wardah",
+  "total_pages": 13,
+  "deck_images": [
+    "/projects/wardah/deck/001.webp",
+    "/projects/wardah/deck/002.webp",
+    "/projects/wardah/deck/003.webp",
+    "/projects/wardah/deck/004.webp",
+    "/projects/wardah/deck/005.webp",
+    "/projects/wardah/deck/006.webp",
+    "/projects/wardah/deck/007.webp",
+    "/projects/wardah/deck/008.webp",
+    "/projects/wardah/deck/009.webp",
+    "/projects/wardah/deck/010.webp",
+    "/projects/wardah/deck/011.webp",
+    "/projects/wardah/deck/012.webp",
+    "/projects/wardah/deck/013.webp"
+  ],
+  "aspect_ratios": [
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606
+  ],
+  "thumbnails": [
+    "/projects/wardah/deck/thumbs/001.webp",
+    "/projects/wardah/deck/thumbs/002.webp",
+    "/projects/wardah/deck/thumbs/003.webp",
+    "/projects/wardah/deck/thumbs/004.webp",
+    "/projects/wardah/deck/thumbs/005.webp",
+    "/projects/wardah/deck/thumbs/006.webp",
+    "/projects/wardah/deck/thumbs/007.webp",
+    "/projects/wardah/deck/thumbs/008.webp",
+    "/projects/wardah/deck/thumbs/009.webp",
+    "/projects/wardah/deck/thumbs/010.webp",
+    "/projects/wardah/deck/thumbs/011.webp",
+    "/projects/wardah/deck/thumbs/012.webp",
+    "/projects/wardah/deck/thumbs/013.webp"
+  ]
+}
