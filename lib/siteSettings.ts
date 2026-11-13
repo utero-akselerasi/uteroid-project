@@ -38,6 +38,7 @@ export interface ContactsConfig {
   facebook: string;
   youtube: string;
   linkedin?: string;
+  behance?: string;
 }
 
 export interface StudioMetric {
@@ -256,6 +257,7 @@ export const defaultSiteSettings: SiteSettings = {
     facebook: "https://www.facebook.com/uteroadvertisingindonesia/",
     youtube: "https://www.youtube.com/@uteroindonesia",
     linkedin: "https://www.linkedin.com/company/utero-indonesia",
+    behance: "https://www.behance.net/UTEROINDONESIA",
   },
   studio: {
     heading: "STUDIO",

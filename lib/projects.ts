@@ -1714,6 +1714,721 @@ export const projects: Project[] = [
       ],
     }
   },
+
+  // ── AQUA ───────────────────────────────────────────────────────────
+  {
+    slug: "aqua-1",
+    routeSlug: "aqua-1",
+    title: "AQUA",
+    client: "AQUA",
+    year: "",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging"],
+    shortDescription:
+      "Proyek desain untuk AQUA.",
+    description:
+      "Proyek desain komprehensif untuk AQUA.",
+    excerpt:
+      "Proyek desain untuk AQUA.",
+    coverImage: "/projects/aqua-1/cover-1d6431b3.webp",
+    heroImage: "/projects/aqua-1/cover-1d6431b3.webp",
+    hoverImage: "/projects/aqua-1/hover-3e4843b5.webp",
+    galleryImages: [
+      "/projects/aqua-1/gallery/000.webp",
+      "/projects/aqua-1/gallery/001.webp",
+      "/projects/aqua-1/gallery/002.webp",
+      "/projects/aqua-1/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── KAVORA ──────────────────────────────────────────────────────────
+  {
+    slug: "kavora",
+    routeSlug: "kavora",
+    title: "KAVORA",
+    client: "KAVORA",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage", "digital"],
+    shortDescription:
+      "Proyek desain untuk KAVORA.",
+    description:
+      "Proyek desain komprehensif untuk KAVORA.",
+    excerpt:
+      "Proyek desain untuk KAVORA.",
+    coverImage: "/projects/kavora/cover-72807bfa.webp",
+    heroImage: "/projects/kavora/cover-72807bfa.webp",
+    hoverImage: "/projects/kavora/hover-94fbaa43.webp",
+    galleryImages: [
+      "/projects/kavora/gallery/000.webp",
+      "/projects/kavora/gallery/001.webp",
+      "/projects/kavora/gallery/002.webp",
+      "/projects/kavora/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── KOPIKO ───────────────────────────────────────────────────────────
+  {
+    slug: "kopiko",
+    routeSlug: "kopiko",
+    title: "KOPIKO",
+    client: "KOPIKO",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage", "digital"],
+    shortDescription:
+      "Proyek desain untuk KOPIKO.",
+    description:
+      "Proyek desain komprehensif untuk KOPIKO.",
+    excerpt:
+      "Proyek desain untuk KOPIKO.",
+    coverImage: "/projects/kopiko/cover-d21c2301.webp",
+    heroImage: "/projects/kopiko/cover-d21c2301.webp",
+    hoverImage: "/projects/kopiko/hover-4bdecf68.webp",
+    galleryImages: [
+      "/projects/kopiko/gallery/000.webp",
+      "/projects/kopiko/gallery/001.webp",
+      "/projects/kopiko/gallery/002.webp",
+      "/projects/kopiko/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── MOUNTEA ─────────────────────────────────────────────────────────
+  {
+    slug: "mountea",
+    routeSlug: "mountea",
+    title: "MOUNTEA",
+    client: "MOUNTEA",
+    year: "",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage", "digital"],
+    shortDescription:
+      "Proyek desain untuk MOUNTEA.",
+    description:
+      "Proyek desain komprehensif untuk MOUNTEA.",
+    excerpt:
+      "Proyek desain untuk MOUNTEA.",
+    coverImage: "/projects/mountea/cover-a7411b31.webp",
+    heroImage: "/projects/mountea/cover-a7411b31.webp",
+    hoverImage: "/projects/mountea/hover-c5c7f9b8.webp",
+    galleryImages: [
+      "/projects/mountea/gallery/000.webp",
+      "/projects/mountea/gallery/001.webp",
+      "/projects/mountea/gallery/002.webp",
+      "/projects/mountea/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── NARAVA ───────────────────────────────────────────────────────────
+  {
+    slug: "narava",
+    routeSlug: "narava",
+    title: "NARAVA",
+    client: "NARAVA",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "arts",
+    disciplines: ["identity", "packaging", "signage"],
+    shortDescription:
+      "Proyek desain untuk NARAVA.",
+    description:
+      "Proyek desain komprehensif untuk NARAVA.",
+    excerpt:
+      "Proyek desain untuk NARAVA.",
+    coverImage: "/projects/narava/cover-227bc25a.webp",
+    heroImage: "/projects/narava/cover-227bc25a.webp",
+    hoverImage: "/projects/narava/hover-0de9166a.webp",
+    galleryImages: [
+      "/projects/narava/gallery/000.webp",
+      "/projects/narava/gallery/001.webp",
+      "/projects/narava/gallery/002.webp",
+      "/projects/narava/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── POCARI SWEAT ────────────────────────────────────────────────────
+  {
+    slug: "pocari-sweat",
+    routeSlug: "pocari-sweat",
+    title: "POCARI SWEAT",
+    client: "POCARI SWEAT",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage"],
+    shortDescription:
+      "Proyek desain untuk POCARI SWEAT.",
+    description:
+      "Proyek desain komprehensif untuk POCARI SWEAT.",
+    excerpt:
+      "Proyek desain untuk POCARI SWEAT.",
+    coverImage: "/projects/pocari-sweat/cover-f6dd4a2c.webp",
+    heroImage: "/projects/pocari-sweat/cover-f6dd4a2c.webp",
+    hoverImage: "/projects/pocari-sweat/hover-c126d80b.webp",
+    galleryImages: [
+      "/projects/pocari-sweat/gallery/000.webp",
+      "/projects/pocari-sweat/gallery/001.webp",
+      "/projects/pocari-sweat/gallery/002.webp",
+      "/projects/pocari-sweat/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── RONAVA ───────────────────────────────────────────────────────────
+  {
+    slug: "ronava",
+    routeSlug: "ronava",
+    title: "RONAVA",
+    client: "RONAVA",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "retail",
+    disciplines: ["identity", "packaging", "signage", "indoor", "outdoor"],
+    shortDescription:
+      "Proyek desain untuk RONAVA.",
+    description:
+      "Proyek desain komprehensif untuk RONAVA.",
+    excerpt:
+      "Proyek desain untuk RONAVA.",
+    coverImage: "/projects/ronava/cover-415e33ca.webp",
+    heroImage: "/projects/ronava/cover-415e33ca.webp",
+    hoverImage: "/projects/ronava/hover-aaf1b844.webp",
+    galleryImages: [
+      "/projects/ronava/gallery/000.webp",
+      "/projects/ronava/gallery/001.webp",
+      "/projects/ronava/gallery/002.webp",
+      "/projects/ronava/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── SAREVA ───────────────────────────────────────────────────────────
+  {
+    slug: "sareva",
+    routeSlug: "sareva",
+    title: "SAREVA",
+    client: "SAREVA",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "government",
+    disciplines: ["identity", "packaging", "signage"],
+    shortDescription:
+      "Proyek desain untuk SAREVA.",
+    description:
+      "Proyek desain komprehensif untuk SAREVA.",
+    excerpt:
+      "Proyek desain untuk SAREVA.",
+    coverImage: "/projects/sareva/cover-924beea6.webp",
+    heroImage: "/projects/sareva/cover-924beea6.webp",
+    hoverImage: "/projects/sareva/hover-02ac2091.webp",
+    galleryImages: [
+      "/projects/sareva/gallery/000.webp",
+      "/projects/sareva/gallery/001.webp",
+      "/projects/sareva/gallery/002.webp",
+      "/projects/sareva/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── SARIWANGI ────────────────────────────────────────────────────────
+  {
+    slug: "sariwangi",
+    routeSlug: "sariwangi",
+    title: "SARIWANGI",
+    client: "SARIWANGI",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage", "digital"],
+    shortDescription:
+      "Proyek desain untuk SARIWANGI.",
+    description:
+      "Proyek desain komprehensif untuk SARIWANGI.",
+    excerpt:
+      "Proyek desain untuk SARIWANGI.",
+    coverImage: "/projects/sariwangi/cover-6290e550.webp",
+    heroImage: "/projects/sariwangi/cover-6290e550.webp",
+    hoverImage: "/projects/sariwangi/hover-43b65895.webp",
+    galleryImages: [
+      "/projects/sariwangi/gallery/000.webp",
+      "/projects/sariwangi/gallery/001.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── SOREVA ───────────────────────────────────────────────────────────
+  {
+    slug: "soreva",
+    routeSlug: "soreva",
+    title: "SOREVA",
+    client: "SOREVA",
+    year: "",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage"],
+    shortDescription:
+      "Proyek desain untuk SOREVA.",
+    description:
+      "Proyek desain komprehensif untuk SOREVA.",
+    excerpt:
+      "Proyek desain untuk SOREVA.",
+    coverImage: "/projects/soreva/cover-65241d23.webp",
+    heroImage: "/projects/soreva/cover-65241d23.webp",
+    hoverImage: "/projects/soreva/hover-4bf76800.webp",
+    galleryImages: [
+      "/projects/soreva/gallery/000.webp",
+      "/projects/soreva/gallery/001.webp",
+      "/projects/soreva/gallery/002.webp",
+      "/projects/soreva/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── Silverqueen ───────────────────────────────────────────────────────
+  {
+    slug: "silverqueen",
+    routeSlug: "silverqueen",
+    title: "Silverqueen",
+    client: "Silverqueen",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage", "digital"],
+    shortDescription:
+      "Proyek desain untuk Silverqueen.",
+    description:
+      "Proyek desain komprehensif untuk Silverqueen.",
+    excerpt:
+      "Proyek desain untuk Silverqueen.",
+    coverImage: "/projects/silverqueen/cover-30e28030.webp",
+    heroImage: "/projects/silverqueen/cover-30e28030.webp",
+    hoverImage: "/projects/silverqueen/hover-5eecc956.webp",
+    galleryImages: [
+      "/projects/silverqueen/gallery/000.webp",
+      "/projects/silverqueen/gallery/001.webp",
+      "/projects/silverqueen/gallery/002.webp",
+      "/projects/silverqueen/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── TEH GELAS ────────────────────────────────────────────────────────
+  {
+    slug: "teh-gelas",
+    routeSlug: "teh-gelas",
+    title: "TEH GELAS",
+    client: "TEH GELAS",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging", "signage", "digital"],
+    shortDescription:
+      "Proyek desain untuk TEH GELAS.",
+    description:
+      "Proyek desain komprehensif untuk TEH GELAS.",
+    excerpt:
+      "Proyek desain untuk TEH GELAS.",
+    coverImage: "/projects/teh-gelas/cover-ea71bdff.webp",
+    heroImage: "/projects/teh-gelas/cover-ea71bdff.webp",
+    hoverImage: "/projects/teh-gelas/hover-ce7420fd.webp",
+    galleryImages: [
+      "/projects/teh-gelas/gallery/000.webp",
+      "/projects/teh-gelas/gallery/001.webp",
+      "/projects/teh-gelas/gallery/002.webp",
+      "/projects/teh-gelas/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── TUMBUHARA ────────────────────────────────────────────────────────
+  {
+    slug: "tumbuhara",
+    routeSlug: "tumbuhara",
+    title: "TUMBUHARA",
+    client: "TUMBUHARA",
+    year: "2026",
+    category: "Brand Identity",
+    industry: "arts",
+    disciplines: ["identity", "packaging", "signage", "indoor"],
+    shortDescription:
+      "Proyek desain untuk TUMBUHARA.",
+    description:
+      "Proyek desain komprehensif untuk TUMBUHARA.",
+    excerpt:
+      "Proyek desain untuk TUMBUHARA.",
+    coverImage: "/projects/tumbuhara/cover-5f8c2ef6.webp",
+    heroImage: "/projects/tumbuhara/cover-5f8c2ef6.webp",
+    hoverImage: "/projects/tumbuhara/hover-ea226099.webp",
+    galleryImages: [
+      "/projects/tumbuhara/gallery/000.webp",
+      "/projects/tumbuhara/gallery/001.webp",
+      "/projects/tumbuhara/gallery/002.webp",
+      "/projects/tumbuhara/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── VITARA ───────────────────────────────────────────────────────────
+  {
+    slug: "vitara",
+    routeSlug: "vitara",
+    title: "VITARA",
+    client: "VITARA",
+    year: "",
+    category: "Brand Identity",
+    industry: "products",
+    disciplines: ["identity", "digital"],
+    shortDescription:
+      "Proyek desain untuk VITARA.",
+    description:
+      "Proyek desain komprehensif untuk VITARA.",
+    excerpt:
+      "Proyek desain untuk VITARA.",
+    coverImage: "/projects/vitara/cover-f6686867.webp",
+    heroImage: "/projects/vitara/cover-f6686867.webp",
+    hoverImage: "/projects/vitara/hover-a1c624de.webp",
+    galleryImages: [
+      "/projects/vitara/gallery/000.webp",
+      "/projects/vitara/gallery/001.webp",
+      "/projects/vitara/gallery/002.webp",
+      "/projects/vitara/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── WARDAH ───────────────────────────────────────────────────────────
+  {
+    slug: "wardah",
+    routeSlug: "wardah",
+    title: "WARDAH",
+    client: "WARDAH",
+    year: "",
+    category: "Brand Identity",
+    industry: "retail",
+    disciplines: ["identity", "signage"],
+    shortDescription:
+      "Proyek desain untuk WARDAH.",
+    description:
+      "Proyek desain komprehensif untuk WARDAH.",
+    excerpt:
+      "Proyek desain untuk WARDAH.",
+    coverImage: "/projects/wardah/cover-608023ca.webp",
+    heroImage: "/projects/wardah/cover-608023ca.webp",
+    hoverImage: "/projects/wardah/hover-a699e880.webp",
+    galleryImages: [
+      "/projects/wardah/gallery/000.webp",
+      "/projects/wardah/gallery/001.webp",
+      "/projects/wardah/gallery/002.webp",
+      "/projects/wardah/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── BISKUAT ─────────────────────────────────────────────────────────
+  {
+    slug: "biskuat",
+    routeSlug: "biskuat",
+    title: "BISKUAT",
+    client: "Mondelez International / Biskuat",
+    year: "2024",
+    category: "Product Innovation & Packaging",
+    industry: "fnb",
+    disciplines: ["packaging", "identity", "campaign"],
+    shortDescription:
+      "Konsep inovasi dessert jar berlapis Biskuat Layers — mentransformasikan biskuit legendaris penambah energi menjadi pengalaman kuliner modern yang premium.",
+    description:
+      "Biskuat Layers adalah rekonseptualisasi inovatif terhadap biskuit energi ikonik Indonesia menjadi hidangan penutup siap saji dalam kemasan kaleng dessert jar. Menampilkan lapisan remah biskuit renyah, mousse cokelat pekat, dan krim vanila lembut, proyek ini mencakup eksplorasi packaging kaleng kedap udara bernuansa oranye-biru khas Biskuat, label kemasan transparan berlapis, sendok terintegrasi, serta visual storytelling gaya hidup urban aktif.",
+    excerpt:
+      "Konsep inovasi dessert jar berlapis Biskuat Layers — mentransformasikan biskuit legendaris penambah energi menjadi pengalaman kuliner modern yang premium.",
+    coverImage: "/projects/biskuat/cover-9b907b55.webp",
+    heroImage: "/projects/biskuat/cover-9b907b55.webp",
+    hoverImage: "/projects/biskuat/hover-9b907b55.webp",
+    galleryImages: [
+      "/projects/biskuat/gallery/000.webp",
+      "/projects/biskuat/gallery/001.webp",
+      "/projects/biskuat/gallery/002.webp",
+      "/projects/biskuat/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [
+        "Product Innovation Concept",
+        "Packaging Design & Structure",
+        "3D Modeling & Photorealistic Rendering",
+        "Label Architecture & Visual Identity",
+        "Lifestyle & Editorial Art Direction",
+      ],
+      challenge:
+        "Bagaimana membawa brand biskuit masa kecil yang fungsional dan berakar kuat di pasar massal ke dalam ranah tren dessert kekinian tanpa menghilangkan identitas energi, karakter warna khas, dan keakraban emosionalnya.",
+      solution:
+        "Mengembangkan konsep dessert jar multi-layer dengan kombinasi bahan premium, kemasan kaleng ringkas dengan tutup transparan dan sendok ergonomis tersemat, serta kampanye visual bergaya modern editorial yang relevan bagi generasi muda aktif.",
+      deliverables: [
+        "Konsep Produk & Struktur Kemasan Dessert Jar",
+        "Desain Label & Sistem Grafis Kaleng",
+        "Aset 3D Render & Visual Lifestyle Kampanye",
+        "Pedoman Pengemasan & Presentasi Produk",
+      ],
+    },
+  },
+
+  // ── KAPAL API ────────────────────────────────────────────────────────
+  {
+    slug: "kapal-api",
+    routeSlug: "kapal-api",
+    title: "KAPAL API",
+    client: "PT Santos Jaya Abadi / Kapal Api",
+    year: "2024",
+    category: "Luxury Packaging & Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity", "packaging"],
+    shortDescription:
+      "Redesain kemasan premium heritage Kapal Api — mengangkat warisan kopi legendaris nusantara ke panggung mewah melalui tabung logam eksklusif dan gradasi crimson organik.",
+    description:
+      "Proyek kemasan Kapal Api edisi premium merayakan perjalanan panjang kopi legendaris Indonesia dengan pendekatan estetika modern luxury. Konsep ini memadukan kaleng silinder logam beraksen tembaga matte, motif timbul (emboss) ikon kapal layar nusantara, gradasi merah-marun organik, serta kotak kado kubik eksklusif dengan sistem bukaan magnetik untuk menghadirkan ritual minum kopi yang anggun.",
+    excerpt:
+      "Redesain kemasan premium heritage Kapal Api — mengangkat warisan kopi legendaris nusantara ke panggung mewah melalui tabung logam eksklusif dan gradasi crimson organik.",
+    coverImage: "/projects/kapal-api/cover-7975eff3.webp",
+    heroImage: "/projects/kapal-api/cover-7975eff3.webp",
+    hoverImage: "/projects/kapal-api/hover-7975eff3.webp",
+    galleryImages: [
+      "/projects/kapal-api/gallery/000.webp",
+      "/projects/kapal-api/gallery/001.webp",
+      "/projects/kapal-api/gallery/002.webp",
+      "/projects/kapal-api/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [
+        "Luxury Packaging Design",
+        "Heritage Brand Elevation",
+        "Dieline & Structural Engineering",
+        "Material, Foil & Emboss Finishing",
+        "Gift Box Architecture & 3D Visualization",
+      ],
+      challenge:
+        "Menaikkan kelas persepsi merek Kapal Api dari komoditas harian menjadi produk kopi cenderamata mewah (luxury gift) berskala internasional dengan tetap menghormati elemen ikonik kapal api yang legendaris.",
+      solution:
+        "Menciptakan canister logam kedap aroma dengan sentuhan matte satin, ornamen timbul yang taktil, palet gradasi crimson-burgundy berkelas, serta kemasan sekunder gift box dengan tata letak visual editorial dan storytelling asal-usul biji kopi nusantara.",
+      deliverables: [
+        "Struktur Tabung Canister Logam Kedap Udara",
+        "Dieline Kemasan Sekunder & Gift Box",
+        "Spesifikasi Material Finishing (Emboss, Foil Emas & Spot UV)",
+        "Set Visual 3D Render & Presentasi Brand",
+      ],
+    },
+  },
+
+  // ── SEDRAL ────────────────────────────────────────────────────────────
+  {
+    slug: "sedral",
+    routeSlug: "sedral",
+    title: "SEDRAL",
+    client: "SEDRAL Haute Parfumerie",
+    year: "2024",
+    category: "Sculptural Packaging & Industrial Design",
+    industry: "retail",
+    disciplines: ["packaging", "identity"],
+    shortDescription:
+      "Botol parfum skulptural terinspirasi fosil laut purba dan spiral nautilus — peleburan seni patung logam cair dan kemasan mewah unboxing.",
+    description:
+      "SEDRAL adalah kreasi parfum adibusana yang mengeksplorasi bentuk organik spiral fosil nautilus ke dalam botol skulptural berbalut perak cair (liquid silver chrome). Menggabungkan kontras antara batuan alam kasar dengan kehalusan logam futuristik, botol ini dilengkapi dudukan batu alami monolitik dan kotak geser mewah bertingkat berlapis kain beludru, mewujudkan karya seni wewangian avant-garde.",
+    excerpt:
+      "Botol parfum skulptural terinspirasi fosil laut purba dan spiral nautilus — peleburan seni patung logam cair dan kemasan mewah unboxing.",
+    coverImage: "/projects/sedral/cover-02c24615.webp",
+    heroImage: "/projects/sedral/cover-02c24615.webp",
+    hoverImage: "/projects/sedral/hover-02c24615.webp",
+    galleryImages: [
+      "/projects/sedral/gallery/000.webp",
+      "/projects/sedral/gallery/001.webp",
+      "/projects/sedral/gallery/002.webp",
+      "/projects/sedral/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [
+        "Industrial Bottle Design",
+        "Sculptural Form Exploration",
+        "Brand Identity & Emblem Design",
+        "Rigid Drawer Box Packaging",
+        "CGI Visual Direction & Campaign Still",
+      ],
+      challenge:
+        "Menciptakan wujud fisik botol wewangian yang benar-benar distingtif dan tidak menyerupai botol konvensional, menggabungkan simbolisme alam purba dengan sentuhan ultra-modern presisi tinggi.",
+      solution:
+        "Merancang geometri spiral nautilus berlapis krom cair yang berpadu dengan tekstur batu alami kasar. Botol dikemas dalam slide-out drawer box premium dengan lekukan presisi untuk mengunci botol, diperkuat identitas visual bertanda spiral monokrom yang elegan.",
+      deliverables: [
+        "Desain Model 3D Botol Skulptural",
+        "Dudukan Batu Monolitik & Sistem Tutup Magnetik",
+        "Kotak Kemasan Slide-out Drawer Box Eksklusif",
+        "Set Visual Render CGI & Editorial Lookbook",
+      ],
+    },
+  },
+
+  // ── TOLAKANGIN ────────────────────────────────────────────────────────
+  {
+    slug: "tolakangin",
+    routeSlug: "tolakangin",
+    title: "TOLAKANGIN",
+    client: "PT Industri Jamu dan Farmasi Sido Muncul Tbk / Tolak Angin",
+    year: "2024",
+    category: "Product Innovation & Packaging",
+    industry: "fnb",
+    disciplines: ["packaging", "campaign"],
+    shortDescription:
+      "Inovasi sendok herbal madu Tolak Angin Herbal Spoon — transformasi jamu tradisional menjadi ritual seduh teh modern yang praktis dan elegan.",
+    description:
+      "Tolak Angin Herbal Spoon menginterpretasikan ulang khasiat herbal jamu legendaris Indonesia menjadi produk gaya hidup kontemporer berbentuk sendok pengaduk berbahan madu herbal padat dengan gagang kayu ramah lingkungan berukir huruf T. Saat diaduk ke dalam secangkir air hangat atau teh, madu herbal larut perlahan menghasilkan seduhan aromatik yang menyehatkan tanpa repot menyobek sachet konvensional.",
+    excerpt:
+      "Inovasi sendok herbal madu Tolak Angin Herbal Spoon — transformasi jamu tradisional menjadi ritual seduh teh modern yang praktis dan elegan.",
+    coverImage: "/projects/tolakangin/cover-d96ae33f.webp",
+    heroImage: "/projects/tolakangin/cover-d96ae33f.webp",
+    hoverImage: "/projects/tolakangin/hover-d96ae33f.webp",
+    galleryImages: [
+      "/projects/tolakangin/gallery/000.webp",
+      "/projects/tolakangin/gallery/001.webp",
+      "/projects/tolakangin/gallery/002.webp",
+      "/projects/tolakangin/gallery/003.webp",
+    ],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [
+        "Product Concept & Ergonomics",
+        "Sustainable Materials Strategy",
+        "Single-serve Wrapper & Box Packaging",
+        "Technical Blueprint & 3D Modeling",
+        "Lifestyle Ritual Art Direction",
+      ],
+      challenge:
+        "Mengubah citra konsumsi jamu herbal yang sering diasosiasikan dengan rasa pahit dan kepraktisan sachet cair menjadi sebuah ritual minum teh yang estetik, higienis, dan disukai kalangan urban muda.",
+      solution:
+        "Mengembangkan Herbal Stirring Spoon dari ekstrak madu herbal mengkristal pada stik kayu alami ergonomis. Menyiapkan kemasan pelindung sachet individu yang higienis serta kemasan luar bernuansa kayu dan kuning keemasan yang menonjolkan tradisi herbal autentik.",
+      deliverables: [
+        "Desain Produk Stik Sendok Herbal & Blueprint Teknis",
+        "Konsep Kemasan Sachet Individu & Box Display",
+        "Render Fotorealistik & Panduan Ritual Penyeduhan",
+        "Materi Presentasi Inovasi Produk",
+      ],
+    },
+  },
 ];
 
 

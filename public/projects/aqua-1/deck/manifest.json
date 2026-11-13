@@ -1,0 +1,49 @@
+{
+  "slug": "aqua-1",
+  "total_pages": 13,
+  "deck_images": [
+    "/projects/aqua-1/deck/001.webp",
+    "/projects/aqua-1/deck/002.webp",
+    "/projects/aqua-1/deck/003.webp",
+    "/projects/aqua-1/deck/004.webp",
+    "/projects/aqua-1/deck/005.webp",
+    "/projects/aqua-1/deck/006.webp",
+    "/projects/aqua-1/deck/007.webp",
+    "/projects/aqua-1/deck/008.webp",
+    "/projects/aqua-1/deck/009.webp",
+    "/projects/aqua-1/deck/010.webp",
+    "/projects/aqua-1/deck/011.webp",
+    "/projects/aqua-1/deck/012.webp",
+    "/projects/aqua-1/deck/013.webp"
+  ],
+  "aspect_ratios": [
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606,
+    1.4142851606
+  ],
+  "thumbnails": [
+    "/projects/aqua-1/deck/thumbs/001.webp",
+    "/projects/aqua-1/deck/thumbs/002.webp",
+    "/projects/aqua-1/deck/thumbs/003.webp",
+    "/projects/aqua-1/deck/thumbs/004.webp",
+    "/projects/aqua-1/deck/thumbs/005.webp",
+    "/projects/aqua-1/deck/thumbs/006.webp",
+    "/projects/aqua-1/deck/thumbs/007.webp",
+    "/projects/aqua-1/deck/thumbs/008.webp",
+    "/projects/aqua-1/deck/thumbs/009.webp",
+    "/projects/aqua-1/deck/thumbs/010.webp",
+    "/projects/aqua-1/deck/thumbs/011.webp",
+    "/projects/aqua-1/deck/thumbs/012.webp",
+    "/projects/aqua-1/deck/thumbs/013.webp"
+  ]
+}
