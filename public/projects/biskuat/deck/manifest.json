@@ -1,0 +1,37 @@
+{
+  "slug": "biskuat",
+  "total_pages": 9,
+  "deck_images": [
+    "/projects/biskuat/deck/001.webp",
+    "/projects/biskuat/deck/002.webp",
+    "/projects/biskuat/deck/003.webp",
+    "/projects/biskuat/deck/004.webp",
+    "/projects/biskuat/deck/005.webp",
+    "/projects/biskuat/deck/006.webp",
+    "/projects/biskuat/deck/007.webp",
+    "/projects/biskuat/deck/008.webp",
+    "/projects/biskuat/deck/009.webp"
+  ],
+  "aspect_ratios": [
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8
+  ],
+  "thumbnails": [
+    "/projects/biskuat/deck/thumbs/001.webp",
+    "/projects/biskuat/deck/thumbs/002.webp",
+    "/projects/biskuat/deck/thumbs/003.webp",
+    "/projects/biskuat/deck/thumbs/004.webp",
+    "/projects/biskuat/deck/thumbs/005.webp",
+    "/projects/biskuat/deck/thumbs/006.webp",
+    "/projects/biskuat/deck/thumbs/007.webp",
+    "/projects/biskuat/deck/thumbs/008.webp",
+    "/projects/biskuat/deck/thumbs/009.webp"
+  ]
+}

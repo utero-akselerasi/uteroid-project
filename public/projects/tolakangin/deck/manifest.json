@@ -1,0 +1,31 @@
+{
+  "slug": "tolakangin",
+  "total_pages": 7,
+  "deck_images": [
+    "/projects/tolakangin/deck/001.webp",
+    "/projects/tolakangin/deck/002.webp",
+    "/projects/tolakangin/deck/003.webp",
+    "/projects/tolakangin/deck/004.webp",
+    "/projects/tolakangin/deck/005.webp",
+    "/projects/tolakangin/deck/006.webp",
+    "/projects/tolakangin/deck/007.webp"
+  ],
+  "aspect_ratios": [
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8
+  ],
+  "thumbnails": [
+    "/projects/tolakangin/deck/thumbs/001.webp",
+    "/projects/tolakangin/deck/thumbs/002.webp",
+    "/projects/tolakangin/deck/thumbs/003.webp",
+    "/projects/tolakangin/deck/thumbs/004.webp",
+    "/projects/tolakangin/deck/thumbs/005.webp",
+    "/projects/tolakangin/deck/thumbs/006.webp",
+    "/projects/tolakangin/deck/thumbs/007.webp"
+  ]
+}

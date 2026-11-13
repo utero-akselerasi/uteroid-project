@@ -1,0 +1,31 @@
+{
+  "slug": "sedral",
+  "total_pages": 7,
+  "deck_images": [
+    "/projects/sedral/deck/001.webp",
+    "/projects/sedral/deck/002.webp",
+    "/projects/sedral/deck/003.webp",
+    "/projects/sedral/deck/004.webp",
+    "/projects/sedral/deck/005.webp",
+    "/projects/sedral/deck/006.webp",
+    "/projects/sedral/deck/007.webp"
+  ],
+  "aspect_ratios": [
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8,
+    0.8
+  ],
+  "thumbnails": [
+    "/projects/sedral/deck/thumbs/001.webp",
+    "/projects/sedral/deck/thumbs/002.webp",
+    "/projects/sedral/deck/thumbs/003.webp",
+    "/projects/sedral/deck/thumbs/004.webp",
+    "/projects/sedral/deck/thumbs/005.webp",
+    "/projects/sedral/deck/thumbs/006.webp",
+    "/projects/sedral/deck/thumbs/007.webp"
+  ]
+}
