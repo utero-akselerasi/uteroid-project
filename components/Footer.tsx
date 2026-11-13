@@ -107,11 +107,44 @@ export default function Footer() {
                 fontSize: "0.85rem",
                 lineHeight: 1.5,
                 color: "rgba(255, 255, 255, 0.65)",
-                margin: 0,
+                margin: "0 0 1.5rem",
               }}
             >
               {t.footer.description}
             </p>
+
+            <div
+              style={{
+                paddingTop: "1rem",
+                borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              <span
+                style={{
+                  display: "block",
+                  fontSize: "0.68rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255, 255, 255, 0.4)",
+                  marginBottom: "0.4rem",
+                }}
+              >
+                Studio Location
+              </span>
+              <p
+                style={{
+                  fontSize: "0.8rem",
+                  lineHeight: 1.5,
+                  color: "rgba(255, 255, 255, 0.7)",
+                  margin: 0,
+                }}
+              >
+                Jl. Bantaran 1 No. 25, Purwantoro<br />
+                Blimbing, Malang, Jawa Timur 65141<br />
+                Indonesia
+              </p>
+            </div>
           </div>
 
           {/* Column 2: Quick Studio Navigation */}
