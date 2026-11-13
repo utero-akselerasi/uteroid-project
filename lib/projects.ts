@@ -2237,6 +2237,126 @@ export const projects: Project[] = [
       deliverables: [],
     },
   },
+
+  // ── BISKUAT ─────────────────────────────────────────────────────────
+  {
+    slug: "biskuat",
+    routeSlug: "biskuat",
+    title: "BISKUAT",
+    client: "BISKUAT",
+    year: "",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity"],
+    shortDescription:
+      "Proyek desain untuk BISKUAT.",
+    description:
+      "Proyek desain komprehensif untuk BISKUAT.",
+    excerpt:
+      "Proyek desain untuk BISKUAT.",
+    coverImage: "/projects/biskuat/cover-9b907b55.webp",
+    heroImage: "/projects/biskuat/cover-9b907b55.webp",
+    hoverImage: "/projects/biskuat/hover-9b907b55.webp",
+    galleryImages: ["/projects/biskuat/gallery/000.webp"],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── KAPAL API ────────────────────────────────────────────────────────
+  {
+    slug: "kapal-api",
+    routeSlug: "kapal-api",
+    title: "KAPAL API",
+    client: "KAPAL API",
+    year: "",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity"],
+    shortDescription:
+      "Proyek desain untuk KAPAL API.",
+    description:
+      "Proyek desain komprehensif untuk KAPAL API.",
+    excerpt:
+      "Proyek desain untuk KAPAL API.",
+    coverImage: "/projects/kapal-api/cover-7975eff3.webp",
+    heroImage: "/projects/kapal-api/cover-7975eff3.webp",
+    hoverImage: "/projects/kapal-api/hover-7975eff3.webp",
+    galleryImages: ["/projects/kapal-api/gallery/000.webp"],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── SEDRAL ────────────────────────────────────────────────────────────
+  {
+    slug: "sedral",
+    routeSlug: "sedral",
+    title: "SEDRAL",
+    client: "SEDRAL",
+    year: "",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity"],
+    shortDescription:
+      "Proyek desain untuk SEDRAL.",
+    description:
+      "Proyek desain komprehensif untuk SEDRAL.",
+    excerpt:
+      "Proyek desain untuk SEDRAL.",
+    coverImage: "/projects/sedral/cover-02c24615.webp",
+    heroImage: "/projects/sedral/cover-02c24615.webp",
+    hoverImage: "/projects/sedral/hover-02c24615.webp",
+    galleryImages: ["/projects/sedral/gallery/000.webp"],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
+
+  // ── TOLAKANGIN ────────────────────────────────────────────────────────
+  {
+    slug: "tolakangin",
+    routeSlug: "tolakangin",
+    title: "TOLAKANGIN",
+    client: "TOLAKANGIN",
+    year: "",
+    category: "Brand Identity",
+    industry: "fnb",
+    disciplines: ["identity"],
+    shortDescription:
+      "Proyek desain untuk TOLAKANGIN.",
+    description:
+      "Proyek desain komprehensif untuk TOLAKANGIN.",
+    excerpt:
+      "Proyek desain untuk TOLAKANGIN.",
+    coverImage: "/projects/tolakangin/cover-d96ae33f.webp",
+    heroImage: "/projects/tolakangin/cover-d96ae33f.webp",
+    hoverImage: "/projects/tolakangin/hover-d96ae33f.webp",
+    galleryImages: ["/projects/tolakangin/gallery/000.webp"],
+    featured: false,
+    priority: 28,
+    details: {
+      scope: [],
+      challenge: "",
+      solution: "",
+      deliverables: [],
+    },
+  },
 ];
 
 

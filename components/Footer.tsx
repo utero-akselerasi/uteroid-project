@@ -25,6 +25,14 @@ const defaultSocialLinks = [
     label: "YouTube",
     href: "https://www.youtube.com/@uteroindonesia",
   },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/utero-indonesia",
+  },
+  {
+    label: "Behance",
+    href: "https://www.behance.net/UTEROINDONESIA",
+  },
 ];
 
 export default function Footer() {
@@ -36,7 +44,8 @@ export default function Footer() {
     { label: "Instagram", href: settings.contacts?.instagram || defaultSocialLinks[0].href },
     { label: "Facebook", href: settings.contacts?.facebook || defaultSocialLinks[1].href },
     { label: "YouTube", href: settings.contacts?.youtube || defaultSocialLinks[2].href },
-    ...(settings.contacts?.linkedin ? [{ label: "LinkedIn", href: settings.contacts.linkedin }] : []),
+    { label: "LinkedIn", href: settings.contacts?.linkedin || defaultSocialLinks[3].href },
+    { label: "Behance", href: settings.contacts?.behance || defaultSocialLinks[4].href },
   ];
 
   const mainNavLinks = mainNavLinksStatic.map((item) => ({
