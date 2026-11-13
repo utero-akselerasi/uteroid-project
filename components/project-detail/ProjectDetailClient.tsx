@@ -159,79 +159,84 @@ export default function ProjectDetailClient({
             <span>{t.projectDetail.allWork}</span>
           </Link>
 
-          {/* ── Overview ────────────────────────────────── */}
+          {/* ── Unified Case Study / Text Block (Compact 2-Column Layout) ── */}
           <RevealOnScroll>
-            <div className="pd-section">
-              <div className="pd-section__label">
-                <span className="pd-section__label-line" />
-                <span className="pd-section__label-text">{t.projectDetail.overview}</span>
+            <div className="pd-text-block">
+              <div className={`pd-text-block__grid ${!hasScope && !hasDeliverables ? "pd-text-block__grid--single" : ""}`}>
+                {/* LEFT Column (about 7 of 12 columns): Overview, Challenge, Approach */}
+                <div className="pd-text-block__main">
+                  {project.description && (
+                    <div className="pd-content-group">
+                      <div className="pd-section__label">
+                        <span className="pd-section__label-line" />
+                        <span className="pd-section__label-text">{t.projectDetail.overview}</span>
+                      </div>
+                      <p className="pd-text-overview">{project.description}</p>
+                    </div>
+                  )}
+
+                  {hasChallenge && (
+                    <div className="pd-content-group">
+                      <div className="pd-section__label">
+                        <span className="pd-section__label-line" />
+                        <span className="pd-section__label-text">{t.projectDetail.challenge}</span>
+                      </div>
+                      <p className="pd-text-body">{project.details!.challenge}</p>
+                    </div>
+                  )}
+
+                  {hasSolution && (
+                    <div className="pd-content-group">
+                      <div className="pd-section__label">
+                        <span className="pd-section__label-line" />
+                        <span className="pd-section__label-text">{t.projectDetail.approach}</span>
+                      </div>
+                      <p className="pd-text-body">{project.details!.solution}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* RIGHT Column (about 5 of 12 columns): Scope, Deliverables */}
+                {(hasScope || hasDeliverables) && (
+                  <div className="pd-text-block__side">
+                    {hasScope && (
+                      <div className="pd-content-group">
+                        <div className="pd-section__label">
+                          <span className="pd-section__label-line" />
+                          <span className="pd-section__label-text">{t.projectDetail.scope}</span>
+                        </div>
+                        <ul className={`pd-compact-list ${project.details!.scope!.length > 6 ? "pd-compact-list--split" : ""}`}>
+                          {project.details!.scope!.map((s) => (
+                            <li key={s} className="pd-compact-list__item">
+                              <span className="pd-compact-list__bullet">■</span>
+                              <span>{s}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {hasDeliverables && (
+                      <div className="pd-content-group">
+                        <div className="pd-section__label">
+                          <span className="pd-section__label-line" />
+                          <span className="pd-section__label-text">{t.projectDetail.deliverables}</span>
+                        </div>
+                        <ul className={`pd-compact-list ${project.details!.deliverables!.length > 6 ? "pd-compact-list--split" : ""}`}>
+                          {project.details!.deliverables!.map((d) => (
+                            <li key={d} className="pd-compact-list__item">
+                              <span className="pd-compact-list__bullet">■</span>
+                              <span>{d}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-              <p className="pd-section__text">{project.description}</p>
             </div>
           </RevealOnScroll>
-
-          {/* ── Case Study Details ───────────────────────── */}
-          {hasAnyDetails && (
-            <RevealOnScroll>
-              <div className="pd-section">
-                <div className="pd-details-grid">
-                  {/* Left column: Challenge + Approach */}
-                  <div className="pd-details-grid__col">
-                    {hasChallenge && (
-                      <div>
-                        <span className="pd-detail-block__label">
-                          {t.projectDetail.challenge}
-                        </span>
-                        <p className="pd-detail-block__text">
-                          {project.details!.challenge}
-                        </p>
-                      </div>
-                    )}
-                    {hasSolution && (
-                      <div>
-                        <span className="pd-detail-block__label">{t.projectDetail.approach}</span>
-                        <p className="pd-detail-block__text">
-                          {project.details!.solution}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right column: Scope + Deliverables */}
-                  <div className="pd-details-grid__col">
-                    {hasScope && (
-                      <div>
-                        <span className="pd-detail-block__label">{t.projectDetail.scope}</span>
-                        <ul className="pd-detail-block__list">
-                          {project.details!.scope!.map((s) => (
-                            <li key={s}>
-                              <span>■</span>
-                              {s}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {hasDeliverables && (
-                      <div>
-                        <span className="pd-detail-block__label">
-                          {t.projectDetail.deliverables}
-                        </span>
-                        <ul className="pd-detail-block__list">
-                          {project.details!.deliverables!.map((d) => (
-                            <li key={d}>
-                              <span>■</span>
-                              {d}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </RevealOnScroll>
-          )}
 
           {/* ── Gallery ──────────────────────────────────── */}
           {gallery && gallery.length > 0 && (

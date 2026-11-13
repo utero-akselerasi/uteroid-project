@@ -287,25 +287,28 @@ export default function PDFDeckSlider({ slug, routeSlug }: PDFDeckSliderProps) {
           return (
             <div
               key={index}
-              className="pd-deck-slider__page"
-              style={{
-                aspectRatio: `${aspectRatio}`,
-                minWidth: "100%",
-              }}
+              className="pd-deck-slider__slide-slot"
             >
-              {isLoaded ? (
-                <Image
-                  src={image}
-                  alt={`${slug} — slide ${index + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
-                  style={{ objectFit: "contain" }}
-                  loading={index < 2 ? "eager" : "lazy"}
-                  decoding="async"
-                />
-              ) : (
-                <div className="pd-deck-slider__page-placeholder" />
-              )}
+              <div
+                className="pd-deck-slider__page"
+                style={{
+                  aspectRatio: `${aspectRatio}`,
+                }}
+              >
+                {isLoaded ? (
+                  <Image
+                    src={image}
+                    alt={`${slug} — slide ${index + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1100px"
+                    style={{ objectFit: "contain" }}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="pd-deck-slider__page-placeholder" />
+                )}
+              </div>
             </div>
           );
         })}
