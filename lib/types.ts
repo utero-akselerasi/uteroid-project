@@ -43,7 +43,6 @@ export interface ProjectDetails {
   challenge?: string;
   solution?: string;
   deliverables?: string[];
-  deckWatermark?: boolean; // Deck logo watermark, default on; never applied to page 1
 }
 
 export interface ProjectVideo {

@@ -3,7 +3,6 @@ package app
 import (
 	"bytes"
 	"context"
-	"embed"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -16,28 +15,8 @@ import (
 	"strconv"
 	"strings"
 
-	xdraw "golang.org/x/image/draw"
 	"golang.org/x/image/webp"
 )
-
-// watermark.png is the real Utero logo used to stamp deck slides.
-//go:embed watermark.png
-var watermarkAsset embed.FS
-
-var watermarkLogo image.Image
-
-func init() {
-	raw, err := watermarkAsset.ReadFile("watermark.png")
-	if err != nil {
-		return
-	}
-	logo, _, err := image.Decode(bytes.NewReader(raw))
-	if err != nil {
-		slog.Warn("watermark logo decode failed", "error", err)
-		return
-	}
-	watermarkLogo = logo
-}
 
 const maxMediaBytes = 20 << 20
 
@@ -77,39 +56,9 @@ func readAndValidateImage(reader io.Reader, maxBytes int64) (*decodedMedia, erro
 	return &decodedMedia{data: data, contentType: contentType, width: config.Width, height: config.Height, ext: ext}, nil
 }
 
-// stampLogo composites the Utero logo into the bottom-right corner of src.
-func stampLogo(src image.Image) *image.RGBA {
-	if watermarkLogo == nil {
-		return nil
-	}
-	bounds := src.Bounds()
-	dst := image.NewRGBA(image.Rect(0, 0, bounds.Dx(), bounds.Dy()))
-	xdraw.Draw(dst, dst.Bounds(), src, bounds.Min, xdraw.Src)
-
-	logoBounds := watermarkLogo.Bounds()
-	logoW := bounds.Dx() / 6
-	if logoW < 32 {
-		logoW = 32
-	}
-	scale := float64(logoW) / float64(logoBounds.Dx())
-	logoH := int(float64(logoBounds.Dy()) * scale)
-	if logoH < 1 {
-		return dst
-	}
-	scaled := image.NewRGBA(image.Rect(0, 0, logoW, logoH))
-	xdraw.ApproxBiLinear.Scale(scaled, scaled.Bounds(), watermarkLogo, logoBounds, xdraw.Over, nil)
-
-	margin := bounds.Dx() / 40
-	if margin < 12 {
-		margin = 12
-	}
-	xdraw.Draw(dst, image.Rect(bounds.Dx()-logoW-margin, bounds.Dy()-logoH-margin, bounds.Dx()-margin, bounds.Dy()-margin), scaled, image.Point{}, xdraw.Over)
-	return dst
-}
-
-// processDeckPage decodes an uploaded deck page, optionally stamps the logo and
-// re-encodes it. WebP input is re-encoded as PNG because there is no WebP encoder.
-func processDeckPage(media *decodedMedia, watermark bool) (*decodedMedia, error) {
+// processDeckPage decodes an uploaded deck page and re-encodes it.
+// WebP input is re-encoded as PNG because there is no WebP encoder.
+func processDeckPage(media *decodedMedia) (*decodedMedia, error) {
 	var src image.Image
 	var err error
 	if media.contentType == "image/webp" {
@@ -121,11 +70,6 @@ func processDeckPage(media *decodedMedia, watermark bool) (*decodedMedia, error)
 		return nil, fmt.Errorf("invalid image")
 	}
 	out := src
-	if watermark {
-		if stamped := stampLogo(src); stamped != nil {
-			out = stamped
-		}
-	}
 	var buf bytes.Buffer
 	contentType := media.contentType
 	if media.contentType == "image/png" || media.contentType == "image/webp" {
@@ -141,10 +85,6 @@ func processDeckPage(media *decodedMedia, watermark bool) (*decodedMedia, error)
 		return nil, fmt.Errorf("unable to encode image")
 	}
 	return &decodedMedia{data: buf.Bytes(), contentType: contentType, width: out.Bounds().Dx(), height: out.Bounds().Dy(), ext: media.ext}, nil
-}
-
-func deckWatermarkEnabled(p Project) bool {
-	return p.Details.DeckWatermark == nil || *p.Details.DeckWatermark
 }
 
 func (s *Server) countDeckMedia(ctx context.Context, projectID int64) int {
@@ -349,15 +289,15 @@ func (s *Server) updateMediaAlt(w http.ResponseWriter, r *http.Request) {
 
 // POST /api/v1/admin/projects/{id}/deck — replace the entire deck in one call.
 // Accepts multipart field "files" (ordered) or repeated "file" parts. Each page
-// is validated, optionally stamped with the logo watermark (never page 1) and
-// stored; old deck objects are removed only after the DB swap commits.
+// is validated, re-encoded and stored; old deck objects are removed only
+// after the DB swap commits.
 func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 	id, err := parseID(r.PathValue("id"))
 	if err != nil {
 		apiError(w, 400, err.Error())
 		return
 	}
-	project, err := s.store.GetProject(r.Context(), id, false, true)
+	_, err = s.store.GetProject(r.Context(), id, false, true)
 	if err != nil {
 		apiError(w, 404, "project not found")
 		return
@@ -381,7 +321,6 @@ func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, "too many pages (max 100)")
 		return
 	}
-	watermark := deckWatermarkEnabled(project)
 	type staged struct {
 		key         string
 		filename    string
@@ -403,8 +342,7 @@ func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 			apiError(w, 400, fmt.Sprintf("page %d: %s", i+1, readErr.Error()))
 			return
 		}
-		// Page 1 never carries the watermark.
-		processed, procErr := processDeckPage(media, watermark && i > 0)
+		processed, procErr := processDeckPage(media)
 		if procErr != nil {
 			apiError(w, 400, fmt.Sprintf("page %d: %s", i+1, procErr.Error()))
 			return

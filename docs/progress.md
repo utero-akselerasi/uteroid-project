@@ -23,3 +23,4 @@
 - M5 `433f968`: proxy.ts /admin gate + /admin/login; settings writes go to Go with real status; offline admin fallback fails closed in production; export + audit endpoints and admin buttons.
 - M6: docs/server-runbook.md final deploy runbook (pull → ./public check → build → owner clicks → /portfolio-api/media check → /legacy-public removal → restore drill).
 - Local verification: go test ./... PASS, npm run typecheck PASS. Server verification pending owner clicks (runbook sections C–F).
+- Follow-up: deck logo watermark removed entirely (owner request) — stamping code, toggle, hint text and PNG assets deleted; deck pages are stored as uploaded.

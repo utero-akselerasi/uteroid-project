@@ -7,8 +7,7 @@ type ProjectDetails struct {
 	Challenge      string   `json:"challenge,omitempty"`
 	Solution       string   `json:"solution,omitempty"`
 	Deliverables   []string `json:"deliverables,omitempty"`
-	DeckWatermark  *bool    `json:"deckWatermark,omitempty"`
-}
+	}
 
 type ProjectVideo struct {
 	Type        string `json:"type"`

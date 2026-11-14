@@ -1967,7 +1967,7 @@ function MediaUpload({ type, busy, onUpload }: { type: string; busy: boolean; on
       <strong>{type.toUpperCase()}</strong>
       <p className={styles.muted}>
         {type === "deck"
-          ? "Tarik beberapa halaman JPG, PNG, atau WebP. Logo watermark otomatis di sudut kanan bawah (tidak pernah di halaman 1). Urutan file menjadi urutan slide. Maksimal 20 MB per file. Atau gunakan 'Upload PDF deck' / 'Ganti seluruh deck' di bawah."
+          ? "Tarik beberapa halaman JPG, PNG, atau WebP. Urutan file menjadi urutan slide. Maksimal 20 MB per file. Atau gunakan 'Upload PDF deck' / 'Ganti seluruh deck' di bawah."
           : `Tarik ${multiple ? "satu atau beberapa" : "satu"} gambar ke sini, atau klik untuk memilih. Maksimal 20 MB per file.`}
       </p>
       <span className={styles.uploadAction}>{dragging ? "Lepaskan untuk upload" : "Pilih file"}</span>
@@ -2258,14 +2258,6 @@ function ProjectEditor({
           <p className={styles.muted}>Simpan proyek dahulu sebelum mengunggah media.</p>
         ) : (
           <>
-            <label className={styles.check} style={{ marginBottom: 14 }}>
-              <input
-                type="checkbox"
-                checked={details.deckWatermark !== false}
-                onChange={(e) => set("details", { ...details, deckWatermark: e.target.checked })}
-              />
-              Watermark logo Utero di deck slide (selalu menyala; tidak pernah di halaman 1)
-            </label>
             <div className={styles.mediaGrid}>
               {["cover", "hover", "gallery", "deck"].map((type) => (
                 <MediaUpload key={type} type={type} busy={busy} onUpload={(files) => onUpload(project, type, files)} />

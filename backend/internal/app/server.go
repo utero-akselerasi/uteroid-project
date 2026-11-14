@@ -481,26 +481,7 @@ func (s *Server) uploadMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, "invalid media type")
 		return
 	}
-	// Deck pages get the logo watermark unless it's the first page or the
-	// per-project toggle is off.
-	storedExt := ""
-	if mediaType == "deck" && deckWatermarkEnabled(project) && s.countDeckMedia(r.Context(), id) > 0 {
-		media := &decodedMedia{data: data, contentType: contentType, width: config.Width, height: config.Height, ext: strings.ToLower(filepath.Ext(header.Filename))}
-		processed, procErr := processDeckPage(media, true)
-		if procErr != nil {
-			apiError(w, 400, procErr.Error())
-			return
-		}
-		data = processed.data
-		contentType = processed.contentType
-		config.Width = processed.width
-		config.Height = processed.height
-		storedExt = processed.ext
-	}
-	ext := storedExt
-	if ext == "" {
-		ext = strings.ToLower(filepath.Ext(header.Filename))
-	}
+	ext := strings.ToLower(filepath.Ext(header.Filename))
 	if ext != ".jpg" && ext != ".jpeg" && ext != ".png" && ext != ".webp" {
 		ext = ".bin"
 	}

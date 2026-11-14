@@ -48,7 +48,7 @@ Tick each item. "PASS" only if the expected result is visible after a page reloa
 | 3 | Uncheck "Tampilkan di homepage", set a unique priority and grid value, Save, reload | Values persist. Work leaves homepage rotation; still visible on /work. Re-check it after the test. |
 | 4 | Open a known Shorts work | Video is portrait (9 / 16). If an older Short is landscape: confirm its video URL, set aspect 9 / 16, Save. |
 | 5 | Open /work and one work page | No duplicates; all expected works present; priority order correct; media loads (no broken object-storage URL). |
-| 6 | Open a work with a deck/images | Thumbnails/deck load through /portfolio-api/media. Watermark rules unchanged (no watermark on page 1). |
+| 6 | Open a work with a deck/images | Thumbnails/deck load through /portfolio-api/media. |
 | 7 | Reload /admin | No error banner; total unchanged; edits still present. |
 
 Stop and report if: total drops, an existing work disappears, duplicates appear, media URLs break, or a save reports success but does not persist after reload.
@@ -137,7 +137,7 @@ Order matters; each step is safe to repeat.
 |---|---|
 | `/work` and homepage | All works visible, no duplicates, media loads |
 | Any work page media/deck | URLs start with `/portfolio-api/media/` — no `object-storage:` or raw S3 hostnames, no broken images |
-| Deck page 1 | NO watermark; pages 2+ show logo watermark (default ON) |
+| Deck pages | No watermark stamped on any page |
 | Homepage campaign section | 3 posts render (2 videos + 1 image), EN/ID toggle works |
 | `/admin` logged out | Redirects to `/admin/login`; API writes without session return 401/403 |
 | Save any setting | Success message AND value persists after reload |
@@ -164,6 +164,6 @@ Once every editable image resolves through `/portfolio-api/media`:
 ## G. What was verified locally vs server-only
 
 Local (this PC, throwaway stack): `go test ./...`, `npm run typecheck`,
-Docker builds, import/sync idempotency, media endpoint, deck watermark.
+Docker builds, import/sync idempotency, media endpoint.
 Server-only (owner clicks): everything in sections C–F. Local counts are
 NOT production facts.
