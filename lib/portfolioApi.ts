@@ -1,6 +1,7 @@
 import "server-only";
 import fs from "fs";
 import type { Project } from "./types";
+import type { ContentOverride } from "./contentOverrides";
 import { projects as localProjects } from "./projects";
 
 function getApiBase(): string {
@@ -40,6 +41,19 @@ export async function getPublicSettingsMap(): Promise<Record<string, any>> {
     return data && typeof data === "object" ? data : {};
   } catch {
     return {};
+  }
+}
+
+export async function getContentOverrides(): Promise<ContentOverride[]> {
+  const apiBase = getApiBase();
+  if (!apiBase) return [];
+  try {
+    const response = await fetch(`${apiBase}/content-overrides`, { cache: "no-store", signal: AbortSignal.timeout(5000) });
+    if (!response.ok) return [];
+    const data = await response.json();
+    return Array.isArray(data?.overrides) ? data.overrides : [];
+  } catch {
+    return [];
   }
 }
 

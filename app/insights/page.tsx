@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getInsights, getInsightsHeader } from "@/lib/insights-source";
 import InsightsContent from "@/components/InsightsContent";
+import { getSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const defaultMetadata: Metadata = {
   title: "Insights & Media — Perspectives from Utero",
   description:
     "Critical reflections, case perspectives, and studio philosophies on branding, environmental spatial design, and execution.",
@@ -32,6 +33,10 @@ export const metadata: Metadata = {
     canonical: "/insights",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata("insights", defaultMetadata);
+}
 
 export default async function InsightsPage() {
   // CMS is the source of truth; lib/insights.ts is the fallback when the

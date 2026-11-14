@@ -8,7 +8,9 @@ import WorkPageContent from "@/components/WorkPageContent";
 import WorkPageSubtitle from "@/components/WorkPageSubtitle";
 import ProjectGrid from "@/components/ProjectGrid";
 
-export const metadata: Metadata = {
+import { getSeoMetadata } from "@/lib/seo";
+
+const defaultMetadata: Metadata = {
   title: "Work — Selected Projects",
   description:
     "Explore selected brand identities, packaging, digital systems, environmental wayfinding, and spatial experiences by Utero design studio.",
@@ -38,6 +40,10 @@ export const metadata: Metadata = {
     canonical: "/work",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata("work", defaultMetadata);
+}
 
 export const dynamic = "force-dynamic";
 

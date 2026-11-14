@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import StudioContent from "@/components/StudioContent";
+import { getSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const defaultMetadata: Metadata = {
   title: "Studio — About Utero Indonesia",
   description:
     "About Utero: an Indonesian multidisciplinary creative design studio and brand consultancy based in Malang, East Java, delivering strategic design solutions since 1998.",
@@ -31,6 +32,10 @@ export const metadata: Metadata = {
     canonical: "/studio",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata("studio", defaultMetadata);
+}
 
 export default function StudioPage() {
   return <StudioContent />;

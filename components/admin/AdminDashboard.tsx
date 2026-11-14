@@ -13,6 +13,7 @@ import {
   type InsightsConfig,
 } from "@/lib/siteSettings";
 import CampaignManager from "./CampaignManager";
+import ContentOverridesPanel from "./ContentOverridesPanel";
 import { api, uploadMediaFile } from "./adminApi";
 import SeedSyncPanel from "./SeedSyncPanel";
 import styles from "./AdminDashboard.module.css";
@@ -21,7 +22,7 @@ type Status = "draft" | "published" | "archived";
 type AdminProject = Project & { id?: number; status: Status; publishedAt?: string; createdAt?: string; updatedAt?: string };
 type SessionResponse = { authenticated: boolean; csrfToken: string };
 type MediaItem = { id: number; mediaType: string; url: string; filename: string; altText?: string; width?: number; height?: number; sortOrder: number };
-type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "campaign" | "security";
+type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "campaign" | "content" | "security";
 
 const disciplines = ["identity", "packaging", "signage", "campaign", "print", "digital", "exhibition", "indoor", "outdoor"] as const;
 const industries = ["fnb", "corporate", "government", "education", "property", "retail", "arts", "event", "services", "products"] as const;
@@ -666,6 +667,15 @@ export default function AdminDashboard() {
                 Kampanye & Homepage
               </button>
               <button
+                className={activeTab === "content" ? styles.active : ""}
+                onClick={() => {
+                  setActiveTab("content");
+                  setEditing(null);
+                }}
+              >
+                Konten (EN/ID)
+              </button>
+              <button
                 className={activeTab === "contacts" ? styles.active : ""}
                 onClick={() => {
                   setActiveTab("contacts");
@@ -915,6 +925,11 @@ export default function AdminDashboard() {
                 await saveSiteSettingsData(payload, message);
               }}
             />
+          )}
+
+          {/* TAB: CONTENT OVERRIDES */}
+          {activeTab === "content" && session && (
+            <ContentOverridesPanel csrfToken={session.csrfToken} />
           )}
 
           {/* TAB 7: SECURITY */}

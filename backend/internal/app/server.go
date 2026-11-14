@@ -86,6 +86,9 @@ func (s *Server) routes() {
 	s.mux.HandleFunc("GET /api/v1/settings", s.getPublicSettings)
 	s.mux.Handle("GET /api/v1/admin/settings", s.requireSession(http.HandlerFunc(s.getAdminSettings), false))
 	s.mux.Handle("PUT /api/v1/admin/settings", s.requireSession(http.HandlerFunc(s.updateAdminSettings), true))
+	s.mux.HandleFunc("GET /api/v1/content-overrides", s.listContentOverrides)
+	s.mux.Handle("PUT /api/v1/admin/content-overrides", s.requireSession(http.HandlerFunc(s.upsertContentOverride), true))
+	s.mux.Handle("DELETE /api/v1/admin/content-overrides", s.requireSession(http.HandlerFunc(s.deleteContentOverride), true))
 }
 
 func writeJSON(w http.ResponseWriter, status int, value any) {

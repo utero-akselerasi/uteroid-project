@@ -3,6 +3,8 @@
 import { servicesData, type ServiceItem } from "./services";
 import { type Discipline } from "./disciplines";
 import { useTranslations } from "./useTranslations";
+import { useLanguage } from "./LanguageContext";
+import { applyOverrides } from "./contentOverrides";
 
 type DisciplineKey = "brand" | "product" | "promotion" | "digital" | "environmental" | "outdoor";
 
@@ -25,8 +27,9 @@ const slugToDisciplineKey: Record<string, DisciplineKey> = {
  */
 export function useTranslatedServices(): ServiceItem[] {
   const t = useTranslations();
+  const { language, contentOverrides } = useLanguage();
 
-  return servicesData.map((s) => {
+  const items = servicesData.map((s) => {
     const key = slugToDisciplineKey[s.slug];
     if (!key) return s;
 
@@ -44,6 +47,20 @@ export function useTranslatedServices(): ServiceItem[] {
       imageAlt: d.imageAlt,
       inquiryLabel: d.inquiryLabel,
     };
+  });
+
+  // DB overrides (scope "services", key "<slug>.<field>") win over defaults
+  return items.map((item) => {
+    const relevant = contentOverrides.filter(
+      (o) => o.scope === "services" && (!o.locale || o.locale === language) && o.key.startsWith(`${item.slug}.`)
+    );
+    if (!relevant.length) return item;
+    const out = { ...item } as Record<string, unknown>;
+    for (const o of relevant) {
+      const field = o.key.slice(item.slug.length + 1);
+      if (field && /^[a-zA-Z]+$/.test(field)) out[field] = o.value;
+    }
+    return out as unknown as ServiceItem;
   });
 }
 
