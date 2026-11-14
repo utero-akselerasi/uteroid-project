@@ -115,12 +115,16 @@ export default function AdminDashboard() {
 
   async function loadSiteSettings() {
     try {
-      const res = await fetch("/api/site-settings", { cache: "no-store" });
-      if (res.ok) {
-        const data: SiteSettings = await res.json();
-        setSiteSettings(data);
-        if (data.typography?.typeface) {
-          setSelectedTypeface(data.typography.typeface);
+      const data = await api("admin/settings");
+      if (data && typeof data === "object") {
+        // Go stores each top-level settings key as a row; tolerate a legacy
+        // nested "site_settings" row by flattening it underneath.
+        const flat = { ...(data.site_settings && typeof data.site_settings === "object" ? data.site_settings : {}), ...data } as Record<string, any>;
+        delete flat.site_settings;
+        const merged: SiteSettings = { ...defaultSiteSettings, ...flat } as SiteSettings;
+        setSiteSettings(merged);
+        if (merged.typography?.typeface) {
+          setSelectedTypeface(merged.typography.typeface);
         }
       }
     } catch (err) {
@@ -129,10 +133,10 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => {
-    loadSiteSettings();
     api("admin/auth/session")
       .then((data) => {
         setSession(data);
+        loadSiteSettings();
         return loadProjects();
       })
       .catch(() => setSession(null))
@@ -513,6 +517,10 @@ export default function AdminDashboard() {
 
   // Save Site Settings Handler
   async function saveSiteSettingsData(updated: Partial<SiteSettings>, successMsg = "Pengaturan berhasil disimpan.") {
+    if (!session) {
+      setError("Sesi berakhir. Silakan login ulang.");
+      return;
+    }
     setBusy(true);
     setError("");
     setNotice("");
@@ -534,15 +542,9 @@ export default function AdminDashboard() {
         insights: { ...siteSettings.insights, ...(updated.insights || {}) },
       };
 
-      const res = await fetch("/api/site-settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(merged),
-      });
-
-      if (!res.ok) throw new Error("Gagal menyimpan ke server.");
-      const saved = await res.json();
-      setSiteSettings(saved);
+      // Go backend is the single write path (session + CSRF enforced there).
+      await api("admin/settings", { method: "PUT", body: JSON.stringify(merged) }, session.csrfToken);
+      setSiteSettings(merged);
       setNotice(successMsg);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal menyimpan pengaturan.");
@@ -934,6 +936,7 @@ export default function AdminDashboard() {
 
           {/* TAB 7: SECURITY */}
           {activeTab === "security" && (
+            <div style={{ display: "grid", gap: 24 }}>
             <form className={styles.editor} onSubmit={changePassword}>
               <div className={styles.editorHead}>
                 <div>
@@ -957,6 +960,59 @@ export default function AdminDashboard() {
                 </button>
               </div>
             </form>
+            <section className={styles.editor}>
+              <div className={styles.editorHead}>
+                <div>
+                  <div className={styles.eyebrow}>Backup & Audit</div>
+                  <h2>Ekspor Data & Log Audit</h2>
+                  <p className={styles.muted}>Unduh seluruh konten yang dikelola admin (proyek, media metadata, pengaturan, override) sebagai JSON, atau 200 entri audit terakhir.</p>
+                </div>
+              </div>
+              <div className={styles.checkGrid}>
+                <button
+                  className={styles.secondary}
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      const data = await api("admin/export");
+                      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = `utero-backup-${new Date().toISOString().slice(0, 10)}.json`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                      setNotice("Backup berhasil diunduh.");
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : "Ekspor gagal.");
+                    }
+                  }}
+                >
+                  Unduh Backup JSON
+                </button>
+                <button
+                  className={styles.ghost}
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      const data = await api("admin/audit");
+                      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = `utero-audit-${new Date().toISOString().slice(0, 10)}.json`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : "Gagal memuat audit.");
+                    }
+                  }}
+                >
+                  Unduh Audit Log
+                </button>
+              </div>
+            </section>
+            </div>
           )}
         </main>
       </div>

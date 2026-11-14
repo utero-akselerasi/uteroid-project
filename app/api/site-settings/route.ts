@@ -87,7 +87,15 @@ export async function GET() {
       });
       if (res.ok) {
         const data = await res.json();
-        const remoteSettings = data?.site_settings;
+        // Go stores each top-level settings key as a row; a legacy nested
+        // "site_settings" row is unwrapped when present.
+        const remoteSettings =
+          data?.site_settings && typeof data.site_settings === "object"
+            ? { ...data.site_settings, ...data, site_settings: undefined }
+            : data && typeof data === "object"
+              ? data
+              : null;
+        delete remoteSettings?.site_settings;
         if (remoteSettings && typeof remoteSettings === "object") {
           settings = {
             ...settings,
@@ -127,8 +135,35 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const payload = await request.json();
-    const current = readStoredSettings();
 
+    // Go backend is the single write path: session cookie + CSRF are
+    // forwarded and the Go status is returned verbatim — no more silent
+    // "saved" responses when persistence fails.
+    const cleanUrl = getBackendUrl();
+    if (cleanUrl) {
+      const upstream = await fetch(`${cleanUrl}/admin/settings`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: request.headers.get("cookie") || "",
+          "X-CSRF-Token": request.headers.get("x-csrf-token") || "",
+          Origin: process.env.FRONTEND_ORIGIN || "",
+        },
+        body: JSON.stringify(payload && typeof payload === "object" ? payload : {}),
+      });
+      const text = await upstream.text();
+      return new NextResponse(text, {
+        status: upstream.status,
+        headers: { "Content-Type": upstream.headers.get("content-type") || "application/json" },
+      });
+    }
+
+    if (process.env.NODE_ENV === "production") {
+      return NextResponse.json({ error: "Penyimpanan tidak tersedia." }, { status: 503 });
+    }
+
+    // Development-only offline fallback: local JSON file.
+    const current = readStoredSettings();
     const merged: SiteSettings = {
       ...current,
       ...payload,
@@ -171,26 +206,6 @@ export async function POST(request: Request) {
     };
 
     writeStoredSettings(merged);
-
-    // If Go backend is available, also attempt to synchronize settings there
-    const cleanUrl = getBackendUrl();
-    if (cleanUrl) {
-      try {
-        await fetch(`${cleanUrl}/admin/settings`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: request.headers.get("cookie") || "",
-            "X-CSRF-Token": request.headers.get("x-csrf-token") || "",
-          },
-          body: JSON.stringify({ site_settings: merged }),
-        });
-      } catch (backendErr) {
-        // Backend optional sync warning
-        console.warn("[site-settings] Could not sync with Go backend:", backendErr);
-      }
-    }
-
     return NextResponse.json(merged);
   } catch (err) {
     console.error("[site-settings] Error saving settings:", err);
