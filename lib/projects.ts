@@ -914,7 +914,7 @@ export const projects: Project[] = [
       "/projects/kiyona/gallery/013.webp",
       "/projects/kiyona/gallery/015.webp",
     ],
-    video: { type: "youtube", src: "DWIfe8hUZC0" },
+    video: { type: "youtube", src: "https://youtube.com/shorts/DVPmJbVU6Mc?si=8dYFokTueYskdsXX", aspectRatio: "9 / 16" },
     featured: false,
     priority: 71,
     tags: ["beauty", "cosmetics", "skincare", "identity"],
@@ -1364,7 +1364,7 @@ export const projects: Project[] = [
       "/projects/satu-titik/gallery/010.webp",
       "/projects/satu-titik/gallery/011.webp",
     ],
-    video: { type: "youtube", src: "DWIfe8hUZC0" },
+    video: { type: "youtube", src: "https://youtube.com/shorts/f8j3PS1kX8g?si=hNy1t8ffYLyAZ3UU", aspectRatio: "9 / 16" },
     featured: false,
     priority: 62,
     tags: ["fnb", "coffee", "hospitality", "identity"],
@@ -1775,6 +1775,7 @@ export const projects: Project[] = [
       "/projects/kavora/gallery/002.webp",
       "/projects/kavora/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/oDUoyMixF1c?si=Sqi6PEpeh1SKLCuX", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -1845,6 +1846,7 @@ export const projects: Project[] = [
       "/projects/mountea/gallery/002.webp",
       "/projects/mountea/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/Vmb_Tkod47A?si=yhN3OV5WhGWR4FUN", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -1915,6 +1917,7 @@ export const projects: Project[] = [
       "/projects/pocari-sweat/gallery/002.webp",
       "/projects/pocari-sweat/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/K3j8ph_DyHE?si=Mla1ut0oY8prcych", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -1950,6 +1953,7 @@ export const projects: Project[] = [
       "/projects/ronava/gallery/002.webp",
       "/projects/ronava/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/TxhsDsyjAh4?si=jMEAbgvdf0I74J-e", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -1985,6 +1989,7 @@ export const projects: Project[] = [
       "/projects/sareva/gallery/002.webp",
       "/projects/sareva/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/LGfoOINuW8M?si=fEbjt4E9_lhtXMo3", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -2018,6 +2023,7 @@ export const projects: Project[] = [
       "/projects/sariwangi/gallery/000.webp",
       "/projects/sariwangi/gallery/001.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/pwR7B2xS828?si=4USo_rr5xuypa0G7", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -2088,6 +2094,7 @@ export const projects: Project[] = [
       "/projects/silverqueen/gallery/002.webp",
       "/projects/silverqueen/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/l1xPpACWrwA?si=AmKiLOY1LtdEpbZO", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -2158,6 +2165,7 @@ export const projects: Project[] = [
       "/projects/tumbuhara/gallery/002.webp",
       "/projects/tumbuhara/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/EM-jV82MGfE?si=rXz7mgXQD8TdKhtP", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -2193,6 +2201,7 @@ export const projects: Project[] = [
       "/projects/vitara/gallery/002.webp",
       "/projects/vitara/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/-9REErea_H8?si=7NN5JhzFFdY470FL", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {
@@ -2263,6 +2272,7 @@ export const projects: Project[] = [
       "/projects/biskuat/gallery/002.webp",
       "/projects/biskuat/gallery/003.webp",
     ],
+    video: { type: "youtube", src: "https://youtube.com/shorts/xj4TR-iPvxQ?si=LTH0qLQAXFi8S4WK", aspectRatio: "9 / 16" },
     featured: false,
     priority: 28,
     details: {

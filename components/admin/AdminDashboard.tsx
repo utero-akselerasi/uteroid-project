@@ -1948,7 +1948,7 @@ function ProjectEditor({
             <input
               placeholder={
                 video.type === "youtube"
-                  ? "https://youtube.com/watch?v=... atau ID video"
+                  ? "https://youtube.com/watch?v=... , /shorts/... , atau ID video"
                   : video.type === "vimeo"
                   ? "https://vimeo.com/... atau ID video"
                   : "/projects/[slug]/video.mp4"

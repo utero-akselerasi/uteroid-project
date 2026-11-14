@@ -1023,7 +1023,8 @@
     ],
     "video": {
       "type": "youtube",
-      "src": "DWIfe8hUZC0"
+      "src": "https://youtube.com/shorts/DVPmJbVU6Mc?si=8dYFokTueYskdsXX",
+      "aspectRatio": "9 / 16"
     },
     "featured": false,
     "priority": 71,
@@ -1540,7 +1541,8 @@
     ],
     "video": {
       "type": "youtube",
-      "src": "DWIfe8hUZC0"
+      "src": "https://youtube.com/shorts/f8j3PS1kX8g?si=hNy1t8ffYLyAZ3UU",
+      "aspectRatio": "9 / 16"
     },
     "featured": false,
     "priority": 62,
@@ -2017,7 +2019,12 @@
       "/projects/kavora/gallery/003.webp"
     ],
     "id": 36,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/oDUoyMixF1c?si=Sqi6PEpeh1SKLCuX",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "kopiko",
@@ -2091,7 +2098,12 @@
       "/projects/mountea/gallery/003.webp"
     ],
     "id": 38,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/Vmb_Tkod47A?si=yhN3OV5WhGWR4FUN",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "narava",
@@ -2163,7 +2175,12 @@
       "/projects/pocari-sweat/gallery/003.webp"
     ],
     "id": 40,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/K3j8ph_DyHE?si=Mla1ut0oY8prcych",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "ronava",
@@ -2201,7 +2218,12 @@
       "/projects/ronava/gallery/003.webp"
     ],
     "id": 41,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/TxhsDsyjAh4?si=jMEAbgvdf0I74J-e",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "sareva",
@@ -2237,7 +2259,12 @@
       "/projects/sareva/gallery/003.webp"
     ],
     "id": 42,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/LGfoOINuW8M?si=fEbjt4E9_lhtXMo3",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "sariwangi",
@@ -2272,7 +2299,12 @@
       "/projects/sariwangi/gallery/001.webp"
     ],
     "id": 43,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/pwR7B2xS828?si=4USo_rr5xuypa0G7",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "soreva",
@@ -2345,7 +2377,12 @@
       "/projects/silverqueen/gallery/003.webp"
     ],
     "id": 45,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/l1xPpACWrwA?si=AmKiLOY1LtdEpbZO",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "teh-gelas",
@@ -2419,7 +2456,12 @@
       "/projects/tumbuhara/gallery/003.webp"
     ],
     "id": 47,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/EM-jV82MGfE?si=rXz7mgXQD8TdKhtP",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "vitara",
@@ -2454,7 +2496,12 @@
       "/projects/vitara/gallery/003.webp"
     ],
     "id": 48,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/-9REErea_H8?si=7NN5JhzFFdY470FL",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "wardah",
@@ -2536,7 +2583,12 @@
       ]
     },
     "id": 50,
-    "status": "published"
+    "status": "published",
+    "video": {
+      "type": "youtube",
+      "src": "https://youtube.com/shorts/xj4TR-iPvxQ?si=LTH0qLQAXFi8S4WK",
+      "aspectRatio": "9 / 16"
+    }
   },
   {
     "slug": "kapal-api",
