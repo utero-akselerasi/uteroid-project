@@ -12,6 +12,7 @@ import {
   type StudioConfig,
   type InsightsConfig,
 } from "@/lib/siteSettings";
+import SeedSyncPanel from "./SeedSyncPanel";
 import styles from "./AdminDashboard.module.css";
 
 type Status = "draft" | "published" | "archived";
@@ -87,6 +88,7 @@ export default function AdminDashboard() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [media, setMedia] = useState<MediaItem[]>([]);
+  const [seedSyncOpen, setSeedSyncOpen] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState<{
     isOpen: boolean;
     title: string;
@@ -676,6 +678,12 @@ export default function AdminDashboard() {
                     >
                       Import missing works ({legacyMissing.length})
                     </button>
+                    <button
+                      className={styles.ghost}
+                      onClick={() => setSeedSyncOpen((open) => !open)}
+                    >
+                      {seedSyncOpen ? "Tutup sinkronisasi" : "Sinkronisasi seed"}
+                    </button>
                     <button className={styles.primary} onClick={() => setEditing(emptyProject())}>
                       + Proyek baru
                     </button>
@@ -688,6 +696,17 @@ export default function AdminDashboard() {
                   <Stat label="Archived" value={stats.archived} />
                   <Stat label="Featured" value={stats.featured} />
                 </div>
+                {seedSyncOpen && session && (
+                  <SeedSyncPanel
+                    projects={projects}
+                    csrfToken={session.csrfToken}
+                    api={api}
+                    requestConfirm={requestConfirm}
+                    onApplied={loadProjects}
+                    onNotice={setNotice}
+                    onError={setError}
+                  />
+                )}
                 <div className={styles.toolbar}>
                   <input
                     aria-label="Filter nama proyek"
