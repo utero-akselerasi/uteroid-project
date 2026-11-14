@@ -7,12 +7,6 @@ const ROTATE_INTERVAL_MS = 7000;
 const CROSSFADE_MS       = 600;
 const SLOT_COUNT         = 4;
 
-// EXCLUDED SLUGS — routeSlug values that must never appear on the homepage grid
-export const HOMEPAGE_EXCLUDED_SLUGS: readonly string[] = [
-  "wajan-giok",
-  "baiturrohman",
-  "wismari-sign-system",
-];
 // ─────────────────────────────────────────────────────────────────────────────
 
 import Link        from "next/link";
@@ -286,7 +280,7 @@ function CardMeta({ project, disciplinesStr }: { project: PoolProject; disciplin
 // ── Main section ──────────────────────────────────────────────────────────────
 export default function SelectedWorkSection({ sourceProjects }: { sourceProjects: Project[] }) {
   const t = useTranslations();
-  const pool = useMemo(() => sourceProjects.filter((project) => !HOMEPAGE_EXCLUDED_SLUGS.includes(project.routeSlug)), [sourceProjects]);
+  const pool = useMemo(() => sourceProjects.filter((project) => project.homepageVisible !== false), [sourceProjects]);
   const serverDefault = useMemo(() => [...pool].sort((first, second) => (second.priority ?? 0) - (first.priority ?? 0)).slice(0, SLOT_COUNT), [pool]);
 
   // Server-renders SERVER_DEFAULT so crawlers always see real links.

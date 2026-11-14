@@ -44,6 +44,7 @@ const emptyProject = (): AdminProject => ({
   description: "",
   coverImage: "",
   featured: false,
+  homepageVisible: true,
   priority: 0,
   tags: [],
   galleryImages: [],
@@ -194,6 +195,15 @@ export default function AdminDashboard() {
     [projects]
   );
 
+  const legacyMissing = useMemo(() => {
+    const known = new Set<string>();
+    projects.forEach((project) => {
+      known.add(project.slug);
+      known.add(project.routeSlug);
+    });
+    return legacyProjects.filter((project) => !known.has(project.slug) && !known.has(project.routeSlug));
+  }, [projects]);
+
   async function login(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -257,18 +267,19 @@ export default function AdminDashboard() {
   }
 
   async function importLegacy() {
-    if (!session || projects.length > 0) return;
+    if (!session || legacyMissing.length === 0) return;
+    const count = legacyMissing.length;
     requestConfirm({
-      title: "Impor Proyek Portofolio",
-      message: "Impor 34 proyek portofolio bawaan Utero ke dalam database studio?",
-      confirmLabel: "Impor 34 Proyek",
+      title: "Import Missing Works",
+      message: `Import ${count} portofolio bawaan Utero yang belum ada di database studio?`,
+      confirmLabel: `Import ${count} Works`,
       isDanger: false,
       onConfirm: async () => {
         closeConfirm();
         setBusy(true);
         setError("");
         try {
-          const payload = legacyProjects.map((project) => ({ ...project, status: "published" }));
+          const payload = legacyMissing.map((project) => ({ ...project, status: "published" }));
           const result = await api("admin/projects/import", { method: "POST", body: JSON.stringify(payload) }, session.csrfToken);
           setNotice(`${result.imported} proyek berhasil diimpor.`);
           await loadProjects();
@@ -297,11 +308,11 @@ export default function AdminDashboard() {
     const cleanSlug = slugify(project.slug) || autoSlug;
     const cleanRouteSlug = slugify(project.routeSlug) || cleanSlug;
 
-    // Auto-assign priority for new projects
-    let autoPriority = project.priority || 0;
-    if (!project.id) {
+    // Auto-assign priority only when a new project leaves it unset
+    let priority = project.priority || 0;
+    if (!project.id && priority <= 0) {
       const maxPriority = projects.reduce((max, p) => Math.max(max, p.priority || 0), 0);
-      autoPriority = maxPriority + 1;
+      priority = maxPriority + 1;
     }
 
     const cleanProject: AdminProject = {
@@ -310,7 +321,7 @@ export default function AdminDashboard() {
       client,
       slug: cleanSlug,
       routeSlug: cleanRouteSlug,
-      priority: autoPriority,
+      priority,
     };
 
     setBusy(true);
@@ -658,11 +669,13 @@ export default function AdminDashboard() {
                     <p className={styles.muted}>Kelola portofolio publik, status publikasi, dan media S3.</p>
                   </div>
                   <div className={styles.actions}>
-                    {projects.length === 0 && (
-                      <button className={styles.secondary} disabled={busy} onClick={importLegacy}>
-                        Impor 34 proyek lama
-                      </button>
-                    )}
+                    <button
+                      className={styles.secondary}
+                      disabled={busy || legacyMissing.length === 0}
+                      onClick={importLegacy}
+                    >
+                      Import missing works ({legacyMissing.length})
+                    </button>
                     <button className={styles.primary} onClick={() => setEditing(emptyProject())}>
                       + Proyek baru
                     </button>
@@ -1860,7 +1873,11 @@ function ProjectEditor({
   const video = project.video || { type: "youtube", src: "", poster: "" };
 
   const setVideo = (updates: Partial<typeof video>) => {
-    set("video", { ...video, ...updates });
+    const next = { ...video, ...updates };
+    if (updates.src && next.type === "youtube" && updates.src.includes("/shorts/") && !next.aspectRatio) {
+      next.aspectRatio = "9 / 16";
+    }
+    set("video", next);
   };
 
   return (
@@ -1964,6 +1981,13 @@ function ProjectEditor({
               onChange={(e) => setVideo({ poster: e.target.value })}
             />
           </Field>
+          <Field label="Aspect ratio video (opsional)">
+            <input
+              placeholder="9 / 16"
+              value={video.aspectRatio || ""}
+              onChange={(e) => setVideo({ aspectRatio: e.target.value })}
+            />
+          </Field>
         </div>
       </section>
       <section className={styles.section}>
@@ -1988,6 +2012,14 @@ function ProjectEditor({
             <input type="checkbox" checked={!!project.featured} onChange={(e) => set("featured", e.target.checked)} />
             Featured
           </label>
+          <label className={styles.check}>
+            <input
+              type="checkbox"
+              checked={project.homepageVisible !== false}
+              onChange={(e) => set("homepageVisible", e.target.checked)}
+            />
+            Tampilkan di homepage
+          </label>
         </div>
         <div className={styles.grid2} style={{ marginTop: 18 }}>
           <Field label="Tags, satu per baris">
@@ -2000,23 +2032,17 @@ function ProjectEditor({
             />
           </Field>
           <Field label="Posisi cover di grid">
-            <select
-              value={project.gridCoverPosition || "center"}
+            <input
+              placeholder="center / center 50% / 45% 45%"
+              value={project.gridCoverPosition || ""}
               onChange={(e) => set("gridCoverPosition", e.target.value)}
-            >
-              <option value="center">Center</option>
-              <option value="top">Top</option>
-              <option value="bottom">Bottom</option>
-              <option value="left">Left</option>
-              <option value="right">Right</option>
-            </select>
+            />
           </Field>
-          <Field label="Priority (urutan)">
+          <Field label="Priority (makin tinggi, makin awal)">
             <input
               type="number"
               value={project.priority || 0}
-              readOnly
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.03)", cursor: "not-allowed" }}
+              onChange={(e) => set("priority", Number(e.target.value) || 0)}
             />
           </Field>
         </div>

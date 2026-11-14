@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS projects (
  description TEXT NOT NULL, excerpt TEXT NOT NULL DEFAULT '', cover_image TEXT NOT NULL DEFAULT '',
  hero_image TEXT NOT NULL DEFAULT '', grid_cover_position TEXT NOT NULL DEFAULT '', hover_image TEXT NOT NULL DEFAULT '',
  gallery_images_json TEXT NOT NULL DEFAULT '[]', video_json TEXT, featured INTEGER NOT NULL DEFAULT 0,
+ homepage_visible INTEGER NOT NULL DEFAULT 1,
  priority INTEGER NOT NULL DEFAULT 0, tags_json TEXT NOT NULL DEFAULT '[]', details_json TEXT NOT NULL DEFAULT '{}',
  status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','published','archived')),
  published_at DATETIME, created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -72,8 +73,17 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 );
 CREATE TABLE IF NOT EXISTS site_settings (
  key TEXT PRIMARY KEY, value_json TEXT NOT NULL, updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);`)
+ );
+CREATE TABLE IF NOT EXISTS schema_migrations (
+ key TEXT PRIMARY KEY, applied_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+ );`)
 	if err != nil {
+		return err
+	}
+	if err = s.ensureColumn("projects", "homepage_visible", "INTEGER NOT NULL DEFAULT 1"); err != nil {
+		return err
+	}
+	if err = s.runOneTimeMigration("backfill_video_aspect_ratios_v1", s.backfillVideoAspectRatios); err != nil {
 		return err
 	}
 	_, err = s.DB.Exec(`WITH ranked AS MATERIALIZED (
@@ -81,6 +91,86 @@ CREATE TABLE IF NOT EXISTS site_settings (
  FROM projects WHERE priority=0 AND deleted_at IS NULL
  ) UPDATE projects SET priority=(SELECT next_priority FROM ranked WHERE ranked.id=projects.id)
  WHERE id IN (SELECT id FROM ranked)`)
+	return err
+}
+
+func (s *Store) runOneTimeMigration(key string, migrate func() error) error {
+	var count int
+	if err := s.DB.QueryRow(`SELECT COUNT(*) FROM schema_migrations WHERE key=?`, key).Scan(&count); err != nil {
+		return err
+	}
+	if count > 0 {
+		return nil
+	}
+	if err := migrate(); err != nil {
+		return err
+	}
+	_, err := s.DB.Exec(`INSERT INTO schema_migrations(key) VALUES(?) ON CONFLICT(key) DO NOTHING`, key)
+	return err
+}
+
+func (s *Store) backfillVideoAspectRatios() error {
+	rows, err := s.DB.Query(`SELECT id, video_json FROM projects WHERE deleted_at IS NULL AND video_json IS NOT NULL AND video_json != ''`)
+	if err != nil {
+		return err
+	}
+	type update struct {
+		id    int64
+		video ProjectVideo
+	}
+	updates := []update{}
+	for rows.Next() {
+		var id int64
+		var raw string
+		if err := rows.Scan(&id, &raw); err != nil {
+			rows.Close()
+			return err
+		}
+		var video ProjectVideo
+		if err := json.Unmarshal([]byte(raw), &video); err != nil {
+			continue
+		}
+		if video.AspectRatio == "" && strings.Contains(video.Src, "/shorts/") {
+			video.AspectRatio = "9 / 16"
+			updates = append(updates, update{id: id, video: video})
+		}
+	}
+	if err := rows.Close(); err != nil {
+		return err
+	}
+	for _, item := range updates {
+		if _, err := s.DB.Exec(`UPDATE projects SET video_json=? WHERE id=?`, encode(item.video), item.id); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (s *Store) ensureColumn(table, column, declaration string) error {
+	rows, err := s.DB.Query(`PRAGMA table_info(` + table + `)`)
+	if err != nil {
+		return err
+	}
+	found := false
+	for rows.Next() {
+		var cid, notNull, pk int
+		var name, columnType string
+		var defaultValue sql.NullString
+		if err := rows.Scan(&cid, &name, &columnType, &notNull, &defaultValue, &pk); err != nil {
+			rows.Close()
+			return err
+		}
+		if name == column {
+			found = true
+		}
+	}
+	if err := rows.Close(); err != nil {
+		return err
+	}
+	if found {
+		return nil
+	}
+	_, err = s.DB.Exec(`ALTER TABLE ` + table + ` ADD COLUMN ` + column + ` ` + declaration)
 	return err
 }
 
@@ -100,7 +190,7 @@ func encode(v any) string { data, _ := json.Marshal(v); return string(data) }
 
 const projectColumns = `id,slug,route_slug,title,client,year,category,industry,disciplines_json,short_description,
  description,excerpt,cover_image,hero_image,grid_cover_position,hover_image,gallery_images_json,video_json,
- featured,priority,tags_json,details_json,status,published_at,created_at,updated_at`
+ featured,homepage_visible,priority,tags_json,details_json,status,published_at,created_at,updated_at`
 
 type scanner interface{ Scan(...any) error }
 
@@ -109,12 +199,14 @@ func scanProject(row scanner) (Project, error) {
 	var disciplines, gallery, tags, details string
 	var video sql.NullString
 	var published sql.NullTime
+	var homepageVisible bool
 	err := row.Scan(&p.ID, &p.Slug, &p.RouteSlug, &p.Title, &p.Client, &p.Year, &p.Category, &p.Industry, &disciplines,
 		&p.ShortDescription, &p.Description, &p.Excerpt, &p.CoverImage, &p.HeroImage, &p.GridCoverPosition, &p.HoverImage,
-		&gallery, &video, &p.Featured, &p.Priority, &tags, &details, &p.Status, &published, &p.CreatedAt, &p.UpdatedAt)
+		&gallery, &video, &p.Featured, &homepageVisible, &p.Priority, &tags, &details, &p.Status, &published, &p.CreatedAt, &p.UpdatedAt)
 	if err != nil {
 		return p, err
 	}
+	p.HomepageVisible = &homepageVisible
 	_ = json.Unmarshal([]byte(disciplines), &p.Disciplines)
 	_ = json.Unmarshal([]byte(gallery), &p.GalleryImages)
 	_ = json.Unmarshal([]byte(tags), &p.Tags)
@@ -188,16 +280,21 @@ func (s *Store) SaveProject(ctx context.Context, p *Project) error {
 	if err := validateProject(p); err != nil {
 		return err
 	}
-	p.GridCoverPosition = "center"
-	if p.ID == 0 {
+	if p.ID == 0 && p.Priority <= 0 {
 		if err := s.DB.QueryRowContext(ctx, `SELECT COALESCE(MAX(priority),0)+1 FROM projects WHERE deleted_at IS NULL`).Scan(&p.Priority); err != nil {
 			return err
 		}
-	} else {
-		if err := s.DB.QueryRowContext(ctx, `SELECT priority FROM projects WHERE id=? AND deleted_at IS NULL`, p.ID).Scan(&p.Priority); err != nil {
-			return err
-		}
 	}
+	if p.HomepageVisible == nil {
+		visible := true
+		if p.ID != 0 {
+			if err := s.DB.QueryRowContext(ctx, `SELECT homepage_visible FROM projects WHERE id=? AND deleted_at IS NULL`, p.ID).Scan(&visible); err != nil {
+				return err
+			}
+		}
+		p.HomepageVisible = &visible
+	}
+	homepageVisible := *p.HomepageVisible
 	var video any
 	if p.Video != nil {
 		video = encode(p.Video)
@@ -207,12 +304,12 @@ func (s *Store) SaveProject(ctx context.Context, p *Project) error {
 		p.PublishedAt = &now
 	}
 	values := []any{p.Slug, p.RouteSlug, p.Title, p.Client, p.Year, p.Category, p.Industry, encode(p.Disciplines), p.ShortDescription, p.Description,
-		p.Excerpt, p.CoverImage, p.HeroImage, p.GridCoverPosition, p.HoverImage, encode(p.GalleryImages), video, p.Featured, p.Priority,
+		p.Excerpt, p.CoverImage, p.HeroImage, p.GridCoverPosition, p.HoverImage, encode(p.GalleryImages), video, p.Featured, homepageVisible, p.Priority,
 		encode(p.Tags), encode(p.Details), p.Status, p.PublishedAt}
 	if p.ID == 0 {
 		result, err := s.DB.ExecContext(ctx, `INSERT INTO projects(slug,route_slug,title,client,year,category,industry,disciplines_json,
 short_description,description,excerpt,cover_image,hero_image,grid_cover_position,hover_image,gallery_images_json,video_json,
-featured,priority,tags_json,details_json,status,published_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, values...)
+featured,homepage_visible,priority,tags_json,details_json,status,published_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, values...)
 		if err != nil {
 			return err
 		}
@@ -236,7 +333,7 @@ featured,priority,tags_json,details_json,status,published_at) VALUES(?,?,?,?,?,?
 	values = append(values, p.ID)
 	_, err = tx.ExecContext(ctx, `UPDATE projects SET slug=?,route_slug=?,title=?,client=?,year=?,category=?,industry=?,disciplines_json=?,
 short_description=?,description=?,excerpt=?,cover_image=?,hero_image=?,grid_cover_position=?,hover_image=?,gallery_images_json=?,video_json=?,
-featured=?,priority=?,tags_json=?,details_json=?,status=?,published_at=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`, values...)
+featured=?,homepage_visible=?,priority=?,tags_json=?,details_json=?,status=?,published_at=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`, values...)
 	if err != nil {
 		return err
 	}
@@ -292,4 +389,3 @@ func (s *Store) GetAllSettings(ctx context.Context) (map[string]any, error) {
 	}
 	return result, nil
 }
-

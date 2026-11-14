@@ -83,6 +83,7 @@ export interface Project {
 
   // ── Flags & metadata ─────────────────────────────────────
   featured?: boolean;          // Show prominently on homepage (top ~3–4)
+  homepageVisible?: boolean;   // Include in homepage rotation (default true)
   priority?: number;           // Archive sort priority (higher = shown first)
   tags?: string[];             // Optional tags for future filtering
 

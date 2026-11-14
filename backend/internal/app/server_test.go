@@ -77,7 +77,7 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	if len(cookies) != 1 || !cookies[0].HttpOnly {
 		t.Fatal("missing secure session cookie")
 	}
-	project := Project{Slug: "sample", RouteSlug: "sample-project", Title: "Sample", Client: "Test client", Status: "draft", Industry: "services", Disciplines: []string{"identity"}, GridCoverPosition: "top", Priority: 999, Tags: []string{"identity", "print"}, Details: ProjectDetails{Challenge: "Before", Solution: "After"}}
+	project := Project{Slug: "sample", RouteSlug: "sample-project", Title: "Sample", Client: "Test client", Status: "draft", Industry: "services", Disciplines: []string{"identity"}, GridCoverPosition: "top", Priority: 999, Tags: []string{"identity", "print"}, Details: ProjectDetails{Challenge: "Before", Solution: "After"}, Video: &ProjectVideo{Type: "youtube", Src: "https://youtube.com/shorts/example", AspectRatio: "9 / 16"}}
 	body, _ := json.Marshal(project)
 	withoutCSRF := httptest.NewRequest(http.MethodPost, "/api/v1/admin/projects", bytes.NewReader(body))
 	withoutCSRF.AddCookie(cookies[0])
@@ -101,8 +101,8 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	if created.Code != http.StatusCreated {
 		t.Fatalf("create failed: %d %s", created.Code, created.Body.String())
 	}
-	if !bytes.Contains(created.Body.Bytes(), []byte(`"gridCoverPosition":"center"`)) || !bytes.Contains(created.Body.Bytes(), []byte(`"priority":1`)) {
-		t.Fatalf("defaults not applied: %s", created.Body.String())
+	if !bytes.Contains(created.Body.Bytes(), []byte(`"gridCoverPosition":"top"`)) || !bytes.Contains(created.Body.Bytes(), []byte(`"priority":999`)) || !bytes.Contains(created.Body.Bytes(), []byte(`"homepageVisible":true`)) || !bytes.Contains(created.Body.Bytes(), []byte(`"aspectRatio":"9 / 16"`)) {
+		t.Fatalf("submitted fields not preserved: %s", created.Body.String())
 	}
 	public := httptest.NewRecorder()
 	handler.ServeHTTP(public, httptest.NewRequest(http.MethodGet, "/api/v1/projects", nil))
@@ -111,6 +111,8 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	}
 	project.Status = "published"
 	project.ID = 1
+	hidden := false
+	project.HomepageVisible = &hidden
 	body, _ = json.Marshal(project)
 	update := httptest.NewRequest(http.MethodPut, "/api/v1/admin/projects/1", bytes.NewReader(body))
 	update.AddCookie(cookies[0])
@@ -120,8 +122,8 @@ func TestAdminSessionAndPublication(t *testing.T) {
 	if updated.Code != http.StatusOK {
 		t.Fatalf("publish failed: %d %s", updated.Code, updated.Body.String())
 	}
-	if !bytes.Contains(updated.Body.Bytes(), []byte(`"priority":1`)) {
-		t.Fatalf("priority changed on update: %s", updated.Body.String())
+	if !bytes.Contains(updated.Body.Bytes(), []byte(`"priority":999`)) || !bytes.Contains(updated.Body.Bytes(), []byte(`"homepageVisible":false`)) {
+		t.Fatalf("priority or homepage flag not preserved on update: %s", updated.Body.String())
 	}
 	public = httptest.NewRecorder()
 	handler.ServeHTTP(public, httptest.NewRequest(http.MethodGet, "/api/v1/projects", nil))
