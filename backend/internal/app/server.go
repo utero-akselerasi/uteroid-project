@@ -791,7 +791,7 @@ func (s *Server) getMedia(w http.ResponseWriter, r *http.Request) {
 			apiError(w, 404, "media not found")
 			return
 		}
-	} else if parts[0] != "site" && parts[0] != "banners" {
+	} else if parts[0] != "site" && parts[0] != "banners" && parts[0] != "campaign" {
 		apiError(w, 404, "media not found")
 		return
 	}

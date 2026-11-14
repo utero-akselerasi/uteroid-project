@@ -12,6 +12,8 @@ import {
   type StudioConfig,
   type InsightsConfig,
 } from "@/lib/siteSettings";
+import CampaignManager from "./CampaignManager";
+import { api, uploadMediaFile } from "./adminApi";
 import SeedSyncPanel from "./SeedSyncPanel";
 import styles from "./AdminDashboard.module.css";
 
@@ -19,7 +21,7 @@ type Status = "draft" | "published" | "archived";
 type AdminProject = Project & { id?: number; status: Status; publishedAt?: string; createdAt?: string; updatedAt?: string };
 type SessionResponse = { authenticated: boolean; csrfToken: string };
 type MediaItem = { id: number; mediaType: string; url: string; filename: string; altText?: string; width?: number; height?: number; sortOrder: number };
-type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "security";
+type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "campaign" | "security";
 
 const disciplines = ["identity", "packaging", "signage", "campaign", "print", "digital", "exhibition", "indoor", "outdoor"] as const;
 const industries = ["fnb", "corporate", "government", "education", "property", "retail", "arts", "event", "services", "products"] as const;
@@ -53,27 +55,6 @@ const emptyProject = (): AdminProject => ({
   details: { scope: [], challenge: "", solution: "" },
   status: "draft",
 });
-
-async function api(path: string, options: RequestInit = {}, csrfToken = "") {
-  const headers = new Headers(options.headers);
-  if (options.body && !(options.body instanceof FormData)) headers.set("Content-Type", "application/json");
-  if (csrfToken) headers.set("X-CSRF-Token", csrfToken);
-  const response = await fetch(`/portfolio-api/${path}`, { ...options, headers, credentials: "same-origin", cache: "no-store" });
-  if (response.status === 204) return null;
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || "Permintaan gagal");
-  return data;
-}
-
-async function uploadMediaFile(file: File, folder = "site"): Promise<string> {
-  const sessionData = await api("admin/auth/session").catch(() => null);
-  const form = new FormData();
-  form.set("file", file);
-  form.set("folder", folder);
-  const data = await api("admin/site-media", { method: "POST", body: form }, sessionData?.csrfToken || "");
-  if (!data?.url) throw new Error("Gagal mengunggah gambar.");
-  return data.url as string;
-}
 
 export default function AdminDashboard() {
   const [session, setSession] = useState<SessionResponse | null>(null);
@@ -676,6 +657,15 @@ export default function AdminDashboard() {
                 Menu Studio & Ruang
               </button>
               <button
+                className={activeTab === "campaign" ? styles.active : ""}
+                onClick={() => {
+                  setActiveTab("campaign");
+                  setEditing(null);
+                }}
+              >
+                Kampanye & Homepage
+              </button>
+              <button
                 className={activeTab === "contacts" ? styles.active : ""}
                 onClick={() => {
                   setActiveTab("contacts");
@@ -912,6 +902,17 @@ export default function AdminDashboard() {
               busy={busy}
               onSave={async (contacts) => {
                 await saveSiteSettingsData({ contacts }, "Informasi kontak dan media sosial berhasil diperbarui!");
+              }}
+            />
+          )}
+
+          {/* TAB: CAMPAIGN & HOMEPAGE */}
+          {activeTab === "campaign" && (
+            <CampaignManager
+              settings={siteSettings}
+              busy={busy}
+              onSave={async (payload, message) => {
+                await saveSiteSettingsData(payload, message);
               }}
             />
           )}

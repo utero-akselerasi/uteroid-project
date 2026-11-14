@@ -30,6 +30,19 @@ export async function getPortfolioProjects(): Promise<Project[]> {
   }
 }
 
+export async function getPublicSettingsMap(): Promise<Record<string, any>> {
+  const apiBase = getApiBase();
+  if (!apiBase) return {};
+  try {
+    const response = await fetch(`${apiBase}/settings`, { cache: "no-store", signal: AbortSignal.timeout(5000) });
+    if (!response.ok) return {};
+    const data = await response.json();
+    return data && typeof data === "object" ? data : {};
+  } catch {
+    return {};
+  }
+}
+
 export async function getPortfolioProject(routeSlug: string): Promise<Project | undefined> {
   const apiBase = getApiBase();
   if (!apiBase) return localProjects.find((project) => project.routeSlug === routeSlug);

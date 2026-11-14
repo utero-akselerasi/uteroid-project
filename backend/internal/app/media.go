@@ -156,12 +156,22 @@ func (s *Server) countDeckMedia(ctx context.Context, projectID int64) int {
 // ─────────────────────────── Site media ───────────────────────────
 
 // POST /api/v1/admin/site-media — authenticated upload for site imagery
-// (banners, studio photos, service images). Objects land under site/ or
-// banners/ keys in SeaweedFS and are served via /portfolio-api/media/...
+// (banners, studio photos, service images) and campaign assets. Objects land
+// under site/, banners/ or campaign/ keys in SeaweedFS and are served via
+// /portfolio-api/media/...
 func (s *Server) uploadSiteMedia(w http.ResponseWriter, r *http.Request) {
-	r.Body = http.MaxBytesReader(w, r.Body, maxMediaBytes+1<<20)
+	folder := r.FormValue("folder")
+	if folder != "banners" && folder != "campaign" {
+		folder = "site"
+	}
+	// Campaign posts may carry MP4 videos; everything else is image-only.
+	limit := int64(maxMediaBytes)
+	if folder == "campaign" {
+		limit = 100 << 20
+	}
+	r.Body = http.MaxBytesReader(w, r.Body, limit+(4<<20))
 	if err := r.ParseMultipartForm(32 << 20); err != nil {
-		apiError(w, 400, "file exceeds 20 MB")
+		apiError(w, 400, "file exceeds size limit")
 		return
 	}
 	file, header, err := r.FormFile("file")
@@ -170,22 +180,33 @@ func (s *Server) uploadSiteMedia(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
-	media, err := readAndValidateImage(file, maxMediaBytes)
-	if err != nil {
-		apiError(w, 400, err.Error())
+	data, err := io.ReadAll(io.LimitReader(file, limit+1))
+	if err != nil || len(data) == 0 || int64(len(data)) > limit {
+		apiError(w, 400, "invalid file")
 		return
 	}
-	folder := r.FormValue("folder")
-	if folder != "banners" {
-		folder = "site"
+	contentType := http.DetectContentType(data)
+	var width, height int
+	ext := ""
+	if contentType == "video/mp4" && folder == "campaign" {
+		ext = ".mp4"
+	} else {
+		media, mediaErr := readAndValidateImage(bytes.NewReader(data), maxMediaBytes)
+		if mediaErr != nil {
+			apiError(w, 400, mediaErr.Error())
+			return
+		}
+		data = media.data
+		contentType = media.contentType
+		width, height = media.width, media.height
+		ext = media.ext
 	}
 	token, _ := randomToken(18)
-	ext := media.ext
 	if ext == "" {
 		ext = ".jpg"
 	}
 	key := fmt.Sprintf("%s/%s%s", folder, token, strings.ToLower(ext))
-	if err = s.storage.Put(r.Context(), key, media.contentType, bytes.NewReader(media.data), int64(len(media.data))); err != nil {
+	if err = s.storage.Put(r.Context(), key, contentType, bytes.NewReader(data), int64(len(data))); err != nil {
 		slog.Error("site media upload failed", "error", err)
 		apiError(w, 502, "storage unavailable")
 		return
@@ -195,8 +216,8 @@ func (s *Server) uploadSiteMedia(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, 201, map[string]any{
 		"url":      "/portfolio-api/media/" + key,
 		"filename": filepath.Base(header.Filename),
-		"width":    media.width,
-		"height":   media.height,
+		"width":    width,
+		"height":   height,
 	})
 }
 

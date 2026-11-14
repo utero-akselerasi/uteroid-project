@@ -4,22 +4,72 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import VideoPlayer from "@/components/project-detail/VideoPlayer";
 import RevealOnScroll from "@/components/RevealOnScroll";
-import { useTranslations } from "@/lib/useTranslations";
+import { useLanguage } from "@/lib/LanguageContext";
+import { resolveCampaignConfig } from "@/lib/campaignDefaults";
+import type { CampaignConfig, CampaignLocaleConfig, CampaignPostConfig } from "@/lib/siteSettings";
 import type { ProjectVideo } from "@/lib/types";
 
-export default function TransitionCampaignSpotlight() {
-  const t = useTranslations();
-  const campaign = t.transitionCampaign;
+type MergedPost = CampaignPostConfig & { position: string; headline: string; description: string; playAria?: string };
+type MergedCampaign = Omit<CampaignLocaleConfig, "postLeft" | "postMiddle" | "postRight"> & {
+  postLeft: MergedPost;
+  postMiddle: MergedPost;
+  postRight: MergedPost;
+};
+
+export default function TransitionCampaignSpotlight({ config }: { config?: CampaignConfig }) {
+  const { language } = useLanguage();
+  const resolved = resolveCampaignConfig(config);
+  const campaign = resolved[language] as unknown as MergedCampaign;
   const [activeVideo, setActiveVideo] = useState<ProjectVideo | null>(null);
   const lastActiveTriggerRef = useRef<HTMLElement | null>(null);
 
-  const handlePlayVideo = (src: string, triggerEl: HTMLElement | null) => {
+  const handlePlayVideo = (post: MergedPost, triggerEl: HTMLElement | null) => {
     lastActiveTriggerRef.current = triggerEl;
     setActiveVideo({
       type: "file",
-      src,
+      src: post.src || "",
+      poster: post.poster,
       aspectRatio: "3 / 4",
     });
+  };
+
+  const renderPostMedia = (post: MergedPost) => {
+    if (post.mediaType === "image" || !post.src) {
+      return (
+        <Image
+          src={post.src || "/projects/transition-feed-campaign/feed-middle.webp"}
+          alt={post.headline || "UTERO campaign"}
+          fill
+          sizes="(max-width: 840px) 100vw, 33vw"
+          className="tfc-card__img"
+          priority
+        />
+      );
+    }
+    return (
+      <>
+        <video
+          src={`${post.src}#t=0.1`}
+          preload="metadata"
+          playsInline
+          muted
+          className="tfc-card__video"
+          aria-hidden="true"
+        />
+        <button
+          type="button"
+          className="tfc-card__play-btn"
+          onClick={(e) => handlePlayVideo(post, e.currentTarget)}
+          aria-label={post.playAria || post.headline}
+        >
+          <span className="tfc-card__play-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+        </button>
+      </>
+    );
   };
 
   return (
@@ -436,31 +486,10 @@ export default function TransitionCampaignSpotlight() {
         {/* 3-Panel Connected Grid Composition */}
         <RevealOnScroll delay={1}>
           <div className="tfc-grid">
-            {/* Post 1 - Posisi Kiri (Video) */}
+            {/* Post 1 - Posisi Kiri */}
             <article className="tfc-card">
               <div className="tfc-card__media-wrap">
-                <video
-                  src="/projects/transition-feed-campaign/video-left.mp4#t=0.1"
-                  preload="metadata"
-                  playsInline
-                  muted
-                  className="tfc-card__video"
-                  aria-hidden="true"
-                />
-                <button
-                  type="button"
-                  className="tfc-card__play-btn"
-                  onClick={(e) =>
-                    handlePlayVideo("/projects/transition-feed-campaign/video-left.mp4", e.currentTarget)
-                  }
-                  aria-label={campaign.postLeft.playAria}
-                >
-                  <span className="tfc-card__play-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </span>
-                </button>
+                {renderPostMedia(campaign.postLeft)}
               </div>
 
               <div className="tfc-card__caption">
@@ -472,17 +501,10 @@ export default function TransitionCampaignSpotlight() {
               </div>
             </article>
 
-            {/* Post 2 - Posisi Tengah (Feed Image) */}
+            {/* Post 2 - Posisi Tengah */}
             <article className="tfc-card">
               <div className="tfc-card__media-wrap">
-                <Image
-                  src="/projects/transition-feed-campaign/feed-middle.webp"
-                  alt="UTERO HAS SOMETHING BIG FOR YOU — Utero Indonesia"
-                  fill
-                  sizes="(max-width: 840px) 100vw, 33vw"
-                  className="tfc-card__img"
-                  priority
-                />
+                {renderPostMedia(campaign.postMiddle)}
               </div>
 
               <div className="tfc-card__caption">
@@ -494,31 +516,10 @@ export default function TransitionCampaignSpotlight() {
               </div>
             </article>
 
-            {/* Post 3 - Posisi Kanan (Video) */}
+            {/* Post 3 - Posisi Kanan */}
             <article className="tfc-card">
               <div className="tfc-card__media-wrap">
-                <video
-                  src="/projects/transition-feed-campaign/video-right.mp4#t=0.1"
-                  preload="metadata"
-                  playsInline
-                  muted
-                  className="tfc-card__video"
-                  aria-hidden="true"
-                />
-                <button
-                  type="button"
-                  className="tfc-card__play-btn"
-                  onClick={(e) =>
-                    handlePlayVideo("/projects/transition-feed-campaign/video-right.mp4", e.currentTarget)
-                  }
-                  aria-label={campaign.postRight.playAria}
-                >
-                  <span className="tfc-card__play-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </span>
-                </button>
+                {renderPostMedia(campaign.postRight)}
               </div>
 
               <div className="tfc-card__caption">
@@ -537,7 +538,7 @@ export default function TransitionCampaignSpotlight() {
       {activeVideo && (
         <VideoPlayer
           video={activeVideo}
-          poster="/projects/transition-feed-campaign/cover-9b98f119.webp"
+          poster={activeVideo.poster || "/projects/transition-feed-campaign/cover-9b98f119.webp"}
           onClose={() => {
             setActiveVideo(null);
             lastActiveTriggerRef.current?.focus();

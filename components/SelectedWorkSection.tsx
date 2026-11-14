@@ -278,9 +278,14 @@ function CardMeta({ project, disciplinesStr }: { project: PoolProject; disciplin
 }
 
 // ── Main section ──────────────────────────────────────────────────────────────
-export default function SelectedWorkSection({ sourceProjects }: { sourceProjects: Project[] }) {
+export default function SelectedWorkSection({ sourceProjects, mode = "random" }: { sourceProjects: Project[]; mode?: "random" | "fixed" }) {
   const t = useTranslations();
-  const pool = useMemo(() => sourceProjects.filter((project) => project.homepageVisible !== false), [sourceProjects]);
+  const fixed = mode === "fixed";
+  const pool = useMemo(() => {
+    const visible = sourceProjects.filter((project) => project.homepageVisible !== false);
+    if (!fixed) return visible;
+    return [...visible].sort((first, second) => (second.priority ?? 0) - (first.priority ?? 0)).slice(0, SLOT_COUNT);
+  }, [sourceProjects, fixed]);
   const serverDefault = useMemo(() => [...pool].sort((first, second) => (second.priority ?? 0) - (first.priority ?? 0)).slice(0, SLOT_COUNT), [pool]);
 
   // Server-renders SERVER_DEFAULT so crawlers always see real links.
@@ -308,11 +313,15 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Randomise initial set on mount (client-only)
+  // Randomise initial set on mount (client-only); fixed mode keeps priority order
   useEffect(() => {
+    if (fixed) {
+      bagRef.current = makeBag(pool);
+      return;
+    }
     setDisplayedProjects(shuffle([...pool]).slice(0, SLOT_COUNT));
     bagRef.current = makeBag(pool);
-  }, [pool]);
+  }, [pool, fixed]);
 
   // IntersectionObserver
   useEffect(() => {
@@ -385,14 +394,14 @@ export default function SelectedWorkSection({ sourceProjects }: { sourceProjects
     });
   }, [hoveredSlug, focusedSlug, pool]);
 
-  // Rotation interval — pauses on all conditions
+  // Rotation interval — pauses on all conditions; disabled in fixed mode
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || fixed) return;
     const shouldPause = !inViewport || !tabVisible || !!hoveredSlug || !!focusedSlug;
     if (shouldPause) return;
     const id = setInterval(performSwap, ROTATE_INTERVAL_MS);
     return () => clearInterval(id);
-  }, [reducedMotion, inViewport, tabVisible, hoveredSlug, focusedSlug, performSwap]);
+  }, [reducedMotion, fixed, inViewport, tabVisible, hoveredSlug, focusedSlug, performSwap]);
 
   // Year range from entire eligible pool (not just displayed cards)
   const yearRangeText = useMemo(() => {
