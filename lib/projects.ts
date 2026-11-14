@@ -2439,6 +2439,58 @@ export const projects: Project[] = [
       ],
     },
   },
+
+  // ── TRANSITION FEED CAMPAIGN ─────────────────────────────────────────
+  {
+    slug: "transition-feed-campaign",
+    routeSlug: "transition-feed-campaign",
+    title: "Transition Feed Campaign",
+    client: "Utero Indonesia",
+    year: "2026",
+    category: "Instagram Campaign",
+    industry: "services",
+    disciplines: ["campaign", "digital"],
+    shortDescription:
+      "Rangkaian kampanye teaser tiga bagian di Instagram yang memperkenalkan era visual baru Utero Indonesia.",
+    description:
+      "Transition Feed Campaign adalah kampanye self-initiated yang menandai Utero Indonesia memasuki fase visual baru. Dirilis sebagai rangkaian tiga pos Instagram yang terkoordinasi — video pembuka \"NEW ERA OF DESIGN\", pengumuman utama di pos tengah, dan teaser \"ARE YOU READY?\" — untuk membangun curiosity sekaligus menegaskan bahwa pembaruan ini bukan sekadar perubahan tampilan, melainkan langkah menuju pendekatan desain yang lebih segar, terarah, dan relevan.",
+    excerpt:
+      "Rangkaian kampanye teaser tiga bagian di Instagram yang memperkenalkan era visual baru Utero Indonesia.",
+    coverImage: "/projects/transition-feed-campaign/cover-9b98f119.webp",
+    heroImage: "/projects/transition-feed-campaign/cover-9b98f119.webp",
+    hoverImage: "/projects/transition-feed-campaign/feed-middle.webp",
+    galleryImages: [
+      "/projects/transition-feed-campaign/feed-middle.webp",
+    ],
+    video: {
+      type: "file",
+      src: "/projects/transition-feed-campaign/video-left.mp4",
+      poster: "/projects/transition-feed-campaign/cover-9b98f119.webp",
+      aspectRatio: "3 / 4",
+    },
+    featured: false,
+    homepageVisible: false,
+    priority: 5,
+    tags: ["campaign", "instagram", "transition", "self-initiated"],
+    details: {
+      scope: [
+        "Campaign Concept & Narrative",
+        "Instagram 3-Grid Sequence",
+        "Motion Content & Art Direction",
+        "Typography-Led Feed Composition",
+      ],
+      challenge:
+        "Memperkenalkan era visual baru Utero Indonesia secara publik tanpa mengurangi momentum, melalui format feed Instagram yang terbatas namun harus tetap kohesif dan membangun anticipation.",
+      solution:
+        "Menyusun rangkaian tiga pos terkoordinasi: video teaser kiri yang menandai transisi, pos tengah yang menjadi announcement utama dengan layout bersih dan fokus tipografi, serta video kanan yang membuka curiosity sebelum reveal. Ketiganya dirancang sebagai satu narasi visual utuh.",
+      deliverables: [
+        "Konsep & Strategi Kampanye Transisi",
+        "Sinematografi & Editing Video Teaser",
+        "Desain Feed Image Pos Tengah",
+        "Copywriting & Caption Sequence",
+      ],
+    },
+  },
 ];
 
 
