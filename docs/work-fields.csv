@@ -1,0 +1,37 @@
+field,source_today,db_today,admin_editable_today,status,action,milestone
+slug,lib/projects.ts + data/projects.json,projects.slug,yes,ok,keep,-
+routeSlug,lib/projects.ts + data/projects.json,projects.route_slug,yes,ok (redirects recorded),keep,- 
+title,lib/projects.ts + data/projects.json,projects.title,yes,ok,keep,-
+client,lib/projects.ts + data/projects.json,projects.client,yes,ok,keep,-
+year,lib/projects.ts + data/projects.json,projects.year,yes,ok (one empty value in seed),keep,-
+category,lib/projects.ts + data/projects.json,projects.category,yes,ok,keep,-
+industry,lib/projects.ts + data/projects.json,projects.industry,yes,ok,keep,-
+disciplines,lib/projects.ts + data/projects.json,projects.disciplines_json,yes,ok,keep,-
+shortDescription,lib/projects.ts + data/projects.json,projects.short_description,yes,ok,keep,-
+description,lib/projects.ts + data/projects.json,projects.description,yes,ok,keep,-
+excerpt,lib/projects.ts + data/projects.json,projects.excerpt,yes (not in form),partial,expose in form,M1
+coverImage,lib/projects.ts + data/projects.json,projects.cover_image,upload/URL,yes (upload appends),add replace+cleanup,M2
+heroImage,lib/projects.ts + data/projects.json,projects.hero_image,no (derived from cover),partial,dedicated hero or keep=cover (decide),M2
+gridCoverPosition,lib/projects.ts + data/projects.json,projects.grid_cover_position,select but overwritten,broken,stop forcing center,M1
+hoverImage,lib/projects.ts + data/projects.json,projects.hover_image,upload,yes (upload appends),add replace+cleanup,M2
+galleryImages,lib/projects.ts + data/projects.json,projects.gallery_images_json,upload/delete/order,yes (append only),add replace/alt,M2
+video.type,lib/projects.ts + data/projects.json,projects.video_json,select,yes,keep,-
+video.src,lib/projects.ts + data/projects.json,projects.video_json,input,yes,keep,-
+video.poster,lib/projects.ts + data/projects.json,projects.video_json,input,yes,keep,-
+video.aspectRatio,data/projects.json (12 Shorts),projects.video_json,no,rejected by Go (DisallowUnknownFields); 0 in DB,add field + accept + form + reimport,M1
+featured,lib/projects.ts + data/projects.json,projects.featured,checkbox,yes,keep,-
+priority/order,lib/projects.ts + data/projects.json,projects.priority,readonly,auto-assigned; update preserves old,make editable,M1
+homepage flag,hard-coded HOMEPAGE_EXCLUDED_SLUGS,none,no,missing,add homepage_visible column + form + remove constant,M1
+tags,lib/projects.ts + data/projects.json,projects.tags_json,yes,yes,keep,-
+details.scope,lib/projects.ts + data/projects.json,projects.details_json,yes,yes,keep,-
+details.challenge,lib/projects.ts + data/projects.json,projects.details_json,yes,yes,keep,-
+details.solution,lib/projects.ts + data/projects.json,projects.details_json,yes,yes,keep,-
+details.deliverables,lib/projects.ts + data/projects.json,projects.details_json,no,missing,expose in form,M1/M3
+status,lib/projects.ts + data/projects.json,projects.status,yes,yes,keep,-
+publishedAt,derived,projects.published_at,no,auto,yes,keep,-
+media.alt,public files,project_media.alt_text,no (upload sends title only),partial,expose per media,M2
+media.order,public files,project_media.sort_order,yes (arrows),yes,keep,-
+media.replace,public files,project_media,none,append+manual delete,atomic replace,M2
+deck.pages,public/projects/*/deck + manifest,project_media media_type=deck,delete/reorder,append only,replace whole deck,M2
+deck.watermark,always on every page,not stored,no,missing,per-deck toggle default on never page 1,M2
+campaign sequence,public/img + components,none,no,missing,optional media kind,M2
