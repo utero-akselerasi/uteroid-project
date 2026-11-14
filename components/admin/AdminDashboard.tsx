@@ -18,7 +18,7 @@ import styles from "./AdminDashboard.module.css";
 type Status = "draft" | "published" | "archived";
 type AdminProject = Project & { id?: number; status: Status; publishedAt?: string; createdAt?: string; updatedAt?: string };
 type SessionResponse = { authenticated: boolean; csrfToken: string };
-type MediaItem = { id: number; mediaType: string; url: string; filename: string; sortOrder: number };
+type MediaItem = { id: number; mediaType: string; url: string; filename: string; altText?: string; width?: number; height?: number; sortOrder: number };
 type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "security";
 
 const disciplines = ["identity", "packaging", "signage", "campaign", "print", "digital", "exhibition", "indoor", "outdoor"] as const;
@@ -65,13 +65,14 @@ async function api(path: string, options: RequestInit = {}, csrfToken = "") {
   return data;
 }
 
-async function uploadMediaFile(file: File): Promise<string> {
+async function uploadMediaFile(file: File, folder = "site"): Promise<string> {
+  const sessionData = await api("admin/auth/session").catch(() => null);
   const form = new FormData();
   form.set("file", file);
-  const res = await fetch("/api/admin/upload-banner", { method: "POST", body: form });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || "Gagal mengunggah gambar.");
-  return data.url;
+  form.set("folder", folder);
+  const data = await api("admin/site-media", { method: "POST", body: form }, sessionData?.csrfToken || "");
+  if (!data?.url) throw new Error("Gagal mengunggah gambar.");
+  return data.url as string;
 }
 
 export default function AdminDashboard() {
@@ -460,6 +461,74 @@ export default function AdminDashboard() {
     }
   }
 
+  async function replaceMediaFile(project: AdminProject, item: MediaItem, file: File) {
+    if (!session || !project.id) return;
+    setBusy(true);
+    setError("");
+    try {
+      const form = new FormData();
+      form.set("file", file);
+      form.set("altText", item.altText || project.title);
+      await api(`admin/projects/${project.id}/media/${item.id}`, { method: "PUT", body: form }, session.csrfToken);
+      setMedia(await api(`admin/projects/${project.id}/media`));
+      setEditing(await api(`admin/projects/${project.id}`));
+      await loadProjects();
+      setNotice(`File "${item.filename}" diganti.`);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal mengganti media");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function saveMediaAlt(project: AdminProject, item: MediaItem, altText: string) {
+    if (!session || !project.id) return;
+    try {
+      await api(`admin/projects/${project.id}/media/${item.id}`, { method: "PATCH", body: JSON.stringify({ altText }) }, session.csrfToken);
+      setMedia((prev) => prev.map((value) => (value.id === item.id ? { ...value, altText } : value)));
+      setNotice("Alt text disimpan.");
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal menyimpan alt text");
+    }
+  }
+
+  async function replaceDeck(project: AdminProject, files: File[]) {
+    if (!session || !project.id || files.length === 0) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const form = new FormData();
+      files.forEach((file) => form.append("files", file));
+      const result = await api(`admin/projects/${project.id}/deck`, { method: "POST", body: form }, session.csrfToken);
+      setMedia(await api(`admin/projects/${project.id}/media`));
+      await loadProjects();
+      setNotice(`Deck diganti: ${result.count} halaman tersimpan.`);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal mengganti deck");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function uploadDeckPdf(project: AdminProject, file: File) {
+    if (!session || !project.id) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const { renderPdfPages } = await import("@/lib/pdfPages");
+      const pages = await renderPdfPages(file, (done, total) => {
+        setNotice(`Merender halaman PDF… ${done}/${total}`);
+      });
+      setNotice("");
+      await replaceDeck(project, pages);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal membaca PDF");
+      setBusy(false);
+    }
+  }
+
   // Save Site Settings Handler
   async function saveSiteSettingsData(updated: Partial<SiteSettings>, successMsg = "Pengaturan berhasil disimpan.") {
     setBusy(true);
@@ -660,6 +729,10 @@ export default function AdminDashboard() {
                 onMoveMedia={moveMedia}
                 onUpload={upload}
                 onMigrate={migrateMedia}
+                onReplaceMedia={replaceMediaFile}
+                onSaveAlt={saveMediaAlt}
+                onReplaceDeck={replaceDeck}
+                onUploadDeckPdf={uploadDeckPdf}
                 onBack={() => setEditing(null)}
               />
             ) : (
@@ -1118,7 +1191,7 @@ function BannerManager({
   const handleUploadSlide = async (idx: number, file: File) => {
     try {
       setUploadingIdx(idx);
-      const url = await uploadMediaFile(file);
+      const url = await uploadMediaFile(file, "banners");
       handleSlideChange(idx, "image", url);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Upload gagal.");
@@ -1130,7 +1203,7 @@ function BannerManager({
   const handleUploadBannerTarget = async (target: "statement" | "services" | "insights" | "studio" | "contact", file: File) => {
     try {
       setUploadingTarget(target);
-      const url = await uploadMediaFile(file);
+      const url = await uploadMediaFile(file, "banners");
       if (target === "statement") {
         setStatementBanner((prev) => ({ ...prev, image: url }));
       } else {
@@ -1822,7 +1895,7 @@ function MediaUpload({ type, busy, onUpload }: { type: string; busy: boolean; on
       <strong>{type.toUpperCase()}</strong>
       <p className={styles.muted}>
         {type === "deck"
-          ? "Tarik beberapa halaman JPG, PNG, atau WebP. Otomatis menjadi WebP resolusi tinggi dengan watermark UTERO ID di tengah. Urutan file menjadi urutan slide. Maksimal 20 MB per file."
+          ? "Tarik beberapa halaman JPG, PNG, atau WebP. Logo watermark otomatis di sudut kanan bawah (tidak pernah di halaman 1). Urutan file menjadi urutan slide. Maksimal 20 MB per file. Atau gunakan 'Upload PDF deck' / 'Ganti seluruh deck' di bawah."
           : `Tarik ${multiple ? "satu atau beberapa" : "satu"} gambar ke sini, atau klik untuk memilih. Maksimal 20 MB per file.`}
       </p>
       <span className={styles.uploadAction}>{dragging ? "Lepaskan untuk upload" : "Pilih file"}</span>
@@ -1841,6 +1914,22 @@ function MediaUpload({ type, busy, onUpload }: { type: string; busy: boolean; on
   );
 }
 
+function MediaAltInput({ item, disabled, onSave }: { item: MediaItem; disabled?: boolean; onSave: (alt: string) => void }) {
+  const [value, setValue] = useState(item.altText || "");
+  return (
+    <input
+      value={value}
+      disabled={disabled}
+      placeholder="Alt text…"
+      onChange={(event) => setValue(event.target.value)}
+      onBlur={() => {
+        if (value !== (item.altText || "")) onSave(value);
+      }}
+      style={{ marginTop: 6, fontSize: 12, padding: "6px 8px", border: "1px solid #d4d0c9", width: "100%", maxWidth: 260 }}
+    />
+  );
+}
+
 function ProjectEditor({
   project,
   media,
@@ -1852,6 +1941,10 @@ function ProjectEditor({
   onMoveMedia,
   onUpload,
   onMigrate,
+  onReplaceMedia,
+  onSaveAlt,
+  onReplaceDeck,
+  onUploadDeckPdf,
   onBack,
 }: {
   project: AdminProject;
@@ -1864,6 +1957,10 @@ function ProjectEditor({
   onMoveMedia: (p: AdminProject, item: MediaItem, direction: -1 | 1) => void;
   onUpload: (p: AdminProject, type: string, files: File[]) => void;
   onMigrate: (p: AdminProject) => void;
+  onReplaceMedia: (p: AdminProject, item: MediaItem, file: File) => void;
+  onSaveAlt: (p: AdminProject, item: MediaItem, altText: string) => void;
+  onReplaceDeck: (p: AdminProject, files: File[]) => void;
+  onUploadDeckPdf: (p: AdminProject, file: File) => void;
   onBack: () => void;
 }) {
   const safeDisciplines = Array.isArray(project.disciplines) ? project.disciplines : [];
@@ -2089,10 +2186,49 @@ function ProjectEditor({
           <p className={styles.muted}>Simpan proyek dahulu sebelum mengunggah media.</p>
         ) : (
           <>
+            <label className={styles.check} style={{ marginBottom: 14 }}>
+              <input
+                type="checkbox"
+                checked={details.deckWatermark !== false}
+                onChange={(e) => set("details", { ...details, deckWatermark: e.target.checked })}
+              />
+              Watermark logo Utero di deck slide (selalu menyala; tidak pernah di halaman 1)
+            </label>
             <div className={styles.mediaGrid}>
               {["cover", "hover", "gallery", "deck"].map((type) => (
                 <MediaUpload key={type} type={type} busy={busy} onUpload={(files) => onUpload(project, type, files)} />
               ))}
+            </div>
+            <div className={styles.actions} style={{ marginTop: 14 }}>
+              <label className={styles.secondary} style={{ cursor: "pointer" }}>
+                {busy ? "Memproses…" : "Ganti seluruh deck (banyak gambar)"}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                  disabled={busy}
+                  className={styles.uploadInput}
+                  onChange={(event) => {
+                    const files = Array.from(event.target.files || []);
+                    if (files.length) onReplaceDeck(project, files);
+                    event.target.value = "";
+                  }}
+                />
+              </label>
+              <label className={styles.secondary} style={{ cursor: "pointer" }}>
+                {busy ? "Memproses…" : "Upload PDF deck (render halaman)"}
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  disabled={busy}
+                  className={styles.uploadInput}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) onUploadDeckPdf(project, file);
+                    event.target.value = "";
+                  }}
+                />
+              </label>
             </div>
             {project.coverImage && typeof project.coverImage === "string" && project.coverImage.startsWith("/projects/") && (
               <button className={styles.secondary} style={{ marginTop: 18 }} disabled={busy} onClick={() => onMigrate(project)}>
@@ -2116,7 +2252,15 @@ function ProjectEditor({
                         <td>
                           <div className={styles.projectCell}>
                             <img className={styles.thumb} src={item.url} alt="" />
-                            <span>{item.filename}</span>
+                            <span>
+                              {item.filename}
+                              <MediaAltInput
+                                key={item.id}
+                                item={item}
+                                disabled={busy}
+                                onSave={(altText) => onSaveAlt(project, item, altText)}
+                              />
+                            </span>
                           </div>
                         </td>
                         <td>{item.mediaType}</td>
@@ -2129,6 +2273,23 @@ function ProjectEditor({
                             <button onClick={() => onMoveMedia(project, item, 1)} type="button">
                               ↓
                             </button>
+                            <label
+                              className={styles.ghost}
+                              style={{ cursor: busy ? "default" : "pointer", padding: "7px 9px", border: "1px solid #ccc", background: "#fff", fontSize: 11, fontWeight: 700 }}
+                            >
+                              Ganti
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp"
+                                disabled={busy}
+                                className={styles.uploadInput}
+                                onChange={(event) => {
+                                  const file = event.target.files?.[0];
+                                  if (file) onReplaceMedia(project, item, file);
+                                  event.target.value = "";
+                                }}
+                              />
+                            </label>
                             <button onClick={() => onDeleteMedia(project, item)} type="button">
                               Hapus
                             </button>

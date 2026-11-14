@@ -3,10 +3,11 @@ package app
 import "time"
 
 type ProjectDetails struct {
-	Scope        []string `json:"scope,omitempty"`
-	Challenge    string   `json:"challenge,omitempty"`
-	Solution     string   `json:"solution,omitempty"`
-	Deliverables []string `json:"deliverables,omitempty"`
+	Scope          []string `json:"scope,omitempty"`
+	Challenge      string   `json:"challenge,omitempty"`
+	Solution       string   `json:"solution,omitempty"`
+	Deliverables   []string `json:"deliverables,omitempty"`
+	DeckWatermark  *bool    `json:"deckWatermark,omitempty"`
 }
 
 type ProjectVideo struct {

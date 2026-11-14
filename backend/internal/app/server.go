@@ -75,10 +75,14 @@ func (s *Server) routes() {
 	s.mux.Handle("DELETE /api/v1/admin/projects/{id}", s.requireSession(http.HandlerFunc(s.deleteProject), true))
 	s.mux.Handle("POST /api/v1/admin/projects/import", s.requireSession(http.HandlerFunc(s.importProjects), true))
 	s.mux.Handle("POST /api/v1/admin/projects/{id}/media", s.requireSession(http.HandlerFunc(s.uploadMedia), true))
+	s.mux.Handle("PUT /api/v1/admin/projects/{id}/media/{mediaId}", s.requireSession(http.HandlerFunc(s.replaceMedia), true))
+	s.mux.Handle("PATCH /api/v1/admin/projects/{id}/media/{mediaId}", s.requireSession(http.HandlerFunc(s.updateMediaAlt), true))
+	s.mux.Handle("POST /api/v1/admin/projects/{id}/deck", s.requireSession(http.HandlerFunc(s.replaceDeck), true))
 	s.mux.Handle("POST /api/v1/admin/projects/{id}/migrate-media", s.requireSession(http.HandlerFunc(s.migrateLegacyMedia), true))
 	s.mux.Handle("GET /api/v1/admin/projects/{id}/media", s.requireSession(http.HandlerFunc(s.listMedia), false))
 	s.mux.Handle("DELETE /api/v1/admin/projects/{id}/media/{mediaId}", s.requireSession(http.HandlerFunc(s.deleteMedia), true))
 	s.mux.Handle("PUT /api/v1/admin/projects/{id}/media/order", s.requireSession(http.HandlerFunc(s.orderMedia), true))
+	s.mux.Handle("POST /api/v1/admin/site-media", s.requireSession(http.HandlerFunc(s.uploadSiteMedia), true))
 	s.mux.HandleFunc("GET /api/v1/settings", s.getPublicSettings)
 	s.mux.Handle("GET /api/v1/admin/settings", s.requireSession(http.HandlerFunc(s.getAdminSettings), false))
 	s.mux.Handle("PUT /api/v1/admin/settings", s.requireSession(http.HandlerFunc(s.updateAdminSettings), true))
@@ -435,7 +439,8 @@ func (s *Server) uploadMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, err.Error())
 		return
 	}
-	if _, err = s.store.GetProject(r.Context(), id, false, true); err != nil {
+	project, err := s.store.GetProject(r.Context(), id, false, true)
+	if err != nil {
 		apiError(w, 404, "project not found")
 		return
 	}
@@ -471,7 +476,26 @@ func (s *Server) uploadMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, "invalid media type")
 		return
 	}
-	ext := strings.ToLower(filepath.Ext(header.Filename))
+	// Deck pages get the logo watermark unless it's the first page or the
+	// per-project toggle is off.
+	storedExt := ""
+	if mediaType == "deck" && deckWatermarkEnabled(project) && s.countDeckMedia(r.Context(), id) > 0 {
+		media := &decodedMedia{data: data, contentType: contentType, width: config.Width, height: config.Height, ext: strings.ToLower(filepath.Ext(header.Filename))}
+		processed, procErr := processDeckPage(media, true)
+		if procErr != nil {
+			apiError(w, 400, procErr.Error())
+			return
+		}
+		data = processed.data
+		contentType = processed.contentType
+		config.Width = processed.width
+		config.Height = processed.height
+		storedExt = processed.ext
+	}
+	ext := storedExt
+	if ext == "" {
+		ext = strings.ToLower(filepath.Ext(header.Filename))
+	}
 	if ext != ".jpg" && ext != ".jpeg" && ext != ".png" && ext != ".webp" {
 		ext = ".bin"
 	}
@@ -489,7 +513,7 @@ func (s *Server) uploadMedia(w http.ResponseWriter, r *http.Request) {
 	}
 	mediaID, _ := result.LastInsertId()
 	url := "/portfolio-api/media/" + key
-	project, _ := s.store.GetProject(r.Context(), id, false, true)
+	project, _ = s.store.GetProject(r.Context(), id, false, true)
 	switch mediaType {
 	case "cover":
 		project.CoverImage = url
@@ -612,6 +636,9 @@ type mediaItem struct {
 	MediaType string `json:"mediaType"`
 	URL       string `json:"url"`
 	Filename  string `json:"filename"`
+	AltText   string `json:"altText"`
+	Width     int    `json:"width"`
+	Height    int    `json:"height"`
 	SortOrder int    `json:"sortOrder"`
 }
 
@@ -621,7 +648,7 @@ func (s *Server) listMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, err.Error())
 		return
 	}
-	rows, err := s.store.DB.QueryContext(r.Context(), `SELECT id,media_type,storage_key,original_filename,sort_order FROM project_media WHERE project_id=? ORDER BY media_type,sort_order,id`, id)
+	rows, err := s.store.DB.QueryContext(r.Context(), `SELECT id,media_type,storage_key,original_filename,alt_text,width,height,sort_order FROM project_media WHERE project_id=? ORDER BY media_type,sort_order,id`, id)
 	if err != nil {
 		apiError(w, 500, "unable to list media")
 		return
@@ -631,7 +658,7 @@ func (s *Server) listMedia(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		var item mediaItem
 		var key string
-		if err = rows.Scan(&item.ID, &item.MediaType, &key, &item.Filename, &item.SortOrder); err != nil {
+		if err = rows.Scan(&item.ID, &item.MediaType, &key, &item.Filename, &item.AltText, &item.Width, &item.Height, &item.SortOrder); err != nil {
 			apiError(w, 500, "unable to list media")
 			return
 		}
