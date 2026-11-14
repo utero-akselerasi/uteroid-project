@@ -223,7 +223,12 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
     return new Response(response.body, { status: response.status, headers: responseHeaders });
   } catch {
     // ─── OFFLINE FALLBACK ───────────────────────────────────────────
-    // Go backend unreachable → full local development mode
+    // Go backend unreachable → full local development mode.
+    // In production, admin endpoints fail closed: the local fallback must
+    // never accept unauthenticated writes or fake sessions.
+    if (process.env.NODE_ENV === "production" && path[0] === "admin") {
+      return Response.json({ error: "Backend tidak tersedia." }, { status: 503 });
+    }
     const subpath = path.join("/");
 
     /* ── Auth ── */

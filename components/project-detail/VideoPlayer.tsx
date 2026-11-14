@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "@/lib/useTranslations";
 import type { ProjectVideo } from "@/lib/types";
@@ -19,8 +19,10 @@ function getEmbedUrl(video: ProjectVideo): string {
     // - https://youtu.be/ID
     // - https://www.youtube.com/embed/ID
     // - https://www.youtube-nocookie.com/embed/ID
+    // - https://www.youtube.com/shorts/ID
+    // - https://www.youtube.com/live/ID
     const match = videoId.match(
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
     );
     if (match && match[1]) {
       videoId = match[1];
@@ -39,6 +41,23 @@ function getEmbedUrl(video: ProjectVideo): string {
   }
 
   return video.src;
+}
+
+function getFrameStyle(video: ProjectVideo): CSSProperties | undefined {
+  if (!video.aspectRatio) return undefined;
+
+  const parts = video.aspectRatio.split("/").map((part) => Number(part.trim()));
+  const ratio =
+    parts.length === 2 && parts[0] > 0 && parts[1] > 0 ? parts[0] / parts[1] : undefined;
+
+  if (!ratio) {
+    return { aspectRatio: video.aspectRatio, maxWidth: "min(92vw, 600px)", maxHeight: "85vh" };
+  }
+
+  return {
+    aspectRatio: video.aspectRatio,
+    width: `min(92vw, calc(85vh * ${ratio}))`,
+  };
 }
 
 export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps) {
@@ -124,7 +143,7 @@ export default function VideoPlayer({ video, poster, onClose }: VideoPlayerProps
 
       <div
         className="pd-video-modal__content"
-        style={video.aspectRatio ? { aspectRatio: video.aspectRatio, maxWidth: "min(85vw, 600px)" } : undefined}
+        style={getFrameStyle(video)}
         onClick={(e) => e.stopPropagation()}
       >
         {(video.type === "youtube" || video.type === "vimeo") && !isClosing && (

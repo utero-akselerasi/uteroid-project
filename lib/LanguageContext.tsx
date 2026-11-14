@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import type { ContentOverride } from "./contentOverrides";
 
 type Language = "en" | "id";
 
@@ -8,6 +9,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
+  contentOverrides: ContentOverride[];
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -16,6 +18,21 @@ const STORAGE_KEY = "utero-language";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>("en");
+  const [contentOverrides, setContentOverrides] = useState<ContentOverride[]>([]);
+
+  // Load content overrides once (DB-driven EN/ID text wins over code defaults)
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/portfolio-api/content-overrides", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : { overrides: [] }))
+      .then((data) => {
+        if (!cancelled && Array.isArray(data?.overrides)) setContentOverrides(data.overrides);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Load language from localStorage on mount
   useEffect(() => {
@@ -44,7 +61,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   // Always provide the context to avoid hook errors
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, contentOverrides }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -3,16 +3,18 @@ package app
 import "time"
 
 type ProjectDetails struct {
-	Scope        []string `json:"scope,omitempty"`
-	Challenge    string   `json:"challenge,omitempty"`
-	Solution     string   `json:"solution,omitempty"`
-	Deliverables []string `json:"deliverables,omitempty"`
+	Scope          []string `json:"scope,omitempty"`
+	Challenge      string   `json:"challenge,omitempty"`
+	Solution       string   `json:"solution,omitempty"`
+	Deliverables   []string `json:"deliverables,omitempty"`
+	DeckWatermark  *bool    `json:"deckWatermark,omitempty"`
 }
 
 type ProjectVideo struct {
-	Type   string `json:"type"`
-	Src    string `json:"src"`
-	Poster string `json:"poster,omitempty"`
+	Type        string `json:"type"`
+	Src         string `json:"src"`
+	Poster      string `json:"poster,omitempty"`
+	AspectRatio string `json:"aspectRatio,omitempty"`
 }
 
 type Project struct {
@@ -35,6 +37,7 @@ type Project struct {
 	GalleryImages     []string       `json:"galleryImages,omitempty"`
 	Video             *ProjectVideo  `json:"video,omitempty"`
 	Featured          bool           `json:"featured"`
+	HomepageVisible   *bool          `json:"homepageVisible,omitempty"`
 	Priority          int            `json:"priority"`
 	Tags              []string       `json:"tags,omitempty"`
 	Details           ProjectDetails `json:"details,omitempty"`

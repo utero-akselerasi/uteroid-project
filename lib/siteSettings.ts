@@ -78,6 +78,37 @@ export interface InsightsConfig {
   articles: InsightArticleConfig[];
 }
 
+export interface CampaignPostConfig {
+  position?: string;
+  headline?: string;
+  description?: string;
+  playAria?: string;
+  mediaType?: "video" | "image";
+  src?: string;
+  poster?: string;
+}
+
+export interface CampaignLocaleConfig {
+  sectionAria?: string;
+  badgeLabel?: string;
+  title?: string;
+  subtitle?: string;
+  tagPill?: string;
+  handle?: string;
+  postLeft?: CampaignPostConfig;
+  postMiddle?: CampaignPostConfig;
+  postRight?: CampaignPostConfig;
+}
+
+export interface CampaignConfig {
+  en?: CampaignLocaleConfig;
+  id?: CampaignLocaleConfig;
+}
+
+export interface HomepageConfig {
+  mode?: "random" | "fixed";
+}
+
 export interface SiteSettings {
   typography: TypographyConfig;
   banners: {
@@ -89,6 +120,8 @@ export interface SiteSettings {
   contacts: ContactsConfig;
   studio: StudioConfig;
   insights: InsightsConfig;
+  homepage?: HomepageConfig;
+  campaign?: CampaignConfig;
   updatedAt?: string;
 }
 

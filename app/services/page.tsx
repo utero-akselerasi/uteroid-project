@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import ServicesContent from "@/components/ServicesContent";
+import { getSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const defaultMetadata: Metadata = {
   title: "Services — Design Disciplines & Capabilities",
   description:
     "Explore Utero's core design disciplines: Brand Identity, Product Packaging, Promotion Campaigns, Digital Systems, Environmental Spatial Wayfinding, and Large-Scale Outdoor Design.",
@@ -31,6 +32,10 @@ export const metadata: Metadata = {
     canonical: "/services",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata("services", defaultMetadata);
+}
 
 export default function ServicesPage() {
   return <ServicesContent />;

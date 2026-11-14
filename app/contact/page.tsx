@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import ContactContent from "@/components/ContactContent";
+import { getSeoMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const defaultMetadata: Metadata = {
   title: "Contact — Start a Project",
   description:
     "Initiate a project inquiry with Utero design studio. Reach our team in Malang, Indonesia for brand, spatial, packaging, and digital design collaborations.",
@@ -31,6 +32,10 @@ export const metadata: Metadata = {
     canonical: "/contact",
   },
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata("contact", defaultMetadata);
+}
 
 export default function ContactPage() {
   return <ContactContent />;

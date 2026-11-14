@@ -1,0 +1,23 @@
+area,path,count_today,editable_today,mechanism_needed,action,milestone
+EN dictionary,lib/translations/en.ts,291 leaf strings,no,generic override store keyed by path + locale,auto-list/search/reset,M4
+ID dictionary,lib/translations/id.ts,291 leaf strings,no,generic override store keyed by path + locale,auto-list/search/reset,M4
+Services copy,lib/services.ts,6 entries (name/tagline/hero/description/overview/approach/deliverables/capabilities),no,services overrides by slug,editor per service,M3/M4
+Services inquiry labels,lib/services.ts,6,no,services overrides,editor,M3/M4
+Contact channels,lib/contactData.ts,6 channels + studioLocation,no,contacts/content override,editor,M3/M4
+SEO page titles/descriptions,app/*/page.tsx + layout.tsx,home/work/services/studio/contact/insights/404,no,seo overrides by page,editor + generateMetadata,M4
+JSON-LD,app/layout.tsx + app/work/[slug]/page.tsx,organization/website/project,no,from settings + seo overrides,generate from DB,M4
+Home intro blocks,components/IntroductionSection.tsx,hard-coded EN copy,no,page-copy overrides,editor,M4
+Manifesto blocks,components/ManifestoSection.tsx,hard-coded EN copy,no,page-copy overrides,editor,M4
+Transition campaign,components/TransitionCampaignSpotlight.tsx,mostly translations,no,translations overrides,auto from M4,M4
+Contact launcher,components/ContactLauncher.tsx,hard-coded labels + phone values,partial (settings contacts),page-copy + contacts override,editor,M3/M4
+Hero fallback slides,lib/siteSettings.ts,3 slides,partial (heroSlides),settings already,keep,M3
+Statement banner defaults,lib/siteSettings.ts,image/tag/quote/cta,partial (image/tag/quote),add CTA fields,M3
+Service images,lib/siteSettings.ts,6,partial (paths editable),already,keep,M2 upload fix
+Studio content,lib/siteSettings.ts,heading/description/philosophy/metrics/images,yes,already,keep,M3
+Studio/contact page heroes,lib/siteSettings.ts,studioHeroImage/contactHeroImage,no,add banner fields,M3
+Insights section,lib/siteSettings.ts,header + 4 local articles,no (CMS is source),document CMS only,no change,-
+Insights fallback posts,lib/insights.ts,4,no,CMS fallback,keep documented,-
+Footer social fallbacks,components/Footer.tsx,5,partial (settings contacts),already,keep,M3
+Work filter labels,lib/types.ts,7 + discipline/industry labels,no,translations overrides,auto from M4,M4
+Hero fallback copy,components/HeroSection.tsx,settings/translations,no,translations overrides,auto from M4,M4
+Admin UI strings,components/admin/AdminDashboard.tsx,Indonesian labels,n/a (admin),not website content,out of scope,-

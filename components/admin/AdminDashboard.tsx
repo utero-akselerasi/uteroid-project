@@ -12,13 +12,17 @@ import {
   type StudioConfig,
   type InsightsConfig,
 } from "@/lib/siteSettings";
+import CampaignManager from "./CampaignManager";
+import ContentOverridesPanel from "./ContentOverridesPanel";
+import { api, uploadMediaFile } from "./adminApi";
+import SeedSyncPanel from "./SeedSyncPanel";
 import styles from "./AdminDashboard.module.css";
 
 type Status = "draft" | "published" | "archived";
 type AdminProject = Project & { id?: number; status: Status; publishedAt?: string; createdAt?: string; updatedAt?: string };
 type SessionResponse = { authenticated: boolean; csrfToken: string };
-type MediaItem = { id: number; mediaType: string; url: string; filename: string; sortOrder: number };
-type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "security";
+type MediaItem = { id: number; mediaType: string; url: string; filename: string; altText?: string; width?: number; height?: number; sortOrder: number };
+type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "campaign" | "content" | "security";
 
 const disciplines = ["identity", "packaging", "signage", "campaign", "print", "digital", "exhibition", "indoor", "outdoor"] as const;
 const industries = ["fnb", "corporate", "government", "education", "property", "retail", "arts", "event", "services", "products"] as const;
@@ -44,6 +48,7 @@ const emptyProject = (): AdminProject => ({
   description: "",
   coverImage: "",
   featured: false,
+  homepageVisible: true,
   priority: 0,
   tags: [],
   galleryImages: [],
@@ -51,26 +56,6 @@ const emptyProject = (): AdminProject => ({
   details: { scope: [], challenge: "", solution: "" },
   status: "draft",
 });
-
-async function api(path: string, options: RequestInit = {}, csrfToken = "") {
-  const headers = new Headers(options.headers);
-  if (options.body && !(options.body instanceof FormData)) headers.set("Content-Type", "application/json");
-  if (csrfToken) headers.set("X-CSRF-Token", csrfToken);
-  const response = await fetch(`/portfolio-api/${path}`, { ...options, headers, credentials: "same-origin", cache: "no-store" });
-  if (response.status === 204) return null;
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || "Permintaan gagal");
-  return data;
-}
-
-async function uploadMediaFile(file: File): Promise<string> {
-  const form = new FormData();
-  form.set("file", file);
-  const res = await fetch("/api/admin/upload-banner", { method: "POST", body: form });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || "Gagal mengunggah gambar.");
-  return data.url;
-}
 
 export default function AdminDashboard() {
   const [session, setSession] = useState<SessionResponse | null>(null);
@@ -86,6 +71,7 @@ export default function AdminDashboard() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [media, setMedia] = useState<MediaItem[]>([]);
+  const [seedSyncOpen, setSeedSyncOpen] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState<{
     isOpen: boolean;
     title: string;
@@ -129,12 +115,16 @@ export default function AdminDashboard() {
 
   async function loadSiteSettings() {
     try {
-      const res = await fetch("/api/site-settings", { cache: "no-store" });
-      if (res.ok) {
-        const data: SiteSettings = await res.json();
-        setSiteSettings(data);
-        if (data.typography?.typeface) {
-          setSelectedTypeface(data.typography.typeface);
+      const data = await api("admin/settings");
+      if (data && typeof data === "object") {
+        // Go stores each top-level settings key as a row; tolerate a legacy
+        // nested "site_settings" row by flattening it underneath.
+        const flat = { ...(data.site_settings && typeof data.site_settings === "object" ? data.site_settings : {}), ...data } as Record<string, any>;
+        delete flat.site_settings;
+        const merged: SiteSettings = { ...defaultSiteSettings, ...flat } as SiteSettings;
+        setSiteSettings(merged);
+        if (merged.typography?.typeface) {
+          setSelectedTypeface(merged.typography.typeface);
         }
       }
     } catch (err) {
@@ -143,10 +133,10 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => {
-    loadSiteSettings();
     api("admin/auth/session")
       .then((data) => {
         setSession(data);
+        loadSiteSettings();
         return loadProjects();
       })
       .catch(() => setSession(null))
@@ -193,6 +183,15 @@ export default function AdminDashboard() {
     }),
     [projects]
   );
+
+  const legacyMissing = useMemo(() => {
+    const known = new Set<string>();
+    projects.forEach((project) => {
+      known.add(project.slug);
+      known.add(project.routeSlug);
+    });
+    return legacyProjects.filter((project) => !known.has(project.slug) && !known.has(project.routeSlug));
+  }, [projects]);
 
   async function login(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -257,18 +256,19 @@ export default function AdminDashboard() {
   }
 
   async function importLegacy() {
-    if (!session || projects.length > 0) return;
+    if (!session || legacyMissing.length === 0) return;
+    const count = legacyMissing.length;
     requestConfirm({
-      title: "Impor Proyek Portofolio",
-      message: "Impor 34 proyek portofolio bawaan Utero ke dalam database studio?",
-      confirmLabel: "Impor 34 Proyek",
+      title: "Import Missing Works",
+      message: `Import ${count} portofolio bawaan Utero yang belum ada di database studio?`,
+      confirmLabel: `Import ${count} Works`,
       isDanger: false,
       onConfirm: async () => {
         closeConfirm();
         setBusy(true);
         setError("");
         try {
-          const payload = legacyProjects.map((project) => ({ ...project, status: "published" }));
+          const payload = legacyMissing.map((project) => ({ ...project, status: "published" }));
           const result = await api("admin/projects/import", { method: "POST", body: JSON.stringify(payload) }, session.csrfToken);
           setNotice(`${result.imported} proyek berhasil diimpor.`);
           await loadProjects();
@@ -297,11 +297,11 @@ export default function AdminDashboard() {
     const cleanSlug = slugify(project.slug) || autoSlug;
     const cleanRouteSlug = slugify(project.routeSlug) || cleanSlug;
 
-    // Auto-assign priority for new projects
-    let autoPriority = project.priority || 0;
-    if (!project.id) {
+    // Auto-assign priority only when a new project leaves it unset
+    let priority = project.priority || 0;
+    if (!project.id && priority <= 0) {
       const maxPriority = projects.reduce((max, p) => Math.max(max, p.priority || 0), 0);
-      autoPriority = maxPriority + 1;
+      priority = maxPriority + 1;
     }
 
     const cleanProject: AdminProject = {
@@ -310,7 +310,7 @@ export default function AdminDashboard() {
       client,
       slug: cleanSlug,
       routeSlug: cleanRouteSlug,
-      priority: autoPriority,
+      priority,
     };
 
     setBusy(true);
@@ -447,8 +447,80 @@ export default function AdminDashboard() {
     }
   }
 
+  async function replaceMediaFile(project: AdminProject, item: MediaItem, file: File) {
+    if (!session || !project.id) return;
+    setBusy(true);
+    setError("");
+    try {
+      const form = new FormData();
+      form.set("file", file);
+      form.set("altText", item.altText || project.title);
+      await api(`admin/projects/${project.id}/media/${item.id}`, { method: "PUT", body: form }, session.csrfToken);
+      setMedia(await api(`admin/projects/${project.id}/media`));
+      setEditing(await api(`admin/projects/${project.id}`));
+      await loadProjects();
+      setNotice(`File "${item.filename}" diganti.`);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal mengganti media");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function saveMediaAlt(project: AdminProject, item: MediaItem, altText: string) {
+    if (!session || !project.id) return;
+    try {
+      await api(`admin/projects/${project.id}/media/${item.id}`, { method: "PATCH", body: JSON.stringify({ altText }) }, session.csrfToken);
+      setMedia((prev) => prev.map((value) => (value.id === item.id ? { ...value, altText } : value)));
+      setNotice("Alt text disimpan.");
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal menyimpan alt text");
+    }
+  }
+
+  async function replaceDeck(project: AdminProject, files: File[]) {
+    if (!session || !project.id || files.length === 0) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const form = new FormData();
+      files.forEach((file) => form.append("files", file));
+      const result = await api(`admin/projects/${project.id}/deck`, { method: "POST", body: form }, session.csrfToken);
+      setMedia(await api(`admin/projects/${project.id}/media`));
+      await loadProjects();
+      setNotice(`Deck diganti: ${result.count} halaman tersimpan.`);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal mengganti deck");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function uploadDeckPdf(project: AdminProject, file: File) {
+    if (!session || !project.id) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const { renderPdfPages } = await import("@/lib/pdfPages");
+      const pages = await renderPdfPages(file, (done, total) => {
+        setNotice(`Merender halaman PDF… ${done}/${total}`);
+      });
+      setNotice("");
+      await replaceDeck(project, pages);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Gagal membaca PDF");
+      setBusy(false);
+    }
+  }
+
   // Save Site Settings Handler
   async function saveSiteSettingsData(updated: Partial<SiteSettings>, successMsg = "Pengaturan berhasil disimpan.") {
+    if (!session) {
+      setError("Sesi berakhir. Silakan login ulang.");
+      return;
+    }
     setBusy(true);
     setError("");
     setNotice("");
@@ -470,15 +542,9 @@ export default function AdminDashboard() {
         insights: { ...siteSettings.insights, ...(updated.insights || {}) },
       };
 
-      const res = await fetch("/api/site-settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(merged),
-      });
-
-      if (!res.ok) throw new Error("Gagal menyimpan ke server.");
-      const saved = await res.json();
-      setSiteSettings(saved);
+      // Go backend is the single write path (session + CSRF enforced there).
+      await api("admin/settings", { method: "PUT", body: JSON.stringify(merged) }, session.csrfToken);
+      setSiteSettings(merged);
       setNotice(successMsg);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal menyimpan pengaturan.");
@@ -594,6 +660,24 @@ export default function AdminDashboard() {
                 Menu Studio & Ruang
               </button>
               <button
+                className={activeTab === "campaign" ? styles.active : ""}
+                onClick={() => {
+                  setActiveTab("campaign");
+                  setEditing(null);
+                }}
+              >
+                Kampanye & Homepage
+              </button>
+              <button
+                className={activeTab === "content" ? styles.active : ""}
+                onClick={() => {
+                  setActiveTab("content");
+                  setEditing(null);
+                }}
+              >
+                Konten (EN/ID)
+              </button>
+              <button
                 className={activeTab === "contacts" ? styles.active : ""}
                 onClick={() => {
                   setActiveTab("contacts");
@@ -647,6 +731,10 @@ export default function AdminDashboard() {
                 onMoveMedia={moveMedia}
                 onUpload={upload}
                 onMigrate={migrateMedia}
+                onReplaceMedia={replaceMediaFile}
+                onSaveAlt={saveMediaAlt}
+                onReplaceDeck={replaceDeck}
+                onUploadDeckPdf={uploadDeckPdf}
                 onBack={() => setEditing(null)}
               />
             ) : (
@@ -658,11 +746,19 @@ export default function AdminDashboard() {
                     <p className={styles.muted}>Kelola portofolio publik, status publikasi, dan media S3.</p>
                   </div>
                   <div className={styles.actions}>
-                    {projects.length === 0 && (
-                      <button className={styles.secondary} disabled={busy} onClick={importLegacy}>
-                        Impor 34 proyek lama
-                      </button>
-                    )}
+                    <button
+                      className={styles.secondary}
+                      disabled={busy || legacyMissing.length === 0}
+                      onClick={importLegacy}
+                    >
+                      Import missing works ({legacyMissing.length})
+                    </button>
+                    <button
+                      className={styles.ghost}
+                      onClick={() => setSeedSyncOpen((open) => !open)}
+                    >
+                      {seedSyncOpen ? "Tutup sinkronisasi" : "Sinkronisasi seed"}
+                    </button>
                     <button className={styles.primary} onClick={() => setEditing(emptyProject())}>
                       + Proyek baru
                     </button>
@@ -675,6 +771,17 @@ export default function AdminDashboard() {
                   <Stat label="Archived" value={stats.archived} />
                   <Stat label="Featured" value={stats.featured} />
                 </div>
+                {seedSyncOpen && session && (
+                  <SeedSyncPanel
+                    projects={projects}
+                    csrfToken={session.csrfToken}
+                    api={api}
+                    requestConfirm={requestConfirm}
+                    onApplied={loadProjects}
+                    onNotice={setNotice}
+                    onError={setError}
+                  />
+                )}
                 <div className={styles.toolbar}>
                   <input
                     aria-label="Filter nama proyek"
@@ -811,8 +918,25 @@ export default function AdminDashboard() {
             />
           )}
 
+          {/* TAB: CAMPAIGN & HOMEPAGE */}
+          {activeTab === "campaign" && (
+            <CampaignManager
+              settings={siteSettings}
+              busy={busy}
+              onSave={async (payload, message) => {
+                await saveSiteSettingsData(payload, message);
+              }}
+            />
+          )}
+
+          {/* TAB: CONTENT OVERRIDES */}
+          {activeTab === "content" && session && (
+            <ContentOverridesPanel csrfToken={session.csrfToken} />
+          )}
+
           {/* TAB 7: SECURITY */}
           {activeTab === "security" && (
+            <div style={{ display: "grid", gap: 24 }}>
             <form className={styles.editor} onSubmit={changePassword}>
               <div className={styles.editorHead}>
                 <div>
@@ -836,6 +960,59 @@ export default function AdminDashboard() {
                 </button>
               </div>
             </form>
+            <section className={styles.editor}>
+              <div className={styles.editorHead}>
+                <div>
+                  <div className={styles.eyebrow}>Backup & Audit</div>
+                  <h2>Ekspor Data & Log Audit</h2>
+                  <p className={styles.muted}>Unduh seluruh konten yang dikelola admin (proyek, media metadata, pengaturan, override) sebagai JSON, atau 200 entri audit terakhir.</p>
+                </div>
+              </div>
+              <div className={styles.checkGrid}>
+                <button
+                  className={styles.secondary}
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      const data = await api("admin/export");
+                      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = `utero-backup-${new Date().toISOString().slice(0, 10)}.json`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                      setNotice("Backup berhasil diunduh.");
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : "Ekspor gagal.");
+                    }
+                  }}
+                >
+                  Unduh Backup JSON
+                </button>
+                <button
+                  className={styles.ghost}
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      const data = await api("admin/audit");
+                      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = `utero-audit-${new Date().toISOString().slice(0, 10)}.json`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : "Gagal memuat audit.");
+                    }
+                  }}
+                >
+                  Unduh Audit Log
+                </button>
+              </div>
+            </section>
+            </div>
           )}
         </main>
       </div>
@@ -1086,7 +1263,7 @@ function BannerManager({
   const handleUploadSlide = async (idx: number, file: File) => {
     try {
       setUploadingIdx(idx);
-      const url = await uploadMediaFile(file);
+      const url = await uploadMediaFile(file, "banners");
       handleSlideChange(idx, "image", url);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Upload gagal.");
@@ -1098,7 +1275,7 @@ function BannerManager({
   const handleUploadBannerTarget = async (target: "statement" | "services" | "insights" | "studio" | "contact", file: File) => {
     try {
       setUploadingTarget(target);
-      const url = await uploadMediaFile(file);
+      const url = await uploadMediaFile(file, "banners");
       if (target === "statement") {
         setStatementBanner((prev) => ({ ...prev, image: url }));
       } else {
@@ -1790,7 +1967,7 @@ function MediaUpload({ type, busy, onUpload }: { type: string; busy: boolean; on
       <strong>{type.toUpperCase()}</strong>
       <p className={styles.muted}>
         {type === "deck"
-          ? "Tarik beberapa halaman JPG, PNG, atau WebP. Otomatis menjadi WebP resolusi tinggi dengan watermark UTERO ID di tengah. Urutan file menjadi urutan slide. Maksimal 20 MB per file."
+          ? "Tarik beberapa halaman JPG, PNG, atau WebP. Logo watermark otomatis di sudut kanan bawah (tidak pernah di halaman 1). Urutan file menjadi urutan slide. Maksimal 20 MB per file. Atau gunakan 'Upload PDF deck' / 'Ganti seluruh deck' di bawah."
           : `Tarik ${multiple ? "satu atau beberapa" : "satu"} gambar ke sini, atau klik untuk memilih. Maksimal 20 MB per file.`}
       </p>
       <span className={styles.uploadAction}>{dragging ? "Lepaskan untuk upload" : "Pilih file"}</span>
@@ -1809,6 +1986,22 @@ function MediaUpload({ type, busy, onUpload }: { type: string; busy: boolean; on
   );
 }
 
+function MediaAltInput({ item, disabled, onSave }: { item: MediaItem; disabled?: boolean; onSave: (alt: string) => void }) {
+  const [value, setValue] = useState(item.altText || "");
+  return (
+    <input
+      value={value}
+      disabled={disabled}
+      placeholder="Alt text…"
+      onChange={(event) => setValue(event.target.value)}
+      onBlur={() => {
+        if (value !== (item.altText || "")) onSave(value);
+      }}
+      style={{ marginTop: 6, fontSize: 12, padding: "6px 8px", border: "1px solid #d4d0c9", width: "100%", maxWidth: 260 }}
+    />
+  );
+}
+
 function ProjectEditor({
   project,
   media,
@@ -1820,6 +2013,10 @@ function ProjectEditor({
   onMoveMedia,
   onUpload,
   onMigrate,
+  onReplaceMedia,
+  onSaveAlt,
+  onReplaceDeck,
+  onUploadDeckPdf,
   onBack,
 }: {
   project: AdminProject;
@@ -1832,6 +2029,10 @@ function ProjectEditor({
   onMoveMedia: (p: AdminProject, item: MediaItem, direction: -1 | 1) => void;
   onUpload: (p: AdminProject, type: string, files: File[]) => void;
   onMigrate: (p: AdminProject) => void;
+  onReplaceMedia: (p: AdminProject, item: MediaItem, file: File) => void;
+  onSaveAlt: (p: AdminProject, item: MediaItem, altText: string) => void;
+  onReplaceDeck: (p: AdminProject, files: File[]) => void;
+  onUploadDeckPdf: (p: AdminProject, file: File) => void;
   onBack: () => void;
 }) {
   const safeDisciplines = Array.isArray(project.disciplines) ? project.disciplines : [];
@@ -1860,7 +2061,11 @@ function ProjectEditor({
   const video = project.video || { type: "youtube", src: "", poster: "" };
 
   const setVideo = (updates: Partial<typeof video>) => {
-    set("video", { ...video, ...updates });
+    const next = { ...video, ...updates };
+    if (updates.src && next.type === "youtube" && updates.src.includes("/shorts/") && !next.aspectRatio) {
+      next.aspectRatio = "9 / 16";
+    }
+    set("video", next);
   };
 
   return (
@@ -1948,7 +2153,7 @@ function ProjectEditor({
             <input
               placeholder={
                 video.type === "youtube"
-                  ? "https://youtube.com/watch?v=... atau ID video"
+                  ? "https://youtube.com/watch?v=... , /shorts/... , atau ID video"
                   : video.type === "vimeo"
                   ? "https://vimeo.com/... atau ID video"
                   : "/projects/[slug]/video.mp4"
@@ -1962,6 +2167,13 @@ function ProjectEditor({
               placeholder="/projects/[slug]/poster.jpg"
               value={video.poster || ""}
               onChange={(e) => setVideo({ poster: e.target.value })}
+            />
+          </Field>
+          <Field label="Aspect ratio video (opsional)">
+            <input
+              placeholder="9 / 16"
+              value={video.aspectRatio || ""}
+              onChange={(e) => setVideo({ aspectRatio: e.target.value })}
             />
           </Field>
         </div>
@@ -1988,6 +2200,14 @@ function ProjectEditor({
             <input type="checkbox" checked={!!project.featured} onChange={(e) => set("featured", e.target.checked)} />
             Featured
           </label>
+          <label className={styles.check}>
+            <input
+              type="checkbox"
+              checked={project.homepageVisible !== false}
+              onChange={(e) => set("homepageVisible", e.target.checked)}
+            />
+            Tampilkan di homepage
+          </label>
         </div>
         <div className={styles.grid2} style={{ marginTop: 18 }}>
           <Field label="Tags, satu per baris">
@@ -2000,23 +2220,17 @@ function ProjectEditor({
             />
           </Field>
           <Field label="Posisi cover di grid">
-            <select
-              value={project.gridCoverPosition || "center"}
+            <input
+              placeholder="center / center 50% / 45% 45%"
+              value={project.gridCoverPosition || ""}
               onChange={(e) => set("gridCoverPosition", e.target.value)}
-            >
-              <option value="center">Center</option>
-              <option value="top">Top</option>
-              <option value="bottom">Bottom</option>
-              <option value="left">Left</option>
-              <option value="right">Right</option>
-            </select>
+            />
           </Field>
-          <Field label="Priority (urutan)">
+          <Field label="Priority (makin tinggi, makin awal)">
             <input
               type="number"
               value={project.priority || 0}
-              readOnly
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.03)", cursor: "not-allowed" }}
+              onChange={(e) => set("priority", Number(e.target.value) || 0)}
             />
           </Field>
         </div>
@@ -2044,10 +2258,49 @@ function ProjectEditor({
           <p className={styles.muted}>Simpan proyek dahulu sebelum mengunggah media.</p>
         ) : (
           <>
+            <label className={styles.check} style={{ marginBottom: 14 }}>
+              <input
+                type="checkbox"
+                checked={details.deckWatermark !== false}
+                onChange={(e) => set("details", { ...details, deckWatermark: e.target.checked })}
+              />
+              Watermark logo Utero di deck slide (selalu menyala; tidak pernah di halaman 1)
+            </label>
             <div className={styles.mediaGrid}>
               {["cover", "hover", "gallery", "deck"].map((type) => (
                 <MediaUpload key={type} type={type} busy={busy} onUpload={(files) => onUpload(project, type, files)} />
               ))}
+            </div>
+            <div className={styles.actions} style={{ marginTop: 14 }}>
+              <label className={styles.secondary} style={{ cursor: "pointer" }}>
+                {busy ? "Memproses…" : "Ganti seluruh deck (banyak gambar)"}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                  disabled={busy}
+                  className={styles.uploadInput}
+                  onChange={(event) => {
+                    const files = Array.from(event.target.files || []);
+                    if (files.length) onReplaceDeck(project, files);
+                    event.target.value = "";
+                  }}
+                />
+              </label>
+              <label className={styles.secondary} style={{ cursor: "pointer" }}>
+                {busy ? "Memproses…" : "Upload PDF deck (render halaman)"}
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  disabled={busy}
+                  className={styles.uploadInput}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) onUploadDeckPdf(project, file);
+                    event.target.value = "";
+                  }}
+                />
+              </label>
             </div>
             {project.coverImage && typeof project.coverImage === "string" && project.coverImage.startsWith("/projects/") && (
               <button className={styles.secondary} style={{ marginTop: 18 }} disabled={busy} onClick={() => onMigrate(project)}>
@@ -2071,7 +2324,15 @@ function ProjectEditor({
                         <td>
                           <div className={styles.projectCell}>
                             <img className={styles.thumb} src={item.url} alt="" />
-                            <span>{item.filename}</span>
+                            <span>
+                              {item.filename}
+                              <MediaAltInput
+                                key={item.id}
+                                item={item}
+                                disabled={busy}
+                                onSave={(altText) => onSaveAlt(project, item, altText)}
+                              />
+                            </span>
                           </div>
                         </td>
                         <td>{item.mediaType}</td>
@@ -2084,6 +2345,23 @@ function ProjectEditor({
                             <button onClick={() => onMoveMedia(project, item, 1)} type="button">
                               ↓
                             </button>
+                            <label
+                              className={styles.ghost}
+                              style={{ cursor: busy ? "default" : "pointer", padding: "7px 9px", border: "1px solid #ccc", background: "#fff", fontSize: 11, fontWeight: 700 }}
+                            >
+                              Ganti
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp"
+                                disabled={busy}
+                                className={styles.uploadInput}
+                                onChange={(event) => {
+                                  const file = event.target.files?.[0];
+                                  if (file) onReplaceMedia(project, item, file);
+                                  event.target.value = "";
+                                }}
+                              />
+                            </label>
                             <button onClick={() => onDeleteMedia(project, item)} type="button">
                               Hapus
                             </button>
