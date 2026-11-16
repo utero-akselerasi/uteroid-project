@@ -28,7 +28,7 @@ import (
 type Server struct {
 	cfg      Config
 	store    *Store
-	storage  *ObjectStorage
+	storage  objectStore
 	mux      *http.ServeMux
 	limiter  sync.Mutex
 	attempts map[string][]time.Time
@@ -43,7 +43,7 @@ type sessionContext struct {
 	CSRFHash string
 }
 
-func NewServer(cfg Config, store *Store, storage *ObjectStorage) *Server {
+func NewServer(cfg Config, store *Store, storage objectStore) *Server {
 	s := &Server{cfg: cfg, store: store, storage: storage, mux: http.NewServeMux(), attempts: map[string][]time.Time{}}
 	s.routes()
 	return s
@@ -492,7 +492,10 @@ func (s *Server) uploadMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 502, "storage unavailable")
 		return
 	}
-	result, err := s.store.DB.ExecContext(r.Context(), `INSERT INTO project_media(project_id,media_type,storage_key,original_filename,mime_type,file_size,width,height,alt_text) VALUES(?,?,?,?,?,?,?,?,?)`, id, mediaType, key, filepath.Base(header.Filename), contentType, len(data), config.Width, config.Height, r.FormValue("altText"))
+	// Appends always go last within their media type, even after a manual reorder.
+	var nextOrder int
+	_ = s.store.DB.QueryRowContext(r.Context(), `SELECT COALESCE(MAX(sort_order),0)+1 FROM project_media WHERE project_id=? AND media_type=?`, id, mediaType).Scan(&nextOrder)
+	result, err := s.store.DB.ExecContext(r.Context(), `INSERT INTO project_media(project_id,media_type,storage_key,original_filename,mime_type,file_size,width,height,alt_text,sort_order) VALUES(?,?,?,?,?,?,?,?,?,?)`, id, mediaType, key, filepath.Base(header.Filename), contentType, len(data), config.Width, config.Height, r.FormValue("altText"), nextOrder)
 	if err != nil {
 		apiError(w, 500, "unable to save media")
 		return
@@ -511,6 +514,10 @@ func (s *Server) uploadMedia(w http.ResponseWriter, r *http.Request) {
 	}
 	if mediaType != "deck" {
 		_ = s.store.SaveProject(r.Context(), &project)
+	} else {
+		// A new last page may turn the previous last page into an interior
+		// slide that now needs the watermark.
+		s.reconcileDeckWatermarks(r.Context(), id)
 	}
 	session := currentSession(r)
 	s.store.Audit(r.Context(), session.AdminID, "media.upload", "project", strconv.FormatInt(id, 10), clientIP(r))
@@ -664,14 +671,19 @@ func (s *Server) deleteMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, err.Error())
 		return
 	}
-	var key, mediaType string
-	if err = s.store.DB.QueryRowContext(r.Context(), `SELECT storage_key,media_type FROM project_media WHERE id=? AND project_id=?`, mediaID, id).Scan(&key, &mediaType); err != nil {
+	var key, mediaType, sourceKey string
+	if err = s.store.DB.QueryRowContext(r.Context(), `SELECT storage_key,media_type,source_key FROM project_media WHERE id=? AND project_id=?`, mediaID, id).Scan(&key, &mediaType, &sourceKey); err != nil {
 		apiError(w, 404, "media not found")
 		return
 	}
 	if err = s.storage.Delete(r.Context(), key); err != nil {
 		apiError(w, 502, "unable to remove object")
 		return
+	}
+	if sourceKey != "" {
+		if err = s.storage.Delete(r.Context(), sourceKey); err != nil {
+			slog.Warn("deck backup cleanup failed", "key", sourceKey, "error", err)
+		}
 	}
 	if _, err = s.store.DB.ExecContext(r.Context(), `DELETE FROM project_media WHERE id=? AND project_id=?`, mediaID, id); err != nil {
 		apiError(w, 500, "unable to remove media metadata")
@@ -702,6 +714,10 @@ func (s *Server) deleteMedia(w http.ResponseWriter, r *http.Request) {
 		if mediaType != "deck" {
 			_ = s.store.SaveProject(r.Context(), &project)
 		}
+	}
+	if mediaType == "deck" {
+		// Removing a page can promote a stamped interior page to first/last.
+		s.reconcileDeckWatermarks(r.Context(), id)
 	}
 	session := currentSession(r)
 	s.store.Audit(r.Context(), session.AdminID, "media.delete", "project", strconv.FormatInt(id, 10), clientIP(r))
@@ -745,6 +761,7 @@ func (s *Server) orderMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 500, "unable to reorder")
 		return
 	}
+	s.reconcileDeckWatermarks(r.Context(), id)
 	writeJSON(w, 200, map[string]bool{"ok": true})
 }
 func (s *Server) getMedia(w http.ResponseWriter, r *http.Request) {
@@ -846,4 +863,3 @@ func (s *Server) updateAdminSettings(w http.ResponseWriter, r *http.Request) {
 	s.store.Audit(r.Context(), session.AdminID, "settings.update", "settings", "site", clientIP(r))
 	writeJSON(w, 200, map[string]bool{"ok": true})
 }
-

@@ -137,7 +137,7 @@ Order matters; each step is safe to repeat.
 |---|---|
 | `/work` and homepage | All works visible, no duplicates, media loads |
 | Any work page media/deck | URLs start with `/portfolio-api/media/` — no `object-storage:` or raw S3 hostnames, no broken images |
-| Deck pages | No watermark stamped on any page |
+| Deck pages | Interior slides carry the centered Utero logo watermark (~12% width, 20% opacity); first and last slide of each deck stay pristine |
 | Homepage campaign section | 3 posts render (2 videos + 1 image), EN/ID toggle works |
 | `/admin` logged out | Redirects to `/admin/login`; API writes without session return 401/403 |
 | Save any setting | Success message AND value persists after reload |
