@@ -22,7 +22,7 @@ export default function ProjectEntry({
   const hoverSrc = getProjectHover(project);
   const num = String(index + 1).padStart(2, "0");
   const disciplines = project.disciplines
-    .map((d) => t.projectChrome.disciplineNames[d] ?? disciplineLabels[d] ?? d)
+    .map((d) => t.projectChrome.disciplineNames?.[d] ?? disciplineLabels[d] ?? d)
     .join(" · ");
 
   const scopeSummary =

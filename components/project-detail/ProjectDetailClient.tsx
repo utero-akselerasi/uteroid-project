@@ -34,7 +34,7 @@ export default function ProjectDetailClient({
 }: ProjectDetailClientProps) {
   const t = useTranslations();
   const disciplines = projectDisciplines
-    .map((d) => t.projectChrome.disciplineNames[d] ?? disciplineLabels[d] ?? d)
+    .map((d) => t.projectChrome.disciplineNames?.[d] ?? disciplineLabels[d] ?? d)
     .join(" · ");
   const industryLabel =
     (t.industries as Record<string, string>)[industry] ??

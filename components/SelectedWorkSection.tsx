@@ -114,8 +114,9 @@ function WorkCard({
   const incCover = coverSrc(inc);
   const incHover = getProjectHover(inc);
 
-  const curDisciplines = cur.disciplines.map((d) => t.projectChrome.disciplineNames[d] ?? disciplineLabels[d] ?? d).join(" · ");
-  const incDisciplines = inc.disciplines.map((d) => t.projectChrome.disciplineNames[d] ?? disciplineLabels[d] ?? d).join(" · ");
+  const nameFor = (d: string) => t.projectChrome.disciplineNames?.[d as keyof typeof t.projectChrome.disciplineNames] ?? disciplineLabels[d as keyof typeof disciplineLabels] ?? d;
+  const curDisciplines = cur.disciplines.map(nameFor).join(" · ");
+  const incDisciplines = inc.disciplines.map(nameFor).join(" · ");
 
   const curScope =
     cur.details?.scope && cur.details.scope.length > 0
