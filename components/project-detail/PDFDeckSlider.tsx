@@ -214,7 +214,9 @@ export default function PDFDeckSlider({ slug, routeSlug }: PDFDeckSliderProps) {
     <div
       ref={containerRef}
       className={`pd-deck-slider pd-section ${isFullscreen ? "pd-deck-slider--fullscreen" : ""}`}
-      data-lenis-prevent
+      // Only block page scroll while fullscreen; inline, vertical wheel
+      // must reach Lenis so the page keeps its smooth scroll.
+      data-lenis-prevent={isFullscreen ? "" : undefined}
       aria-label={`${t.projectDetail.fullPresentation} Deck`}
     >
       <div className="pd-deck-slider__header">
@@ -278,7 +280,9 @@ export default function PDFDeckSlider({ slug, routeSlug }: PDFDeckSliderProps) {
         ref={scrollContainerRef}
         className="pd-deck-slider__scroll-container"
         onScroll={handleScroll}
-        data-lenis-prevent
+        // Horizontal-dominant gestures scroll slides natively; vertical
+        // ones fall through to Lenis for smooth page scroll.
+        data-lenis-prevent-horizontal
       >
         {manifest.deck_images.map((image, index) => {
           const aspectRatio = manifest.aspect_ratios[index] || 1.414;
@@ -318,7 +322,7 @@ export default function PDFDeckSlider({ slug, routeSlug }: PDFDeckSliderProps) {
         <div
           ref={thumbnailStripRef}
           className="pd-deck-slider__thumbnails"
-          data-lenis-prevent
+          data-lenis-prevent-horizontal
         >
           {manifest.thumbnails.map((thumb, index) => (
             <button
