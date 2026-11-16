@@ -13,6 +13,7 @@ import VideoPlayer from "./VideoPlayer";
 import PDFDeckSlider from "./PDFDeckSlider";
 import { useTranslations } from "@/lib/useTranslations";
 import { useLocalizedProject } from "@/lib/useLocalizedProject";
+import { wasRecentPopNavigation } from "@/lib/scrollState";
 
 interface ProjectDetailClientProps {
   project: Project;
@@ -47,8 +48,16 @@ export default function ProjectDetailClient({
   const playButtonRef = useRef<HTMLButtonElement>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Reliable scroll to top on mount and route/slug change
+  // Scroll to top on project-to-project navigation only. Skipped on first
+  // mount (browser restores scroll on reload) and on Back/Forward
+  // (popstate) where the previous position must be restored.
+  const isFirstMount = useRef(true);
   useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    if (wasRecentPopNavigation()) return;
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
