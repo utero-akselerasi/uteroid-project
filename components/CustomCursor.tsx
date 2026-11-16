@@ -1,8 +1,41 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useTranslations, type Translations } from "@/lib/useTranslations";
+
+const CURSOR_TEXT_KEYS: Record<string, keyof Translations["cursor"]> = {
+  OPEN: "open",
+  "VIEW PROJECT": "viewProject",
+  "READ ESSAY": "readEssay",
+  READ: "read",
+  "VIEW WORKS": "viewWorks",
+  CONTACT: "contact",
+  BACK: "back",
+  "LET'S TALK": "letsTalk",
+  "START A PROJECT": "startProject",
+  HOME: "home",
+  CHAT: "chat",
+  EMAIL: "email",
+  SUBMIT: "submit",
+};
+
+function localizeCursorText(raw: string, t: Translations): string {
+  const hadArrow = /→|↗|&rarr;/.test(raw);
+  const normalized = raw
+    .replace(/&rarr;|→|↗/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+  const key = CURSOR_TEXT_KEYS[normalized];
+  if (!key) return raw;
+  const text = String(t.cursor[key]);
+  return hadArrow && !/[→↗]$/.test(text) ? `${text} →` : text;
+}
 
 export default function CustomCursor() {
+  const t = useTranslations();
+  const tRef = useRef(t);
+  tRef.current = t;
   const targetPosRef = useRef({ x: -100, y: -100 });
   const trailingPosRef = useRef({ x: -100, y: -100 });
   const cursorRingRef = useRef<HTMLDivElement>(null);
@@ -46,7 +79,7 @@ export default function CustomCursor() {
       const cursorTarget = target.closest("[data-cursor]") as HTMLElement | null;
       if (cursorTarget) {
         const text = cursorTarget.getAttribute("data-cursor") || "";
-        setCursorText(text);
+        setCursorText(localizeCursorText(text, tRef.current));
         setIsHovered(true);
       } else {
         const isInteractive = target.closest("a, button, [role='button'], input, textarea, select");

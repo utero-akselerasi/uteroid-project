@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import RevealOnScroll from "./RevealOnScroll";
+import { useTranslations } from "@/lib/useTranslations";
 
 export default function ManifestoSection() {
+  const t = useTranslations();
   return (
     <section
       id="philosophy"
@@ -76,7 +78,7 @@ export default function ManifestoSection() {
                 color: "rgba(255, 255, 255, 0.95)",
               }}
             >
-              04 / PHILOSOPHY &amp; EXECUTION
+              04 / {t.home.manifestoLabel.toUpperCase()}
             </span>
           </div>
         </RevealOnScroll>
@@ -94,7 +96,7 @@ export default function ManifestoSection() {
               lineHeight: 1.5,
             }}
           >
-            With 25+ years of real-world production in branding, marketing, and design, our core standard has remained resolute:
+            {t.home.manifestoIntro}
           </p>
         </RevealOnScroll>
 
@@ -120,15 +122,15 @@ export default function ManifestoSection() {
                 margin: 0,
               }}
             >
-              IDE TANPA
+              {t.home.manifestoL1}
               <br />
-              REALISASI
+              {t.home.manifestoL2}
               <br />
               <span style={{ color: "rgba(255, 255, 255, 0.85)" }}>
-                SAMA DENGAN
+                {t.home.manifestoL3}
               </span>
               <br />
-              SAMPAH.
+              {t.home.manifestoL4}
             </h2>
           </div>
         </RevealOnScroll>
@@ -151,9 +153,7 @@ export default function ManifestoSection() {
                 margin: 0,
               }}
             >
-              A concept remains sterile until it is brought to life with precision,
-              craftsmanship, and unrelenting attention to detail. We do not just imagine
-              possibilities &mdash; we engineer them into tangible reality.
+              {t.home.manifestoBody}
             </p>
           </RevealOnScroll>
 
@@ -176,7 +176,7 @@ export default function ManifestoSection() {
                   margin: "0 0 0.4rem",
                 }}
               >
-                UTERO STANDARD
+                {t.home.manifestoCardLabel}
               </p>
               <p
                 style={{
@@ -186,8 +186,7 @@ export default function ManifestoSection() {
                   margin: 0,
                 }}
               >
-                Design without execution is mere decoration. Execution without design is noise.
-                We unite both to deliver authentic transformation.
+                {t.home.manifestoCardBody}
               </p>
             </div>
           </RevealOnScroll>

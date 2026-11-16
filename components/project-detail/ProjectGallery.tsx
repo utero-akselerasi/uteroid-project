@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback, type ReactNode } from "react";
 import Image from "next/image";
 import Lightbox from "./Lightbox";
+import { useTranslations } from "@/lib/useTranslations";
 
 // ─────────────────────────────────────────────
 // Scroll-reveal wrapper for individual gallery items
@@ -51,6 +52,7 @@ function GalleryImage({
   alt: string;
   onClick: () => void;
 }) {
+  const t = useTranslations();
   return (
     <div
       className="pd-gallery-item"
@@ -58,7 +60,7 @@ function GalleryImage({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onClick(); }}
-      aria-label={`View ${alt} in fullscreen`}
+      aria-label={t.projectChrome.viewFullscreen.replace("[NAME]", alt)}
     >
       <Image
         src={src}
@@ -81,6 +83,7 @@ export default function ProjectGallery({
   images: string[];
   projectTitle?: string;
 }) {
+  const t = useTranslations();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const openLightbox = useCallback((index: number) => {
@@ -102,7 +105,7 @@ export default function ProjectGallery({
         {/* Section label */}
         <div className="pd-section__label">
           <span className="pd-section__label-line" />
-          <span className="pd-section__label-text">Highlights</span>
+          <span className="pd-section__label-text">{t.projectChrome.highlights}</span>
         </div>
 
         {/* Gallery grid - 2x2 uniform grid */}
@@ -122,7 +125,7 @@ export default function ProjectGallery({
         </div>
 
         <p className="pd-gallery__note">
-          A few highlights from the full presentation below.
+          {t.projectChrome.galleryNote}
         </p>
       </div>
 

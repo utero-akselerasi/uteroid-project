@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import RevealOnScroll from "./RevealOnScroll";
 import { useSiteSettings } from "@/components/SiteSettingsProvider";
+import { useTranslations } from "@/lib/useTranslations";
 
 export default function StatementBanner() {
+  const t = useTranslations();
   const { settings } = useSiteSettings();
   const banner = settings.banners?.statementBanner;
   const bannerImage = banner?.image || "/img/Collaborative Design Moodboard Workspace.png";
@@ -88,7 +90,7 @@ export default function StatementBanner() {
                 color: "#e31e24",
               }}
             >
-              UTERO CREATIVE STANDARD &mdash; EST. 1998
+              {t.home.statementTag}
             </span>
           </div>
         </RevealOnScroll>
@@ -108,7 +110,7 @@ export default function StatementBanner() {
                 color: "#ffffff",
               }}
             >
-              WE DON&apos;T JUST MAKE THINGS LOOK GOOD.
+              {t.home.statementHeadlineTop}
               <br />
               <span
                 style={{
@@ -117,7 +119,7 @@ export default function StatementBanner() {
                   marginTop: "0.2em",
                 }}
               >
-                WE DESIGN THINGS TO WORK BETTER.
+                {t.home.statementHeadline}
               </span>
             </h2>
           </RevealOnScroll>
@@ -143,9 +145,7 @@ export default function StatementBanner() {
                 margin: 0,
               }}
             >
-              From corporate brand identity to spatial environments and public media,
-              every project is backed by comprehensive strategic thinking and relentless
-              craftsmanship.
+              {t.home.statementBody}
             </p>
           </RevealOnScroll>
 
@@ -173,7 +173,7 @@ export default function StatementBanner() {
                     color: "#ffffff",
                   }}
                 >
-                  MALANG &bull; EAST JAVA &bull; INDONESIA
+                  {t.home.statementLocation}
                 </div>
                 <div
                   style={{
@@ -182,7 +182,7 @@ export default function StatementBanner() {
                     marginTop: "0.25rem",
                   }}
                 >
-                  Over two decades shaping Indonesian commercial design
+                  {t.home.statementLocationSub}
                 </div>
               </div>
 
@@ -212,7 +212,7 @@ export default function StatementBanner() {
                   e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
                 }}
               >
-                DISCOVER OUR STORY &rarr;
+                {t.home.statementCta}
               </Link>
             </div>
           </RevealOnScroll>

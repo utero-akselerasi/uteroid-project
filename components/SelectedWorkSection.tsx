@@ -23,6 +23,7 @@ import { getProjectCover, getProjectHover } from "@/lib/projectMedia";
 import { disciplineLabels } from "@/lib/types";
 import RevealOnScroll from "./RevealOnScroll";
 import { useTranslations } from "@/lib/useTranslations";
+import { useLocalizedProject } from "@/lib/useLocalizedProject";
 
 // ── Pool helpers ──────────────────────────────────────────────────────────────
 type PoolProject = Project;
@@ -105,23 +106,25 @@ function WorkCard({
   const { project: inc } = incoming ?? { project: cur };
   const isSwapping = incoming !== null;
   const num = String(slot + 1).padStart(2, "0");
+  const curLocalized = useLocalizedProject(cur);
+  const incLocalized = useLocalizedProject(inc);
 
   const curCover = coverSrc(cur);
   const curHover = getProjectHover(cur);
   const incCover = coverSrc(inc);
   const incHover = getProjectHover(inc);
 
-  const curDisciplines = cur.disciplines.map((d) => disciplineLabels[d]).join(" · ");
-  const incDisciplines = inc.disciplines.map((d) => disciplineLabels[d]).join(" · ");
+  const curDisciplines = cur.disciplines.map((d) => t.projectChrome.disciplineNames[d] ?? disciplineLabels[d] ?? d).join(" · ");
+  const incDisciplines = inc.disciplines.map((d) => t.projectChrome.disciplineNames[d] ?? disciplineLabels[d] ?? d).join(" · ");
 
   const curScope =
     cur.details?.scope && cur.details.scope.length > 0
       ? cur.details.scope.slice(0, 2).join(" · ")
-      : cur.category;
+      : curLocalized.category;
   const incScope =
     inc.details?.scope && inc.details.scope.length > 0
       ? inc.details.scope.slice(0, 2).join(" · ")
-      : inc.category;
+      : incLocalized.category;
 
   const targetSlug = isSwapping ? inc.routeSlug : cur.routeSlug;
 

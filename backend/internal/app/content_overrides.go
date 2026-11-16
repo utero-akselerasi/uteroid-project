@@ -20,6 +20,7 @@ var validOverrideScopes = map[string]bool{
 	"services":     true,
 	"seo":          true,
 	"page-copy":    true,
+	"projects":     true,
 }
 
 func (s *Store) ListContentOverrides() ([]ContentOverride, error) {

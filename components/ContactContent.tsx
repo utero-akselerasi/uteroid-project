@@ -283,7 +283,7 @@ export default function ContactContent() {
                             marginBottom: "0.2rem",
                           }}
                         >
-                          {channel.label}
+                          {(t.contact.channelNames as Record<string, string>)[channel.id] ?? channel.label}
                         </span>
                         <span
                           style={{
@@ -513,7 +513,7 @@ export default function ContactContent() {
                           id="clientName"
                           required
                           type="text"
-                          placeholder="e.g. Budi Santoso"
+                          placeholder={t.contact.placeholderName}
                           value={formName}
                           onChange={(e) => setFormName(e.target.value)}
                           style={{
@@ -547,7 +547,7 @@ export default function ContactContent() {
                         <input
                           id="brandName"
                           type="text"
-                          placeholder="e.g. Amarta Wisesa"
+                          placeholder={t.contact.placeholderCompany}
                           value={formCompany}
                           onChange={(e) => setFormCompany(e.target.value)}
                           style={{
@@ -585,7 +585,7 @@ export default function ContactContent() {
                           id="clientEmail"
                           required
                           type="email"
-                          placeholder="name@company.com"
+                          placeholder={t.contact.placeholderEmail}
                           value={formEmail}
                           onChange={(e) => setFormEmail(e.target.value)}
                           style={{
@@ -619,7 +619,7 @@ export default function ContactContent() {
                         <input
                           id="clientPhone"
                           type="tel"
-                          placeholder="+62 81..."
+                          placeholder={t.contact.placeholderPhone}
                           value={formPhone}
                           onChange={(e) => setFormPhone(e.target.value)}
                           style={{
@@ -656,7 +656,7 @@ export default function ContactContent() {
                           id="projectBrief"
                           required
                           rows={3}
-                          placeholder="Describe your current brand challenge, key timeline, and deliverables required..."
+                          placeholder={t.contact.placeholderBrief}
                           value={formBrief}
                           onChange={(e) => setFormBrief(e.target.value)}
                           style={{
@@ -700,7 +700,7 @@ export default function ContactContent() {
                         transition: "background-color 0.2s ease",
                       }}
                     >
-                      {submitting ? "Sending..." : t.contact.submit}
+                      {submitting ? t.contact.submitting : t.contact.submit}
                     </button>
                   </form>
                 )}

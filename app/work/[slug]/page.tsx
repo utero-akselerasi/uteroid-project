@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getPortfolioProject, getPortfolioProjects } from "@/lib/portfolioApi";
 import { getProjectCover } from "@/lib/projectMedia";
-import { disciplineLabels, industryLabels } from "@/lib/types";
 import JsonLd from "@/components/JsonLd";
 import ProjectDetailClient from "@/components/project-detail/ProjectDetailClient";
 
@@ -80,14 +79,6 @@ export default async function ProjectPage({
   const projectIndex = allRouteSlugs.indexOf(project.routeSlug);
   const num = String(projectIndex + 1).padStart(2, "0");
 
-  // Formatted discipline labels
-  const disciplines = project.disciplines
-    .map((d) => disciplineLabels[d] || d)
-    .join(" · ");
-
-  // Industry label
-  const industryLabel = industryLabels[project.industry] || project.industry;
-
   const rawCover = getProjectCover(project);
   const coverUrl = rawCover
     ? rawCover.startsWith("http")
@@ -156,8 +147,8 @@ export default async function ProjectPage({
         prev={prev ? { slug: prev.routeSlug, title: prev.title, year: prev.year, coverImage: getProjectCover(prev) } : null}
         next={next ? { slug: next.routeSlug, title: next.title, year: next.year, coverImage: getProjectCover(next) } : null}
         projectNum={num}
-        disciplines={disciplines}
-        industryLabel={industryLabel}
+        disciplines={project.disciplines}
+        industry={project.industry}
       />
     </>
   );

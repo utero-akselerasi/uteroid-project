@@ -139,7 +139,7 @@ export default function Footer() {
                   marginBottom: "0.4rem",
                 }}
               >
-                Studio Location
+                {t.footer.studioLocation}
               </span>
               <p
                 style={{

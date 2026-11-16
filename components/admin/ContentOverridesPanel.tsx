@@ -13,6 +13,7 @@ const SCOPES = [
   { id: "services", label: "Copy Layanan" },
   { id: "seo", label: "SEO per Halaman" },
   { id: "page-copy", label: "Copy Halaman" },
+  { id: "projects", label: "Proyek EN/ID" },
 ] as const;
 
 const TRANSLATION_LOCALES = ["en", "id"] as const;
@@ -91,8 +92,8 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
         }
       }
     } else {
-      // page-copy: show existing overrides + allow custom keys
-      for (const o of overrides.filter((x) => x.scope === "page-copy")) {
+      // page-copy / projects: show existing overrides + allow custom keys
+      for (const o of overrides.filter((x) => x.scope === scope)) {
         if (locale !== "all" && o.locale !== locale) continue;
         if (!match(o.key)) continue;
         out.push({ id: `${byId}${o.key}|${o.locale}`, scope, key: o.key, locale: o.locale, defaultValue: undefined, override: o });
@@ -164,7 +165,7 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
     try {
       await api("admin/content-overrides", {
         method: "PUT",
-        body: JSON.stringify({ scope: "page-copy", key, locale: "en", value }),
+        body: JSON.stringify({ scope, key, locale: locale === "id" ? "id" : "en", value }),
       }, csrfToken);
       setMessage(`Override ${key} disimpan.`);
       const data = await api("content-overrides");
@@ -204,7 +205,7 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
               </button>
             ))}
           </div>
-          {(scope === "translations" || scope === "services") && (
+          {(scope === "translations" || scope === "services" || scope === "projects") && (
             <div className={styles.checkGrid}>
               {TRANSLATION_LOCALES.map((l) => (
                 <button key={l} className={locale === l ? styles.primary : styles.ghost} onClick={() => setLocale(l)} type="button">
@@ -258,9 +259,9 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
               </div>
             );
           })}
-          {scope === "page-copy" && (
+          {(scope === "page-copy" || scope === "projects") && (
             <div style={{ display: "flex", gap: 8, padding: 12, border: "1px dashed #bbb", borderRadius: 4 }}>
-              <input value={newKey} onChange={(e) => setNewKey(e.target.value)} placeholder="key.baru (mis. hero.cta)" style={{ flex: 1 }} />
+              <input value={newKey} onChange={(e) => setNewKey(e.target.value)} placeholder={scope === "projects" ? "slug.field (mis. biskuat.description)" : "key.baru (mis. hero.cta)"} style={{ flex: 1 }} />
               <input value={newValue} onChange={(e) => setNewValue(e.target.value)} placeholder="nilai" style={{ flex: 1 }} />
               <button className={styles.primary} onClick={addPageCopy} type="button">Tambah</button>
             </div>

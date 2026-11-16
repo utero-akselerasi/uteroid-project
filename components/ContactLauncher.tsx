@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { useTranslations } from "@/lib/useTranslations";
 
 interface ContactLauncherProps {
   isOpen: boolean;
@@ -13,6 +15,7 @@ export default function ContactLauncher({
   onClose,
   isDarkText = false,
 }: ContactLauncherProps) {
+  const t = useTranslations();
   const launcherRef = useRef<HTMLDivElement>(null);
 
   // Click outside and Escape key to close
@@ -73,7 +76,7 @@ export default function ContactLauncher({
         ref={launcherRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Direct Contact Channels"
+        aria-label={t.contactChrome.channelsAria}
         className="fixed z-[1060] right-3 sm:right-6 top-16 md:top-[68px] w-[calc(100vw-1.5rem)] sm:w-[320px] max-w-[340px]"
         style={{
           animation: "contactLauncherFade 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards",
@@ -122,7 +125,7 @@ export default function ContactLauncher({
                   color: isDarkText ? "#0a0a0a" : "#ffffff",
                 }}
               >
-                CONNECT WITH UTERO
+                {t.contactChrome.launcherTitle}
               </span>
             </div>
 
@@ -135,7 +138,7 @@ export default function ContactLauncher({
                 color: mutedColor,
               }}
             >
-              MALANG (UTC+7)
+              {t.contactChrome.launcherLocation}
             </span>
           </div>
 
@@ -379,6 +382,40 @@ export default function ContactLauncher({
               </div>
               <span style={{ color: "#c91a1f", fontSize: "11px", fontWeight: "bold" }}>&rarr;</span>
             </a>
+          </div>
+
+          {/* Project Brief CTA */}
+          <div style={{ padding: "4px 2px 2px" }}>
+            <Link
+              href="/contact"
+              onClick={onClose}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "6px",
+                width: "100%",
+                padding: "9px 10px",
+                borderRadius: "8px",
+                backgroundColor: "#e31e24",
+                color: "#ffffff",
+                fontSize: "10px",
+                fontWeight: 800,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                transition: "background-color 0.2s ease, transform 0.15s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#c91a1f";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#e31e24";
+              }}
+            >
+              {t.contact.startProject}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
           </div>
 
           {/* Footer Bar: Email */}

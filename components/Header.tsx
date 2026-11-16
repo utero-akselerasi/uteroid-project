@@ -206,7 +206,7 @@ export default function Header() {
   const handleInquirySubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formName.trim() || !formEmail.trim() || !formBrief.trim()) {
-      setFormError("Please fill in all required fields (*)");
+      setFormError(t.header.menuErrorRequired);
       return;
     }
     setFormError("");
@@ -224,7 +224,7 @@ export default function Header() {
       setFormSubmitted(true);
     } catch (err: unknown) {
       console.error("Project inquiry error:", err);
-      setFormError("Something went wrong. Please try again.");
+      setFormError(t.header.menuErrorGeneric);
     } finally {
       setFormSubmitting(false);
     }
@@ -889,7 +889,7 @@ export default function Header() {
                 fontWeight: 700,
               }}
             >
-              CLOSE
+              {t.nav.close}
             </span>
             <span style={{ fontSize: "12px", fontWeight: "bold" }}>✕</span>
           </button>
@@ -1051,7 +1051,7 @@ export default function Header() {
                     color: "rgba(255, 255, 255, 0.85)",
                   }}
                 >
-                  PROJECT BRIEF INQUIRY
+                  {t.header.menuFormKicker}
                 </span>
               </div>
               <h3
@@ -1066,7 +1066,7 @@ export default function Header() {
                   lineHeight: 1.15,
                 }}
               >
-                TELL US ABOUT YOUR VISION
+                {t.header.menuFormHeading}
               </h3>
             </div>
 
@@ -1108,7 +1108,7 @@ export default function Header() {
                       letterSpacing: "0.05em",
                     }}
                   >
-                    BRIEF RECEIVED
+                    {t.header.menuFormReceived}
                   </h4>
                   <p
                     style={{
@@ -1119,9 +1119,7 @@ export default function Header() {
                       maxWidth: "380px",
                     }}
                   >
-                    Thank you, <strong>{formName}</strong>. Our creative team will
-                    review your project requirements and get in touch within 24
-                    hours.
+                    {t.header.menuThankYou(formName)}
                   </p>
                 </div>
                 <button
@@ -1155,7 +1153,7 @@ export default function Header() {
                     e.currentTarget.style.backgroundColor = "transparent";
                   }}
                 >
-                  SUBMIT ANOTHER BRIEF
+                  {t.header.menuSubmitAnother}
                 </button>
               </div>
             ) : (
@@ -1174,7 +1172,7 @@ export default function Header() {
                       marginBottom: "0.5rem",
                     }}
                   >
-                    INTERESTED DISCIPLINES
+                    {t.header.menuFormDisciplines}
                   </label>
                   <div
                     style={{
@@ -1251,13 +1249,13 @@ export default function Header() {
                         marginBottom: "0.25rem",
                       }}
                     >
-                      YOUR NAME *
+                      {t.header.menuFormName}
                     </label>
                     <input
                       id="menu-inquiry-name"
                       type="text"
                       required
-                      placeholder="e.g. Alex Morgan"
+                      placeholder={t.header.placeholderName}
                       value={formName}
                       onChange={(e) => setFormName(e.target.value)}
                       className="menu-form-input"
@@ -1297,12 +1295,12 @@ export default function Header() {
                         marginBottom: "0.25rem",
                       }}
                     >
-                      COMPANY / BRAND
+                      {t.header.menuFormCompany}
                     </label>
                     <input
                       id="menu-inquiry-company"
                       type="text"
-                      placeholder="e.g. Studio Vertex"
+                      placeholder={t.header.placeholderCompany}
                       value={formCompany}
                       onChange={(e) => setFormCompany(e.target.value)}
                       className="menu-form-input"
@@ -1352,13 +1350,13 @@ export default function Header() {
                         marginBottom: "0.25rem",
                       }}
                     >
-                      EMAIL ADDRESS *
+                      {t.header.menuFormEmail}
                     </label>
                     <input
                       id="menu-inquiry-email"
                       type="email"
                       required
-                      placeholder="alex@company.com"
+                      placeholder={t.header.placeholderEmail}
                       value={formEmail}
                       onChange={(e) => setFormEmail(e.target.value)}
                       className="menu-form-input"
@@ -1398,7 +1396,7 @@ export default function Header() {
                         marginBottom: "0.25rem",
                       }}
                     >
-                      WHATSAPP / PHONE
+                      {t.header.menuFormPhone}
                     </label>
                     <input
                       id="menu-inquiry-phone"
@@ -1445,13 +1443,13 @@ export default function Header() {
                       marginBottom: "0.25rem",
                     }}
                   >
-                    PROJECT BRIEF &amp; SCOPE OVERVIEW *
+                    {t.header.menuFormBrief}
                   </label>
                   <textarea
                     id="menu-inquiry-brief"
                     required
                     rows={2}
-                    placeholder="Briefly describe your objectives, target audience, timeline, or key challenges..."
+                    placeholder={t.header.placeholderBrief}
                     value={formBrief}
                     onChange={(e) => setFormBrief(e.target.value)}
                     className="menu-form-input"
@@ -1530,8 +1528,8 @@ export default function Header() {
                 >
                   <span>
                     {formSubmitting
-                      ? "TRANSMITTING BRIEF..."
-                      : "SUBMIT PROJECT BRIEF"}
+                      ? t.header.menuFormSubmitting
+                      : t.header.menuFormSubmit}
                   </span>
                   <span>&rarr;</span>
                 </button>
@@ -1561,7 +1559,7 @@ export default function Header() {
               color: "rgba(255, 255, 255, 0.8)",
             }}
           >
-            DESIGN AS A SOLUTION.
+            {t.header.menuTagline}
           </span>
 
           <span

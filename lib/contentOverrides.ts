@@ -1,11 +1,11 @@
 // Generic content-override helpers shared by client + admin.
 // Overrides come from the Go API (content_overrides table) and take
 // precedence over code defaults. Keys are dot-paths into the default
-// object for scope "translations"/"page-copy"/"seo", or "<slug>.<field>"
-// for scope "services".
+// object for scope "translations"/"page-copy"/"seo", "<slug>.<field>"
+// for scope "services", and "<routeSlug>.<field>" for scope "projects".
 
 export interface ContentOverride {
-  scope: "translations" | "services" | "seo" | "page-copy";
+  scope: "translations" | "services" | "seo" | "page-copy" | "projects";
   key: string;
   locale: string;
   value: unknown;

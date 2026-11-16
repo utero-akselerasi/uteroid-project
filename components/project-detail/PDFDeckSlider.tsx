@@ -200,7 +200,7 @@ export default function PDFDeckSlider({ slug, routeSlug }: PDFDeckSliderProps) {
           <span className="pd-section__label-line" />
           <span className="pd-section__label-text">{t.projectDetail.fullPresentation}</span>
         </div>
-        <div className="pd-deck-slider__loading">Loading presentation deck...</div>
+        <div className="pd-deck-slider__loading">{t.projectChrome.loadingDeck}</div>
       </div>
     );
   }
