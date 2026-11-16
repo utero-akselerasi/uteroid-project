@@ -76,6 +76,24 @@ No-backup fallback (data-loss-free for existing works):
 
 ---
 
+# Backend changes since last mentor deploy (scroll/admin/localization work)
+
+Rebuild the Go server and restart the container for these changes to take effect:
+
+1. **`backend/internal/app/content_overrides.go`** — Added `"projects"` scope to content overrides
+   - One-line change allows admin to override project fields via key `routeSlug.field` (e.g. `biskuat.description`)
+   - No database migration; new scope is just a string in the allow-list
+
+2. **No other backend code changed** — Scroll fixes and admin URL state are client-side only (Next.js + React)
+
+Mentor smoke test for the `projects` override scope:
+- In live admin, open **Konten** → **Proyek EN/ID**
+- Create a test override (e.g. `biskuat.description` = "test value")
+- Reload admin → verify it persists
+- Delete the test row
+
+---
+
 # FINAL DEPLOY RUNBOOK (M2–M6) — non-developer edition
 
 Production lives only on the mentor's machine. This PC never connects to it.
