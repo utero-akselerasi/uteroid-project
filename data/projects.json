@@ -2655,12 +2655,7 @@
     "coverImage": "/projects/sedral/cover-02c24615.webp",
     "heroImage": "/projects/sedral/cover-02c24615.webp",
     "hoverImage": "/projects/sedral/hover-02c24615.webp",
-    "galleryImages": [
-      "/projects/sedral/gallery/000.webp",
-      "/projects/sedral/gallery/001.webp",
-      "/projects/sedral/gallery/002.webp",
-      "/projects/sedral/gallery/003.webp"
-    ],
+    "galleryImages": [],
     "featured": false,
     "priority": 28,
     "details": {

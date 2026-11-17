@@ -43,6 +43,41 @@ func (s *ObjectStorage) Get(ctx context.Context, key string) (*minio.Object, err
 func (s *ObjectStorage) Delete(ctx context.Context, key string) error {
 	return s.client.RemoveObject(ctx, s.bucket, key, minio.RemoveObjectOptions{})
 }
+
+// ObjectInfo describes a stored object's metadata.
+type ObjectInfo struct {
+	ContentType string
+	Size        int64
+}
+
+// GetBytes reads a whole object into memory. Callers must bound the size via
+// readAndValidateImage afterwards; the read itself is capped at 64 MiB.
+func (s *ObjectStorage) GetBytes(ctx context.Context, key string) ([]byte, ObjectInfo, error) {
+	object, err := s.Get(ctx, key)
+	if err != nil {
+		return nil, ObjectInfo{}, err
+	}
+	defer object.Close()
+	stat, err := object.Stat()
+	if err != nil {
+		return nil, ObjectInfo{}, err
+	}
+	data, err := io.ReadAll(io.LimitReader(object, 64<<20))
+	if err != nil {
+		return nil, ObjectInfo{}, err
+	}
+	return data, ObjectInfo{ContentType: stat.ContentType, Size: stat.Size}, nil
+}
+
+// objectStore is the subset of ObjectStorage used by the server, extracted so
+// tests can substitute an in-memory implementation.
+type objectStore interface {
+	Put(ctx context.Context, key, contentType string, reader io.Reader, size int64) error
+	Get(ctx context.Context, key string) (*minio.Object, error)
+	GetBytes(ctx context.Context, key string) ([]byte, ObjectInfo, error)
+	Delete(ctx context.Context, key string) error
+}
+
 func safeObjectKey(key string) (string, error) {
 	clean := path.Clean("/" + key)
 	if strings.Contains(clean, "..") || clean == "/" {

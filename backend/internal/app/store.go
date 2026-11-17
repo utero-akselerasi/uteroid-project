@@ -88,6 +88,12 @@ CREATE TABLE IF NOT EXISTS schema_migrations (
 	if err = s.ensureColumn("projects", "homepage_visible", "INTEGER NOT NULL DEFAULT 1"); err != nil {
 		return err
 	}
+	if err = s.ensureColumn("project_media", "watermark_state", "INTEGER NOT NULL DEFAULT 0"); err != nil {
+		return err
+	}
+	if err = s.ensureColumn("project_media", "source_key", "TEXT NOT NULL DEFAULT ''"); err != nil {
+		return err
+	}
 	if err = s.runOneTimeMigration("backfill_video_aspect_ratios_v1", s.backfillVideoAspectRatios); err != nil {
 		return err
 	}

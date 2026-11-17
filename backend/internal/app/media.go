@@ -3,7 +3,6 @@ package app
 import (
 	"bytes"
 	"context"
-	"embed"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -16,28 +15,8 @@ import (
 	"strconv"
 	"strings"
 
-	xdraw "golang.org/x/image/draw"
 	"golang.org/x/image/webp"
 )
-
-// watermark.png is the real Utero logo used to stamp deck slides.
-//go:embed watermark.png
-var watermarkAsset embed.FS
-
-var watermarkLogo image.Image
-
-func init() {
-	raw, err := watermarkAsset.ReadFile("watermark.png")
-	if err != nil {
-		return
-	}
-	logo, _, err := image.Decode(bytes.NewReader(raw))
-	if err != nil {
-		slog.Warn("watermark logo decode failed", "error", err)
-		return
-	}
-	watermarkLogo = logo
-}
 
 const maxMediaBytes = 20 << 20
 
@@ -77,74 +56,62 @@ func readAndValidateImage(reader io.Reader, maxBytes int64) (*decodedMedia, erro
 	return &decodedMedia{data: data, contentType: contentType, width: config.Width, height: config.Height, ext: ext}, nil
 }
 
-// stampLogo composites the Utero logo into the bottom-right corner of src.
-func stampLogo(src image.Image) *image.RGBA {
-	if watermarkLogo == nil {
-		return nil
+func decodeDeckImage(media *decodedMedia) (image.Image, error) {
+	if media.contentType == "image/webp" {
+		return webp.Decode(bytes.NewReader(media.data))
 	}
-	bounds := src.Bounds()
-	dst := image.NewRGBA(image.Rect(0, 0, bounds.Dx(), bounds.Dy()))
-	xdraw.Draw(dst, dst.Bounds(), src, bounds.Min, xdraw.Src)
-
-	logoBounds := watermarkLogo.Bounds()
-	logoW := bounds.Dx() / 6
-	if logoW < 32 {
-		logoW = 32
-	}
-	scale := float64(logoW) / float64(logoBounds.Dx())
-	logoH := int(float64(logoBounds.Dy()) * scale)
-	if logoH < 1 {
-		return dst
-	}
-	scaled := image.NewRGBA(image.Rect(0, 0, logoW, logoH))
-	xdraw.ApproxBiLinear.Scale(scaled, scaled.Bounds(), watermarkLogo, logoBounds, xdraw.Over, nil)
-
-	margin := bounds.Dx() / 40
-	if margin < 12 {
-		margin = 12
-	}
-	xdraw.Draw(dst, image.Rect(bounds.Dx()-logoW-margin, bounds.Dy()-logoH-margin, bounds.Dx()-margin, bounds.Dy()-margin), scaled, image.Point{}, xdraw.Over)
-	return dst
+	img, _, err := image.Decode(bytes.NewReader(media.data))
+	return img, err
 }
 
-// processDeckPage decodes an uploaded deck page, optionally stamps the logo and
-// re-encodes it. WebP input is re-encoded as PNG because there is no WebP encoder.
-func processDeckPage(media *decodedMedia, watermark bool) (*decodedMedia, error) {
-	var src image.Image
-	var err error
-	if media.contentType == "image/webp" {
-		src, err = webp.Decode(bytes.NewReader(media.data))
-	} else {
-		src, _, err = image.Decode(bytes.NewReader(media.data))
-	}
-	if err != nil {
-		return nil, fmt.Errorf("invalid image")
-	}
-	out := src
-	if watermark {
-		if stamped := stampLogo(src); stamped != nil {
-			out = stamped
-		}
-	}
+// encodeDeckImage re-encodes a decoded page. WebP input is re-encoded as PNG
+// because there is no WebP encoder; JPEG stays JPEG at quality 90.
+func encodeDeckImage(img image.Image, sourceContentType string) (*decodedMedia, error) {
+	out := img
 	var buf bytes.Buffer
-	contentType := media.contentType
-	if media.contentType == "image/png" || media.contentType == "image/webp" {
+	contentType := sourceContentType
+	ext := ".bin"
+	var err error
+	if sourceContentType == "image/png" || sourceContentType == "image/webp" {
 		contentType = "image/png"
-		media.ext = ".png"
+		ext = ".png"
 		err = png.Encode(&buf, out)
 	} else {
 		contentType = "image/jpeg"
-		media.ext = ".jpg"
+		ext = ".jpg"
 		err = jpeg.Encode(&buf, out, &jpeg.Options{Quality: 90})
 	}
 	if err != nil {
 		return nil, fmt.Errorf("unable to encode image")
 	}
-	return &decodedMedia{data: buf.Bytes(), contentType: contentType, width: out.Bounds().Dx(), height: out.Bounds().Dy(), ext: media.ext}, nil
+	bounds := out.Bounds()
+	return &decodedMedia{data: buf.Bytes(), contentType: contentType, width: bounds.Dx(), height: bounds.Dy(), ext: ext}, nil
 }
 
-func deckWatermarkEnabled(p Project) bool {
-	return p.Details.DeckWatermark == nil || *p.Details.DeckWatermark
+// processDeckPage decodes an uploaded deck page and re-encodes it. When stamp
+// is true it also returns the watermarked variant plus the pristine encoded
+// bytes so callers can keep an unstamped backup.
+func processDeckPage(media *decodedMedia, stamp bool) (*decodedMedia, *decodedMedia, error) {
+	src, err := decodeDeckImage(media)
+	if err != nil {
+		return nil, nil, fmt.Errorf("invalid image")
+	}
+	pristine, err := encodeDeckImage(src, media.contentType)
+	if err != nil {
+		return nil, nil, err
+	}
+	if !stamp {
+		return pristine, nil, nil
+	}
+	stampedImg, err := applyDeckWatermark(src)
+	if err != nil {
+		return nil, nil, err
+	}
+	stamped, err := encodeDeckImage(stampedImg, media.contentType)
+	if err != nil {
+		return nil, nil, err
+	}
+	return stamped, pristine, nil
 }
 
 func (s *Server) countDeckMedia(ctx context.Context, projectID int64) int {
@@ -237,8 +204,9 @@ func (s *Server) replaceMedia(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, err.Error())
 		return
 	}
-	var oldKey, mediaType, oldAlt string
-	if err = s.store.DB.QueryRowContext(r.Context(), `SELECT storage_key,media_type,alt_text FROM project_media WHERE id=? AND project_id=?`, mediaID, id).Scan(&oldKey, &mediaType, &oldAlt); err != nil {
+	var oldKey, mediaType, oldAlt, oldSourceKey string
+	var oldWatermarkState int
+	if err = s.store.DB.QueryRowContext(r.Context(), `SELECT storage_key,media_type,alt_text,source_key,watermark_state FROM project_media WHERE id=? AND project_id=?`, mediaID, id).Scan(&oldKey, &mediaType, &oldAlt, &oldSourceKey, &oldWatermarkState); err != nil {
 		apiError(w, 404, "media not found")
 		return
 	}
@@ -300,8 +268,24 @@ func (s *Server) replaceMedia(w http.ResponseWriter, r *http.Request) {
 			_ = s.store.SaveProject(r.Context(), &project)
 		}
 	}
+	if mediaType == "deck" {
+		// The replacement file is pristine: clear any watermark bookkeeping so
+		// the reconcile pass re-evaluates this page's position in the deck.
+		if _, err = s.store.DB.ExecContext(r.Context(), `UPDATE project_media SET watermark_state=0,source_key='' WHERE id=? AND project_id=?`, mediaID, id); err != nil {
+			apiError(w, 500, "unable to update media")
+			return
+		}
+		if oldSourceKey != "" {
+			if err = s.storage.Delete(r.Context(), oldSourceKey); err != nil {
+				slog.Warn("old deck backup cleanup failed", "key", oldSourceKey, "error", err)
+			}
+		}
+	}
 	if err = s.storage.Delete(r.Context(), oldKey); err != nil {
 		slog.Warn("old media object cleanup failed", "key", oldKey, "error", err)
+	}
+	if mediaType == "deck" {
+		s.reconcileDeckWatermarks(r.Context(), id)
 	}
 	session := currentSession(r)
 	s.store.Audit(r.Context(), session.AdminID, "media.replace", "project", strconv.FormatInt(id, 10), clientIP(r))
@@ -349,15 +333,15 @@ func (s *Server) updateMediaAlt(w http.ResponseWriter, r *http.Request) {
 
 // POST /api/v1/admin/projects/{id}/deck — replace the entire deck in one call.
 // Accepts multipart field "files" (ordered) or repeated "file" parts. Each page
-// is validated, optionally stamped with the logo watermark (never page 1) and
-// stored; old deck objects are removed only after the DB swap commits.
+// is validated, re-encoded and stored; old deck objects are removed only
+// after the DB swap commits.
 func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 	id, err := parseID(r.PathValue("id"))
 	if err != nil {
 		apiError(w, 400, err.Error())
 		return
 	}
-	project, err := s.store.GetProject(r.Context(), id, false, true)
+	_, err = s.store.GetProject(r.Context(), id, false, true)
 	if err != nil {
 		apiError(w, 404, "project not found")
 		return
@@ -381,16 +365,18 @@ func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 		apiError(w, 400, "too many pages (max 100)")
 		return
 	}
-	watermark := deckWatermarkEnabled(project)
 	type staged struct {
 		key         string
+		sourceKey   string
+		state       int
 		filename    string
 		contentType string
 		size        int
 		width       int
 		height      int
 	}
-	stagedPages := make([]staged, 0, len(headers))
+	totalPages := len(headers)
+	stagedPages := make([]staged, 0, totalPages)
 	for i, header := range headers {
 		file, openErr := header.Open()
 		if openErr != nil {
@@ -403,8 +389,10 @@ func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 			apiError(w, 400, fmt.Sprintf("page %d: %s", i+1, readErr.Error()))
 			return
 		}
-		// Page 1 never carries the watermark.
-		processed, procErr := processDeckPage(media, watermark && i > 0)
+		// Only interior slides carry the watermark; the first and last slide of
+		// the complete deck always stay pristine.
+		stamp := isDeckInterior(i, totalPages)
+		processed, pristine, procErr := processDeckPage(media, stamp)
 		if procErr != nil {
 			apiError(w, 400, fmt.Sprintf("page %d: %s", i+1, procErr.Error()))
 			return
@@ -416,19 +404,33 @@ func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 			apiError(w, 502, "storage unavailable")
 			return
 		}
-		stagedPages = append(stagedPages, staged{
+		page := staged{
 			key: key, filename: filepath.Base(header.Filename), contentType: processed.contentType,
 			size: len(processed.data), width: processed.width, height: processed.height,
-		})
+		}
+		if stamp {
+			sourceKey := fmt.Sprintf("orig/deck/%d/%s-%03d-src%s", id, token, i+1, strings.ToLower(pristine.ext))
+			if err = s.storage.Put(r.Context(), sourceKey, pristine.contentType, bytes.NewReader(pristine.data), int64(len(pristine.data))); err != nil {
+				slog.Error("deck page backup upload failed", "error", err)
+				apiError(w, 502, "storage unavailable")
+				return
+			}
+			page.sourceKey = sourceKey
+			page.state = deckWatermarkStamped
+		}
+		stagedPages = append(stagedPages, page)
 	}
 	// Swap deck rows atomically, then remove the old objects.
 	oldKeys := []string{}
-	rows, qerr := s.store.DB.QueryContext(r.Context(), `SELECT storage_key FROM project_media WHERE project_id=? AND media_type='deck'`, id)
+	rows, qerr := s.store.DB.QueryContext(r.Context(), `SELECT storage_key,source_key FROM project_media WHERE project_id=? AND media_type='deck'`, id)
 	if qerr == nil {
 		for rows.Next() {
-			var key string
-			if rows.Scan(&key) == nil {
+			var key, sourceKey string
+			if rows.Scan(&key, &sourceKey) == nil {
 				oldKeys = append(oldKeys, key)
+				if sourceKey != "" {
+					oldKeys = append(oldKeys, sourceKey)
+				}
 			}
 		}
 		rows.Close()
@@ -444,7 +446,7 @@ func (s *Server) replaceDeck(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for i, page := range stagedPages {
-		if _, err = tx.ExecContext(r.Context(), `INSERT INTO project_media(project_id,media_type,storage_key,original_filename,mime_type,file_size,width,height,sort_order) VALUES(?,?,?,?,?,?,?,?,?)`, id, "deck", page.key, page.filename, page.contentType, page.size, page.width, page.height, i); err != nil {
+		if _, err = tx.ExecContext(r.Context(), `INSERT INTO project_media(project_id,media_type,storage_key,original_filename,mime_type,file_size,width,height,sort_order,watermark_state,source_key) VALUES(?,?,?,?,?,?,?,?,?,?,?)`, id, "deck", page.key, page.filename, page.contentType, page.size, page.width, page.height, i, page.state, page.sourceKey); err != nil {
 			apiError(w, 500, "unable to replace deck")
 			return
 		}
