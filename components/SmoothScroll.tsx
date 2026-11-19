@@ -17,6 +17,20 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     // forced to the top by the pathname effect below.
     history.scrollRestoration = "auto";
 
+    const currentPathKey = () => (typeof window !== "undefined" ? window.location.pathname + window.location.search : "");
+
+    const isReload = () => {
+      try {
+        const navEntries = performance.getEntriesByType("navigation");
+        if (navEntries.length > 0) {
+          return (navEntries[0] as PerformanceNavigationTiming).type === "reload";
+        }
+        return (performance as any).navigation?.type === 1;
+      } catch {
+        return false;
+      }
+    };
+
     // After a popstate the browser/Next restores scroll immediately, but a
     // still-loading page clamps it to the short document. Retry the saved
     // position until the page is tall enough, and never fight the user.
@@ -25,8 +39,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     let restorePending = false;
     const scheduleHistoryRestore = () => {
       restoreCancelled = false;
-      const state = history.state as { __uteroScrollYStable?: number; __uteroScrollY?: number } | null;
-      const saved = state?.__uteroScrollYStable ?? state?.__uteroScrollY;
+      const state = history.state as { __uteroScrollPath?: string; __uteroScrollYStable?: number; __uteroScrollY?: number } | null;
+      if (!state || state.__uteroScrollPath !== currentPathKey()) {
+        restorePending = false;
+        return;
+      }
+      const saved = state.__uteroScrollYStable ?? state.__uteroScrollY;
       if (typeof saved !== "number" || saved < 80) {
         restorePending = false;
         return;
@@ -35,37 +53,47 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       const cancel = () => {
         restoreCancelled = true;
         restorePending = false;
+        restoreTimers.forEach(clearTimeout);
+        restoreTimers.length = 0;
         window.removeEventListener("wheel", cancel, true);
         window.removeEventListener("touchstart", cancel, true);
+        window.removeEventListener("pointerdown", cancel, true);
+        window.removeEventListener("mousedown", cancel, true);
         window.removeEventListener("keydown", cancel, true);
       };
       window.addEventListener("wheel", cancel, { capture: true, passive: true });
       window.addEventListener("touchstart", cancel, { capture: true, passive: true });
+      window.addEventListener("pointerdown", cancel, { capture: true, passive: true });
+      window.addEventListener("mousedown", cancel, { capture: true, passive: true });
       window.addEventListener("keydown", cancel, { capture: true });
       let attempts = 0;
       const finish = () => {
         restoreCancelled = true;
         restorePending = false;
+        restoreTimers.forEach(clearTimeout);
+        restoreTimers.length = 0;
         window.removeEventListener("wheel", cancel, true);
         window.removeEventListener("touchstart", cancel, true);
+        window.removeEventListener("pointerdown", cancel, true);
+        window.removeEventListener("mousedown", cancel, true);
         window.removeEventListener("keydown", cancel, true);
       };
       const attempt = () => {
-        if (restoreCancelled || ++attempts > 40) { finish(); return; }
+        if (restoreCancelled) return;
+        if (++attempts > 8) { finish(); return; }
         const maxY = document.documentElement.scrollHeight - window.innerHeight;
-        if (Math.abs(scrollY - saved) <= 40) { finish(); return; }
         if (maxY >= saved - 40) {
           window.scrollTo({ top: saved, left: 0, behavior: "instant" as ScrollBehavior });
           lenisRef.current?.scrollTo(saved, { immediate: true, force: true });
+          finish();
+          return;
         }
-        restoreTimers.push(window.setTimeout(attempt, attempts < 8 ? 150 : 400));
+        restoreTimers.push(window.setTimeout(attempt, 100));
       };
-      restoreTimers.push(window.setTimeout(attempt, 60));
-      restoreTimers.push(window.setTimeout(attempt, 300));
-      restoreTimers.push(window.setTimeout(attempt, 800));
-      restoreTimers.push(window.setTimeout(attempt, 1600));
-      restoreTimers.push(window.setTimeout(attempt, 2600));
-      restoreTimers.push(window.setTimeout(attempt, 4000));
+      restoreTimers.push(window.setTimeout(attempt, 50));
+      restoreTimers.push(window.setTimeout(attempt, 200));
+      restoreTimers.push(window.setTimeout(attempt, 500));
+      restoreTimers.push(window.setTimeout(attempt, 1000));
     };
 
     const onPopState = () => {
@@ -75,27 +103,22 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     window.addEventListener("popstate", onPopState);
     // On reload the browser restores scroll immediately but clamps it if
     // the document is still short; retry once the page has grown.
-    scheduleHistoryRestore();
+    if (isReload()) {
+      scheduleHistoryRestore();
+    }
 
     // Remember each history entry's scroll position so Back/Forward can
-    // restore it even when the target page is still loading (the browser
-    // clamps the restore to the short document and never retries).
-    // Two values are kept per entry:
-    //  - __uteroScrollY: live position, updated while scrolling.
-    //  - __uteroScrollYStable: position committed after ~450ms of scroll
-    //    idle (and on pointerdown, before any click navigation). Next.js
-    //    animates scroll-to-top BEFORE pushState on link clicks, which
-    //    would otherwise overwrite the departing entry's saved position
-    //    with ~0; the stable value survives that.
+    // restore it even when the target page is still loading.
     let lastSave = 0;
     let idleTimer: number | null = null;
-    // Next.js animates scroll-to-top BEFORE pushState on link clicks.
-    // Suppress stable commits during that window so the departing
-    // entry keeps the position the user actually stopped at.
-    const writeState = (patch: Record<string, number>) => {
+    const writeState = (patch: Record<string, unknown>) => {
       try {
         const state = history.state;
-        history.replaceState({ ...(state && typeof state === "object" ? state : {}), ...patch }, "");
+        history.replaceState({
+          ...(state && typeof state === "object" ? state : {}),
+          __uteroScrollPath: currentPathKey(),
+          ...patch
+        }, "");
       } catch {}
     };
     const commitStable = () => {
@@ -133,12 +156,13 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
       touchMultiplier: 1.5,
+      allowNestedScroll: true,
     });
     lenisRef.current = lenis;
 
