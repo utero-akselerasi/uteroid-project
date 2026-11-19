@@ -14,6 +14,12 @@ const LOCALIZABLE_FIELDS = [
   "category",
 ] as const;
 
+// Project fields with built-in English translations in projects.json
+const BUILTIN_EN_FIELDS = [
+  "shortDescriptionEn",
+  "categoryEn",
+] as const;
+
 type LocalizableField = (typeof LOCALIZABLE_FIELDS)[number];
 
 export function useLocalizedProject(project: Project): Project {
@@ -28,15 +34,27 @@ export function useLocalizedProject(project: Project): Project {
         overrides.set(o.key, o.value);
       }
     }
-    if (!overrides.size) return project;
 
     const localized = { ...project };
+
+    // First, apply content overrides (highest priority)
     for (const field of LOCALIZABLE_FIELDS) {
       const value = overrides.get(`${project.routeSlug}.${field}`);
       if (value !== undefined) {
         (localized as Record<LocalizableField, unknown>)[field] = value;
       }
     }
+
+    // If English and no override, use built-in English fields
+    if (language === "en") {
+      if (!overrides.has(`${project.routeSlug}.shortDescription`) && (project as any).shortDescriptionEn) {
+        localized.shortDescription = (project as any).shortDescriptionEn;
+      }
+      if (!overrides.has(`${project.routeSlug}.category`) && (project as any).categoryEn) {
+        localized.category = (project as any).categoryEn;
+      }
+    }
+
     return localized;
   }, [project, language, contentOverrides]);
 }
