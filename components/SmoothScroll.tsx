@@ -12,10 +12,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   const suppressStableUntilRef = useRef(0);
 
   useEffect(() => {
-    // Let the browser restore scroll on reload and Back/Forward
-    // (scrollRestoration "auto"). Client-side push navigations are still
-    // forced to the top by the pathname effect below.
-    history.scrollRestoration = "auto";
+    // Use manual scroll restoration to control when and how scroll is restored.
+    // This prevents the browser from restoring stale scroll positions on reload
+    // when the user hasn't meaningfully navigated to that page.
+    history.scrollRestoration = "manual";
 
     const currentPathKey = () => (typeof window !== "undefined" ? window.location.pathname + window.location.search : "");
 
@@ -101,10 +101,17 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       scheduleHistoryRestore();
     };
     window.addEventListener("popstate", onPopState);
-    // On reload the browser restores scroll immediately but clamps it if
-    // the document is still short; retry once the page has grown.
+    // On reload, only restore scroll if we have a meaningful saved position
+    // for this specific path. This prevents restoring stale positions from
+    // unrelated navigation history.
     if (isReload()) {
-      scheduleHistoryRestore();
+      const state = history.state as { __uteroScrollPath?: string; __uteroScrollYStable?: number; __uteroScrollY?: number } | null;
+      if (state && state.__uteroScrollPath === currentPathKey()) {
+        const saved = state.__uteroScrollYStable ?? state.__uteroScrollY;
+        if (typeof saved === "number" && saved >= 80) {
+          scheduleHistoryRestore();
+        }
+      }
     }
 
     // Remember each history entry's scroll position so Back/Forward can
@@ -190,16 +197,11 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
   // On client-side route changes (link clicks), jump straight back to the
   // top so the new page is immediately visible. Skipped on:
-  //  - initial mount (browser restores scroll on reload),
   //  - popstate navigations (browser/Next restores the history entry's
   //    scroll position — Back/Forward must land where the user left off),
   //  - same-pathname updates (search-param filter changes don't touch
   //    scroll because usePathname doesn't change).
   useEffect(() => {
-    if (isFirstPath.current) {
-      isFirstPath.current = false;
-      return;
-    }
     if (wasRecentPopNavigation()) return;
     // Cover the tail of Next's pre-push scroll animation plus any residual
     // scroll events after the new entry is pushed.
@@ -210,6 +212,28 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       document.body.scrollTop = 0;
       lenisRef.current?.scrollTo(0, { immediate: true, force: true });
     };
+
+    // On first mount, check if browser restored a stale scroll position
+    // that doesn't match our saved state. If so, reset to top.
+    if (isFirstPath.current) {
+      isFirstPath.current = false;
+      const state = history.state as { __uteroScrollPath?: string; __uteroScrollYStable?: number; __uteroScrollY?: number } | null;
+      const currentScrollY = window.scrollY;
+      const savedY = state?.__uteroScrollYStable ?? state?.__uteroScrollY;
+      const currentPath = typeof window !== "undefined" ? window.location.pathname + window.location.search : "";
+      // If browser restored a scroll position but we don't have a matching
+      // saved position for this path, it's stale from a previous visit.
+      if (currentScrollY > 50 && (!state || state.__uteroScrollPath !== currentPath || savedY === undefined)) {
+        resetScroll();
+        const t = setTimeout(resetScroll, 50);
+        const t2 = setTimeout(resetScroll, 200);
+        return () => {
+          clearTimeout(t);
+          clearTimeout(t2);
+        };
+      }
+      return;
+    }
 
     resetScroll();
     const t = setTimeout(resetScroll, 60);
