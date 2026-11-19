@@ -707,6 +707,8 @@ export default function Header() {
           color: "#ffffff",
           opacity: menuOpen ? 1 : 0,
           visibility: menuOpen ? "visible" : "hidden",
+          pointerEvents: menuOpen ? "auto" : "none",
+          contain: "paint",
           transition:
             "opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s",
           overflow: "hidden",

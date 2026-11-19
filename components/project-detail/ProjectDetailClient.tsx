@@ -290,7 +290,7 @@ export default function ProjectDetailClient({
           poster={project.video.poster || coverSrc}
           onClose={() => {
             setShowVideo(false);
-            playButtonRef.current?.focus();
+            playButtonRef.current?.focus({ preventScroll: true });
           }}
         />
       )}
