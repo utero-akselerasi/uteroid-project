@@ -61,7 +61,10 @@
       ]
     },
     "id": 1,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Integrated cloud platform for automotive workshops and detailing centers, equipped with a comprehensive brand identity manual (GSM) from logo to fleet transportation.",
+    "categoryEn": "Brand Identity & Design System",
+    "excerptEn": "Integrated cloud platform for automotive workshops and detailing centers, equipped with a comprehensive brand identity manual (GSM) from logo to fleet transportation."
   },
   {
     "slug": "mcc",
@@ -120,7 +123,10 @@
       ]
     },
     "id": 2,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Incubation and collaboration center for 17 creative economy subsectors in Malang Raya, equipped with spatial identity standardization and multi-floor wayfinding.",
+    "categoryEn": "Public Sector & Wayfinding System",
+    "excerptEn": "Incubation and collaboration center for 17 creative economy subsectors in Malang Raya, equipped with spatial identity standardization and multi-floor wayfinding."
   },
   {
     "slug": "stamford",
@@ -183,7 +189,10 @@
       ]
     },
     "id": 3,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Integrated Football Training Center (SIFC) for ages 6–19 — rebranding based on Majapahit banner, Komodo, and \"Beyond Dreams\" motto.",
+    "categoryEn": "Football Academy Brand Identity & GSM",
+    "excerptEn": "Integrated Football Training Center (SIFC) for ages 6–19 — rebranding based on Majapahit banner, Komodo, and \"Beyond Dreams\" motto."
   },
   {
     "slug": "chatten",
@@ -242,7 +251,10 @@
       ]
     },
     "id": 4,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Retro pop visual identity and packaging guidelines for a coffee and float modern dining establishment.",
+    "categoryEn": "Hospitality & Packaging Experience",
+    "excerptEn": "Retro pop visual identity and packaging guidelines for a coffee and float modern dining establishment."
   },
   {
     "slug": "bank-sidoarjo",
@@ -298,7 +310,10 @@
       ]
     },
     "id": 5,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Bank Sidoarjo visual identity guidelines — comprehensive regional banking brand standardization.",
+    "categoryEn": "Banking Brand Identity & Spatial",
+    "excerptEn": "Bank Sidoarjo visual identity guidelines — comprehensive regional banking brand standardization."
   },
   {
     "slug": "mie-gacoan",
@@ -354,7 +369,10 @@
       ]
     },
     "id": 6,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Graphic Standard Manual for Indonesia's number one culinary network Mie Gacoan.",
+    "categoryEn": "Culinary Megabrand Identity System",
+    "excerptEn": "Graphic Standard Manual for Indonesia's number one culinary network Mie Gacoan."
   },
   {
     "slug": "ayam-goreng-nelongso",
@@ -414,7 +432,10 @@
       ]
     },
     "id": 7,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Comprehensive visual identity system for national culinary franchise Ayam Goreng Nelongso.",
+    "categoryEn": "F&B Franchise Identity System",
+    "excerptEn": "Comprehensive visual identity system for national culinary franchise Ayam Goreng Nelongso."
   },
   {
     "slug": "konas-2021",
@@ -469,7 +490,10 @@
       ]
     },
     "id": 8,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Visual identity for National Conference (KONAS) 2021 — comprehensive graphic system for major event.",
+    "categoryEn": "Event Identity & Environmental System",
+    "excerptEn": "Visual identity for National Conference (KONAS) 2021 — comprehensive graphic system for major event."
   },
   {
     "slug": "sfi",
@@ -529,7 +553,10 @@
       ]
     },
     "id": 9,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Visual identity system for Startup For Industry program — \"An Ecosystem Of Technology Solution\" from Ministry of Industry RI.",
+    "categoryEn": "Government Program Brand Identity",
+    "excerptEn": "Visual identity system for Startup For Industry program — \"An Ecosystem Of Technology Solution\" from Ministry of Industry RI."
   },
   {
     "slug": "wajan-giok",
@@ -585,7 +612,10 @@
       ]
     },
     "id": 10,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Culinary brand identity guidelines for Wajan Giok — strong F&B visual system.",
+    "categoryEn": "F&B Brand Identity & Visual Guideline",
+    "excerptEn": "Culinary brand identity guidelines for Wajan Giok — strong F&B visual system."
   },
   {
     "slug": "bpr-tulungagung",
@@ -643,7 +673,10 @@
       ]
     },
     "id": 11,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Visual identity guidelines for Bank Perkreditan Rakyat Tulungagung.",
+    "categoryEn": "Brand Identity & Visual Guideline",
+    "excerptEn": "Visual identity guidelines for Bank Perkreditan Rakyat Tulungagung."
   },
   {
     "slug": "bpr-artha-kanjuruhan",
@@ -703,7 +736,10 @@
       ]
     },
     "id": 12,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Visual identity guidelines for Bank Perkreditan Rakyat Artha Kanjuruhan.",
+    "categoryEn": "Banking Identity & Financial Signage",
+    "excerptEn": "Visual identity guidelines for Bank Perkreditan Rakyat Artha Kanjuruhan."
   },
   {
     "slug": "baiturrohman",
@@ -757,7 +793,10 @@
       ]
     },
     "id": 13,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Visual identity guidelines for Baiturrohman Islamic educational institution.",
+    "categoryEn": "Institutional Visual Guideline",
+    "excerptEn": "Visual identity guidelines for Baiturrohman Islamic educational institution."
   },
   {
     "slug": "jmt",
@@ -816,7 +855,10 @@
       ]
     },
     "id": 14,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Visual identity system for JMT — national culinary franchise.",
+    "categoryEn": "Food Brand Identity & Mascot System",
+    "excerptEn": "Visual identity system for JMT — national culinary franchise."
   },
   {
     "slug": "lacamino",
@@ -877,7 +919,10 @@
       ]
     },
     "id": 15,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Cigar brand identity and packaging design for La Camino.",
+    "categoryEn": "Premium Cigar Brand Identity & Packaging",
+    "excerptEn": "Cigar brand identity and packaging design for La Camino."
   },
   {
     "slug": "techlink",
@@ -937,7 +982,10 @@
       ]
     },
     "id": 16,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Event identity and visual system for Techlink Summit 2024.",
+    "categoryEn": "Technology Event Identity",
+    "excerptEn": "Event identity and visual system for Techlink Summit 2024."
   },
   {
     "slug": "proxon",
@@ -995,7 +1043,10 @@
       ]
     },
     "id": 17,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand strategy and visual identity for Proxima Omnia (Proxon).",
+    "categoryEn": "Business Strategy Consultancy Identity",
+    "excerptEn": "Brand strategy and visual identity for Proxima Omnia (Proxon)."
   },
   {
     "slug": "kiyona",
@@ -1051,7 +1102,10 @@
       ]
     },
     "id": 18,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Beauty brand identity and packaging design for Kiyona.",
+    "categoryEn": "Beauty & Skincare Brand Identity",
+    "excerptEn": "Beauty brand identity and packaging design for Kiyona."
   },
   {
     "slug": "uwg",
@@ -1107,7 +1161,10 @@
       ]
     },
     "id": 19,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "University brand identity and visual guidelines for Universitas Widyagama.",
+    "categoryEn": "Higher Education Identity & Campus System",
+    "excerptEn": "University brand identity and visual guidelines for Universitas Widyagama."
   },
   {
     "slug": "rohani",
@@ -1166,7 +1223,10 @@
       ]
     },
     "id": 20,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Keripik Tempe Rohani — traditional Indonesian snack brand.",
+    "categoryEn": "Heritage F&B Brand Identity & GSM",
+    "excerptEn": "Brand identity for Keripik Tempe Rohani — traditional Indonesian snack brand."
   },
   {
     "slug": "gsm-1922",
@@ -1226,7 +1286,10 @@
       ]
     },
     "id": 21,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Coffee brand identity for Kopi 1922.",
+    "categoryEn": "Coffee Brand Identity & Packaging GSM",
+    "excerptEn": "Coffee brand identity for Kopi 1922."
   },
   {
     "slug": "momsarasa",
@@ -1281,7 +1344,10 @@
       ]
     },
     "id": 22,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Culinary brand identity for Momsarasa.",
+    "categoryEn": "Culinary Seasoning & Packaging System",
+    "excerptEn": "Culinary brand identity for Momsarasa."
   },
   {
     "slug": "yin-yam",
@@ -1336,7 +1402,10 @@
       ]
     },
     "id": 23,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Food brand identity for Yin Yam.",
+    "categoryEn": "Street Food Identity & Packaging Mini GSM",
+    "excerptEn": "Food brand identity for Yin Yam."
   },
   {
     "slug": "cos-pleng",
@@ -1397,7 +1466,10 @@
       ]
     },
     "id": 24,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Cos Pleng.",
+    "categoryEn": "Chinese Food Brand Identity & Mini GSM",
+    "excerptEn": "Brand identity for Cos Pleng."
   },
   {
     "slug": "boop",
@@ -1454,7 +1526,10 @@
       ]
     },
     "id": 25,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Pet food brand identity for Boop Premium Pet Food.",
+    "categoryEn": "Pet Food Brand Identity & Mini GSM",
+    "excerptEn": "Pet food brand identity for Boop Premium Pet Food."
   },
   {
     "slug": "maitri",
@@ -1514,7 +1589,10 @@
       ]
     },
     "id": 26,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Coffee shop and social hub brand identity for Maitri.",
+    "categoryEn": "Coffee & Social Space Brand Identity",
+    "excerptEn": "Coffee shop and social hub brand identity for Maitri."
   },
   {
     "slug": "satu-titik",
@@ -1569,7 +1647,10 @@
       ]
     },
     "id": 27,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Coffee brand identity for Satu Titik Coffee.",
+    "categoryEn": "Lifestyle Hospitality Brand Identity",
+    "excerptEn": "Coffee brand identity for Satu Titik Coffee."
   },
   {
     "slug": "amarta-wisesa",
@@ -1623,7 +1704,10 @@
       ]
     },
     "id": 28,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Amarta Wisesa.",
+    "categoryEn": "Corporate Brand Identity & System",
+    "excerptEn": "Brand identity for Amarta Wisesa."
   },
   {
     "slug": "plut-kumkm",
@@ -1679,7 +1763,10 @@
       ]
     },
     "id": 29,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Plut KUMKM.",
+    "categoryEn": "Public Sector Identity & Facility Signage",
+    "excerptEn": "Brand identity for Plut KUMKM."
   },
   {
     "slug": "dailbana",
@@ -1734,7 +1821,10 @@
       ]
     },
     "id": 30,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Dailbana.",
+    "categoryEn": "FMCG Brand Identity & Packaging",
+    "excerptEn": "Brand identity for Dailbana."
   },
   {
     "slug": "wismari",
@@ -1793,7 +1883,10 @@
       ]
     },
     "id": 31,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Sign system and wayfinding for Wismari.",
+    "categoryEn": "Facility Signage & Wayfinding System",
+    "excerptEn": "Sign system and wayfinding for Wismari."
   },
   {
     "slug": "logo-73-indonesia",
@@ -1844,7 +1937,10 @@
       ]
     },
     "id": 32,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Logo and visual identity for 73 Tahun Indonesia Merdeka.",
+    "categoryEn": "National Anniversary Identity & Campaign",
+    "excerptEn": "Logo and visual identity for 73 Tahun Indonesia Merdeka."
   },
   {
     "slug": "latobas-cigar",
@@ -1895,7 +1991,10 @@
       ]
     },
     "id": 33,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Cigar brand identity for La Tobas Cigar.",
+    "categoryEn": "Brand Identity, Packaging & Visual Guideline",
+    "excerptEn": "Cigar brand identity for La Tobas Cigar."
   },
   {
     "slug": "dhika-universe",
@@ -1947,7 +2046,10 @@
       ]
     },
     "id": 34,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Dhika Universe.",
+    "categoryEn": "Property Brand Identity & Visual Guideline",
+    "excerptEn": "Brand identity for Dhika Universe."
   },
   {
     "slug": "aqua-1",
@@ -1982,7 +2084,10 @@
       "/projects/aqua-1/gallery/003.webp"
     ],
     "id": 35,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Aqua 1.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Aqua 1."
   },
   {
     "slug": "kavora",
@@ -2024,7 +2129,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/oDUoyMixF1c?si=Sqi6PEpeh1SKLCuX",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Brand identity for Kavora.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Kavora."
   },
   {
     "slug": "kopiko",
@@ -2061,7 +2169,10 @@
       "/projects/kopiko/gallery/003.webp"
     ],
     "id": 37,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Coffee brand identity for Kopiko.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Coffee brand identity for Kopiko."
   },
   {
     "slug": "mountea",
@@ -2103,7 +2214,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/Vmb_Tkod47A?si=yhN3OV5WhGWR4FUN",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Tea brand identity for Mountea.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Tea brand identity for Mountea."
   },
   {
     "slug": "narava",
@@ -2139,7 +2253,10 @@
       "/projects/narava/gallery/003.webp"
     ],
     "id": 39,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Narava.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Narava."
   },
   {
     "slug": "pocari-sweat",
@@ -2180,7 +2297,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/K3j8ph_DyHE?si=Mla1ut0oY8prcych",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Brand identity for Pocari Sweat.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Pocari Sweat."
   },
   {
     "slug": "ronava",
@@ -2223,7 +2343,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/TxhsDsyjAh4?si=jMEAbgvdf0I74J-e",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Brand identity for Ronava.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Ronava."
   },
   {
     "slug": "sareva",
@@ -2264,7 +2387,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/LGfoOINuW8M?si=fEbjt4E9_lhtXMo3",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Brand identity for Sareva.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Sareva."
   },
   {
     "slug": "sariwangi",
@@ -2304,7 +2430,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/pwR7B2xS828?si=4USo_rr5xuypa0G7",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Tea brand identity for Sariwangi.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Tea brand identity for Sariwangi."
   },
   {
     "slug": "soreva",
@@ -2340,7 +2469,10 @@
       "/projects/soreva/gallery/003.webp"
     ],
     "id": 44,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Soreva.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Soreva."
   },
   {
     "slug": "silverqueen",
@@ -2382,7 +2514,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/l1xPpACWrwA?si=AmKiLOY1LtdEpbZO",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Food brand identity for Silverqueen.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Food brand identity for Silverqueen."
   },
   {
     "slug": "teh-gelas",
@@ -2419,7 +2554,10 @@
       "/projects/teh-gelas/gallery/003.webp"
     ],
     "id": 46,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Tea brand identity for Teh Gelas.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Tea brand identity for Teh Gelas."
   },
   {
     "slug": "tumbuhara",
@@ -2461,7 +2599,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/EM-jV82MGfE?si=rXz7mgXQD8TdKhtP",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Brand identity for Tumbuhara.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Tumbuhara."
   },
   {
     "slug": "vitara",
@@ -2501,7 +2642,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/-9REErea_H8?si=7NN5JhzFFdY470FL",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Brand identity for Vitara.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Brand identity for Vitara."
   },
   {
     "slug": "wardah",
@@ -2536,7 +2680,10 @@
       "/projects/wardah/gallery/003.webp"
     ],
     "id": 49,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Beauty brand identity for Wardah.",
+    "categoryEn": "Brand Identity",
+    "excerptEn": "Beauty brand identity for Wardah."
   },
   {
     "slug": "biskuat",
@@ -2588,7 +2735,10 @@
       "type": "youtube",
       "src": "https://youtube.com/shorts/xj4TR-iPvxQ?si=LTH0qLQAXFi8S4WK",
       "aspectRatio": "9 / 16"
-    }
+    },
+    "shortDescriptionEn": "Food brand identity for Biskuat.",
+    "categoryEn": "Product Innovation & Packaging",
+    "excerptEn": "Food brand identity for Biskuat."
   },
   {
     "slug": "kapal-api",
@@ -2635,7 +2785,10 @@
       ]
     },
     "id": 51,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Kapal Api coffee.",
+    "categoryEn": "Luxury Packaging & Brand Identity",
+    "excerptEn": "Brand identity for Kapal Api coffee."
   },
   {
     "slug": "sedral",
@@ -2676,7 +2829,10 @@
       ]
     },
     "id": 52,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Sedral.",
+    "categoryEn": "Sculptural Packaging & Industrial Design",
+    "excerptEn": "Brand identity for Sedral."
   },
   {
     "slug": "tolakangin",
@@ -2722,7 +2878,10 @@
       ]
     },
     "id": 53,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Brand identity for Tolakangin.",
+    "categoryEn": "Product Innovation & Packaging",
+    "excerptEn": "Brand identity for Tolakangin."
   },
   {
     "slug": "transition-feed-campaign",
@@ -2777,6 +2936,9 @@
       ]
     },
     "id": 54,
-    "status": "published"
+    "status": "published",
+    "shortDescriptionEn": "Three-part Instagram teaser campaign introducing Utero Indonesia's new visual era.",
+    "categoryEn": "Instagram Campaign",
+    "excerptEn": "Three-part Instagram teaser campaign introducing Utero Indonesia's new visual era."
   }
 ]

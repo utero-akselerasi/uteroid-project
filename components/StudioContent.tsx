@@ -356,14 +356,7 @@ export default function StudioContent() {
                 marginTop: "2rem",
               }}
             >
-              {[
-                { sector: "Government & Public Sector", desc: "Municipal creative centers, cultural bureaus, civic wayfinding systems." },
-                { sector: "Corporate & Financial", desc: "Enterprise brand guidelines, annual reporting, headquarters spatial branding." },
-                { sector: "Food & Beverage (F&B)", desc: "End-to-end cafe branding, retail packaging, menu systems, and physical signage." },
-                { sector: "Real Estate & Architecture", desc: "Residential pylons, architectural totems, directional signage, marketing suites." },
-                { sector: "Higher Education", desc: "University identity systems, campus wayfinding, and institutional publications." },
-                { sector: "Arts & Public Culture", desc: "Exhibition identity, city creative festivals, and artistic publication catalogues." },
-              ].map((item) => (
+              {t.studio.sectors.map((item) => (
                 <div
                   key={item.sector}
                   style={{

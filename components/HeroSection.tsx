@@ -387,19 +387,35 @@ export default function HeroSection() {
         <Link
           href="#works"
           style={{
-            fontSize: "clamp(0.55rem, 0.7vw, 0.75rem)",
-            fontWeight: 500,
+            fontSize: "clamp(0.6rem, 0.75vw, 0.8rem)",
+            fontWeight: 700,
             letterSpacing: "0.16em",
             textTransform: "uppercase",
             color: "#F7F2EC",
             textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
-            gap: "0.4rem",
-            transition: "color 0.2s ease",
+            gap: "0.55rem",
+            padding: "0.7rem 1.4rem",
+            backgroundColor: "rgba(247, 242, 236, 0.08)",
+            border: "1px solid rgba(247, 242, 236, 0.55)",
+            borderRadius: "2px",
+            backdropFilter: "blur(6px)",
+            WebkitBackdropFilter: "blur(6px)",
+            transition: "background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "#e31e24")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "#F7F2EC")}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "rgba(227, 30, 36, 0.85)";
+            e.currentTarget.style.borderColor = "#e31e24";
+            e.currentTarget.style.color = "#ffffff";
+            e.currentTarget.style.transform = "translateY(-2px)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "rgba(247, 242, 236, 0.08)";
+            e.currentTarget.style.borderColor = "rgba(247, 242, 236, 0.55)";
+            e.currentTarget.style.color = "#F7F2EC";
+            e.currentTarget.style.transform = "translateY(0)";
+          }}
         >
           <span>{t.hero.exploreWork}</span>
           <span>&darr;</span>

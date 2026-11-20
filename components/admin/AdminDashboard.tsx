@@ -24,6 +24,32 @@ type SessionResponse = { authenticated: boolean; csrfToken: string };
 type MediaItem = { id: number; mediaType: string; url: string; filename: string; altText?: string; width?: number; height?: number; sortOrder: number };
 type AdminTab = "projects" | "typography" | "banners" | "media" | "studio" | "insights" | "contacts" | "campaign" | "content" | "security";
 
+const ADMIN_TABS: AdminTab[] = ["projects", "typography", "banners", "media", "studio", "insights", "contacts", "campaign", "content", "security"];
+
+interface AdminNavState {
+  tab: AdminTab;
+  project: string | null; // "new" | project id | null
+  sync: boolean;
+}
+
+function parseAdminUrl(): AdminNavState {
+  if (typeof window === "undefined") return { tab: "projects", project: null, sync: false };
+  const params = new URLSearchParams(window.location.search);
+  const tabParam = params.get("tab") as AdminTab | null;
+  const tab = tabParam && ADMIN_TABS.includes(tabParam) ? tabParam : "projects";
+  const project = params.get("project");
+  return { tab, project, sync: params.get("sync") === "1" };
+}
+
+function buildAdminUrl(state: AdminNavState): string {
+  const params = new URLSearchParams();
+  if (state.tab !== "projects") params.set("tab", state.tab);
+  if (state.project) params.set("project", state.project);
+  if (state.sync) params.set("sync", "1");
+  const query = params.toString();
+  return query ? `/admin?${query}` : "/admin";
+}
+
 const disciplines = ["identity", "packaging", "signage", "campaign", "print", "digital", "exhibition", "indoor", "outdoor"] as const;
 const industries = ["fnb", "corporate", "government", "education", "property", "retail", "arts", "event", "services", "products"] as const;
 
@@ -74,6 +100,8 @@ export default function AdminDashboard() {
   const [busy, setBusy] = useState(false);
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [seedSyncOpen, setSeedSyncOpen] = useState(false);
+  const [dirty, setDirty] = useState(false);
+  const [urlReady, setUrlReady] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState<{
     isOpen: boolean;
     title: string;
@@ -82,6 +110,7 @@ export default function AdminDashboard() {
     cancelLabel?: string;
     isDanger?: boolean;
     onConfirm: () => void;
+    onCancel?: () => void;
   } | null>(null);
 
   const requestConfirm = (options: {
@@ -91,6 +120,7 @@ export default function AdminDashboard() {
     cancelLabel?: string;
     isDanger?: boolean;
     onConfirm: () => void;
+    onCancel?: () => void;
   }) => {
     setConfirmDialog({
       isOpen: true,
@@ -155,6 +185,142 @@ export default function AdminDashboard() {
     }
   }, [session, editing?.id]);
 
+  // ─── URL-driven navigation state ────────────────────────────────
+  // The admin is a single page; tab / open project / sync panel live in
+  // the query string so refresh, pasted links and Back/Forward all work.
+  const editingKey = editing ? (editing.id ? String(editing.id) : "new") : null;
+  const navRef = useRef({ tab: activeTab, project: editingKey, sync: seedSyncOpen });
+  navRef.current = { tab: activeTab, project: editingKey, sync: seedSyncOpen };
+
+  function openProjectByKey(projectKey: string | null) {
+    setDirty(false);
+    if (!projectKey) {
+      setEditing(null);
+      return;
+    }
+    if (projectKey === "new") {
+      setEditing(emptyProject());
+      return;
+    }
+    const id = Number(projectKey);
+    if (!Number.isFinite(id)) {
+      setEditing(null);
+      return;
+    }
+    api(`admin/projects/${id}`)
+      .then((project) => setEditing(project))
+      .catch(() => setEditing(null));
+  }
+
+  function applyNavState(state: AdminNavState, mode: "push" | "replace" | "none") {
+    const url = buildAdminUrl(state);
+    if (mode === "push") history.pushState({}, "", url);
+    else if (mode === "replace") history.replaceState({}, "", url);
+    setActiveTab(state.tab);
+    setSeedSyncOpen(state.sync);
+    openProjectByKey(state.project);
+  }
+
+  function requestNav(state: AdminNavState) {
+    const go = () => applyNavState(state, "push");
+    if (dirty) {
+      requestConfirm({
+        title: "Perubahan Belum Disimpan",
+        message: "Editor proyek memiliki perubahan yang belum disimpan. Tinggalkan tanpa menyimpan?",
+        confirmLabel: "Ya, Tinggalkan",
+        cancelLabel: "Kembali",
+        isDanger: true,
+        onConfirm: () => {
+          closeConfirm();
+          setDirty(false);
+          go();
+        },
+      });
+    } else {
+      go();
+    }
+  }
+
+  function goTab(tab: AdminTab) {
+    requestNav({ tab, project: null, sync: seedSyncOpen });
+  }
+
+  function goNewProject() {
+    requestNav({ tab: "projects", project: "new", sync: seedSyncOpen });
+  }
+
+  function goProject(project: AdminProject) {
+    requestNav({ tab: "projects", project: project.id ? String(project.id) : "new", sync: seedSyncOpen });
+  }
+
+  function closeEditor() {
+    requestNav({ tab: "projects", project: null, sync: seedSyncOpen });
+  }
+
+  // Restore view from URL once the session is known (refresh / pasted link)
+  useEffect(() => {
+    if (!session || urlReady) return;
+    applyNavState(parseAdminUrl(), "none");
+    setUrlReady(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
+
+  // Keep the URL in sync with state (e.g. new project gains an id after save)
+  useEffect(() => {
+    if (!session || !urlReady) return;
+    const url = buildAdminUrl({ tab: activeTab, project: editingKey, sync: seedSyncOpen });
+    if (url !== window.location.pathname + window.location.search) {
+      history.replaceState({}, "", url);
+    }
+  }, [session, urlReady, activeTab, editingKey, seedSyncOpen]);
+
+  // Back/Forward within the admin
+  useEffect(() => {
+    const onPopState = () => {
+      const target = parseAdminUrl();
+      const apply = () => {
+        setActiveTab(target.tab);
+        setSeedSyncOpen(target.sync);
+        openProjectByKey(target.project);
+      };
+      if (dirty) {
+        const current = navRef.current;
+        requestConfirm({
+          title: "Perubahan Belum Disimpan",
+          message: "Editor proyek memiliki perubahan yang belum disimpan. Tinggalkan tanpa menyimpan?",
+          confirmLabel: "Ya, Tinggalkan",
+          cancelLabel: "Kembali",
+          isDanger: true,
+          onConfirm: () => {
+            closeConfirm();
+            setDirty(false);
+            apply();
+          },
+          onCancel: () => {
+            // Stay on the editor: re-push the entry we were on so the
+            // address bar matches the state that was never left.
+            history.pushState({}, "", buildAdminUrl({ tab: current.tab, project: current.project, sync: current.sync }));
+          },
+        });
+      } else {
+        apply();
+      }
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dirty]);
+
+  // Warn on tab close / reload while the project editor is dirty
+  useEffect(() => {
+    if (!dirty) return;
+    const handler = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
+
   const years = useMemo(
     () => [...new Set(projects.map((project) => project.year).filter(Boolean))].sort((a, b) => b.localeCompare(a)),
     [projects]
@@ -210,6 +376,7 @@ export default function AdminDashboard() {
         }),
       });
       setSession(data);
+      resetNav();
       await loadProjects();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Login gagal");
@@ -218,11 +385,21 @@ export default function AdminDashboard() {
     }
   }
 
+  function resetNav() {
+    setActiveTab("projects");
+    setEditing(null);
+    setDirty(false);
+    setSeedSyncOpen(false);
+    setUrlReady(false);
+    history.replaceState({}, "", "/admin");
+  }
+
   async function logout() {
     if (!session) return;
     await api("admin/auth/logout", { method: "POST" }, session.csrfToken);
     setSession(null);
     setProjects([]);
+    resetNav();
   }
 
   async function changePassword(event: React.FormEvent<HTMLFormElement>) {
@@ -250,6 +427,7 @@ export default function AdminDashboard() {
       );
       setSession(null);
       setNotice("");
+      resetNav();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Password gagal diubah");
     } finally {
@@ -335,6 +513,7 @@ export default function AdminDashboard() {
               disciplines: Array.isArray(cleanProject.disciplines) && cleanProject.disciplines.length > 0 ? cleanProject.disciplines : ["identity"],
             };
       setEditing(saved);
+      setDirty(false);
       await loadProjects();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Penyimpanan gagal");
@@ -356,6 +535,7 @@ export default function AdminDashboard() {
         try {
           await api(`admin/projects/${project.id}`, { method: "DELETE" }, session.csrfToken);
           setEditing(null);
+          setDirty(false);
           await loadProjects();
           setNotice(`Proyek ${label} berhasil dihapus.`);
         } catch (caught) {
@@ -627,19 +807,13 @@ export default function AdminDashboard() {
               <div className={styles.navGroupTitle}>Portofolio</div>
               <button
                 className={activeTab === "projects" && !editing ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("projects");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("projects")}
               >
                 Daftar Proyek
               </button>
               <button
                 className={activeTab === "projects" && editing && !editing.id ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("projects");
-                  setEditing(emptyProject());
-                }}
+                onClick={goNewProject}
               >
                 + Tambah Proyek
               </button>
@@ -649,64 +823,43 @@ export default function AdminDashboard() {
               <div className={styles.navGroupTitle}>Tampilan & Website</div>
               <button
                 className={activeTab === "typography" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("typography");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("typography")}
               >
                 Tipografi & Font
               </button>
               <button
                 className={activeTab === "banners" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("banners");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("banners")}
               >
                 Banner & Hero
               </button>
               <button
                 className={activeTab === "media" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("media");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("media")}
               >
                 Gambar Menu (Services)
               </button>
               <button
                 className={activeTab === "studio" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("studio");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("studio")}
               >
                 Menu Studio & Ruang
               </button>
               <button
                 className={activeTab === "campaign" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("campaign");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("campaign")}
               >
                 Kampanye & Homepage
               </button>
               <button
                 className={activeTab === "content" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("content");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("content")}
               >
                 Konten (EN/ID)
               </button>
               <button
                 className={activeTab === "contacts" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("contacts");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("contacts")}
               >
                 Kontak & Sosmed
               </button>
@@ -716,10 +869,7 @@ export default function AdminDashboard() {
               <div className={styles.navGroupTitle}>Sistem</div>
               <button
                 className={activeTab === "security" ? styles.active : ""}
-                onClick={() => {
-                  setActiveTab("security");
-                  setEditing(null);
-                }}
+                onClick={() => goTab("security")}
               >
                 Keamanan
               </button>
@@ -749,7 +899,10 @@ export default function AdminDashboard() {
                 project={editing}
                 media={media}
                 busy={busy}
-                onChange={setEditing}
+                onChange={(next) => {
+                  setEditing(next);
+                  setDirty(true);
+                }}
                 onSave={saveProject}
                 onDelete={removeProject}
                 onDeleteMedia={deleteMedia}
@@ -760,7 +913,7 @@ export default function AdminDashboard() {
                 onSaveAlt={saveMediaAlt}
                 onReplaceDeck={replaceDeck}
                 onUploadDeckPdf={uploadDeckPdf}
-                onBack={() => setEditing(null)}
+                onBack={closeEditor}
               />
             ) : (
               <>
@@ -780,11 +933,15 @@ export default function AdminDashboard() {
                     </button>
                     <button
                       className={styles.ghost}
-                      onClick={() => setSeedSyncOpen((open) => !open)}
+                      onClick={() => {
+                        const next = !seedSyncOpen;
+                        setSeedSyncOpen(next);
+                        history.replaceState({}, "", buildAdminUrl({ tab: activeTab, project: editingKey, sync: next }));
+                      }}
                     >
                       {seedSyncOpen ? "Tutup sinkronisasi" : "Sinkronisasi seed"}
                     </button>
-                    <button className={styles.primary} onClick={() => setEditing(emptyProject())}>
+                    <button className={styles.primary} onClick={goNewProject}>
                       + Proyek baru
                     </button>
                   </div>
@@ -871,7 +1028,7 @@ export default function AdminDashboard() {
                           </td>
                           <td data-label="Aksi">
                             <div className={styles.rowActions}>
-                              <button onClick={() => setEditing(project)}>Edit</button>
+                              <button onClick={() => goProject(project)}>Edit</button>
                               <button onClick={() => window.open(`/admin/preview/${project.id}`, "_blank")}>Preview</button>
                               <button style={{ color: "#a01015", borderColor: "#f1c0c2" }} onClick={() => removeProject(project)}>Hapus</button>
                             </div>
@@ -1044,7 +1201,7 @@ export default function AdminDashboard() {
 
       {/* Confirmation Modal Popup */}
       {confirmDialog?.isOpen && (
-        <div className={styles.modalOverlay} onClick={closeConfirm}>
+        <div className={styles.modalOverlay} onClick={() => { confirmDialog.onCancel?.(); closeConfirm(); }}>
           <div className={styles.modalBox} onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
             <div className={styles.modalHead}>
               <div className={styles.modalEyebrow}>Konfirmasi Tindakan</div>
@@ -1055,7 +1212,7 @@ export default function AdminDashboard() {
             <h3 className={styles.modalTitle}>{confirmDialog.title}</h3>
             <p className={styles.modalMessage}>{confirmDialog.message}</p>
             <div className={styles.modalActions}>
-              <button type="button" className={styles.ghost} onClick={closeConfirm}>
+              <button type="button" className={styles.ghost} onClick={() => { confirmDialog.onCancel?.(); closeConfirm(); }}>
                 {confirmDialog.cancelLabel || "Batal"}
               </button>
               <button

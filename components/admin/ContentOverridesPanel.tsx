@@ -13,6 +13,7 @@ const SCOPES = [
   { id: "services", label: "Copy Layanan" },
   { id: "seo", label: "SEO per Halaman" },
   { id: "page-copy", label: "Copy Halaman" },
+  { id: "projects", label: "Proyek EN/ID" },
 ] as const;
 
 const TRANSLATION_LOCALES = ["en", "id"] as const;
@@ -93,9 +94,9 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
         }
       }
     } else {
-      // page-copy: show existing overrides + allow custom keys
-      for (const o of overrides.filter((x) => x.scope === "page-copy")) {
-        if (locale !== "all" && o.locale !== locale) continue;
+      // page-copy / projects: show existing overrides + allow custom keys
+      for (const o of overrides.filter((x) => x.scope === scope)) {
+        if (scope === "projects" && o.locale !== locale) continue;
         if (!match(o.key)) continue;
         out.push({ id: `${byId}${o.key}|${o.locale}`, scope, key: o.key, locale: o.locale, defaultValue: undefined, override: o });
       }
@@ -166,7 +167,7 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
     try {
       await api("admin/content-overrides", {
         method: "PUT",
-        body: JSON.stringify({ scope: "page-copy", key, locale: "en", value }),
+        body: JSON.stringify({ scope, key, locale: locale === "id" ? "id" : "en", value }),
       }, csrfToken);
       setMessage(`Override ${key} disimpan.`);
       const data = await api("content-overrides");
@@ -198,8 +199,9 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
           {SCOPES.map((item) => <button key={item.id} className={scope === item.id ? styles.scopeTabActive : styles.scopeTab} aria-pressed={scope === item.id} onClick={() => { setScope(item.id); setSearch(""); setPage(1); }} type="button">{item.label}</button>)}
         </div>
         <div className={styles.contentTools}>
-          {(scope === "translations" || scope === "services") && <div className={styles.localePicker} role="group" aria-label="Bahasa"><span>Bahasa</span>{TRANSLATION_LOCALES.map((item) => <button key={item} className={locale === item ? styles.localeActive : styles.localeButton} aria-pressed={locale === item} onClick={() => { setLocale(item); setPage(1); }} type="button">{item.toUpperCase()}</button>)}</div>}
+          {(scope === "translations" || scope === "services" || scope === "projects") && <div className={styles.localePicker} role="group" aria-label="Bahasa"><span>Bahasa</span>{TRANSLATION_LOCALES.map((item) => <button key={item} className={locale === item ? styles.localeActive : styles.localeButton} aria-pressed={locale === item} onClick={() => { setLocale(item); setPage(1); }} type="button">{item.toUpperCase()}</button>)}</div>}
           <label className={styles.contentSearch}><span>Cari key konten</span><input value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} placeholder="Contoh: hero.title" /></label>
+
         </div>
         <div className={styles.contentListHeader}>
           <div><strong>{shownCount.toLocaleString("id-ID")}</strong> key tersedia{shownCount > 0 && <span> · Menampilkan {((page - 1) * PAGE_SIZE + 1).toLocaleString("id-ID")}–{Math.min(page * PAGE_SIZE, shownCount).toLocaleString("id-ID")}</span>}</div>
@@ -219,8 +221,9 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
             </article>;
           })}
           {!rows.length && <div className={styles.contentEmpty}><strong>Tidak ada key yang cocok.</strong><span>Coba kata kunci lain atau hapus pencarian.</span>{search && <button type="button" onClick={() => { setSearch(""); setPage(1); }}>Hapus pencarian</button>}</div>}
+
         </div>
-        {scope === "page-copy" && <form className={styles.newCopyForm} onSubmit={(event) => { event.preventDefault(); void addPageCopy(); }}><div><strong>Tambah copy halaman</strong><p>Gunakan key unik, misalnya <code>hero.cta</code>.</p></div><label>Key<input value={newKey} onChange={(event) => setNewKey(event.target.value)} placeholder="hero.cta" required /></label><label>Nilai<input value={newValue} onChange={(event) => setNewValue(event.target.value)} placeholder="Teks baru" required /></label><button className={styles.saveOverride} disabled={busyKey === "new"} type="submit">{busyKey === "new" ? "Menyimpan…" : "Tambah copy"}</button></form>}
+        {(scope === "page-copy" || scope === "projects") && <form className={styles.newCopyForm} onSubmit={(event) => { event.preventDefault(); void addPageCopy(); }}><div><strong>{scope === "projects" ? "Tambah teks proyek" : "Tambah copy halaman"}</strong><p>Gunakan key unik, misalnya <code>{scope === "projects" ? "biskuat.description" : "hero.cta"}</code>.</p></div><label>Key<input value={newKey} onChange={(event) => setNewKey(event.target.value)} placeholder={scope === "projects" ? "slug.field" : "hero.cta"} required /></label><label>Nilai<input value={newValue} onChange={(event) => setNewValue(event.target.value)} placeholder="Teks baru" required /></label><button className={styles.saveOverride} disabled={busyKey === "new"} type="submit">{busyKey === "new" ? "Menyimpan…" : "Tambah copy"}</button></form>}
       </section>
     </div>
   );

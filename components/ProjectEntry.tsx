@@ -6,6 +6,7 @@ import { useTranslations } from "@/lib/useTranslations";
 import { getProjectCover, getProjectHover } from "@/lib/projectMedia";
 import type { Project } from "@/lib/types";
 import { disciplineLabels } from "@/lib/types";
+import { useLocalizedProject } from "@/lib/useLocalizedProject";
 
 export default function ProjectEntry({
   project,
@@ -15,18 +16,19 @@ export default function ProjectEntry({
   index: number;
 }) {
   const t = useTranslations();
+  const localizedProject = useLocalizedProject(project);
 
   const coverSrc = getProjectCover(project);
   const hoverSrc = getProjectHover(project);
   const num = String(index + 1).padStart(2, "0");
   const disciplines = project.disciplines
-    .map((d) => disciplineLabels[d])
+    .map((d) => t.projectChrome.disciplineNames?.[d] ?? disciplineLabels[d] ?? d)
     .join(" · ");
 
   const scopeSummary =
     project.details?.scope && project.details.scope.length > 0
       ? project.details.scope.slice(0, 2).join(" · ")
-      : project.category;
+      : localizedProject.category;
 
   return (
     <Link
@@ -75,7 +77,7 @@ export default function ProjectEntry({
             <div className="pe-placeholder">
               <span className="pe-placeholder__num">{num}</span>
               <span className="pe-placeholder__logo">UTERO.ID</span>
-              <span className="pe-placeholder__cat">{project.category}</span>
+              <span className="pe-placeholder__cat">{localizedProject.category}</span>
             </div>
           )}
 

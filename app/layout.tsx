@@ -133,7 +133,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <ServerFontLoader />
         {gaId && (

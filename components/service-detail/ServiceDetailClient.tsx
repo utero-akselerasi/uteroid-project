@@ -7,10 +7,16 @@ import type { Project } from "@/lib/types";
 import { getProjectCover } from "@/lib/projectMedia";
 import { useTranslations } from "@/lib/useTranslations";
 import { useTranslatedService } from "@/lib/useTranslatedServices";
+import { useLocalizedProject } from "@/lib/useLocalizedProject";
 
 interface ServiceDetailClientProps {
   initialService: ServiceItem;
   relatedProjects: (Project | undefined)[];
+}
+
+function ProjectCategory({ project }: { project: Project }) {
+  const localized = useLocalizedProject(project);
+  return <>{localized.category}</>;
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -378,7 +384,7 @@ export default function ServiceDetailClient({
                             textTransform: "uppercase",
                           }}
                         >
-                          {proj.category}
+                          <ProjectCategory project={proj} />
                         </div>
                       </div>
 

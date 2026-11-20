@@ -3,7 +3,8 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Project } from "@/lib/types";
+import type { Discipline, Industry, Project } from "@/lib/types";
+import { disciplineLabels, industryLabels } from "@/lib/types";
 import { getProjectCover, getProjectGallery } from "@/lib/projectMedia";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import ProjectGallery from "./ProjectGallery";
@@ -11,14 +12,16 @@ import ProjectNavigation from "./ProjectNavigation";
 import VideoPlayer from "./VideoPlayer";
 import PDFDeckSlider from "./PDFDeckSlider";
 import { useTranslations } from "@/lib/useTranslations";
+import { useLocalizedProject } from "@/lib/useLocalizedProject";
+import { wasRecentPopNavigation } from "@/lib/scrollState";
 
 interface ProjectDetailClientProps {
   project: Project;
   prev: Pick<Project, "slug" | "title" | "year" | "coverImage"> | null;
   next: Pick<Project, "slug" | "title" | "year" | "coverImage"> | null;
   projectNum: string;
-  disciplines: string;
-  industryLabel: string;
+  disciplines: Discipline[];
+  industry: Industry;
 }
 
 export default function ProjectDetailClient({
@@ -26,10 +29,18 @@ export default function ProjectDetailClient({
   prev,
   next,
   projectNum,
-  disciplines,
-  industryLabel,
+  disciplines: projectDisciplines,
+  industry,
 }: ProjectDetailClientProps) {
   const t = useTranslations();
+  const disciplines = projectDisciplines
+    .map((d) => t.projectChrome.disciplineNames?.[d] ?? disciplineLabels[d] ?? d)
+    .join(" · ");
+  const industryLabel =
+    (t.industries as Record<string, string>)[industry] ??
+    industryLabels[industry] ??
+    industry;
+  const localizedProject = useLocalizedProject(project);
   const coverSrc = getProjectCover(project);
   const gallery = getProjectGallery(project);
   const [showVideo, setShowVideo] = useState(false);
@@ -37,8 +48,16 @@ export default function ProjectDetailClient({
   const playButtonRef = useRef<HTMLButtonElement>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Reliable scroll to top on mount and route/slug change
+  // Scroll to top on project-to-project navigation only. Skipped on first
+  // mount (browser restores scroll on reload) and on Back/Forward
+  // (popstate) where the previous position must be restored.
+  const isFirstMount = useRef(true);
   useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    if (wasRecentPopNavigation()) return;
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
@@ -126,19 +145,19 @@ export default function ProjectDetailClient({
 
           <div className="pd-hero__meta">
             <div className="pd-hero__meta-item">
-              <span className="pd-hero__meta-label">Client</span>
+              <span className="pd-hero__meta-label">{t.projectChrome.client}</span>
               <span className="pd-hero__meta-value">{project.client}</span>
             </div>
             <div className="pd-hero__meta-item">
-              <span className="pd-hero__meta-label">Year</span>
+              <span className="pd-hero__meta-label">{t.projectChrome.year}</span>
               <span className="pd-hero__meta-value">{project.year || "—"}</span>
             </div>
             <div className="pd-hero__meta-item">
-              <span className="pd-hero__meta-label">Industry</span>
+              <span className="pd-hero__meta-label">{t.projectChrome.industry}</span>
               <span className="pd-hero__meta-value">{industryLabel}</span>
             </div>
             <div className="pd-hero__meta-item">
-              <span className="pd-hero__meta-label">Disciplines</span>
+              <span className="pd-hero__meta-label">{t.projectChrome.disciplines}</span>
               <span className="pd-hero__meta-value">{disciplines}</span>
             </div>
           </div>
@@ -155,7 +174,6 @@ export default function ProjectDetailClient({
         <div className="pd-body">
           {/* Back link */}
           <Link href="/work" className="pd-back" style={{ display: "block" }}>
-            <span>←</span>
             <span>{t.projectDetail.allWork}</span>
           </Link>
 
@@ -165,13 +183,13 @@ export default function ProjectDetailClient({
               <div className={`pd-text-block__grid ${!hasScope && !hasDeliverables ? "pd-text-block__grid--single" : ""}`}>
                 {/* LEFT Column (about 7 of 12 columns): Overview, Challenge, Approach */}
                 <div className="pd-text-block__main">
-                  {project.description && (
+                  {localizedProject.description && (
                     <div className="pd-content-group">
                       <div className="pd-section__label">
                         <span className="pd-section__label-line" />
                         <span className="pd-section__label-text">{t.projectDetail.overview}</span>
                       </div>
-                      <p className="pd-text-overview">{project.description}</p>
+                      <p className="pd-text-overview">{localizedProject.description}</p>
                     </div>
                   )}
 
@@ -256,10 +274,10 @@ export default function ProjectDetailClient({
           {/* ── Bottom CTA ─────────────────────────────────── */}
           <div className="pd-bottom-cta">
             <Link href="/work" className="pd-bottom-cta__back">
-              ← All Projects
+              {t.projectDetail.allWork}
             </Link>
             <Link href="/contact" className="pd-bottom-cta__contact">
-              Start a Project →
+              {t.projectDetail.startProject}
             </Link>
           </div>
         </div>
@@ -272,7 +290,7 @@ export default function ProjectDetailClient({
           poster={project.video.poster || coverSrc}
           onClose={() => {
             setShowVideo(false);
-            playButtonRef.current?.focus();
+            playButtonRef.current?.focus({ preventScroll: true });
           }}
         />
       )}

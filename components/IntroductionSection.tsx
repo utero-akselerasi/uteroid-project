@@ -3,8 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import RevealOnScroll from "./RevealOnScroll";
+import { useTranslations } from "@/lib/useTranslations";
 
 export default function IntroductionSection() {
+  const t = useTranslations();
   return (
     <section
       id="about"
@@ -51,7 +53,7 @@ export default function IntroductionSection() {
                 color: "#e31e24",
               }}
             >
-              01 / ABOUT UTERO INDONESIA
+              {t.home.aboutLabel}
             </span>
           </div>
         </RevealOnScroll>
@@ -71,8 +73,7 @@ export default function IntroductionSection() {
                 maxWidth: "1150px",
               }}
             >
-              A comprehensive branding and design company delivering strategic identity,
-              distinctive media, and real-world execution.
+              {t.home.aboutHeading}
             </h2>
           </RevealOnScroll>
         </div>
@@ -101,7 +102,7 @@ export default function IntroductionSection() {
                   marginBottom: "1rem",
                 }}
               >
-                BRAND CONSULTANT &bull; CREATIVE AGENCY
+                {t.home.aboutSub}
               </h3>
               <p
                 style={{
@@ -111,9 +112,7 @@ export default function IntroductionSection() {
                   marginBottom: "1.5rem",
                 }}
               >
-                Since 1998, Utero has built iconic visual identities, product packaging,
-                and environmental spaces for industry leaders across Indonesia. We bridge
-                creative vision and functional commercial reality.
+                {t.home.aboutBody}
               </p>
             </RevealOnScroll>
 
@@ -126,8 +125,7 @@ export default function IntroductionSection() {
                   marginBottom: "2rem",
                 }}
               >
-                Every solution we produce is engineered for longevity &mdash; balancing
-                aesthetic distinction with measurable business impact.
+                {t.home.aboutBody2}
               </p>
 
               <Link
@@ -154,7 +152,7 @@ export default function IntroductionSection() {
                   e.currentTarget.style.color = "#0a0a0a";
                 }}
               >
-                <span>EXPLORE STUDIO STORY</span>
+                <span>{t.home.aboutCta}</span>
                 <span>&rarr;</span>
               </Link>
             </RevealOnScroll>
@@ -195,8 +193,8 @@ export default function IntroductionSection() {
                   letterSpacing: "0.05em",
                 }}
               >
-                <span>STUDIO ARCHIVE &bull; EDITORIAL CATALOG</span>
-                <span style={{ color: "#e31e24", fontWeight: 600 }}>VOL. 1998&mdash;2026</span>
+                <span>{t.home.archiveLabel}</span>
+                <span style={{ color: "#e31e24", fontWeight: 600 }}>{t.home.archiveVolume}</span>
               </div>
             </RevealOnScroll>
           </div>
@@ -236,7 +234,7 @@ export default function IntroductionSection() {
                   marginTop: "0.4rem",
                 }}
               >
-                Years Experience
+                {t.home.statYearsExp}
               </div>
             </div>
 
@@ -261,7 +259,7 @@ export default function IntroductionSection() {
                   marginTop: "0.4rem",
                 }}
               >
-                Brand Projects
+                {t.home.statBrandProjects}
               </div>
             </div>
 
@@ -286,7 +284,7 @@ export default function IntroductionSection() {
                   marginTop: "0.4rem",
                 }}
               >
-                Execution Driven
+                {t.home.statExecution}
               </div>
             </div>
 
@@ -311,7 +309,7 @@ export default function IntroductionSection() {
                   marginTop: "0.4rem",
                 }}
               >
-                National Reach
+                {t.home.statReach}
               </div>
             </div>
           </div>

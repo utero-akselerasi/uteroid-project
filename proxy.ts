@@ -11,15 +11,24 @@ export function proxy(request: NextRequest) {
   const hasSession = request.cookies.has(SESSION_COOKIE);
 
   if (pathname === "/admin/login") {
-    return hasSession
-      ? NextResponse.redirect(new URL("/admin", request.url))
-      : NextResponse.next();
+    if (hasSession) {
+      const res = NextResponse.redirect(new URL("/admin", request.url));
+      res.headers.set("Cache-Control", "no-store");
+      return res;
+    }
+    const res = NextResponse.next();
+    res.headers.set("Cache-Control", "no-store");
+    return res;
   }
 
   if (!hasSession) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    const res = NextResponse.redirect(new URL("/admin/login", request.url));
+    res.headers.set("Cache-Control", "no-store");
+    return res;
   }
-  return NextResponse.next();
+  const res = NextResponse.next();
+  res.headers.set("Cache-Control", "no-store");
+  return res;
 }
 
 export const config = {
