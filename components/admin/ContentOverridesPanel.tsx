@@ -16,6 +16,7 @@ const SCOPES = [
 ] as const;
 
 const TRANSLATION_LOCALES = ["en", "id"] as const;
+const PAGE_SIZE = 20;
 const SERVICE_FIELDS = ["name", "tagline", "heroHeadline", "description", "overview", "approach", "deliverables", "capabilities", "imageAlt", "inquiryLabel"];
 const SEO_PAGES = ["work", "services", "studio", "contact", "insights"];
 const SEO_FIELDS = ["title", "description", "openGraph.title", "openGraph.description", "twitter.title", "twitter.description"];
@@ -31,13 +32,14 @@ interface Row {
 
 function displayValue(v: unknown): string {
   if (v === undefined) return "";
-  return typeof v === "string" ? v : JSON.stringify(v);
+  return typeof v === "string" ? v : JSON.stringify(v) ?? "";
 }
 
 export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string }) {
   const [scope, setScope] = useState<string>("translations");
   const [locale, setLocale] = useState<string>("en");
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
   const [overrides, setOverrides] = useState<ContentOverride[]>([]);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [busyKey, setBusyKey] = useState<string | null>(null);
@@ -179,94 +181,46 @@ export default function ContentOverridesPanel({ csrfToken }: { csrfToken: string
   }
 
   const shownCount = rows.length;
+  const pageCount = Math.max(1, Math.ceil(shownCount / PAGE_SIZE));
+  const visibleRows = rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div className={styles.editor}>
-      <div className={styles.editorHead}>
-        <div>
-          <div className={styles.eyebrow}>Konten</div>
-          <h2>Override Konten (EN/ID, Layanan, SEO)</h2>
-          <p className={styles.muted}>
-            Nilai di database menimpa default kode. Kosongkan override untuk kembali ke default. Teks translasi tampil setelah reload halaman.
-          </p>
+      <header className={styles.contentHeader}>
+        <div className={styles.eyebrow}>Konten & Bahasa</div>
+        <h2>Kelola konten situs</h2>
+        <p className={styles.muted}>Atur terjemahan, copy layanan, SEO, dan teks halaman. Nilai override menggantikan default; reset untuk memakai teks bawaan lagi.</p>
+      </header>
+      {message && <div className={styles.success} role="status">{message}</div>}
+      {error && <div className={styles.error} role="alert">{error}</div>}
+      <section className={styles.contentWorkspace} aria-label="Editor konten">
+        <div className={styles.scopeTabs} role="group" aria-label="Jenis konten">
+          {SCOPES.map((item) => <button key={item.id} className={scope === item.id ? styles.scopeTabActive : styles.scopeTab} aria-pressed={scope === item.id} onClick={() => { setScope(item.id); setSearch(""); setPage(1); }} type="button">{item.label}</button>)}
         </div>
-      </div>
-
-      {message && <div className={styles.success}>{message}</div>}
-      {error && <div className={styles.error}>{error}</div>}
-
-      <section className={styles.section}>
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginBottom: 16 }}>
-          <div className={styles.checkGrid}>
-            {SCOPES.map((s) => (
-              <button key={s.id} className={scope === s.id ? styles.primary : styles.ghost} onClick={() => { setScope(s.id); setSearch(""); }} type="button">
-                {s.label}
-              </button>
-            ))}
-          </div>
-          {(scope === "translations" || scope === "services") && (
-            <div className={styles.checkGrid}>
-              {TRANSLATION_LOCALES.map((l) => (
-                <button key={l} className={locale === l ? styles.primary : styles.ghost} onClick={() => setLocale(l)} type="button">
-                  {l.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          )}
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cari key…"
-            style={{ flex: 1, minWidth: 180 }}
-          />
+        <div className={styles.contentTools}>
+          {(scope === "translations" || scope === "services") && <div className={styles.localePicker} role="group" aria-label="Bahasa"><span>Bahasa</span>{TRANSLATION_LOCALES.map((item) => <button key={item} className={locale === item ? styles.localeActive : styles.localeButton} aria-pressed={locale === item} onClick={() => { setLocale(item); setPage(1); }} type="button">{item.toUpperCase()}</button>)}</div>}
+          <label className={styles.contentSearch}><span>Cari key konten</span><input value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} placeholder="Contoh: hero.title" /></label>
         </div>
-        <p className={styles.muted} style={{ marginBottom: 12 }}>{shownCount} key</p>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, maxHeight: "65vh", overflowY: "auto" }}>
-          {rows.map((row) => {
+        <div className={styles.contentListHeader}>
+          <div><strong>{shownCount.toLocaleString("id-ID")}</strong> key tersedia{shownCount > 0 && <span> · Menampilkan {((page - 1) * PAGE_SIZE + 1).toLocaleString("id-ID")}–{Math.min(page * PAGE_SIZE, shownCount).toLocaleString("id-ID")}</span>}</div>
+          <div className={styles.pagination} aria-label="Halaman daftar key"><button type="button" className={styles.pageButton} disabled={page <= 1} onClick={() => setPage((current) => Math.max(1, current - 1))}>Sebelumnya</button><span>Halaman {Math.min(page, pageCount)} / {pageCount}</span><button type="button" className={styles.pageButton} disabled={page >= pageCount} onClick={() => setPage((current) => Math.min(pageCount, current + 1))}>Berikutnya</button></div>
+        </div>
+        <div className={styles.contentList}>
+          {visibleRows.map((row) => {
             const current = row.override ? displayValue(row.override.value) : displayValue(row.defaultValue);
             const draft = drafts[row.id] ?? current;
             const dirty = drafts[row.id] !== undefined && drafts[row.id] !== current;
-            return (
-              <div key={row.id} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: 12, border: "1px solid #e3ded5", borderRadius: 4, background: "#faf9f6" }}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontFamily: "monospace", fontSize: 12, wordBreak: "break-all" }}>
-                    {row.key}
-                    {row.locale && <span className={styles.muted}> [{row.locale}]</span>}
-                    {row.override && <span style={{ color: "#e31e24" }}> ● override</span>}
-                  </div>
-                  {!row.override && row.defaultValue !== undefined && (
-                    <div className={styles.muted} style={{ fontSize: 12, marginTop: 2, whiteSpace: "pre-wrap" }}>{current.slice(0, 140)}{current.length > 140 ? "…" : ""}</div>
-                  )}
-                  <input
-                    value={draft}
-                    onChange={(e) => setDrafts((d) => ({ ...d, [row.id]: e.target.value }))}
-                    placeholder='Nilai override (teks atau JSON, mis. "teks" atau {"a":1})'
-                    style={{ width: "100%", marginTop: 6, fontFamily: "monospace", fontSize: 12 }}
-                  />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
-                  <button className={styles.primary} disabled={!dirty || busyKey === row.id} onClick={() => save(row)} type="button">
-                    {busyKey === row.id ? "…" : "Simpan"}
-                  </button>
-                  {row.override && (
-                    <button className={styles.ghost} disabled={busyKey === row.id} onClick={() => reset(row)} type="button">
-                      Reset
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
+            const fieldId = "content-" + row.id;
+            const longValue = current.length > 120 || Array.isArray(row.defaultValue) || Array.isArray(row.override?.value);
+            return <article key={row.id} className={styles.contentRow}>
+              <div className={styles.contentMeta}><code>{row.key}</code>{row.locale && <span className={styles.localeTag}>{row.locale.toUpperCase()}</span>}{row.override ? <span className={styles.overrideTag}>Override aktif</span> : <span className={styles.defaultTag}>Default</span>}{row.defaultValue !== undefined && !row.override && <p>{current.length > 110 ? current.slice(0, 110) + "…" : current}</p>}</div>
+              <div className={styles.contentField}><label htmlFor={fieldId}>{row.override ? "Nilai override" : "Nilai teks"}</label>{longValue ? <textarea id={fieldId} value={draft} rows={3} onChange={(event) => setDrafts((values) => ({ ...values, [row.id]: event.target.value }))} /> : <input id={fieldId} value={draft} onChange={(event) => setDrafts((values) => ({ ...values, [row.id]: event.target.value }))} />}</div>
+              <div className={styles.contentActions}><button className={styles.saveOverride} disabled={!dirty || busyKey === row.id} onClick={() => save(row)} type="button">{busyKey === row.id ? "Menyimpan…" : "Simpan"}</button>{row.override && <button className={styles.resetOverride} disabled={busyKey === row.id} onClick={() => reset(row)} type="button">Reset</button>}</div>
+            </article>;
           })}
-          {scope === "page-copy" && (
-            <div style={{ display: "flex", gap: 8, padding: 12, border: "1px dashed #bbb", borderRadius: 4 }}>
-              <input value={newKey} onChange={(e) => setNewKey(e.target.value)} placeholder="key.baru (mis. hero.cta)" style={{ flex: 1 }} />
-              <input value={newValue} onChange={(e) => setNewValue(e.target.value)} placeholder="nilai" style={{ flex: 1 }} />
-              <button className={styles.primary} onClick={addPageCopy} type="button">Tambah</button>
-            </div>
-          )}
-          {!rows.length && <p className={styles.muted}>Tidak ada key yang cocok.</p>}
+          {!rows.length && <div className={styles.contentEmpty}><strong>Tidak ada key yang cocok.</strong><span>Coba kata kunci lain atau hapus pencarian.</span>{search && <button type="button" onClick={() => { setSearch(""); setPage(1); }}>Hapus pencarian</button>}</div>}
         </div>
+        {scope === "page-copy" && <form className={styles.newCopyForm} onSubmit={(event) => { event.preventDefault(); void addPageCopy(); }}><div><strong>Tambah copy halaman</strong><p>Gunakan key unik, misalnya <code>hero.cta</code>.</p></div><label>Key<input value={newKey} onChange={(event) => setNewKey(event.target.value)} placeholder="hero.cta" required /></label><label>Nilai<input value={newValue} onChange={(event) => setNewValue(event.target.value)} placeholder="Teks baru" required /></label><button className={styles.saveOverride} disabled={busyKey === "new"} type="submit">{busyKey === "new" ? "Menyimpan…" : "Tambah copy"}</button></form>}
       </section>
     </div>
   );

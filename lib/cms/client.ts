@@ -84,7 +84,11 @@ async function toCmsError(response: Response): Promise<CmsError> {
   );
 }
 
-async function cmsFetch<T>(path: string, query: URLSearchParams): Promise<T> {
+async function cmsFetch<T>(
+  path: string,
+  query: URLSearchParams,
+  options: { noStore?: boolean } = {},
+): Promise<T> {
   const env = readCmsEnv();
   if (!env) throw new CmsNotConfiguredError();
 
@@ -95,9 +99,9 @@ async function cmsFetch<T>(path: string, query: URLSearchParams): Promise<T> {
       "x-artikel-key": env.apiKey,
       accept: "application/json",
     },
-    // Next 16 does not cache fetch by default. Opt in explicitly, and stay
-    // under the 3600s signed-image-URL lifetime.
-    next: { revalidate: CMS_REVALIDATE_SECONDS },
+    ...(options.noStore
+      ? { cache: "no-store" as const }
+      : { next: { revalidate: CMS_REVALIDATE_SECONDS } }),
   });
 
   if (!response.ok) throw await toCmsError(response);
@@ -178,6 +182,7 @@ export const getArticle = cache(
       const payload = await cmsFetch<CmsDetailResponse>(
         `/articles/${encodeURIComponent(slug)}`,
         new URLSearchParams(),
+        { noStore: true },
       );
       return payload?.data ?? null;
     } catch (error) {

@@ -20,7 +20,8 @@ README.md
 content
 
 # Python tooling used to render the decks; not needed at runtime
-scripts
+scripts/*
+!scripts/copy-pdf-worker.mjs
 render_pdf.py
 __pycache__
 *.pyc

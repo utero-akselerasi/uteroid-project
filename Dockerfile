@@ -14,6 +14,7 @@ WORKDIR /app
 
 # Copy lockfile first so this layer caches until dependencies change.
 COPY package.json package-lock.json ./
+COPY scripts/copy-pdf-worker.mjs ./scripts/copy-pdf-worker.mjs
 RUN npm ci
 
 # ── Stage 2: build ───────────────────────────────────────────────────
@@ -22,6 +23,7 @@ WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY --from=deps /app/node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs ./public/pdf.worker.min.mjs
 
 ARG NEXT_PUBLIC_GTM_ID
 ARG NEXT_PUBLIC_GA4_MEASUREMENT_ID

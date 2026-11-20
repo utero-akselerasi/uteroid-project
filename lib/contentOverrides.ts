@@ -48,12 +48,13 @@ export function applyOverrides<T>(base: T, overrides: ContentOverride[], scope: 
 
 // Flatten an object to leaf dot-paths for the admin key list.
 export function flattenKeys(obj: unknown, prefix = "", out: string[] = []): string[] {
+  if (typeof obj === "function" || obj === undefined) return out;
   if (isPlainObject(obj)) {
     for (const [k, v] of Object.entries(obj)) {
       flattenKeys(v, prefix ? `${prefix}.${k}` : k, out);
     }
   } else if (Array.isArray(obj)) {
-    obj.forEach((v, i) => flattenKeys(v, `${prefix}[${i}]`, out));
+    if (prefix) out.push(prefix);
   } else if (prefix) {
     out.push(prefix);
   }

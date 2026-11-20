@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { getInsight, getInsightSlugs } from "@/lib/insights-source";
 import JsonLd from "@/components/JsonLd";
 import InsightArticleContent from "@/components/InsightArticleContent";
@@ -18,6 +19,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  await connection();
+
   const { slug } = await params;
   const result = await getInsight(slug);
 
@@ -56,6 +59,8 @@ export default async function InsightsSlugPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  await connection();
+
   const { slug } = await params;
   const result = await getInsight(slug);
 

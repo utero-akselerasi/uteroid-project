@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { projects as legacyProjects } from "@/lib/projects";
 import type { Project } from "@/lib/types";
 import {
@@ -61,6 +61,8 @@ export default function AdminDashboard() {
   const [session, setSession] = useState<SessionResponse | null>(null);
   const [checking, setChecking] = useState(true);
   const [activeTab, setActiveTab] = useState<AdminTab>("projects");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const dashboardRef = useRef<HTMLDivElement>(null);
   const [projects, setProjects] = useState<AdminProject[]>([]);
   const [editing, setEditing] = useState<AdminProject | null>(null);
   const [projectQuery, setProjectQuery] = useState("");
@@ -589,16 +591,38 @@ export default function AdminDashboard() {
     );
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} ref={dashboardRef}>
       <div className={styles.shell}>
         {/* ─── SIDEBAR NAVIGATION ─── */}
         <aside className={styles.sidebar}>
-          <div className={styles.brand}>
-            UTERO.ID<span> •</span>
+          <div className={styles.sidebarHeader}>
+            <div>
+              <div className={styles.brand}>
+                UTERO.ID<span> •</span>
+              </div>
+              <div className={styles.sideMeta}>STUDIO SYSTEM ADMIN</div>
+            </div>
+            <button
+              type="button"
+              className={styles.mobileMenuToggle}
+              aria-controls="admin-navigation"
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen((open) => !open)}
+            >
+              {mobileMenuOpen ? "Tutup" : "Menu"}
+            </button>
           </div>
-          <div className={styles.sideMeta}>STUDIO SYSTEM ADMIN</div>
-
-          <div className={styles.nav}>
+          <div id="admin-navigation" className={`${styles.sidebarContent} ${mobileMenuOpen ? styles.sidebarContentOpen : ""}`}>
+          <nav
+            className={styles.nav}
+            aria-label="Navigasi admin"
+            onClick={(event) => {
+              if ((event.target as Element).closest("button")) {
+                setMobileMenuOpen(false);
+                dashboardRef.current?.scrollTo({ top: 0 });
+              }
+            }}
+          >
             <div className={styles.navSection}>
               <div className={styles.navGroupTitle}>Portofolio</div>
               <button
@@ -700,7 +724,7 @@ export default function AdminDashboard() {
                 Keamanan
               </button>
             </div>
-          </div>
+          </nav>
 
           <div className={styles.sideBottom}>
             <button className={styles.ghost} onClick={() => window.open("/", "_blank")}>
@@ -709,6 +733,7 @@ export default function AdminDashboard() {
             <button className={styles.danger} onClick={logout}>
               Keluar
             </button>
+          </div>
           </div>
         </aside>
 
@@ -811,7 +836,7 @@ export default function AdminDashboard() {
                   </select>
                 </div>
                 <div className={styles.tableWrap}>
-                  <table className={styles.table}>
+                  <table className={`${styles.table} ${styles.projectsTable}`}>
                     <thead>
                       <tr>
                         <th>Proyek</th>
@@ -824,7 +849,7 @@ export default function AdminDashboard() {
                     <tbody>
                       {filtered.map((project) => (
                         <tr key={project.id}>
-                          <td>
+                          <td data-label="Proyek">
                             <div className={styles.projectCell}>
                               {project.coverImage ? (
                                 <img className={styles.thumb} src={project.coverImage} alt="" />
@@ -839,12 +864,12 @@ export default function AdminDashboard() {
                               </div>
                             </div>
                           </td>
-                          <td>{project.client || <span style={{ fontStyle: "italic", opacity: 0.5 }}>-</span>}</td>
-                          <td>{project.year}</td>
-                          <td>
+                          <td data-label="Client">{project.client || <span style={{ fontStyle: "italic", opacity: 0.5 }}>-</span>}</td>
+                          <td data-label="Tahun">{project.year}</td>
+                          <td data-label="Status">
                             <span className={`${styles.status} ${styles[project.status]}`}>{project.status}</span>
                           </td>
-                          <td>
+                          <td data-label="Aksi">
                             <div className={styles.rowActions}>
                               <button onClick={() => setEditing(project)}>Edit</button>
                               <button onClick={() => window.open(`/admin/preview/${project.id}`, "_blank")}>Preview</button>
@@ -1946,58 +1971,53 @@ function split(value: string) {
 function MediaUpload({ type, busy, onUpload }: { type: string; busy: boolean; onUpload: (files: File[]) => void }) {
   const [dragging, setDragging] = useState(false);
   const multiple = type === "gallery" || type === "deck";
+  const details: Record<string, { title: string; description: string }> = {
+    cover: { title: "Cover", description: "Gambar utama pada kartu dan halaman proyek." },
+    hover: { title: "Hover image", description: "Gambar alternatif saat pengunjung mengarahkan kursor." },
+    gallery: { title: "Galeri proyek", description: "Pilih beberapa gambar untuk melengkapi cerita proyek." },
+    deck: { title: "Slide studi kasus", description: "Tambahkan halaman JPG, PNG, atau WebP tanpa mengganti slide lama." },
+  };
+  const info = details[type] || { title: type, description: "Unggah gambar JPG, PNG, atau WebP." };
   const send = (files: FileList | null) => {
     if (!files?.length) return;
     onUpload(Array.from(files).slice(0, multiple ? undefined : 1));
   };
   return (
     <label
-      className={`${styles.upload} ${dragging ? styles.uploadDragging : ""}`}
-      onDragOver={(event) => {
-        event.preventDefault();
-        setDragging(true);
-      }}
+      className={[styles.upload, dragging ? styles.uploadDragging : "", busy ? styles.uploadBusy : ""].filter(Boolean).join(" ")}
+      onDragOver={(event) => { event.preventDefault(); if (!busy) setDragging(true); }}
       onDragLeave={() => setDragging(false)}
-      onDrop={(event) => {
-        event.preventDefault();
-        setDragging(false);
-        send(event.dataTransfer.files);
-      }}
+      onDrop={(event) => { event.preventDefault(); setDragging(false); if (!busy) send(event.dataTransfer.files); }}
     >
-      <strong>{type.toUpperCase()}</strong>
-      <p className={styles.muted}>
-        {type === "deck"
-          ? "Tarik beberapa halaman JPG, PNG, atau WebP. Urutan file menjadi urutan slide. Maksimal 20 MB per file. Atau gunakan 'Upload PDF deck' / 'Ganti seluruh deck' di bawah."
-          : `Tarik ${multiple ? "satu atau beberapa" : "satu"} gambar ke sini, atau klik untuk memilih. Maksimal 20 MB per file.`}
-      </p>
-      <span className={styles.uploadAction}>{dragging ? "Lepaskan untuk upload" : "Pilih file"}</span>
+      <span className={styles.uploadIcon} aria-hidden="true">{type === "deck" || type === "gallery" ? "+" : "↑"}</span>
+      <strong>{info.title}</strong>
+      <span className={styles.uploadDescription}>{info.description}</span>
+      <span className={styles.uploadHint}>{multiple ? "Bisa pilih beberapa file" : "Pilih satu file"} · JPG, PNG, WebP · maks. 20 MB</span>
+      <span className={styles.uploadAction}>{busy ? "Mengunggah…" : dragging ? "Lepaskan file untuk mulai" : "Pilih file"}</span>
       <input
         className={styles.uploadInput}
         type="file"
         accept="image/jpeg,image/png,image/webp"
         multiple={multiple}
         disabled={busy}
-        onChange={(event) => {
-          send(event.target.files);
-          event.target.value = "";
-        }}
+        onChange={(event) => { send(event.target.files); event.target.value = ""; }}
       />
     </label>
   );
 }
-
 function MediaAltInput({ item, disabled, onSave }: { item: MediaItem; disabled?: boolean; onSave: (alt: string) => void }) {
   const [value, setValue] = useState(item.altText || "");
   return (
     <input
       value={value}
       disabled={disabled}
+      aria-label={"Alt text for " + item.filename}
       placeholder="Alt text…"
       onChange={(event) => setValue(event.target.value)}
       onBlur={() => {
         if (value !== (item.altText || "")) onSave(value);
       }}
-      style={{ marginTop: 6, fontSize: 12, padding: "6px 8px", border: "1px solid #d4d0c9", width: "100%", maxWidth: 260 }}
+      className={styles.mediaAltInput}
     />
   );
 }
@@ -2058,6 +2078,7 @@ function ProjectEditor({
   };
 
   const details = project.details || {};
+  const mediaTypes = Array.from(new Set(media.map((item) => item.mediaType)));
   const video = project.video || { type: "youtube", src: "", poster: "" };
 
   const setVideo = (updates: Partial<typeof video>) => {
@@ -2252,121 +2273,56 @@ function ProjectEditor({
           </Field>
         </div>
       </section>
-      <section className={styles.section}>
-        <h3>Media S3</h3>
-        {!project.id ? (
-          <p className={styles.muted}>Simpan proyek dahulu sebelum mengunggah media.</p>
-        ) : (
-          <>
-            <div className={styles.mediaGrid}>
-              {["cover", "hover", "gallery", "deck"].map((type) => (
-                <MediaUpload key={type} type={type} busy={busy} onUpload={(files) => onUpload(project, type, files)} />
-              ))}
-            </div>
-            <div className={styles.actions} style={{ marginTop: 14 }}>
-              <label className={styles.secondary} style={{ cursor: "pointer" }}>
-                {busy ? "Memproses…" : "Ganti seluruh deck (banyak gambar)"}
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  multiple
-                  disabled={busy}
-                  className={styles.uploadInput}
-                  onChange={(event) => {
-                    const files = Array.from(event.target.files || []);
-                    if (files.length) onReplaceDeck(project, files);
-                    event.target.value = "";
-                  }}
-                />
-              </label>
-              <label className={styles.secondary} style={{ cursor: "pointer" }}>
-                {busy ? "Memproses…" : "Upload PDF deck (render halaman)"}
-                <input
-                  type="file"
-                  accept="application/pdf"
-                  disabled={busy}
-                  className={styles.uploadInput}
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
-                    if (file) onUploadDeckPdf(project, file);
-                    event.target.value = "";
-                  }}
-                />
-              </label>
-            </div>
-            {project.coverImage && typeof project.coverImage === "string" && project.coverImage.startsWith("/projects/") && (
-              <button className={styles.secondary} style={{ marginTop: 18 }} disabled={busy} onClick={() => onMigrate(project)}>
-                Pindahkan media lama ke S3
-              </button>
-            )}
-            {media.length > 0 && (
-              <div className={styles.tableWrap} style={{ marginTop: 18 }}>
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>Media</th>
-                      <th>Tipe</th>
-                      <th>Urutan</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {media.map((item) => (
-                      <tr key={item.id}>
-                        <td>
-                          <div className={styles.projectCell}>
-                            <img className={styles.thumb} src={item.url} alt="" />
-                            <span>
-                              {item.filename}
-                              <MediaAltInput
-                                key={item.id}
-                                item={item}
-                                disabled={busy}
-                                onSave={(altText) => onSaveAlt(project, item, altText)}
-                              />
-                            </span>
-                          </div>
-                        </td>
-                        <td>{item.mediaType}</td>
-                        <td>{item.sortOrder + 1}</td>
-                        <td>
-                          <div className={styles.rowActions}>
-                            <button onClick={() => onMoveMedia(project, item, -1)} type="button">
-                              ↑
-                            </button>
-                            <button onClick={() => onMoveMedia(project, item, 1)} type="button">
-                              ↓
-                            </button>
-                            <label
-                              className={styles.ghost}
-                              style={{ cursor: busy ? "default" : "pointer", padding: "7px 9px", border: "1px solid #ccc", background: "#fff", fontSize: 11, fontWeight: 700 }}
-                            >
-                              Ganti
-                              <input
-                                type="file"
-                                accept="image/jpeg,image/png,image/webp"
-                                disabled={busy}
-                                className={styles.uploadInput}
-                                onChange={(event) => {
-                                  const file = event.target.files?.[0];
-                                  if (file) onReplaceMedia(project, item, file);
-                                  event.target.value = "";
-                                }}
-                              />
-                            </label>
-                            <button onClick={() => onDeleteMedia(project, item)} type="button">
-                              Hapus
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+      <section className={styles.section + " " + styles.mediaManager}>
+        <div className={styles.mediaSectionHead}>
+          <div><div className={styles.eyebrow}>04 · Penyimpanan</div><h3>Media proyek</h3><p>Kelola gambar cover, hover, galeri, dan slide studi kasus dari satu tempat.</p></div>
+          {media.length > 0 && <span className={styles.mediaCount}>{media.length} file tersimpan</span>}
+        </div>
+        {!project.id ? <div className={styles.mediaEmpty}>Simpan proyek dahulu sebelum menambahkan gambar.</div> : <>
+          <div className={styles.mediaUploadGroup}>
+            <div className={styles.mediaGroupHeading}><div><strong>Gambar proyek</strong><span>Cover untuk kartu, hover untuk efek, galeri untuk dokumentasi.</span></div></div>
+            <div className={styles.mediaGrid}>{["cover", "hover", "gallery"].map((type) => <MediaUpload key={type} type={type} busy={busy} onUpload={(files) => onUpload(project, type, files)} />)}</div>
+          </div>
+          <div className={styles.deckPanel}>
+            <div className={styles.mediaGroupHeading}><div><strong>Slide studi kasus</strong><span>Tambahkan halaman baru, atau ganti seluruh urutan deck secara terpisah.</span></div></div>
+            <div className={styles.deckControls}>
+              <MediaUpload type="deck" busy={busy} onUpload={(files) => onUpload(project, "deck", files)} />
+              <div className={styles.deckActions}>
+                <label className={styles.deckReplace} aria-disabled={busy}>
+                  <span>{busy ? "Memproses…" : "Ganti seluruh slide"}</span><small>Menghapus urutan deck lama dan menggantinya dengan file pilihan.</small>
+                  <input type="file" accept="image/jpeg,image/png,image/webp" multiple disabled={busy} className={styles.uploadInput} onChange={(event) => { const files = Array.from(event.target.files || []); if (files.length) onReplaceDeck(project, files); event.target.value = ""; }} />
+                </label>
+                <label className={styles.deckPdf} aria-disabled={busy}>
+                  <span>{busy ? "Memproses…" : "Render dari PDF"}</span><small>Mengganti deck lama dengan halaman PDF yang dirender.</small>
+                  <input type="file" accept="application/pdf" disabled={busy} className={styles.uploadInput} onChange={(event) => { const file = event.target.files?.[0]; if (file) onUploadDeckPdf(project, file); event.target.value = ""; }} />
+                </label>
               </div>
-            )}
-          </>
-        )}
+            </div>
+          </div>
+          {project.coverImage && typeof project.coverImage === "string" && project.coverImage.startsWith("/projects/") && <button className={styles.secondary} disabled={busy} onClick={() => onMigrate(project)}>Pindahkan media lama ke S3</button>}
+          <div className={styles.mediaInventoryHead}><div><h4>File tersimpan</h4><p>Pratinjau gambar, perbarui alt text, atau atur urutan tampil.</p></div><span>{media.length} aset</span></div>
+          {!media.length ? <div className={styles.mediaEmpty}>Belum ada media tersimpan. Mulai dengan mengunggah cover, hover, galeri, atau slide.</div> : <div className={styles.mediaInventory}>
+            {mediaTypes.map((type) => {
+              const group = media.filter((item) => item.mediaType === type);
+              const typeLabel = ({ cover: "Cover", hover: "Hover", gallery: "Galeri", deck: "Slide deck" } as Record<string, string>)[type] || type;
+              return <section key={type} className={styles.mediaGroup} aria-label={typeLabel}>
+                <header><h5>{typeLabel}</h5><span>{group.length} file</span></header>
+                <div className={styles.mediaAssetGrid}>{group.map((item, index) => (
+                  <article key={item.id} className={styles.mediaAsset}>
+                    <a className={styles.mediaPreview} href={item.url} target="_blank" rel="noreferrer" aria-label={"Buka pratinjau " + item.filename}><img src={item.url} alt="" width={96} height={80} loading="lazy" /></a>
+                    <div className={styles.mediaAssetDetails}><strong title={item.filename}>{item.filename}</strong><span className={styles.mediaAssetMeta}>Urutan {item.sortOrder + 1}</span><label className={styles.altLabel}>Teks alternatif<MediaAltInput key={item.id} item={item} disabled={busy} onSave={(altText) => onSaveAlt(project, item, altText)} /></label></div>
+                    <div className={styles.mediaAssetActions}>
+                      <button type="button" aria-label={"Naikkan " + item.filename} title="Naikkan urutan" disabled={busy || index === 0} onClick={() => onMoveMedia(project, item, -1)}>↑</button>
+                      <button type="button" aria-label={"Turunkan " + item.filename} title="Turunkan urutan" disabled={busy || index === group.length - 1} onClick={() => onMoveMedia(project, item, 1)}>↓</button>
+                      <label className={styles.assetReplace} aria-disabled={busy}>Ganti<input type="file" accept="image/jpeg,image/png,image/webp" disabled={busy} className={styles.uploadInput} onChange={(event) => { const file = event.target.files?.[0]; if (file) onReplaceMedia(project, item, file); event.target.value = ""; }} /></label>
+                      <button type="button" className={styles.assetDelete} disabled={busy} onClick={() => onDeleteMedia(project, item)}>Hapus</button>
+                    </div>
+                  </article>
+                ))}</div>
+              </section>;
+            })}
+          </div>}
+        </>}
       </section>
       <div className={styles.footerActions}>
         <div>{project.id && <button className={styles.danger} onClick={() => onDelete(project)}>Hapus proyek</button>}</div>
