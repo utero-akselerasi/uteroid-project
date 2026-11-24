@@ -55,6 +55,6 @@ export const studioLocation = {
   city: "Malang",
   region: "East Java",
   country: "Indonesia",
-  address: "Jl. Bantaran 1 No. 25, Purwantoro, Blimbing, Malang, Jawa Timur 65141, Indonesia",
-  mapsUrl: "https://maps.google.com/?q=Utero+Indonesia+Malang",
+  address: "Jl. Bantaran 1 No.25, Tulusrejo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141",
+  mapsUrl: "https://maps.google.com/?q=Jl.+Bantaran+1+No.25,+Tulusrejo,+Lowokwaru,+Malang",
 };

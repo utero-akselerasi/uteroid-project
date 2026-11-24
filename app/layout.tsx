@@ -20,7 +20,7 @@ const siteStructuredData = {
       foundingDate: "1998",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Jl. Bantaran 1 No. 25, Purwantoro, Blimbing",
+        streetAddress: "Jl. Bantaran 1 No.25, Tulusrejo, Kec. Lowokwaru",
         addressLocality: "Malang",
         addressRegion: "Jawa Timur",
         postalCode: "65141",

@@ -149,9 +149,9 @@ export default function Footer() {
                   margin: 0,
                 }}
               >
-                Jl. Bantaran 1 No. 25, Purwantoro<br />
-                Blimbing, Malang, Jawa Timur 65141<br />
-                Indonesia
+                RUMAH MERAH OXYZ<br />
+                PT UTERO KREATIF INDONESIA<br />
+                Jl. Bantaran 1 No.25, Tulusrejo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141
               </p>
             </div>
           </div>
