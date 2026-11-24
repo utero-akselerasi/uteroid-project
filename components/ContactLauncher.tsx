@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import Link from "next/link";
 import { useTranslations } from "@/lib/useTranslations";
 
 interface ContactLauncherProps {
   isOpen: boolean;
   onClose: () => void;
+  triggerRef: RefObject<HTMLButtonElement | null>;
   isDarkText?: boolean;
 }
 
 export default function ContactLauncher({
   isOpen,
   onClose,
+  triggerRef,
   isDarkText = false,
 }: ContactLauncherProps) {
   const t = useTranslations();
@@ -25,7 +27,8 @@ export default function ContactLauncher({
     const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       if (
         launcherRef.current &&
-        !launcherRef.current.contains(e.target as Node)
+        !launcherRef.current.contains(e.target as Node) &&
+        !triggerRef.current?.contains(e.target as Node)
       ) {
         onClose();
       }
@@ -46,7 +49,7 @@ export default function ContactLauncher({
       document.removeEventListener("touchstart", handleClickOutside);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, triggerRef]);
 
   if (!isOpen) return null;
 
@@ -241,7 +244,7 @@ export default function ContactLauncher({
 
             {/* 2. INSTAGRAM */}
             <a
-              href="https://www.instagram.com/uteroindonesia/?hl=en"
+              href="https://www.instagram.com/utero.design/"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -284,7 +287,7 @@ export default function ContactLauncher({
                     Instagram
                   </span>
                   <span style={{ fontSize: "10px", color: mutedColor }}>
-                    @uteroindonesia
+                    @utero.design
                   </span>
                 </div>
               </div>

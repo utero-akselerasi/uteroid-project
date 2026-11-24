@@ -67,6 +67,7 @@ export default function Header() {
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const contactButtonRef = useRef<HTMLButtonElement>(null);
   const [activePreview, setActivePreview] = useState<string>(
     menuNavLinksStatic[0].previewImage
   );
@@ -483,7 +484,8 @@ export default function Header() {
 
             {/* CONTACT Button */}
             <button
-              onClick={() => setContactOpen(!contactOpen)}
+              ref={contactButtonRef}
+              onClick={() => setContactOpen((isOpen) => !isOpen)}
               onMouseEnter={() => setIsContactHovered(true)}
               onMouseLeave={() => setIsContactHovered(false)}
               aria-expanded={contactOpen}
@@ -655,6 +657,7 @@ export default function Header() {
       ══════════════════════════════════════════════ */}
       <ContactLauncher
         isOpen={contactOpen}
+        triggerRef={contactButtonRef}
         onClose={() => setContactOpen(false)}
         isDarkText={isDarkText}
       />
