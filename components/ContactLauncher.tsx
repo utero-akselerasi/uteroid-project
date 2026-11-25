@@ -3,6 +3,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 import Link from "next/link";
 import { useTranslations } from "@/lib/useTranslations";
+import { whatsappAdmins } from "@/lib/contactData";
 
 interface ContactLauncherProps {
   isOpen: boolean;
@@ -82,6 +83,8 @@ export default function ContactLauncher({
         aria-label={t.contactChrome.channelsAria}
         className="fixed z-[1060] right-3 sm:right-6 top-16 md:top-[68px] w-[calc(100vw-1.5rem)] sm:w-[320px] max-w-[340px]"
         style={{
+          maxHeight: "calc(100dvh - 5rem)",
+          overflowY: "auto",
           animation: "contactLauncherFade 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         }}
       >
@@ -181,65 +184,38 @@ export default function ContactLauncher({
                 </div>
               </div>
 
-              {/* Wahyu */}
-              <a
-                href="https://wa.me/6281999900900"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "4px 6px",
-                  borderRadius: "4px",
-                  fontSize: "11px",
-                  color: textColor,
-                  textDecoration: "none",
-                  fontWeight: 500,
-                  transition: "background-color 0.15s ease, transform 0.15s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = hoverBg;
-                  e.currentTarget.style.transform = "translateX(2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.transform = "translateX(0)";
-                }}
-              >
-                <span>081 999 900 900 — Wahyu</span>
-                <span style={{ color: "#c91a1f", fontSize: "11px", fontWeight: "bold" }}>&rarr;</span>
-              </a>
-
-              {/* Utero */}
-              <a
-                href="https://wa.me/62817388616"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "4px 6px",
-                  borderRadius: "4px",
-                  fontSize: "11px",
-                  color: textColor,
-                  textDecoration: "none",
-                  fontWeight: 500,
-                  transition: "background-color 0.15s ease, transform 0.15s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = hoverBg;
-                  e.currentTarget.style.transform = "translateX(2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.transform = "translateX(0)";
-                }}
-              >
-                <span>081 7388 616 — Utero</span>
-                <span style={{ color: "#c91a1f", fontSize: "11px", fontWeight: "bold" }}>&rarr;</span>
-              </a>
+              {whatsappAdmins.map((admin) => (
+                <a
+                  key={admin.name}
+                  href={admin.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    minHeight: "44px",
+                    padding: "6px 8px",
+                    borderRadius: "4px",
+                    fontSize: "11px",
+                    color: textColor,
+                    textDecoration: "none",
+                    fontWeight: 500,
+                    transition: "background-color 0.15s ease, transform 0.15s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = hoverBg;
+                    e.currentTarget.style.transform = "translateX(2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.transform = "translateX(0)";
+                  }}
+                >
+                  <span>{admin.name} · {admin.number}</span>
+                  <span style={{ color: "#c91a1f", fontSize: "11px", fontWeight: "bold" }}>&rarr;</span>
+                </a>
+              ))}
             </div>
 
             {/* 2. INSTAGRAM */}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "@/lib/useTranslations";
+import { whatsappAdmins } from "@/lib/contactData";
 import { useSiteSettings } from "@/components/SiteSettingsProvider";
 
 const mainNavLinksStatic = [
@@ -221,67 +222,40 @@ export default function Footer() {
             </span>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-              <a
-                href="https://wa.me/6281999900900"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="CHAT"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  backgroundColor: "rgba(255, 255, 255, 0.06)",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                  padding: "8px 12px",
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  fontSize: "0.8rem",
-                  fontWeight: 400,
-                  transition: "background-color 0.2s ease, border-color 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "rgba(201, 26, 31, 0.2)";
-                  e.currentTarget.style.borderColor = "#c91a1f";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.06)";
-                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                }}
-              >
-                <span>081 999 900 900 — Wahyu</span>
-                <span style={{ color: "#25D366" }}>&rarr;</span>
-              </a>
-
-              <a
-                href="https://wa.me/62817388616"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="CHAT"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  backgroundColor: "rgba(255, 255, 255, 0.06)",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                  padding: "8px 12px",
-                  color: "#ffffff",
-                  textDecoration: "none",
-                  fontSize: "0.8rem",
-                  fontWeight: 400,
-                  transition: "background-color 0.2s ease, border-color 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "rgba(201, 26, 31, 0.2)";
-                  e.currentTarget.style.borderColor = "#c91a1f";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.06)";
-                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                }}
-              >
-                <span>081 7388 616 — Utero</span>
-                <span style={{ color: "#25D366" }}>&rarr;</span>
-              </a>
+              {whatsappAdmins.map((admin) => (
+                <a
+                  key={admin.name}
+                  href={admin.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="CHAT"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: "rgba(255, 255, 255, 0.06)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    minHeight: "44px",
+                    padding: "8px 12px",
+                    color: "#ffffff",
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                    fontWeight: 400,
+                    transition: "background-color 0.2s ease, border-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "rgba(201, 26, 31, 0.2)";
+                    e.currentTarget.style.borderColor = "#c91a1f";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.06)";
+                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                  }}
+                >
+                  <span>{admin.name} · {admin.number}</span>
+                  <span style={{ color: "#25D366" }}>&rarr;</span>
+                </a>
+              ))}
             </div>
           </div>
 
